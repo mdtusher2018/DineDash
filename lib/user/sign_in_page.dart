@@ -1,0 +1,208 @@
+import 'package:dine_dash/colors.dart';
+import 'package:dine_dash/commonWidgets.dart';
+import 'package:dine_dash/image_paths.dart';
+import 'package:flutter/material.dart';
+
+
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool rememberMe = false;
+  bool isPasswordVisible = false;
+  int selectedPlayerType = 0; // 0: Player, 1: Coach
+
+  @override
+  void dispose() {
+    emailController.clear();
+    passwordController.clear();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: commonAppBar(title: "Sign In to Your Account",backGroundColor: AppColors.primaryColor,textColor: AppColors.white),
+      backgroundColor: AppColors.primaryColor,
+      bottomSheet: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+   
+
+                // Email TextField
+                commonTextfieldWithTitle(
+                  "Email",
+                  emailController,
+                  hintText: "Enter your email",
+                  assetIconPath: ImagePaths.emailIcon,
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                const SizedBox(height: 15),
+
+                // Password TextField with Visibility Toggle
+                commonTextfieldWithTitle(
+                  "Password",
+                  passwordController,
+                  hintText: "Enter your password",
+                  assetIconPath: ImagePaths.lockIcon,
+
+                  isPasswordVisible: isPasswordVisible,
+                  issuffixIconVisible: true,
+                  changePasswordVisibility: () {
+                    setState(() {
+                      isPasswordVisible = !isPasswordVisible;
+                    });
+                  },
+                ),
+           
+                // Remember Me and Forgot Password Row
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: rememberMe,
+                          onChanged: (value) {
+                            setState(() {
+                              rememberMe = value!;
+                            });
+                          },
+                        ),
+                        commonText("Remember me", size: 12.0),
+                      ],
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                   
+                      },
+                      child: commonText(
+                        "Forgot Password",
+                        size: 12.0,
+                        isBold: true,
+                      ),
+                    ),
+                  ],
+                ),
+       
+                const SizedBox(height: 20),
+                // Sign In Button
+                commonButton(
+                  "Sign In",
+                  onTap: () {
+         
+                  },
+                ),
+
+
+                const SizedBox(height: 20),
+
+
+                // Sign In with Google
+                commonBorderButton(
+                  "Sign In With Google",
+                  imagePath: ImagePaths.googleIcon,
+
+                  onTap: () {
+                    // Handle Google Sign In
+                  },
+                ),
+
+                const SizedBox(height: 30),
+
+                // Already have an account? Sign In
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    commonText("Don't have an account? ", size: 12.0),
+                    GestureDetector(
+                      onTap: () {
+                        // navigateToPage(SignUpScreen());
+                      },
+                      child: commonText(
+                        "Sign Up",
+                        size: 12.0,
+                        color: AppColors.black,
+                        isBold: true,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class PlayerSelector extends StatelessWidget {
+  final bool isSelected;
+  final VoidCallback onTap;
+  final String label;
+
+  const PlayerSelector({
+    super.key,
+    required this.isSelected,
+    required this.onTap,
+    required this.label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Row(
+        children: [
+          Container(
+            width: 24,
+            height: 24,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+            
+              border: Border.all(
+                color: isSelected ? Colors.transparent : Colors.grey,
+                width: 2,
+              ),
+            ),
+            child:
+                isSelected
+                    ? Center(
+                      child: Container(
+                        width: 10,
+                        height: 10,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    )
+                    : null,
+          ),
+          const SizedBox(width: 8),
+          Text(
+            label,
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

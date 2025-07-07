@@ -1,0 +1,96 @@
+import 'package:dine_dash/colors.dart';
+import 'package:dine_dash/commonWidgets.dart';
+import 'package:dine_dash/image_paths.dart';
+import 'package:flutter/material.dart';
+
+
+class ForgotPasswordScreen extends StatefulWidget {
+  ForgotPasswordScreen({super.key});
+
+  @override
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+}
+
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  final TextEditingController emailController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.clear();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: commonAppBar(title: "Get Verification Code",backGroundColor: AppColors.primaryColor,textColor: AppColors.white),
+      backgroundColor: AppColors.primaryColor,
+      bottomSheet: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20),
+        child: SizedBox(
+          height: double.infinity,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+        
+                Image.asset(ImagePaths.forgetPageImage),
+            
+      
+                RichText(
+                  text: TextSpan(
+                    style: const TextStyle(
+                      fontSize: 21,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    children: [
+                      const TextSpan(
+                        text: "Forget Your ",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                         const TextSpan(
+                        text: "Password",
+                        style: TextStyle(color: AppColors.primaryColor),
+                      ),
+                        const TextSpan(
+                        text: "?",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ],
+                  ),
+                ),
+            
+                const SizedBox(height: 5),
+                commonText(
+                  "Enter your email address to reset your password.",
+                  textAlign: TextAlign.center,
+                  size: 14.0,
+                ),
+                const SizedBox(height: 30),
+            
+                // Email TextField
+                commonTextfieldWithTitle(
+                  "Email",
+                  emailController,
+                  hintText: "Enter your email",
+                  assetIconPath: ImagePaths.emailIcon,
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                   SizedBox(height: 20,),
+            
+                commonButton(
+                  "Get Verification Code",
+                  textColor: Colors.white,
+                  onTap: () {
+                 
+                  },
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
