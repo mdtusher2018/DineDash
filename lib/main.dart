@@ -1,5 +1,7 @@
-import 'package:dine_dash/user/reset_password_page.dart';
-import 'package:dine_dash/user/sign_in_sign_up_chooeser.dart';
+
+import 'package:dine_dash/user/home/home_page.dart';
+import 'package:dine_dash/user/notification/notification.dart';
+import 'package:dine_dash/user/root_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: SignInSignUpChooeser(),
+      home: RootPage(),
     );
   }
 }

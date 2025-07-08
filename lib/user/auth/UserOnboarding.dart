@@ -1,5 +1,5 @@
 import 'package:dine_dash/colors.dart';
-import 'package:dine_dash/user/create_user_account.dart';
+import 'package:dine_dash/user/auth/sign_in_sign_up_chooeser.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/commonWidgets.dart';
 import 'package:dine_dash/padding.dart';
@@ -44,7 +44,7 @@ class _UserOnboardingViewState extends State<UserOnboardingView> {
         curve: Curves.easeInOut,
       );
     } else {
-      navigateToPage(CreateUserAccount(),clearStack: true);
+      navigateToPage(UserSignInSignUpChooeser(),clearStack: true);
     }
   }
 

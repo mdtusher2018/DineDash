@@ -1,17 +1,18 @@
 import 'package:dine_dash/colors.dart';
 import 'package:dine_dash/commonWidgets.dart';
 import 'package:dine_dash/image_paths.dart';
+import 'package:dine_dash/user/auth/otp_verification_page.dart';
 import 'package:flutter/material.dart';
 
 
-class ForgotPasswordScreen extends StatefulWidget {
-  ForgotPasswordScreen({super.key});
+class UserForgotPasswordScreen extends StatefulWidget {
+  UserForgotPasswordScreen({super.key});
 
   @override
-  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+  State<UserForgotPasswordScreen> createState() => _UserForgotPasswordScreenState();
 }
 
-class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+class _UserForgotPasswordScreenState extends State<UserForgotPasswordScreen> {
   final TextEditingController emailController = TextEditingController();
 
   @override
@@ -76,13 +77,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   assetIconPath: ImagePaths.emailIcon,
                   keyboardType: TextInputType.emailAddress,
                 ),
-                   SizedBox(height: 20,),
-            
+
+              const SizedBox(height: 40),
                 commonButton(
                   "Get Verification Code",
                   textColor: Colors.white,
                   onTap: () {
-                 
+                 navigateToPage(UserOTPVerificationScreen());
                   },
                 ),
                 const SizedBox(height: 20),

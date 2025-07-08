@@ -3,14 +3,14 @@ import 'package:dine_dash/commonWidgets.dart';
 import 'package:dine_dash/padding.dart';
 import 'package:flutter/material.dart';
 
-class CreateAccount extends StatefulWidget {
-  const CreateAccount({super.key});
+class CreateDealerAccount extends StatefulWidget {
+  const CreateDealerAccount({super.key});
 
   @override
-  State<CreateAccount> createState() => _CreateAccountState();
+  State<CreateDealerAccount> createState() => _CreateDealerAccountState();
 }
 
-class _CreateAccountState extends State<CreateAccount> {
+class _CreateDealerAccountState extends State<CreateDealerAccount> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 

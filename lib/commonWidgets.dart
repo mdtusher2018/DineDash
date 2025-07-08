@@ -206,32 +206,7 @@ Widget commonButton(
   );
 }
 
-Widget commonSmallButton({
-  required String text,
-  Color textColor = AppColors.black,
-  double radious = 16.0,
-  double padding = 16.0,
-  ontap,
-  Color color = AppColors.yellow,
-}) {
-  return InkWell(
-    onTap: ontap,
-    child: Container(
-      padding: EdgeInsets.symmetric(horizontal: padding, vertical: 8),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(radious),
-      ),
-      child: commonText(
-        text,
-        size: 12.0,
-        color: textColor,
-        isBold: true,
-        textAlign: TextAlign.center,
-      ),
-    ),
-  );
-}
+
 
 Widget commonBorderButton(
   String title, {
@@ -252,14 +227,14 @@ Widget commonBorderButton(
 
       decoration: BoxDecoration(
         color:  Colors.transparent ,
-        
-        borderRadius: BorderRadius.circular(16),
+          border: Border.all(width: 4,color: color),
+        borderRadius: BorderRadius.circular(12),
       ),
       padding: const EdgeInsets.all(1.5), // space for the gradient border
       child: Container(
         decoration: BoxDecoration(
-          color: color, // inner background color
-          border: Border.all(width: 2,color: color),
+          color: Colors.transparent, // inner background color
+        
           borderRadius: BorderRadius.circular(14), // slightly smaller radius
         ),
         child: Center(
@@ -377,7 +352,7 @@ Widget commonRadioGroup(
                       value: val,
                       groupValue: selectedValue,
                       onChanged: (newVal) => onChanged(newVal!),
-                      activeColor: AppColors.yellow,
+                      activeColor: AppColors.primaryColor,
                     ),
                     Flexible(child: commonText(val, size: 14)),
                   ],
@@ -408,7 +383,7 @@ Widget commonRadioGroup(
                     value: val,
                     groupValue: selectedValue,
                     onChanged: (newVal) => onChanged(newVal!),
-                    activeColor: AppColors.yellow,
+                    activeColor: AppColors.primaryColor,
                   ),
                   Flexible(child: commonText(val, size: 14)),
                 ],
@@ -434,7 +409,7 @@ Widget commonRadioGroup(
                   value: val,
                   groupValue: selectedValue,
                   onChanged: (newVal) => onChanged(newVal!),
-                  activeColor: AppColors.yellow,
+                  activeColor: AppColors.primaryColor,
                 ),
                 Flexible(child: commonText(val, size: 14)),
               ],
@@ -529,7 +504,7 @@ Widget commonRadioGroupWithWidgetsOnly({
                 value: val,
                 groupValue: selectedValue,
                 onChanged: (newVal) => onChanged(newVal!),
-                activeColor: AppColors.yellow,
+                activeColor: AppColors.primaryColor,
               ),
               Expanded(child: widgets[index]),
             ],
@@ -589,7 +564,7 @@ Widget commonCheckbox({
       Checkbox(
         value: value,
         onChanged: onChanged,
-        activeColor: AppColors.yellow,
+        activeColor: AppColors.primaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         side: const BorderSide(color: Colors.black26),
       ),

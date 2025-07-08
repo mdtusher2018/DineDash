@@ -43,7 +43,7 @@ class _DealerOnboardingViewState extends State<DealerOnboardingView> {
         curve: Curves.easeInOut,
       );
     } else {
-      navigateToPage(CreateAccount(),clearStack: true);
+      navigateToPage(CreateDealerAccount(),clearStack: true);
     }
   }
 

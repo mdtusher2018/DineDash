@@ -1,17 +1,19 @@
 import 'package:dine_dash/colors.dart';
 import 'package:dine_dash/commonWidgets.dart';
 import 'package:dine_dash/image_paths.dart';
+import 'package:dine_dash/user/auth/create_user_account.dart';
+import 'package:dine_dash/user/auth/forget_password_page.dart';
 import 'package:flutter/material.dart';
 
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+class UserSignInScreen extends StatefulWidget {
+  const UserSignInScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<UserSignInScreen> createState() => _UserSignInScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _UserSignInScreenState extends State<UserSignInScreen> {
   
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -31,15 +33,17 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       appBar: commonAppBar(title: "Sign In to Your Account",backGroundColor: AppColors.primaryColor,textColor: AppColors.white),
       backgroundColor: AppColors.primaryColor,
-      bottomSheet: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20),
-        child: Center(
+      bottomSheet: SizedBox(
+        height: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20),
           child: SingleChildScrollView(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-   
-
+             
+          SizedBox(height: 20,),
                 // Email TextField
                 commonTextfieldWithTitle(
                   "Email",
@@ -49,14 +53,14 @@ class _SignInScreenState extends State<SignInScreen> {
                   keyboardType: TextInputType.emailAddress,
                 ),
                 const SizedBox(height: 15),
-
+          
                 // Password TextField with Visibility Toggle
                 commonTextfieldWithTitle(
                   "Password",
                   passwordController,
                   hintText: "Enter your password",
                   assetIconPath: ImagePaths.lockIcon,
-
+          
                   isPasswordVisible: isPasswordVisible,
                   issuffixIconVisible: true,
                   changePasswordVisibility: () {
@@ -85,7 +89,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                   
+                   navigateToPage(UserForgotPasswordScreen());
                       },
                       child: commonText(
                         "Forgot Password",
@@ -95,32 +99,32 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   ],
                 ),
-       
+                 
                 const SizedBox(height: 20),
                 // Sign In Button
                 commonButton(
                   "Sign In",
                   onTap: () {
-         
+                   
                   },
                 ),
-
-
+          
+          
                 const SizedBox(height: 20),
-
-
+          
+          
                 // Sign In with Google
                 commonBorderButton(
                   "Sign In With Google",
                   imagePath: ImagePaths.googleIcon,
-
+          
                   onTap: () {
                     // Handle Google Sign In
                   },
                 ),
-
+          
                 const SizedBox(height: 30),
-
+          
                 // Already have an account? Sign In
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -128,7 +132,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     commonText("Don't have an account? ", size: 12.0),
                     GestureDetector(
                       onTap: () {
-                        // navigateToPage(SignUpScreen());
+                        navigateToPage(CreateUserAccount());
                       },
                       child: commonText(
                         "Sign Up",

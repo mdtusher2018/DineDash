@@ -3,14 +3,14 @@ import 'package:dine_dash/commonWidgets.dart';
 import 'package:dine_dash/image_paths.dart';
 import 'package:flutter/material.dart';
 
-class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
+class UserResetPasswordScreen extends StatefulWidget {
+  const UserResetPasswordScreen({super.key});
 
   @override
-  State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
+  State<UserResetPasswordScreen> createState() => _UserResetPasswordScreenState();
 }
 
-class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
+class _UserResetPasswordScreenState extends State<UserResetPasswordScreen> {
   final TextEditingController newPasswordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();

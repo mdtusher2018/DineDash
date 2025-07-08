@@ -1,17 +1,18 @@
 import 'package:dine_dash/colors.dart';
 import 'package:dine_dash/commonWidgets.dart';
 import 'package:dine_dash/image_paths.dart';
+import 'package:dine_dash/user/auth/reset_password_page.dart';
 import 'package:flutter/material.dart';
 
-class EmailVerificationScreen extends StatefulWidget {
+class UserOTPVerificationScreen extends StatefulWidget {
 
-  EmailVerificationScreen({super.key});
+  UserOTPVerificationScreen({super.key});
 
   @override
-  State<EmailVerificationScreen> createState() => _EmailVerificationScreenState();
+  State<UserOTPVerificationScreen> createState() => _UserOTPVerificationScreenState();
 }
 
-class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
+class _UserOTPVerificationScreenState extends State<UserOTPVerificationScreen> {
   final List<TextEditingController> otpControllers = List.generate(
     4,
     (_) => TextEditingController(),
@@ -116,7 +117,7 @@ backgroundColor: AppColors.primaryColor,
             
                   textColor: Colors.white,
                   onTap: () {
-               
+               navigateToPage(UserResetPasswordScreen());
                   },
                 ),
                 const SizedBox(height: 30),

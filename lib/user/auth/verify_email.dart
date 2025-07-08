@@ -3,15 +3,15 @@ import 'package:dine_dash/commonWidgets.dart';
 import 'package:dine_dash/image_paths.dart';
 import 'package:flutter/material.dart';
 
-class OTPVerificationScreen extends StatefulWidget {
+class UserEmailVerificationScreen extends StatefulWidget {
 
-  OTPVerificationScreen({super.key});
+  UserEmailVerificationScreen({super.key});
 
   @override
-  State<OTPVerificationScreen> createState() => _OTPVerificationScreenState();
+  State<UserEmailVerificationScreen> createState() => _UserEmailVerificationScreenState();
 }
 
-class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
+class _UserEmailVerificationScreenState extends State<UserEmailVerificationScreen> {
   final List<TextEditingController> otpControllers = List.generate(
     4,
     (_) => TextEditingController(),
