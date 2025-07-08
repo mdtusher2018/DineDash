@@ -2,7 +2,7 @@ import 'package:dine_dash/colors.dart';
 import 'package:dine_dash/user/auth/sign_in_sign_up_chooeser.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/commonWidgets.dart';
-import 'package:dine_dash/padding.dart';
+
 
 class UserOnboardingView extends StatefulWidget {
   const UserOnboardingView({super.key});
@@ -69,7 +69,7 @@ class _UserOnboardingViewState extends State<UserOnboardingView> {
 
               /// Overlay content
               Container(
-                padding: AppPadding.all,
+                padding: EdgeInsets.all(16),
              
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,

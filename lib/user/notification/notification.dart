@@ -2,7 +2,6 @@
 
 import 'package:dine_dash/colors.dart';
 import 'package:dine_dash/commonWidgets.dart';
-import 'package:dine_dash/padding.dart';
 import 'package:flutter/material.dart';
 
 class UserNotificationsPage extends StatelessWidget {
@@ -62,7 +61,7 @@ List<String> notification=[];
 Widget _noNotificationsView() {
     return Center(
       child: Padding(
-        padding: AppPadding.horizontal,
+        padding: EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           
           mainAxisAlignment: MainAxisAlignment.center,
