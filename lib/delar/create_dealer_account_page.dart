@@ -1,6 +1,6 @@
 import 'package:dine_dash/colors.dart';
 import 'package:dine_dash/commonWidgets.dart';
-import 'package:dine_dash/padding.dart';
+
 import 'package:flutter/material.dart';
 
 class CreateDealerAccount extends StatefulWidget {
@@ -53,7 +53,7 @@ class _CreateDealerAccountState extends State<CreateDealerAccount> {
   centerTitle: true,
   ),
       bottomSheet: Padding(
-        padding: AppPadding.vertical,
+        padding: EdgeInsets.symmetric(horizontal: 16),
         child: PageView(
           controller: _pageController,
           onPageChanged: onPageChanged,
@@ -61,7 +61,7 @@ class _CreateDealerAccountState extends State<CreateDealerAccount> {
           children: [
             /// PAGE 1: Business Name
             Padding(
-              padding: AppPadding.all,
+              padding: EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -76,7 +76,7 @@ class _CreateDealerAccountState extends State<CreateDealerAccount> {
             /// PAGE 2: Personal Info
             SingleChildScrollView(
               child: Padding(
-                padding: AppPadding.all,
+                padding: EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -123,7 +123,7 @@ void showPendingDialog(BuildContext context) {
         backgroundColor: AppColors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Padding(
-          padding: AppPadding.all,
+          padding: EdgeInsets.all(16),
           child: Column(
             mainAxisSize: MainAxisSize.min, // Wrap content
             children: [

@@ -2,7 +2,6 @@ import 'package:dine_dash/colors.dart';
 import 'package:dine_dash/delar/create_dealer_account_page.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/commonWidgets.dart';
-import 'package:dine_dash/padding.dart';
 
 class DealerOnboardingView extends StatefulWidget {
   const DealerOnboardingView({super.key});
@@ -68,7 +67,7 @@ class _DealerOnboardingViewState extends State<DealerOnboardingView> {
 
               /// Overlay content
               Container(
-                padding: AppPadding.all,
+                padding: EdgeInsets.all(16),
              
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
