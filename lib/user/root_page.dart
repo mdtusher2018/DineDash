@@ -1,6 +1,7 @@
 import 'package:dine_dash/colors.dart';
 import 'package:dine_dash/commonWidgets.dart';
-import 'package:dine_dash/user/home/RestaurantDetailsPage.dart';
+import 'package:dine_dash/user/explore/explore.dart';
+import 'package:dine_dash/user/favorite/favorite.dart';
 import 'package:dine_dash/user/home/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -14,8 +15,8 @@ class _RootPageState extends State<RootPage> {
 
   final List<Widget> _pages = [
     UserHomeView(),
-    RestaurantDetailsPage(),
-    Center(child: commonText('Favorite Page')),
+    ExplorePage(),
+    UserFavoritePage(),
     Center(child: commonText('Details Page')),
     Center(child: commonText('Profile Page')),
   ];

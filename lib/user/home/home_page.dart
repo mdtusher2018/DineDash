@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dine_dash/colors.dart';
 import 'package:dine_dash/commonWidgets.dart';
 import 'package:dine_dash/user/common_design.dart';
+import 'package:dine_dash/user/home/RestaurantDetailsPage.dart';
 import 'package:flutter/material.dart';
 
 class UserHomeView extends StatelessWidget {
@@ -113,15 +114,20 @@ class UserHomeView extends StatelessWidget {
         padding: const EdgeInsets.only(right: 12),
         child: SizedBox(
           width: 320,
-          child: BusinessCard(
-            imageUrl: "https://tse4.mm.bing.net/th/id/OIP.r3wgjJHOPaQo1GnGCkMnwgHaE8?rs=1&pid=ImgDetMain&o=7&rm=3",
-            title: "The Rio Lounge",
-            rating: 4.0,
-            reviewCount: 120,
-            priceRange: "€50–5000",
-            openTime: "9 AM - 10 PM",
-            location: "Gulshan 2, Dhaka.",
-            tags: ["Free cold drinks", "2 for 1"],
+          child: InkWell(
+            onTap: () {
+              navigateToPage(RestaurantDetailsPage());
+            },
+            child: BusinessCard(
+              imageUrl: "https://tse4.mm.bing.net/th/id/OIP.r3wgjJHOPaQo1GnGCkMnwgHaE8?rs=1&pid=ImgDetMain&o=7&rm=3",
+              title: "The Rio Lounge",
+              rating: 4.0,
+              reviewCount: 120,
+              priceRange: "€50–5000",
+              openTime: "9 AM - 10 PM",
+              location: "Gulshan 2, Dhaka.",
+              tags: ["Free cold drinks", "2 for 1"],
+            ),
           ),
         ),
       );
@@ -205,10 +211,10 @@ class _PromotionBannerState extends State<PromotionBanner> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
-                      Text("ICE CREAM DAY", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white)),
-                      Text("GET YOUR SWEET\nICE CREAM", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
-                      Text("40% OFF", style: TextStyle(fontSize: 14, color: Colors.white)),
+                    children:  [
+                      commonText("ICE CREAM DAY", size: 14, fontWeight: FontWeight.bold, color: Colors.white),
+                      commonText("GET YOUR SWEET\nICE CREAM",  size: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                      commonText("40% OFF",  size: 14, color: Colors.white),
                     ],
                   ),
                 ),

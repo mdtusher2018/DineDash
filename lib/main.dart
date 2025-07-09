@@ -1,8 +1,8 @@
 
-import 'package:dine_dash/commonWidgets.dart';
-import 'package:dine_dash/user/home/home_page.dart';
-import 'package:dine_dash/user/notification/notification.dart';
-import 'package:dine_dash/user/root_page.dart';
+import 'package:dine_dash/user/home/RestaurantDetailsPage.dart';
+import 'package:dine_dash/user/home/deal_blocked.dart';
+import 'package:dine_dash/user/profile/contact_us.dart';
+import 'package:dine_dash/user/profile/edit_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,31 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      // home: RootPage(),
-      home: Scaffold(
-        body: Container(
-        child: Column(
-          children: [
-       
-Row(
-  children: [
-    commonText("4.0", size: 18, isBold: true),
-    SizedBox(width: 8),
-    Row(
-      children: List.generate(5, (index) {
-        return Icon(
-          index < 4 ? Icons.star : Icons.star_border,
-          color: Colors.amber,
-          size: 20,
-        );
-      }),
-    ),
-  ],
-)
-          ],
-        ),
-      ),
-      )
+      home: DealBlockedPage(),
     );
   }
 }

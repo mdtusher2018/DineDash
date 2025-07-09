@@ -162,7 +162,7 @@ Widget commonButton(
   VoidCallback? onTap,
   TextAlign textalign = TextAlign.left,
   bool isLoading = false,
-  bool haveNextIcon = false,
+  bool haveNextIcon = false,double boarderRadious=16
 }) {
   return GestureDetector(
     onTap: onTap,
@@ -170,7 +170,7 @@ Widget commonButton(
       height: height,
       width: width,
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        borderRadius:  BorderRadius.all(Radius.circular(boarderRadious)),
         color:  color,
         
       ),
