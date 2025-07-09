@@ -5,6 +5,8 @@ import 'package:dine_dash/user/notification/notification.dart';
 import 'package:dine_dash/user/root_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'Deals_screen/DealsPage/deals_page.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -22,30 +24,33 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       // home: RootPage(),
-      home: Scaffold(
-        body: Container(
-        child: Column(
-          children: [
-       
-Row(
-  children: [
-    commonText("4.0", size: 18, isBold: true),
-    SizedBox(width: 8),
-    Row(
-      children: List.generate(5, (index) {
-        return Icon(
-          index < 4 ? Icons.star : Icons.star_border,
-          color: Colors.amber,
-          size: 20,
-        );
-      }),
-    ),
-  ],
-)
-          ],
-        ),
-      ),
-      )
+      debugShowCheckedModeBanner: false,
+      home: DealsPage(),
+
+//       home: Scaffold(
+//         body: Container(
+//         child: Column(
+//           children: [
+//
+// Row(
+//   children: [
+//     commonText("4.0", size: 18, isBold: true),
+//     SizedBox(width: 8),
+//     Row(
+//       children: List.generate(5, (index) {
+//         return Icon(
+//           index < 4 ? Icons.star : Icons.star_border,
+//           color: Colors.amber,
+//           size: 20,
+//         );
+//       }),
+//     ),
+//   ],
+// )
+//           ],
+//         ),
+//       ),
+//       )
     );
   }
 }
