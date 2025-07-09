@@ -1,4 +1,5 @@
 
+import 'package:dine_dash/commonWidgets.dart';
 import 'package:dine_dash/user/home/home_page.dart';
 import 'package:dine_dash/user/notification/notification.dart';
 import 'package:dine_dash/user/root_page.dart';
@@ -20,7 +21,31 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: RootPage(),
+      // home: RootPage(),
+      home: Scaffold(
+        body: Container(
+        child: Column(
+          children: [
+       
+Row(
+  children: [
+    commonText("4.0", size: 18, isBold: true),
+    SizedBox(width: 8),
+    Row(
+      children: List.generate(5, (index) {
+        return Icon(
+          index < 4 ? Icons.star : Icons.star_border,
+          color: Colors.amber,
+          size: 20,
+        );
+      }),
+    ),
+  ],
+)
+          ],
+        ),
+      ),
+      )
     );
   }
 }
