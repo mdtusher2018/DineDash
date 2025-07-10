@@ -1,10 +1,11 @@
 
-import 'package:dine_dash/Deals_screen/DealsPage/DealsDetails/deals_details.dart';
 import 'package:dine_dash/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+
+import 'deals_details.dart';
 
 class DealsPage extends StatelessWidget {
   const DealsPage({super.key});

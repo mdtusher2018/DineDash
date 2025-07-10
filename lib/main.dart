@@ -1,11 +1,17 @@
 
+import 'package:dine_dash/Razu/DealerHomePage/dealer_homepage.dart';
 import 'package:dine_dash/commonWidgets.dart';
 import 'package:dine_dash/user/home/home_page.dart';
 import 'package:dine_dash/user/notification/notification.dart';
 import 'package:dine_dash/user/root_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'Deals_screen/DealsPage/deals_page.dart';
+
+import 'Razu/DealerBusinessPage/dealer_business_page.dart';
+import 'Razu/DealerProfile/dealer_profile.dart';
+import 'Razu/DealerReview/dealer_review.dart';
+import 'Razu/DealerReview/widget/test.dart';
+import 'Razu/UserProfileScreen/profile_screen.dart';
 
 
 void main() {
@@ -25,7 +31,7 @@ class MyApp extends StatelessWidget {
       ),
       // home: RootPage(),
       debugShowCheckedModeBanner: false,
-      home: DealsPage(),
+      home: DealerReview(),
 
 //       home: Scaffold(
 //         body: Container(

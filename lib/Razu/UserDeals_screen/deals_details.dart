@@ -1,6 +1,6 @@
 import 'dart:ffi';
 
-import 'package:dine_dash/Deals_screen/DealsPage/DealsDetails/CongratulatedScreen/ReminderScreen/reminder_screen.dart';
+import 'package:dine_dash/Razu/UserDeals_screen/reminder_screen.dart';
 import 'package:dine_dash/commonWidgets.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +8,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
-import '../../../controller/deal_details_controller/deal_details_controller.dart';
+import '../../controller/deal_details_controller/deal_details_controller.dart';
+
 
 class DealsDetails extends StatelessWidget {
   const DealsDetails({super.key});
