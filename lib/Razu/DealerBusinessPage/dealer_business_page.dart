@@ -68,7 +68,7 @@ class DealerBusinessPage extends StatelessWidget {
                               children: [
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  spacing:50,
+                                  spacing:40,
                                   children: [
                                     commonText("Chef's Table",size: 20,fontWeight: FontWeight.w600),
                                     Row(
