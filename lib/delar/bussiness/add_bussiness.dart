@@ -1,5 +1,6 @@
 import 'package:dine_dash/colors.dart';
 import 'package:dine_dash/commonWidgets.dart';
+import 'package:dine_dash/delar/bussiness/add_new_bussiness.dart';
 import 'package:flutter/material.dart';
 
 class AddBusinessScreenFrist extends StatefulWidget {
@@ -140,11 +141,14 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: commonAppBar(title: "Add Business"),
+      backgroundColor: AppColors.white,
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            commonText("Basic Information",size: 16,isBold: true),
+            SizedBox(height: 8,),
             // Business Name
             commonTextfieldWithTitle(
               "Business Name*",
@@ -174,7 +178,8 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
             ),
             const SizedBox(height: 16),
 
-            // Location - ZIP
+             commonText("Location",size: 16,isBold: true),
+            SizedBox(height: 8,),
             commonTextfieldWithTitle(
               "ZIP/Postal Code*",
               zipController,
@@ -190,7 +195,8 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
             ),
             const SizedBox(height: 16),
 
-            // Phone Number
+             commonText("Contact",size: 16,isBold: true),
+            SizedBox(height: 8,),
             commonTextfieldWithTitle(
               "Phone Number*",
               phoneController,
@@ -219,8 +225,7 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
             commonButton(
               "Next",
               onTap: () {
-                // Handle submission
-                print("Business Name: ${businessNameController.text}");
+                navigateToPage(AddBusiness2ndScreen());
               },
             ),
             const SizedBox(height: 32),

@@ -1,3 +1,4 @@
+import 'package:dine_dash/colors.dart';
 import 'package:dine_dash/commonWidgets.dart';
 import 'package:dine_dash/delar/DealerOnboarding.dart';
 import 'package:dine_dash/user/profile/about_us.dart';
@@ -156,25 +157,33 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 62),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(color: Colors.grey.shade300),
-                  top: BorderSide(color: Colors.grey.shade300),
-                ),
-              ),
-              child: Row(
-                spacing: 10,
-                children: [
-                  Image.asset(
-                    "assets/images/logout.png",
-                    height: 35,
-                    width: 35,
-                    fit: BoxFit.fill,
+            GestureDetector(
+
+onTap: () {
+  showDeleteAccountDialog(context,(){
+
+  });
+},
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(color: Colors.grey.shade300),
+                    top: BorderSide(color: Colors.grey.shade300),
                   ),
-                  commonText("Log Out", size: 16, fontWeight: FontWeight.w600),
-                ],
+                ),
+                child: Row(
+                  spacing: 10,
+                  children: [
+                    Image.asset(
+                      "assets/images/logout.png",
+                      height: 35,
+                      width: 35,
+                      fit: BoxFit.fill,
+                    ),
+                    commonText("Log Out", size: 16, fontWeight: FontWeight.w600),
+                  ],
+                ),
               ),
             ),
           ],
@@ -182,6 +191,62 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
+
+    Future<void> showDeleteAccountDialog(
+    BuildContext context,
+    VoidCallback onDelete,
+  ) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: commonText(
+            "Do you want to log out your account?",
+            size: 18,
+            fontWeight: FontWeight.w500,
+            textAlign: TextAlign.center,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          actions: [
+            Row(
+              children: [
+                Expanded(
+                  child: commonButton(
+                    "Cancel",
+                    color: Color(0xFFDDDDDD),
+                    textColor: Colors.black,
+                    height: 40,
+                    width: 100,boarderRadious: 10,
+                    onTap: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                    },
+                  ),
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: commonButton(
+                    "Yes, Log Out",
+                    color: AppColors.primaryColor,
+                    textColor: Colors.white,
+                    height: 40,
+                    boarderRadious: 10,
+                    width: 100,
+                    onTap: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                      // onDelete(); // Perform the delete action
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }
 
 class buildRowCon extends StatelessWidget {
@@ -224,6 +289,7 @@ class buildRowCon extends StatelessWidget {
       ),
     );
   }
+  
 }
 
 class buildcontainer extends StatelessWidget {
@@ -265,4 +331,11 @@ class buildcontainer extends StatelessWidget {
       ),
     );
   }
+
+
+
+
+
+
+
 }

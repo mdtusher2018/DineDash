@@ -1,3 +1,4 @@
+import 'package:dine_dash/delar/bussiness/add_bussiness.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -16,7 +17,9 @@ class DealerBusinessPage extends StatelessWidget {
           children: [
             SizedBox(height: 64,),
             GestureDetector(
-              onTap:(){},
+              onTap:(){
+                navigateToPage(AddBusinessScreenFrist());
+              },
               child: Container(
                 height: 46,
                 width: double.infinity,

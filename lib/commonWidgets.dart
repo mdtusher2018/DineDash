@@ -616,7 +616,7 @@ AppBar commonAppBar({
   bool hideBackButton = false,
 }) {
   return AppBar(
-    backgroundColor: backGroundColor,
+    backgroundColor: backGroundColor,surfaceTintColor: Colors.transparent,
     leading:
         (hideBackButton)
             ? null

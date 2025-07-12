@@ -10,13 +10,16 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white,
       appBar: AppBar(
+        backgroundColor: AppColors.white,
         elevation: 0,
         title: commonText("General Settings", size: 18, isBold: true),
         centerTitle: true,
       ),
 
-      bottomSheet: SizedBox(
+      bottomSheet: Container(
+        color: AppColors.white,
         height: double.infinity,
         child: Padding(
           padding: const EdgeInsets.only(top: 16.0),

@@ -3,12 +3,12 @@ import 'package:dine_dash/commonWidgets.dart';
 import 'package:flutter/material.dart';
 // Assuming all common widgets are in this file
 
-class AddBusinessScreen extends StatefulWidget {
+class AddBusiness2ndScreen extends StatefulWidget {
   @override
-  _AddBusinessScreenState createState() => _AddBusinessScreenState();
+  _AddBusiness2ndScreenState createState() => _AddBusiness2ndScreenState();
 }
 
-class _AddBusinessScreenState extends State<AddBusinessScreen> {
+class _AddBusiness2ndScreenState extends State<AddBusiness2ndScreen> {
   // Controllers
   final TextEditingController itemNameController = TextEditingController();
   final TextEditingController itemDescriptionController =

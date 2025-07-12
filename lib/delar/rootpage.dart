@@ -4,6 +4,7 @@ import 'package:dine_dash/Razu/DealerProfile/dealer_profile.dart';
 import 'package:dine_dash/Razu/DealerReview/dealer_review.dart';
 import 'package:dine_dash/colors.dart';
 import 'package:dine_dash/delar/BusinessDealsPage.dart';
+import 'package:dine_dash/delar/deals/dealer_deals.dart';
 import 'package:flutter/material.dart';
 
 class DealerRootPage extends StatefulWidget {
@@ -16,7 +17,7 @@ class _DealerRootPageState extends State<DealerRootPage> {
 
   final List<Widget> _pages = [
     DealerHomepage(),
-    BusinessDealsPage(),
+    DealerDealsPage(),
     DealerBusinessPage(),
     DealerReview(),
     DealerProfile(),

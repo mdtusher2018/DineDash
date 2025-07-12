@@ -26,6 +26,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+         backgroundColor: AppColors.white,
       appBar: commonAppBar(title: "Add Deal"),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -84,13 +85,13 @@ class _AddDealScreenState extends State<AddDealScreen> {
                         Icon(
                           Icons.add,
                           size: 18,
-                          color: AppColors.primaryColor,
+                          
                         ),
                         SizedBox(width: 4),
                         commonText(
                           "Add",
                           size: 14,
-                          color: AppColors.primaryColor,
+                          
                         ),
                       ],
                     ),
@@ -310,7 +311,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                 // Handle deal submission
               },
               haveNextIcon: false,
-            ),
+            ),SizedBox(height: 24,)
           ],
         ),
       ),
