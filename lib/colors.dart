@@ -10,4 +10,7 @@ class AppColors {
   static const Color lightBlue = Color(0xFFB7CDF5);
 
   static const Color primaryColor = Color(0xFF185DDE);
+
+  static const Color red = Color(0xFFCE0000);
+
 }

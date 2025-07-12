@@ -20,15 +20,15 @@ class _DealerReviewState extends State<DealerReview> {
     final TextEditingController _businessController = TextEditingController();
     final TextEditingController _ratingController = TextEditingController();
     final TextEditingController _sortByController = TextEditingController();
-    final TextEditingController ratingController = TextEditingController();
+    // final TextEditingController ratingController = TextEditingController();
     final List<String> _items = ['Business A', 'Business B', 'Business C'];
     String _selectedItem = '';
-    @override
-    void dispose() {
-      _ratingController.dispose();
-      super.dispose();
-    }
-    int index=5;
+    // @override
+    // void dispose() {
+    //   _ratingController.dispose();
+    //   super.dispose();
+    // }
+    // int index=5;
     List ratting=[
       { "ratting": "5.0"},
       { "ratting": "4.0"},

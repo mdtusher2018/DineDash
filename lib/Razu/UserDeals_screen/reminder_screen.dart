@@ -14,10 +14,10 @@ class ReminderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DealDetailsController controller = Get.put(DealDetailsController());
-    TextEditingController commentController=TextEditingController();
+    // TextEditingController commentController=TextEditingController();
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(backgroundColor: Colors.white,),
+      appBar: AppBar(backgroundColor: Colors.white),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SingleChildScrollView(
@@ -122,9 +122,8 @@ class ReminderScreen extends StatelessWidget {
 
             ],
           ),
-        ),
       ),
-
+      )
     );
   }
 }
