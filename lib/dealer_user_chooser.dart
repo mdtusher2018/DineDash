@@ -1,19 +1,18 @@
 import 'package:dine_dash/colors.dart';
 import 'package:dine_dash/commonWidgets.dart';
+import 'package:dine_dash/delar/rootpage.dart';
 import 'package:dine_dash/image_paths.dart';
-import 'package:dine_dash/user/auth/create_user_account.dart';
-import 'package:dine_dash/user/auth/sign_in_page.dart';
+import 'package:dine_dash/user/auth/UserOnboarding.dart';
 import 'package:flutter/material.dart';
 
-class UserSignInSignUpChooeser extends StatefulWidget {
-  const UserSignInSignUpChooeser({super.key});
+class DealerUserChooeser extends StatefulWidget {
+  const DealerUserChooeser({super.key});
 
   @override
-  State<UserSignInSignUpChooeser> createState() =>
-      _UserSignInSignUpChooeserState();
+  State<DealerUserChooeser> createState() => _DealerUserChooeserState();
 }
 
-class _UserSignInSignUpChooeserState extends State<UserSignInSignUpChooeser> {
+class _DealerUserChooeserState extends State<DealerUserChooeser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,24 +42,24 @@ class _UserSignInSignUpChooeserState extends State<UserSignInSignUpChooeser> {
                 ),
                 SizedBox(height: 20),
                 commonText(
-                  "Now continue after register in \"DEALR\".",
+                  "Are You Dealer or User?",
                   size: 14,
                   color: AppColors.white,
                 ),
                 SizedBox(height: 20),
                 commonButton(
-                  "Sign In",
+                  "User",
                   onTap: () {
-                    navigateToPage(UserSignInScreen());
+                    navigateToPage(UserOnboardingView());
                   },
                 ),
 
                 SizedBox(height: 20),
                 commonBorderButton(
-                  "Sign Up",
+                  "Dealer",
                   textColor: AppColors.white,
                   onTap: () {
-                    navigateToPage(CreateUserAccount());
+                    navigateToPage(DealerRootPage());
                   },
                 ),
                 SizedBox(height: 40),

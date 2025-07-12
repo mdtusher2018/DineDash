@@ -398,7 +398,7 @@ class _BusinessDealsPageState extends State<BusinessDealsPage>
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Image.asset(
-                            "assets/images/time.png",
+                            "assets/images/time222.png",
                             height: 20,
                           ),
                         ),

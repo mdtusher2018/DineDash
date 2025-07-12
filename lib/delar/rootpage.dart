@@ -1,25 +1,25 @@
-import 'package:dine_dash/Razu/UserDeals_screen/deals_page.dart';
-import 'package:dine_dash/Razu/UserProfileScreen/profile_screen.dart';
+import 'package:dine_dash/Razu/DealerBusinessPage/dealer_business_page.dart';
+import 'package:dine_dash/Razu/DealerHomePage/dealer_homepage.dart';
+import 'package:dine_dash/Razu/DealerProfile/dealer_profile.dart';
+import 'package:dine_dash/Razu/DealerReview/dealer_review.dart';
 import 'package:dine_dash/colors.dart';
-import 'package:dine_dash/user/explore/explore.dart';
-import 'package:dine_dash/user/favorite/favorite.dart';
-import 'package:dine_dash/user/home/home_page.dart';
+import 'package:dine_dash/delar/BusinessDealsPage.dart';
 import 'package:flutter/material.dart';
 
-class RootPage extends StatefulWidget {
+class DealerRootPage extends StatefulWidget {
   @override
-  _RootPageState createState() => _RootPageState();
+  _DealerRootPageState createState() => _DealerRootPageState();
 }
 
-class _RootPageState extends State<RootPage> {
+class _DealerRootPageState extends State<DealerRootPage> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    UserHomeView(),
-    ExplorePage(),
-    UserFavoritePage(),
-    DealsPage(),
-    ProfileScreen(),
+    DealerHomepage(),
+    BusinessDealsPage(),
+    DealerBusinessPage(),
+    DealerReview(),
+    DealerProfile(),
   ];
 
   void _onItemTapped(int index) {
@@ -46,19 +46,21 @@ class _RootPageState extends State<RootPage> {
 
   @override
   Widget build(BuildContext context) {
-    final labels = ["Home", "Explore", "Favorite", "Details", "Profile"];
+    final labels = ["DeshBoard", "Deals", "Bussiness", "Review", "Profile"];
     final selectedIcons = [
-      "assets/images/bottom nav/home_s.png",
-      "assets/images/bottom nav/explore_s.png",
-      "assets/images/bottom nav/fav_s.png",
+      "assets/images/bottom nav/d_d_s.png",
       "assets/images/bottom nav/details_s.png",
+      "assets/images/bottom nav/b_d_s.png",
+      "assets/images/bottom nav/r_d_s.png",
+
       "assets/images/bottom nav/profile_s.png",
     ];
     final unselectedIcons = [
-      "assets/images/bottom nav/home_u.png",
-      "assets/images/bottom nav/explore_u.png",
-      "assets/images/bottom nav/fav_u.png",
+      "assets/images/bottom nav/d_d_u.png",
       "assets/images/bottom nav/details_u.png",
+      "assets/images/bottom nav/b_d_u.png",
+      "assets/images/bottom nav/r_d_u.png",
+
       "assets/images/bottom nav/profile_u.png",
     ];
 
