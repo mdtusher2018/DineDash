@@ -4,6 +4,7 @@ import 'package:dine_dash/colors.dart';
 import 'package:dine_dash/commonWidgets.dart';
 import 'package:dine_dash/user/common_design.dart';
 import 'package:dine_dash/user/home/RestaurantDetailsPage.dart';
+import 'package:dine_dash/user/notification/notification.dart';
 import 'package:flutter/material.dart';
 
 class UserHomeView extends StatelessWidget {
@@ -28,14 +29,19 @@ class UserHomeView extends StatelessWidget {
                     Icon(Icons.arrow_drop_down,color: AppColors.primaryColor,),
                   ],
                 ),
-                Material(
-                  borderRadius: BorderRadius.circular(100),
-                  elevation: 2,
-                  child: Padding(
-                    padding: EdgeInsets.all(8),
-                    
-                    child: Icon(Icons.notifications_active, color: Colors.orange),
-                  )),
+                GestureDetector(
+                  onTap: () {
+                    navigateToPage(UserNotificationsPage());
+                  },
+                  child: Material(
+                    borderRadius: BorderRadius.circular(100),
+                    elevation: 2,
+                    child: Padding(
+                      padding: EdgeInsets.all(8),
+                      
+                      child: Icon(Icons.notifications_active, color: Colors.orange),
+                    )),
+                ),
               ],
             ),
 

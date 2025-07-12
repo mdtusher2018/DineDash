@@ -97,7 +97,7 @@ class DealerProfile extends StatelessWidget {
                     navigateToPage(AboutUsPage());
                   },),
                   buildRowCon(image: 'assets/images/become.png', title: 'Back to User', onTap: () {
-                    navigateToPage(RootPage(),clearStack: true);
+                    navigateToPage(UserRootPage(),clearStack: true);
                   },),
                 ],
               ),

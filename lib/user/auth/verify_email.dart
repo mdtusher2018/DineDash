@@ -1,6 +1,7 @@
 import 'package:dine_dash/colors.dart';
 import 'package:dine_dash/commonWidgets.dart';
 import 'package:dine_dash/image_paths.dart';
+import 'package:dine_dash/user/root_page.dart';
 import 'package:flutter/material.dart';
 
 class UserEmailVerificationScreen extends StatefulWidget {
@@ -116,7 +117,7 @@ backgroundColor: AppColors.primaryColor,
             
                   textColor: Colors.white,
                   onTap: () {
-               
+               navigateToPage(UserRootPage());
                   },
                 ),
                 const SizedBox(height: 30),

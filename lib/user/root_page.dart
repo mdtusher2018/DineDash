@@ -6,12 +6,12 @@ import 'package:dine_dash/user/favorite/favorite.dart';
 import 'package:dine_dash/user/home/home_page.dart';
 import 'package:flutter/material.dart';
 
-class RootPage extends StatefulWidget {
+class UserRootPage extends StatefulWidget {
   @override
-  _RootPageState createState() => _RootPageState();
+  _UserRootPageState createState() => _UserRootPageState();
 }
 
-class _RootPageState extends State<RootPage> {
+class _UserRootPageState extends State<UserRootPage> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [

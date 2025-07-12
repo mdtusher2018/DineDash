@@ -107,7 +107,7 @@ class _UserSignInScreenState extends State<UserSignInScreen> {
                 commonButton(
                   "Sign In",
                   onTap: () {
-                    navigateToPage(RootPage());
+                    navigateToPage(UserRootPage());
                   },
                 ),
 

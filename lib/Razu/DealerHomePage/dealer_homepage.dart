@@ -1,6 +1,7 @@
 import 'package:dine_dash/commonWidgets.dart';
 import 'package:dine_dash/delar/BusinessDealsPage.dart';
 import 'package:dine_dash/delar/create_deal.dart';
+import 'package:dine_dash/delar/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -21,7 +22,9 @@ class DealerHomepage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   commonText("Hi Dealer!!",size: 18,fontWeight: FontWeight.w700),
-                  IconButton(onPressed: (){}, icon: Icon(Icons.notifications_active,color: Colors.orange,)),
+                  IconButton(onPressed: (){
+                    navigateToPage(DealerNotificationsPage());
+                  }, icon: Icon(Icons.notifications_active,color: Colors.orange,)),
                 ],
               ),
               SizedBox(height: 15,),
