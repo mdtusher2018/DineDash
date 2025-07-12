@@ -42,7 +42,7 @@ class DealerBusinessPage extends StatelessWidget {
                   return  Expanded(
                     child: Container(
                       margin: EdgeInsets.symmetric(vertical: 10),
-                      padding: EdgeInsets.symmetric(horizontal: 5,vertical: 10),
+                      padding: EdgeInsets.symmetric(vertical: 10),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           border: Border.all(color: Colors.grey.shade300)
@@ -68,9 +68,9 @@ class DealerBusinessPage extends StatelessWidget {
                               children: [
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  spacing:40,
+                                  spacing:20,
                                   children: [
-                                    commonText("Chef's Table",size: 20,fontWeight: FontWeight.w600),
+                                    commonText("Chef's Table",size: 18,fontWeight: FontWeight.w600),
                                     Row(
                                       spacing: 10,
                                       children: [
@@ -85,7 +85,7 @@ class DealerBusinessPage extends StatelessWidget {
                                 Row(
                                   children: [
                                     Icon(Icons.location_on_rounded,size: 25,color: Colors.blueAccent,),
-                                    commonText("Downtown, 123 Main St",size:18,fontWeight: FontWeight.w400),
+                                    commonText("Downtown, 123 Main St",size:14,fontWeight: FontWeight.w400),
                                   ],
                                 ),
                                 Row(
@@ -101,7 +101,7 @@ class DealerBusinessPage extends StatelessWidget {
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          commonText("2 deals",size: 14,fontWeight: FontWeight.w400),
+                                          commonText("2 deals",size: 12,fontWeight: FontWeight.w400),
                                         ],
                                       ),
                                     ),
@@ -115,10 +115,10 @@ class DealerBusinessPage extends StatelessWidget {
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          commonText("4.8",size: 14,fontWeight: FontWeight.w400),
+                                          commonText("4.8",size: 12,fontWeight: FontWeight.w400),
                                           RatingBar.builder(
                                             initialRating: 3,
-                                            itemSize: 15,
+                                            itemSize: 12,
                                             minRating: 1,
                                             direction: Axis.horizontal,
                                             allowHalfRating: true,
@@ -132,13 +132,13 @@ class DealerBusinessPage extends StatelessWidget {
                                               print(rating);
                                             },
                                           ),
-                                          commonText("(120)",size: 14,fontWeight: FontWeight.w400),
+                                          commonText("(120)",size: 12,fontWeight: FontWeight.w400),
                                         ],
                                       ),
                                     )
                                   ],
                                 ),
-                                commonText("56 deals redeemed this month",size: 16,fontWeight: FontWeight.w400),
+                                commonText("56 deals redeemed this month",size: 14,fontWeight: FontWeight.w400),
                               ],
                             )
                           ],
