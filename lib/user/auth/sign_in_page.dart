@@ -3,8 +3,8 @@ import 'package:dine_dash/commonWidgets.dart';
 import 'package:dine_dash/image_paths.dart';
 import 'package:dine_dash/user/auth/create_user_account.dart';
 import 'package:dine_dash/user/auth/forget_password_page.dart';
+import 'package:dine_dash/user/root_page.dart';
 import 'package:flutter/material.dart';
-
 
 class UserSignInScreen extends StatefulWidget {
   const UserSignInScreen({super.key});
@@ -14,7 +14,6 @@ class UserSignInScreen extends StatefulWidget {
 }
 
 class _UserSignInScreenState extends State<UserSignInScreen> {
-  
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool rememberMe = false;
@@ -31,7 +30,11 @@ class _UserSignInScreenState extends State<UserSignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Sign In to Your Account",backGroundColor: AppColors.primaryColor,textColor: AppColors.white),
+      appBar: commonAppBar(
+        title: "Sign In to Your Account",
+        backGroundColor: AppColors.primaryColor,
+        textColor: AppColors.white,
+      ),
       backgroundColor: AppColors.primaryColor,
       bottomSheet: SizedBox(
         height: double.infinity,
@@ -42,8 +45,7 @@ class _UserSignInScreenState extends State<UserSignInScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-             
-          SizedBox(height: 20,),
+                SizedBox(height: 20),
                 // Email TextField
                 commonTextfieldWithTitle(
                   "Email",
@@ -53,14 +55,14 @@ class _UserSignInScreenState extends State<UserSignInScreen> {
                   keyboardType: TextInputType.emailAddress,
                 ),
                 const SizedBox(height: 15),
-          
+
                 // Password TextField with Visibility Toggle
                 commonTextfieldWithTitle(
                   "Password",
                   passwordController,
                   hintText: "Enter your password",
                   assetIconPath: ImagePaths.lockIcon,
-          
+
                   isPasswordVisible: isPasswordVisible,
                   issuffixIconVisible: true,
                   changePasswordVisibility: () {
@@ -69,7 +71,7 @@ class _UserSignInScreenState extends State<UserSignInScreen> {
                     });
                   },
                 ),
-           
+
                 // Remember Me and Forgot Password Row
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -89,7 +91,7 @@ class _UserSignInScreenState extends State<UserSignInScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                   navigateToPage(UserForgotPasswordScreen());
+                        navigateToPage(UserForgotPasswordScreen());
                       },
                       child: commonText(
                         "Forgot Password",
@@ -99,32 +101,30 @@ class _UserSignInScreenState extends State<UserSignInScreen> {
                     ),
                   ],
                 ),
-                 
+
                 const SizedBox(height: 20),
                 // Sign In Button
                 commonButton(
                   "Sign In",
                   onTap: () {
-                   
+                    navigateToPage(RootPage());
                   },
                 ),
-          
-          
+
                 const SizedBox(height: 20),
-          
-          
+
                 // Sign In with Google
                 commonBorderButton(
                   "Sign In With Google",
                   imagePath: ImagePaths.googleIcon,
-          
+
                   onTap: () {
                     // Handle Google Sign In
                   },
                 ),
-          
+
                 const SizedBox(height: 30),
-          
+
                 // Already have an account? Sign In
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -176,7 +176,7 @@ class PlayerSelector extends StatelessWidget {
             height: 24,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-            
+
               border: Border.all(
                 color: isSelected ? Colors.transparent : Colors.grey,
                 width: 2,

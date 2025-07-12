@@ -1,7 +1,8 @@
+// ignore_for_file: file_names
+
 import 'package:dine_dash/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 
 Widget commonText(
   String text, {
@@ -111,21 +112,16 @@ Widget commonTextfieldWithTitle(
                 prefixIcon:
                     assetIconPath != null
                         ? Padding(
-  padding: const EdgeInsets.all(10.0),
-  child: Container(
-   
-    height: 16,
-    width: 16,
-    child: FittedBox(
-      fit: BoxFit.scaleDown,
-      child: Image.asset(
-        assetIconPath,
-  scale: 2,
-      ),
-    ),
-  ),
-)
-
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            height: 16,
+                            width: 16,
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Image.asset(assetIconPath, scale: 2),
+                            ),
+                          ),
+                        )
                         : null,
               ),
             ),
@@ -154,7 +150,7 @@ void navigateToPage(
 
 Widget commonButton(
   String title, {
-  Color? color=AppColors.primaryColor,
+  Color? color = AppColors.primaryColor,
   Color textColor = Colors.white,
   double textSize = 18,
   double width = double.infinity,
@@ -162,7 +158,8 @@ Widget commonButton(
   VoidCallback? onTap,
   TextAlign textalign = TextAlign.left,
   bool isLoading = false,
-  bool haveNextIcon = false,double boarderRadious=16
+  bool haveNextIcon = false,
+  double boarderRadious = 16,
 }) {
   return GestureDetector(
     onTap: onTap,
@@ -170,9 +167,8 @@ Widget commonButton(
       height: height,
       width: width,
       decoration: BoxDecoration(
-        borderRadius:  BorderRadius.all(Radius.circular(boarderRadious)),
-        color:  color,
-        
+        borderRadius: BorderRadius.all(Radius.circular(boarderRadious)),
+        color: color,
       ),
       child: Center(
         child: Padding(
@@ -206,14 +202,12 @@ Widget commonButton(
   );
 }
 
-
-
 Widget commonBorderButton(
   String title, {
   double width = double.infinity,
   double height = 50,
   VoidCallback? onTap,
-  Color color=AppColors.primaryColor,
+  Color color = AppColors.primaryColor,
   String? imagePath,
   Widget? icon,
   double imageSize = 20.0,
@@ -226,15 +220,15 @@ Widget commonBorderButton(
       width: width,
 
       decoration: BoxDecoration(
-        color:  Colors.transparent ,
-          border: Border.all(width: 4,color: color),
-        borderRadius: BorderRadius.circular(12),
+        color: Colors.transparent,
+        border: Border.all(width: 2, color: color),
+        borderRadius: BorderRadius.circular(16),
       ),
       padding: const EdgeInsets.all(1.5), // space for the gradient border
       child: Container(
         decoration: BoxDecoration(
           color: Colors.transparent, // inner background color
-        
+
           borderRadius: BorderRadius.circular(14), // slightly smaller radius
         ),
         child: Center(
@@ -528,10 +522,9 @@ Widget commonTextField({
       controller: controller,
       onChanged: onChanged,
       keyboardType: keyboardType,
-      textAlign: TextAlign.center,
+
       style: const TextStyle(fontSize: 14),
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.zero,
         hintText: hintText,
         hintStyle: TextStyle(fontSize: 12, color: Colors.grey),
         filled: true,
@@ -556,6 +549,7 @@ Widget commonTextField({
 Widget commonCheckbox({
   required bool value,
   required Function(bool?) onChanged,
+  double textSize = 14,
   String label = '',
 }) {
   return Row(
@@ -566,9 +560,16 @@ Widget commonCheckbox({
         onChanged: onChanged,
         activeColor: AppColors.primaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+        materialTapTargetSize:
+            MaterialTapTargetSize
+                .shrinkWrap, // Optional: makes checkbox smaller
+        visualDensity: VisualDensity(
+          horizontal: -4,
+          vertical: -4,
+        ), // Reduce extra spacing
         side: const BorderSide(color: Colors.black26),
       ),
-      if (label.isNotEmpty) Flexible(child: commonText(label, size: 14)),
+      if (label.isNotEmpty) Flexible(child: commonText(label, size: textSize)),
     ],
   );
 }
@@ -579,39 +580,51 @@ Widget commonDropdown<T>({
   required String hint,
   required void Function(T?) onChanged,
 }) {
-  return Container(
-    padding: EdgeInsets.symmetric(horizontal: 16),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(12),
-      border: Border.all(color: Colors.grey.shade300),
-    ),
-    child: DropdownButton<T>(
-      isExpanded: true,
-      underline: SizedBox(),
-      value: value,
-      hint: commonText(hint, size: 14),
-      items:
-          items.map<DropdownMenuItem<T>>((T item) {
-            return DropdownMenuItem<T>(
-              value: item,
-              child: commonText(item.toString(), size: 14),
-            );
-          }).toList(),
-      onChanged: onChanged,
+  return Material(
+    elevation: 1,
+    borderRadius: BorderRadius.circular(12),
+    child: Container(
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey.shade300),
+      ),
+      child: DropdownButton<T>(
+        isExpanded: true,
+        underline: SizedBox(),
+        value: value,
+        hint: commonText(hint, size: 14),
+        items:
+            items.map<DropdownMenuItem<T>>((T item) {
+              return DropdownMenuItem<T>(
+                value: item,
+                child: commonText(item.toString(), size: 14),
+              );
+            }).toList(),
+        onChanged: onChanged,
+      ),
     ),
   );
 }
 
-
-
-AppBar commonAppBar({required String title,bool isCenter=true,Color backGroundColor=AppColors.white,Color textColor=AppColors.black,bool hideBackButton=false}){
+AppBar commonAppBar({
+  required String title,
+  bool isCenter = true,
+  Color backGroundColor = AppColors.white,
+  Color textColor = AppColors.black,
+  bool hideBackButton = false,
+}) {
   return AppBar(
     backgroundColor: backGroundColor,
-    leading: (hideBackButton)?null: InkWell(
-    onTap: ()=>Get.back(),
-    child: Icon(Icons.arrow_back_ios,color: textColor,)),
-    title: commonText(title,size: 20,isBold: true,color: textColor),
+    leading:
+        (hideBackButton)
+            ? null
+            : InkWell(
+              onTap: () => Get.back(),
+              child: Icon(Icons.arrow_back_ios, color: textColor),
+            ),
+    title: commonText(title, size: 20, isBold: true, color: textColor),
     centerTitle: isCenter,
   );
 }

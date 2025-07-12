@@ -1,5 +1,4 @@
-
-import 'package:dine_dash/demo.dart';
+import 'package:dine_dash/dealer_user_chooser.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +17,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: AnimationDemo(),
+      // home: RootPage(),
+      debugShowCheckedModeBanner: false,
+      home: DealerUserChooeser(),
     );
   }
 }
