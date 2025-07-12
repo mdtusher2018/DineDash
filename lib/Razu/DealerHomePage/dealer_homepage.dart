@@ -56,8 +56,7 @@ class DealerHomepage extends StatelessWidget {
               ),
               SizedBox(height: 15,),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-                height: 129,
+                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 15),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
@@ -205,8 +204,8 @@ class buildStack extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: 152,
-          width: 163,
+          height: 150,
+          width: 155,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
 

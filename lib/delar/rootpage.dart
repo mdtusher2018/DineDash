@@ -3,7 +3,6 @@ import 'package:dine_dash/Razu/DealerHomePage/dealer_homepage.dart';
 import 'package:dine_dash/Razu/DealerProfile/dealer_profile.dart';
 import 'package:dine_dash/Razu/DealerReview/dealer_review.dart';
 import 'package:dine_dash/colors.dart';
-import 'package:dine_dash/delar/BusinessDealsPage.dart';
 import 'package:dine_dash/delar/deals/dealer_deals.dart';
 import 'package:flutter/material.dart';
 

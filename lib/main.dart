@@ -1,7 +1,8 @@
 import 'package:dine_dash/dealer_user_chooser.dart';
-import 'package:dine_dash/user/auth/UserOnboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+
 
 void main() {
   runApp(const MyApp());
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
       ),
       // home: RootPage(),
       debugShowCheckedModeBanner: false,
+      // home: DealerBusinessPage(),
       home: DealerUserChooeser(),
     );
   }

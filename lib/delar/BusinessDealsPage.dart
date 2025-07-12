@@ -1,4 +1,5 @@
 import 'package:dine_dash/commonWidgets.dart';
+import 'package:dine_dash/delar/create_deal.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/colors.dart';
 
@@ -176,7 +177,9 @@ class _BusinessDealsPageState extends State<BusinessDealsPage>
       child: Column(
         children: [
           /// + Add Deal button
-          commonBorderButton("+ Add Deal", onTap: () {}),
+          commonBorderButton("+ Add Deal", onTap: () {
+                   navigateToPage(AddDealScreen());
+          }),
 
           const SizedBox(height: 20),
 
