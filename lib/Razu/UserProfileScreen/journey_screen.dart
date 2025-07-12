@@ -78,34 +78,36 @@ class journeybox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 5),
-      height: 68,
-      width: 150,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Color(0xffDCE7FA),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        spacing: 5,
-        children: [
-          CircleAvatar(
-            radius: 22,
-            backgroundColor: Colors.white,
-            child:ClipRect(
-              child: Image.asset(icon,height: 22,width: 22,),
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 5),
+        height: 68,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Color(0xffDCE7FA),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          spacing: 5,
+          children: [
+            CircleAvatar(
+              radius: 22,
+              backgroundColor: Colors.white,
+              child:ClipRect(
+                child: Image.asset(icon,height: 22,width: 22,),
+              ),
             ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              commonText(digit,size: 26,fontWeight: FontWeight.w700),
-              commonText(title,size: 14,fontWeight: FontWeight.w400,textAlign: TextAlign.start),
-            ],
-          )
-        ],
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                commonText(digit,size: 26,fontWeight: FontWeight.w700),
+                commonText(title,size: 16,fontWeight: FontWeight.w400,textAlign: TextAlign.start),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

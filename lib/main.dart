@@ -10,7 +10,11 @@ import 'package:get/get.dart';
 import 'Razu/DealerBusinessPage/dealer_business_page.dart';
 import 'Razu/DealerProfile/dealer_profile.dart';
 import 'Razu/DealerReview/dealer_review.dart';
+import 'Razu/UserDeals_screen/deals_details.dart';
+import 'Razu/UserDeals_screen/deals_page.dart';
+import 'Razu/UserDeals_screen/ratting_page.dart';
 import 'Razu/UserDeals_screen/reminder_screen.dart';
+import 'Razu/UserProfileScreen/journey_screen.dart';
 import 'Razu/UserProfileScreen/profile_screen.dart';
 
 
@@ -31,7 +35,7 @@ class MyApp extends StatelessWidget {
       ),
       // home: RootPage(),
       debugShowCheckedModeBanner: false,
-      home: ReminderScreen(),
+      home: DealerBusinessPage(),
       // home: DealerReview(),
 
 //       home: Scaffold(

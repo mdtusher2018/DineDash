@@ -19,13 +19,14 @@ class DealsDetails extends StatelessWidget {
     final DealDetailsController controller = Get.put(DealDetailsController());
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(),
+      appBar: AppBar(backgroundColor: Colors.white,),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14,vertical: 5),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 30,),
               Container(
                 padding: EdgeInsets.only(bottom: 20),
                 width: double.infinity,
