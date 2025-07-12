@@ -52,8 +52,7 @@ class DealerHomepage extends StatelessWidget {
               ),
               SizedBox(height: 15,),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-                height: 129,
+                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 15),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
@@ -82,8 +81,7 @@ class DealerHomepage extends StatelessWidget {
                   itemBuilder: (context,index){
                 return  Container(
                   margin: EdgeInsets.symmetric(vertical: 10),
-                  padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-                  height:117,
+                  padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
                   width: double.infinity,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
@@ -103,7 +101,7 @@ class DealerHomepage extends StatelessWidget {
                         child: Image.asset("assets/images/resturant.png",fit: BoxFit.fill,),
                       ),
                       Column(
-                        spacing:2,
+                        spacing:5,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           commonText("Chef's Table",size: 20,fontWeight: FontWeight.w600),
@@ -196,8 +194,8 @@ class buildStack extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: 152,
-          width: 163,
+          height: 150,
+          width: 155,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
 

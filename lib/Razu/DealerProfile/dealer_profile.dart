@@ -9,104 +9,107 @@ class DealerProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              children: [
-                SizedBox(height: 74,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        commonText("Jhon Doi",size: 18,fontWeight: FontWeight.w600),
-                        commonText("example.gmail.com",size: 16,fontWeight: FontWeight.w400,color: Color(0xff555555)),
-                      ],
-                    ),
-                    Container(
-                      height: 77,
-                      width: 77,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  SizedBox(height: 74,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          commonText("Jhon Doi",size: 18,fontWeight: FontWeight.w600),
+                          commonText("example.gmail.com",size: 16,fontWeight: FontWeight.w400,color: Color(0xff555555)),
+                        ],
                       ),
-                      child: ClipOval(
-                        child: Image.asset(
-                          "assets/images/profilepic.png",
-                          fit: BoxFit.cover,
+                      Container(
+                        height: 77,
+                        width: 77,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
                         ),
-                      ),
-                    )
+                        child: ClipOval(
+                          child: Image.asset(
+                            "assets/images/profilepic.png",
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      )
 
-                  ],
-                ),
-                SizedBox(height: 15,),
-                GestureDetector(
-                  onTap: (){
-                    // Get.to(()=>JourneyScreen());
-                  },
-                  child: Container(
-                    height: 84,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.grey.shade300),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        commonText("Your Journey",size: 22,fontWeight: FontWeight.w600),
-                        SizedBox(width: 50,),
-                        Image.asset("assets/images/track.png",height: 66,width: 66,),
-                      ],
+                    ],
+                  ),
+                  SizedBox(height: 15,),
+                  GestureDetector(
+                    onTap: (){
+                      // Get.to(()=>JourneyScreen());
+                    },
+                    child: Container(
+                      height: 84,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.grey.shade300),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          commonText("Your Journey",size: 22,fontWeight: FontWeight.w600),
+                          SizedBox(width: 50,),
+                          Image.asset("assets/images/track.png",height: 66,width: 66,),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 15,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    buildcontainer(image: 'assets/images/edit.png', title: 'Edit Profile', onTap: () {},),
-                    buildcontainer(image: 'assets/images/setting.png', title: 'Settings', onTap: () {  },),
-                    buildcontainer(image: 'assets/images/contact.png', title: 'Contact Us', onTap: () {},),
-                  ],
-                ),
-              ],
+                  SizedBox(height: 15,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildcontainer(image: 'assets/images/edit.png', title: 'Edit Profile', onTap: () {},),
+                      buildcontainer(image: 'assets/images/setting.png', title: 'Settings', onTap: () {  },),
+                      buildcontainer(image: 'assets/images/contact.png', title: 'Contact Us', onTap: () {},),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: 10,),
-          Divider(thickness: 2,color: Colors.grey.shade300,),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                buildRowCon(image: 'assets/images/policy.png', title: 'Privacy Policy', onTap: () {},),
-                buildRowCon(image: 'assets/images/termscon.png', title: 'Terms and Condition', onTap: () {},),
-                buildRowCon(image: 'assets/images/about.png', title: 'About Us', onTap: () {},),
-                buildRowCon(image: 'assets/images/become.png', title: 'BBack to User', onTap: () {},),
-              ],
+            SizedBox(height: 10,),
+            Divider(thickness: 2,color: Colors.grey.shade300,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  buildRowCon(image: 'assets/images/policy.png', title: 'Privacy Policy', onTap: () {},),
+                  buildRowCon(image: 'assets/images/termscon.png', title: 'Terms and Condition', onTap: () {},),
+                  buildRowCon(image: 'assets/images/about.png', title: 'About Us', onTap: () {},),
+                  buildRowCon(image: 'assets/images/become.png', title: 'BBack to User', onTap: () {},),
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: 62,),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 16,vertical: 20),
-            decoration: BoxDecoration(
-                border: Border(
-                  bottom:BorderSide(color: Colors.grey.shade300),
-                  top:BorderSide(color: Colors.grey.shade300),)
+            SizedBox(height: 62,),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16,vertical: 20),
+              decoration: BoxDecoration(
+                  border: Border(
+                    bottom:BorderSide(color: Colors.grey.shade300),
+                    top:BorderSide(color: Colors.grey.shade300),)
+              ),
+              child:Row(
+                spacing: 10,
+                children: [
+                  Image.asset("assets/images/logout.png",height: 35,width: 35,fit: BoxFit.fill,),
+                  commonText("Log Out",size: 16,fontWeight: FontWeight.w600),
+                ],
+              ),
             ),
-            child:Row(
-              spacing: 10,
-              children: [
-                Image.asset("assets/images/logout.png",height: 35,width: 35,fit: BoxFit.fill,),
-                commonText("Log Out",size: 16,fontWeight: FontWeight.w600),
-              ],
-            ),
-          )
+            SizedBox(height: 50,),
 
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -162,7 +165,7 @@ class buildcontainer extends StatelessWidget {
       onTap:onTap,
       child: Container(
         height: 84,
-        width: 110,
+        width: 100,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: Colors.grey.shade300),
@@ -172,7 +175,7 @@ class buildcontainer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           spacing: 5,
           children: [
-            Image.asset(image,height: 35,width: 35,fit: BoxFit.cover,),
+            Image.asset(image,height: 32,width: 32,fit: BoxFit.cover,),
             commonText(title,size: 14,fontWeight: FontWeight.w500),
           ],
         ),

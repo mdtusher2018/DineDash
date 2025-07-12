@@ -19,106 +19,109 @@ class ReminderScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(backgroundColor: Colors.white,),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 12,),
-            commonText("How was your experience at The Rio Lounge?",size: 22,fontWeight: FontWeight.w700),
-            SizedBox(height: 50,),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  commonText("Savings:",size: 18,fontWeight: FontWeight.w700),
-                  commonText("11 €",size: 18,fontWeight: FontWeight.w700),
-                ],
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 12,),
+              commonText("How was your experience at The Rio Lounge?",size: 22,fontWeight: FontWeight.w700),
+              SizedBox(height: 50,),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    commonText("Savings:",size: 18,fontWeight: FontWeight.w700),
+                    commonText("11 €",size: 18,fontWeight: FontWeight.w700),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(child: Divider(height: 1,color: Colors.grey,)),
-            SizedBox(height: 20,),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  commonText("Rating:",size: 18,fontWeight: FontWeight.w700),
-                  RatingBar.builder(
-                    initialRating: 3,
-                    itemSize: 25,
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemPadding: EdgeInsets.symmetric(horizontal:0),
-                    itemBuilder: (context, _) => Icon(
-                      Icons.star,
-                      color: Colors.amber,
+              SizedBox(child: Divider(height: 1,color: Colors.grey,)),
+              SizedBox(height: 20,),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    commonText("Rating:",size: 18,fontWeight: FontWeight.w700),
+                    RatingBar.builder(
+                      initialRating: 3,
+                      itemSize: 25,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemPadding: EdgeInsets.symmetric(horizontal:0),
+                      itemBuilder: (context, _) => Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        print(rating);
+                      },
                     ),
-                    onRatingUpdate: (rating) {
-                      print(rating);
-                    },
+                  ],
+                ),
+              ),
+              SizedBox(child: Divider(height: 1,color: Colors.grey,)),
+              SizedBox(height: 20,),
+              commonText("Comment:",size: 18,fontWeight: FontWeight.w600),
+              SizedBox(height: 10,),
+              TextFormField(
+                maxLines: 3,
+                decoration: InputDecoration(
+                  hintText: "Let others know about your experience..",
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.black),
                   ),
-                ],
-              ),
-            ),
-            SizedBox(child: Divider(height: 1,color: Colors.grey,)),
-            SizedBox(height: 20,),
-            commonText("Comment:",size: 18,fontWeight: FontWeight.w600),
-            SizedBox(height: 10,),
-            TextFormField(
-              maxLines: 3,
-              decoration: InputDecoration(
-                hintText: "Let others know about your experience..",
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Colors.black),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Colors.black),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.black),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 25,),
-            Obx(() => Wrap(
-              spacing: 12,
-              children:controller.comment.map((option) {
-                final isSelected = controller.selecteds.value == option;
-                return GestureDetector(
-                  onTap: () {
-                    controller.selecteds.value = option;
-                  },
-                  child: Container(
-                    padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: isSelected
-                          ? Color(0xffB7CDF6)
-                          : Color(0xffB7CDF5),
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                    child: Text(
-                      option,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight:
-                        isSelected ? FontWeight.w600 : FontWeight.normal,
+              SizedBox(height: 25,),
+              Obx(() => Wrap(
+                spacing: 12,
+                children:controller.comment.map((option) {
+                  final isSelected = controller.selecteds.value == option;
+                  return GestureDetector(
+                    onTap: () {
+                      controller.selecteds.value = option;
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                      margin: EdgeInsets.symmetric(vertical: 5),
+                      decoration: BoxDecoration(
+                        color: isSelected
+                            ? Color(0xffB7CDF6)
+                            : Color(0xffB7CDF5),
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                      child: Text(
+                        option,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight:
+                          isSelected ? FontWeight.w600 : FontWeight.normal,
+                        ),
                       ),
                     ),
-                  ),
-                );
-              }).toList(),
-            )),
-            SizedBox(height: 132,),
-            commonButton("Continue",onTap: (){
-              Get.to(()=> RattingPage());
-            }),
-            SizedBox(height: 10,),
-            Center(child: TextButton(onPressed: (){}, child:commonText("Remind me later",size: 18,fontWeight: FontWeight.w600))),
+                  );
+                }).toList(),
+              )),
+              SizedBox(height: 132,),
+              commonButton("Continue",onTap: (){
+                Get.to(()=> RattingPage());
+              }),
+              SizedBox(height: 10,),
+              Center(child: TextButton(onPressed: (){}, child:commonText("Remind me later",size: 18,fontWeight: FontWeight.w600))),
+              SizedBox(height: 20,),
 
-          ],
+            ],
+          ),
         ),
       ),
 

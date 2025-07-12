@@ -30,7 +30,7 @@ class RattingPage extends StatelessWidget {
                   itemBuilder: (context,index){
                 return Container(
                   margin: EdgeInsets.only(bottom: 15),
-                  height: 635,
+                  padding: EdgeInsets.only(bottom: 20),
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
@@ -40,7 +40,6 @@ class RattingPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        height: 124,
                         width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -90,13 +89,13 @@ class RattingPage extends StatelessWidget {
                               children: [
                                 Container(
                                   height: 31,
-                                  width: 160,
+                                  width: 150,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
                                       border: Border.all(color: Colors.black)
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 5),
+                                    padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 20),
                                     child: Row(
                                       spacing: 10,
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -109,7 +108,7 @@ class RattingPage extends StatelessWidget {
                                 ),
                                 Container(
                                   height: 31,
-                                  width: 160,
+                                  width: 150,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
                                       border: Border.all(color: Colors.black)
@@ -135,7 +134,7 @@ class RattingPage extends StatelessWidget {
                                   children: [
                                     SizedBox(height: 20,),
                                     Container(
-                                        height:245,
+                                    padding: EdgeInsets.symmetric(vertical: 10),
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(10),
@@ -152,7 +151,7 @@ class RattingPage extends StatelessWidget {
                                               commonText("Lorem ipsum dolor sit amet consectetur. Rhoncus molestie amet non pellentesque.",size: 16,fontWeight: FontWeight.w400,color: Color(0xff0A0A0A)),
                                               SizedBox(height: 10,),
                                               Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   Row(
                                                     spacing: 5,
@@ -175,7 +174,6 @@ class RattingPage extends StatelessWidget {
                                                       )
                                                     ],
                                                   ),
-                                                  SizedBox(width: 30,),
                                                   Row(
                                                     spacing: 5,
                                                     children: [
@@ -221,7 +219,7 @@ class RattingPage extends StatelessWidget {
                                                       ),
                                                     ),
                                                     const SizedBox(width: 10),
-                                                   commonText("In 50 days bookable again",size:18,fontWeight: FontWeight.w600),
+                                                   commonText("In 50 days bookable again",size:16,fontWeight: FontWeight.w600),
                                                   ],
                                                 ),
                                               )
@@ -234,8 +232,8 @@ class RattingPage extends StatelessWidget {
                                 ),
                                 Positioned(
                                     top: 0,
-                                    left: 130,
-                                    right: 130,
+                                    left: 110,
+                                    right: 110,
                                     child: Container(
                                       height: 39,
                                       width: 89,

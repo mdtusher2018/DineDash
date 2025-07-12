@@ -1,5 +1,8 @@
 
 import 'package:dine_dash/Razu/DealerReview/widget/custom_progress.dart';
+import 'package:dine_dash/Razu/DealerReview/widget/businessdropdownshow.dart';
+import 'package:dine_dash/Razu/DealerReview/widget/rattingdropdown.dart';
+import 'package:dine_dash/Razu/DealerReview/widget/shortbydropdown.dart';
 import 'package:dine_dash/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -29,7 +32,7 @@ class _DealerReviewState extends State<DealerReview> {
     List ratting=[
       { "ratting": "5.0"},
       { "ratting": "4.0"},
-      { "ratting": "3.0"},
+      { "ratting": "3.5"},
       { "ratting": "2.0"},
       { "ratting": "2.5"},
     ];
@@ -68,36 +71,41 @@ class _DealerReviewState extends State<DealerReview> {
                 ],
               ),
               SizedBox(height: 15,),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 38),
-                height: 240,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.grey.shade300),
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(height: 10,),
-                    commonText("Rating Distribution",size: 16,fontWeight: FontWeight.w700),
-                    SizedBox(height: 10,),
-                    ListView.builder(
-                      shrinkWrap: true,
-                        itemCount: 5,
-                        itemBuilder: (context,index){
-                        double ratingValue = double.parse(ratting[index]['ratting']);
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            height: 240,
+            width: MediaQuery.sizeOf(context).width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.grey.shade300),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 10),
+                commonText("Rating Distribution", size: 16, fontWeight: FontWeight.w700),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount:ratting.length,
+                    itemBuilder: (context, index) {
+                      double ratingValue = double.parse(ratting[index]['ratting']);
                       return Row(
                         spacing: 10,
                         children: [
-                          commonText("${5-index}*",size: 20,fontWeight: FontWeight.w500),
-                          RatingProgressBar(rating: ratingValue),
+                          Text("${5 - index}*", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+                          Expanded(
+                            child: RatingProgressBar(rating: ratingValue),
+                          ),
                         ],
                       );
-                    })
-                  ],
-                ),
-              ),
-              SizedBox(height: 15,),
+                    },
+                  ),
+                )
+              ],
+            ),
+          ),
+
+          SizedBox(height: 15,),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 height: 340,
@@ -106,91 +114,35 @@ class _DealerReviewState extends State<DealerReview> {
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: Colors.grey.shade300),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 10,),
-                    Row(
-                      spacing: 5,
-                      children: [
-                       Image.asset("assets/images/filter.png",height: 25,width: 25,),
-                        commonText("Filters",size: 18,fontWeight: FontWeight.w700),
-                      ],
-                    ),
-                    commonText("Business",size: 14,fontWeight: FontWeight.w500),
-                    SizedBox(height: 10,),
-                    GestureDetector(
-                      // onTap: () =>),
-                      child: AbsorbPointer(
-                        child: TextField(
-                          controller: _businessController,
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            hintText: "Select your business",
-                            suffixIcon: Icon(Icons.arrow_drop_down),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                        ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Image.asset("assets/images/filter.png", height: 25, width: 25),
+                          SizedBox(width: 5),
+                          commonText("Filters", size: 18, fontWeight: FontWeight.w700),
+                        ],
                       ),
-                    ),
-                    SizedBox(height: 10,),
-                    commonText("Rating",size: 14,fontWeight: FontWeight.w500),
-                    SizedBox(height: 10,),
-                GestureDetector(
-                  onTap: () {
-                    // Optional: Add custom tap behavior if needed
-                  },
-                  child: TextField(
-                    controller: _ratingController,
-                    readOnly: true, // Makes TextField non-editable
-                    decoration: InputDecoration(
-                      hintText: _selectedItem.isEmpty ? 'Select your business' : _selectedItem, // Update hintText with selected item
-                      suffixIcon: PopupMenuButton<String>(
-                        icon: Icon(Icons.arrow_drop_down),
-                        onSelected: (String value) {
-                          setState(() {
-                            _selectedItem = value; // Update selected item for hintText
-                            _ratingController.clear(); // Clear TextField content
-                          });
-                        },
-                        itemBuilder: (BuildContext context) {
-                          return _items.map((String item) {
-                            return PopupMenuItem<String>(
-                              value: item,
-                              child: Text(item),
-                            );
-                          }).toList();
-                        },
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
+                      SizedBox(height: 10),
+                      commonText("Business", size: 14, fontWeight: FontWeight.w500),
+                      SizedBox(height: 10),
+                      BusinessDropdown(),
+                      SizedBox(height: 10),
+                      commonText("Rating", size: 14, fontWeight: FontWeight.w500),
+                      SizedBox(height: 10),
+                      RattingDropdown(),
+                      SizedBox(height: 10),
+                      commonText("Sort By", size: 14, fontWeight: FontWeight.w500),
+                      SizedBox(height: 10),
+                      ShortByDropdown(),
+                    ],
                   ),
                 ),
-                    SizedBox(height: 10,),
-                    commonText("Sort By",size: 14,fontWeight: FontWeight.w500),
-                    SizedBox(height: 10,),
-                    GestureDetector(
-                      child: AbsorbPointer(
-                        child: TextField(
-                          controller: _sortByController,
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            hintText: "Select your business",
-                            suffixIcon: Icon(Icons.arrow_drop_down),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               ),
+
               SizedBox(height: 15,),
               ListView.builder(
                 shrinkWrap: true,

@@ -11,54 +11,57 @@ class JourneyScreen extends StatelessWidget {
       appBar: AppBar(backgroundColor: Colors.white,),
       body:Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Center(
-              child: Container(
-                height: 266,
-                width: 266,
-                child: Image.asset("assets/images/journey.png",fit: BoxFit.fill,),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Center(
+                child: Container(
+                  height: 266,
+                  width: 266,
+                  child: Image.asset("assets/images/journey.png",fit: BoxFit.fill,),
+                ),
               ),
-            ),
-            SizedBox(height: 20,),
-            commonText("Your Journey",size: 26,fontWeight: FontWeight.w700),
-            SizedBox(height: 5,),
-            commonText("Discovering new restaurants, trying delicious dishes while paying less, a review of your culinary journey!",size: 18,fontWeight: FontWeight.w400,textAlign: TextAlign.center),
-            SizedBox(height: 20,),
-            Column(
-              spacing: 20,
-              children: [
-                Row(
-                  spacing: 11,
-                  mainAxisAlignment:MainAxisAlignment.center,
-                  children: [
-                    journeybox(icon: 'assets/images/deals.png', digit: '3', title: 'Deals',),
-                    journeybox(icon: 'assets/images/savings.png', digit: '11 €', title: 'Savings',),
-                  ],
-                ),
-                Row(
-                  spacing: 11,
-                  mainAxisAlignment:MainAxisAlignment.center,
-                  children: [
-                    journeybox(icon: 'assets/images/visited.png', digit: '4', title: 'Visited Place',),
-                    journeybox(icon: 'assets/images/locations.png', digit: '2', title: 'Cities',),
-                  ],
-                ),
-                Row(
-                  spacing: 11,
-                  mainAxisAlignment:MainAxisAlignment.center,
-                  children: [
-                    journeybox(icon: 'assets/images/star.png', digit: '6', title: 'Ratings',),
-                    journeybox(icon: 'assets/images/review.png', digit: '1', title: 'Review',),
-                  ],
-                ),
+              SizedBox(height: 20,),
+              commonText("Your Journey",size: 26,fontWeight: FontWeight.w700),
+              SizedBox(height: 5,),
+              commonText("Discovering new restaurants, trying delicious dishes while paying less, a review of your culinary journey!",size: 18,fontWeight: FontWeight.w400,textAlign: TextAlign.center),
+              SizedBox(height: 20,),
+              Column(
+                spacing: 20,
+                children: [
+                  Row(
+                    spacing: 11,
+                    mainAxisAlignment:MainAxisAlignment.center,
+                    children: [
+                      journeybox(icon: 'assets/images/deals.png', digit: '3', title: 'Deals',),
+                      journeybox(icon: 'assets/images/savings.png', digit: '11 €', title: 'Savings',),
+                    ],
+                  ),
+                  Row(
+                    spacing: 11,
+                    mainAxisAlignment:MainAxisAlignment.center,
+                    children: [
+                      journeybox(icon: 'assets/images/visited.png', digit: '4', title: 'Visited Place',),
+                      journeybox(icon: 'assets/images/locations.png', digit: '2', title: 'Cities',),
+                    ],
+                  ),
+                  Row(
+                    spacing: 11,
+                    mainAxisAlignment:MainAxisAlignment.center,
+                    children: [
+                      journeybox(icon: 'assets/images/star.png', digit: '6', title: 'Ratings',),
+                      journeybox(icon: 'assets/images/review.png', digit: '1', title: 'Review',),
+                    ],
+                  ),
 
-              ],
-            )
+                ],
+              ),
+              SizedBox(height: 30,),
 
 
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -76,9 +79,9 @@ class journeybox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.symmetric(horizontal: 5),
       height: 68,
-      width: 180,
+      width: 150,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Color(0xffDCE7FA),
@@ -99,7 +102,7 @@ class journeybox extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               commonText(digit,size: 26,fontWeight: FontWeight.w700),
-              commonText(title,size: 18,fontWeight: FontWeight.w400),
+              commonText(title,size: 14,fontWeight: FontWeight.w400,textAlign: TextAlign.start),
             ],
           )
         ],
