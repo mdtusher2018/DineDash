@@ -1,8 +1,5 @@
 
-import 'package:dine_dash/user/home/RestaurantDetailsPage.dart';
-import 'package:dine_dash/user/home/deal_blocked.dart';
-import 'package:dine_dash/user/profile/contact_us.dart';
-import 'package:dine_dash/user/profile/edit_profile.dart';
+import 'package:dine_dash/demo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: DealBlockedPage(),
+      home: AnimationDemo(),
     );
   }
 }
