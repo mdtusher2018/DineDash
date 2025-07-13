@@ -17,6 +17,8 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
 
   List<String> selectedCategories = ['Cafe', 'Juice', 'Bar'];
   final List<String> allCategories = ['Cafe', 'Juice', 'Bar', 'Diner'];
+  String? selecteategory;
+
 
   Map<String, bool> closedDays = {
     "Sunday": true,
@@ -177,7 +179,54 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
                       .toList(),
             ),
             const SizedBox(height: 16),
-
+                 commonDropdown<String>(
+              items: allCategories,
+              value: selecteategory,
+              hint: "Select your business",
+              onChanged: (val){
+ setState(() {
+              selecteategory = val;
+            });
+              },
+            ),
+          if (selecteategory != null)
+            Align(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                onTap: (){
+                       if (!selectedCategories.contains(selecteategory)) {
+            setState(() {
+              selectedCategories.add(selecteategory!);
+              selecteategory = null; // Reset dropdown
+            });
+                            }
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 4),
+                  margin: EdgeInsets.symmetric(vertical: 8),
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.add,
+                        size: 18,
+                        
+                      ),
+                      SizedBox(width: 4),
+                      commonText(
+                        "Add",
+                        size: 14,
+                        
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),SizedBox(height: 8,),
              commonText("Location",size: 16,isBold: true),
             SizedBox(height: 8,),
             commonTextfieldWithTitle(

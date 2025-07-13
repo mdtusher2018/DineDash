@@ -115,14 +115,17 @@ class _BusinessDealsPageState extends State<BusinessDealsPage>
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
-                      color: Colors.amber.shade50,
+                      color: Color(0xFFCCF3D9),
                       borderRadius: BorderRadius.circular(16),
                     ),
 
                     child: commonText(
                       "2 active deals",
                       size: 12,
-                      color: Colors.green,
+                      color: Color(0xFF168368)
+                      
+                      
+
                     ),
                   ),
                 ],
@@ -346,7 +349,9 @@ class _BusinessDealsPageState extends State<BusinessDealsPage>
     required VoidCallback onDelete,
     required VoidCallback onToggleStatus,
   }) {
-    Color statusColor = status == "Active" ? Colors.green : Colors.orange;
+    Color statusColor = status == "Active" ? Color(0xFF90EE90) : Color(0xFFFFDF00);
+    Color textColor = status == "Active" ? Color(0xFF056608) : Color(0xFF735900);
+    
 
     return Stack(
       children: [
@@ -369,13 +374,13 @@ class _BusinessDealsPageState extends State<BusinessDealsPage>
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
-                      color: Colors.amber.shade100,
+                      color: statusColor,
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: commonText(
                       status,
                       size: 12,
-                      color: statusColor,
+                      color: textColor,
                       isBold: true,
                     ),
                   ),
@@ -450,17 +455,17 @@ class _BusinessDealsPageState extends State<BusinessDealsPage>
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  actionButton(Icons.edit, "Edit", onEdit),
+                  actionButton(Image.asset("assets/images/lucide_edit.png"), "Edit", onEdit),
                   actionButton(
                     status == "Active"
-                        ? Icons.pause_outlined
-                        : Icons.play_arrow,
+                        ? Image.asset("assets/images/pause.png")
+                        : Image.asset("assets/images/play.png"),
                     status == "Active" ? "Pause" : "Active",
                     onToggleStatus,
                     color: AppColors.primaryColor,
                   ),
                   actionButton(
-                    Icons.delete,
+                    Image.asset("assets/images/delete.png"),
                     "Delete",
                     onDelete,
                     color: Colors.red,
@@ -571,7 +576,7 @@ class _BusinessDealsPageState extends State<BusinessDealsPage>
   }
 
   Widget actionButton(
-    IconData icon,
+    Widget icon,
     String label,
     VoidCallback onTap, {
     Color color = Colors.black87,
@@ -580,7 +585,8 @@ class _BusinessDealsPageState extends State<BusinessDealsPage>
       onTap: onTap,
       child: Column(
         children: [
-          Icon(icon, size: 20, color: color),
+          // Icon(icon, size: 20, color: color),
+          icon,
           const SizedBox(height: 4),
           commonText(label, size: 12, color: color),
         ],

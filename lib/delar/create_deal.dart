@@ -12,6 +12,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController reusableAfterController = TextEditingController();
   final TextEditingController maxClaimsController = TextEditingController();
+  final TextEditingController dealTitleController = TextEditingController();
 
   String? selectedBusiness;
   String? selectedDealType;
@@ -48,6 +49,13 @@ class _AddDealScreenState extends State<AddDealScreen> {
               onChanged: (val) => setState(() => selectedBusiness = val),
             ),
             const SizedBox(height: 16),
+                     commonTextfieldWithTitle(
+              "Deal Title*",
+              dealTitleController,
+              hintText: "e.g., Happy Hour Special",
+              
+            ),
+            const SizedBox(height: 30),
 
             /// Description
             commonTextfieldWithTitle(
@@ -297,7 +305,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
 
             /// Max Claims
             commonTextfieldWithTitle(
-              "Maximum Claims",
+              "Maximum Claims*",
               maxClaimsController,
               hintText: "e.g. 100",
               keyboardType: TextInputType.number,

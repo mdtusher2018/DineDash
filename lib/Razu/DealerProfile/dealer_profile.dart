@@ -1,5 +1,8 @@
 import 'package:dine_dash/user/profile/about_us.dart';
+import 'package:dine_dash/user/profile/contact_us.dart';
+import 'package:dine_dash/user/profile/edit_profile.dart';
 import 'package:dine_dash/user/profile/privacy_policy.dart';
+import 'package:dine_dash/user/profile/settings.dart';
 import 'package:dine_dash/user/profile/tearms_and_condition.dart';
 import 'package:dine_dash/user/root_page.dart';
 import 'package:flutter/material.dart';
@@ -48,34 +51,40 @@ class DealerProfile extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 15,),
-                  GestureDetector(
-                    onTap: (){
-                      // Get.to(()=>JourneyScreen());
-                    },
-                    child: Container(
-                      height: 84,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.grey.shade300),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          commonText("Your Journey",size: 22,fontWeight: FontWeight.w600),
-                          SizedBox(width: 50,),
-                          Image.asset("assets/images/track.png",height: 66,width: 66,),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 15,),
+                  // GestureDetector(
+                  //   onTap: (){
+                  //     // Get.to(()=>JourneyScreen());
+                  //   },
+                  //   child: Container(
+                  //     height: 84,
+                  //     width: double.infinity,
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(10),
+                  //       border: Border.all(color: Colors.grey.shade300),
+                  //     ),
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.center,
+                  //       children: [
+                  //         commonText("Your Journey",size: 22,fontWeight: FontWeight.w600),
+                  //         SizedBox(width: 50,),
+                  //         Image.asset("assets/images/track.png",height: 66,width: 66,),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                  // SizedBox(height: 15,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      buildcontainer(image: 'assets/images/edit.png', title: 'Edit Profile', onTap: () {},),
-                      buildcontainer(image: 'assets/images/setting.png', title: 'Settings', onTap: () {  },),
-                      buildcontainer(image: 'assets/images/contact.png', title: 'Contact Us', onTap: () {},),
+                      buildcontainer(image: 'assets/images/edit.png', title: 'Edit Profile', onTap: () {
+                        navigateToPage(EditProfileView());
+                      },),
+                      buildcontainer(image: 'assets/images/setting.png', title: 'Settings', onTap: () { 
+                        navigateToPage(SettingsScreen());
+                       },),
+                      buildcontainer(image: 'assets/images/contact.png', title: 'Contact Us', onTap: () {
+                        navigateToPage(ContactUsPage());
+                      },),
                     ],
                   ),
                 ],
