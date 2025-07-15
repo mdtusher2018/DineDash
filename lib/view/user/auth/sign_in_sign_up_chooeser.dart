@@ -1,18 +1,19 @@
 import 'package:dine_dash/view/res/colors.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
-import 'package:dine_dash/view/dealer/rootpage.dart';
 import 'package:dine_dash/view/res/image_paths.dart';
-import 'package:dine_dash/view/user/onboarding/UserOnboarding.dart';
+import 'package:dine_dash/view/user/auth/create_user_account.dart';
+import 'package:dine_dash/view/user/auth/sign_in_page.dart';
 import 'package:flutter/material.dart';
 
-class DealerUserChooeser extends StatefulWidget {
-  const DealerUserChooeser({super.key});
+class UserSignInSignUpChooeser extends StatefulWidget {
+  const UserSignInSignUpChooeser({super.key});
 
   @override
-  State<DealerUserChooeser> createState() => _DealerUserChooeserState();
+  State<UserSignInSignUpChooeser> createState() =>
+      _UserSignInSignUpChooeserState();
 }
 
-class _DealerUserChooeserState extends State<DealerUserChooeser> {
+class _UserSignInSignUpChooeserState extends State<UserSignInSignUpChooeser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,24 +43,24 @@ class _DealerUserChooeserState extends State<DealerUserChooeser> {
                 ),
                 SizedBox(height: 20),
                 commonText(
-                  "Are You Dealer or User?",
+                  "Now continue after register in \"DEALR\".",
                   size: 14,
                   color: AppColors.white,
                 ),
                 SizedBox(height: 20),
                 commonButton(
-                  "User",
+                  "Sign In",
                   onTap: () {
-                    navigateToPage(UserOnboardingView());
+                    navigateToPage(UserSignInScreen());
                   },
                 ),
 
                 SizedBox(height: 20),
                 commonBorderButton(
-                  "Dealer",
+                  "Sign Up",
                   textColor: AppColors.white,
                   onTap: () {
-                    navigateToPage(DealerRootPage());
+                    navigateToPage(CreateUserAccount());
                   },
                 ),
                 SizedBox(height: 40),
