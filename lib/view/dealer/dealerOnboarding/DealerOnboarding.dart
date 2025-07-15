@@ -1,5 +1,5 @@
+import 'package:dine_dash/view/dealer/dealerOnboarding/create_dealer_account_page.dart';
 import 'package:dine_dash/view/res/colors.dart';
-import 'package:dine_dash/delar/create_dealer_account_page.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 
