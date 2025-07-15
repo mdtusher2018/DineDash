@@ -1,5 +1,6 @@
 
 
+import 'package:dine_dash/view/user/deals/deal_redeem.dart';
 import 'package:dine_dash/view/user/deals/reminder_screen.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:dotted_line/dotted_line.dart';
@@ -265,7 +266,9 @@ class DealsDetails extends StatelessWidget {
                               height: 20,
                             ),
                             GestureDetector(
-                              onTap: (){},
+                              onTap: (){
+                                navigateToPage(DealRedeemPage());
+                              },
                               child: Container(
                                 height: 48,
                                 width:double.infinity,
