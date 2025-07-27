@@ -50,12 +50,18 @@ class DealerHomepage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 15,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  buildStack(image: 'assets/images/banner1.png', icon: 'assets/images/starreview.png', text: '3', title: 'Total Reviews',),
-                  buildStack(image: 'assets/images/banner2.png', icon: 'assets/images/rattingicon.png', text: '4.7', title: 'Avg. Rating',),
-                ],
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+
+                  children: [
+                    buildStack(image: 'assets/images/banner1.png', icon: 'assets/images/starreview.png', text: '3', title: 'Total Reviews',),
+                    SizedBox(width: 16,),
+                    buildStack(image: 'assets/images/banner2.png', icon: 'assets/images/rattingicon.png', text: '4.7', title: 'Avg. Rating',),SizedBox(width: 16,),
+                    buildStack(image: 'assets/images/banner3.png', icon: 'assets/images/businesses.png', text: '3', title: 'Businesses',),SizedBox(width: 16,),
+                    buildStack(image: 'assets/images/banner4.png', icon: 'assets/images/activedeals.png', text: '8', title: 'Active Deals',),
+                  ],
+                ),
               ),
               SizedBox(height: 15,),
               Container(
@@ -81,8 +87,13 @@ class DealerHomepage extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(height: 12),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: commonText("Your Restaurants",size: 18,isBold: true)),
               ListView.builder(
                 shrinkWrap: true,
+                padding: EdgeInsets.all(0),
                   physics: ScrollPhysics(),
                   itemCount: 3,
                   itemBuilder: (context,index){
@@ -91,7 +102,7 @@ class DealerHomepage extends StatelessWidget {
                     navigateToPage(BusinessDealsPage());
                   },
                   child: Container(
-                    margin: EdgeInsets.symmetric(vertical: 10),
+                    margin: EdgeInsets.symmetric(vertical: 8),
                     padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                     height:117,
                     width: double.infinity,

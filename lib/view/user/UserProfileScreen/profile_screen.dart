@@ -1,4 +1,5 @@
 
+import 'package:dine_dash/dealer_user_chooser.dart';
 import 'package:dine_dash/view/res/colors.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:dine_dash/view/dealer/dealerOnboarding/DealerOnboarding.dart';
@@ -116,19 +117,26 @@ navigateToPage(SettingsScreen());
             ),
           ),
           SizedBox(height: 62,),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 16,vertical: 20),
-            decoration: BoxDecoration(
-              border: Border(
-                  bottom:BorderSide(color: Colors.grey.shade300),
-                  top:BorderSide(color: Colors.grey.shade300),)
-            ),
-            child:Row(
-              spacing: 10,
-              children: [
-                Image.asset("assets/images/logout.png",height: 35,width: 35,fit: BoxFit.fill,),
-                commonText("Log Out",size: 16,fontWeight: FontWeight.w600),
-              ],
+          GestureDetector(
+            onTap: () {
+                   showLogoutDialog(context, (){
+                  Get.offAll(DealerUserChooeser());
+                });
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16,vertical: 20),
+              decoration: BoxDecoration(
+                border: Border(
+                    bottom:BorderSide(color: Colors.grey.shade300),
+                    top:BorderSide(color: Colors.grey.shade300),)
+              ),
+              child:Row(
+                spacing: 10,
+                children: [
+                  Image.asset("assets/images/logout.png",height: 35,width: 35,fit: BoxFit.fill,),
+                  commonText("Log Out",size: 16,fontWeight: FontWeight.w600,),
+                ],
+              ),
             ),
           )
 
@@ -137,16 +145,16 @@ navigateToPage(SettingsScreen());
     );
   }
 
-    Future<void> showDeleteAccountDialog(
+  Future<void> showLogoutDialog(
     BuildContext context,
-    VoidCallback onDelete,
+    VoidCallback onLogout,
   ) async {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: commonText(
-            "Do you want to log out your account?",
+            "Do you want to Log Out?",
             size: 18,
             fontWeight: FontWeight.w500,
             textAlign: TextAlign.center,
@@ -172,16 +180,13 @@ navigateToPage(SettingsScreen());
                 SizedBox(width: 10),
                 Expanded(
                   child: commonButton(
-                    "Yes, Log Out",
+                    "Log Out",
                     color: AppColors.primaryColor,
                     textColor: Colors.white,
                     height: 40,
                     boarderRadious: 10,
                     width: 100,
-                    onTap: () {
-                      Navigator.of(context).pop(); // Close the dialog
-                      // onDelete(); // Perform the delete action
-                    },
+                    onTap:onLogout
                   ),
                 ),
               ],
@@ -191,6 +196,10 @@ navigateToPage(SettingsScreen());
       },
     );
   }
+
+
+
+
 
 }
 

@@ -1,7 +1,11 @@
+import 'package:dine_dash/view/user/home/all_review.dart';
 import 'package:dine_dash/view/user/home/deal_blocked.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:dine_dash/view/res/colors.dart';
+import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
+
 
 class RestaurantDetailsPage extends StatefulWidget {
   const RestaurantDetailsPage({super.key});
@@ -27,9 +31,14 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
           Positioned(
             top: 40,
             left: 16,
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Icon(Icons.arrow_back_ios_new),
+            child: GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                child: Icon(Icons.arrow_back_ios_new),
+              ),
             ),
           ),
         ],
@@ -161,7 +170,12 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                              final String shareText = "Check out this awesome business on DineDesh!";
+    final String shareLink = "Share this Resturent";
+
+    Share.share('$shareText\n$shareLink');
+                        },
                         icon: Container(
                           padding: EdgeInsets.all(8),
                           decoration: BoxDecoration(
@@ -318,7 +332,9 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
                           },
                         ),
 
-                        commonButton("All reviews (36)"),
+                        commonButton("All reviews (36)",onTap: () {
+                          Get.to(AllReviewPage());
+                        },),
                       ],
                     ),
                   if (selectedTabIndex == 2) restaurantInfoTab(),
@@ -466,6 +482,7 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
                     timeRange: "12:00 - 20:00",
                     dealCount: 15,
                     onDealTap: () {
+                      Get.back();
                       navigateToPage(DealBlockedPage());
                     },
                   );
@@ -699,143 +716,164 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
     );
   }
 
-  void showDealBottomSheet(
-    BuildContext context, {
-    required String title,
-    required String description,
-    required List<String> days,
-    required String selectedDay,
-    required String timeRange,
-    required int dealCount,
-    required VoidCallback onDealTap,
-  }) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) {
-        return Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+void showDealBottomSheet(
+  BuildContext context, {
+  required String title,
+  required String description,
+  required List<String> days,
+  required String selectedDay,
+  required String timeRange,
+  required int dealCount,
+  required VoidCallback onDealTap,
+}) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (context) {
+      String selectedDayState = selectedDay;
+      String selectedTimeRange = timeRange;
 
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 5,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Title
-                  commonText(title, size: 16, isBold: true),
-                  const SizedBox(height: 8),
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 5,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Title
+                    commonText(title, size: 16, isBold: true),
+                    const SizedBox(height: 8),
 
-                  // Description
-                  commonText(description, size: 13),
-                  const SizedBox(height: 12),
+                    // Description
+                    commonText(description, size: 13),
+                    const SizedBox(height: 12),
 
-                  const Divider(height: 1),
+                    const Divider(height: 1),
+                    const SizedBox(height: 12),
 
-                  const SizedBox(height: 12),
-
-                  // Day Section
-                  commonText("Day", isBold: true, size: 14),
-                  const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 8,
-                    children:
-                        days.map((day) {
-                          final isSelected = day == selectedDay;
-                          return GestureDetector(
-                            onTap: () {
-                              // Handle your selection logic here
-                              // For example, update selectedDay state in your StatefulWidget
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 8,
-                              ),
-                              decoration: BoxDecoration(
-                                color:
-                                    isSelected
-                                        ? AppColors.primaryColor
-                                        : Colors.grey.shade100,
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
-                                  color:
-                                      isSelected
-                                          ? Colors.transparent
-                                          : Colors.black,
-                                ),
-                              ),
-                              child: commonText(
-                                day,
-                                color: isSelected ? Colors.white : Colors.black,
+                    // Day Section
+                    commonText("Day", isBold: true, size: 14),
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 8,
+                      children: days.map((day) {
+                        final isSelected = day == selectedDayState;
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedDayState = day;
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: isSelected ? AppColors.primaryColor : Colors.grey.shade100,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: isSelected ? Colors.transparent : Colors.black,
                               ),
                             ),
+                            child: commonText(
+                              day,
+                              color: isSelected ? Colors.white : Colors.black,
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    // Time Section
+                    commonText("Time", isBold: true, size: 14),
+                    const SizedBox(height: 8),
+                    GestureDetector(
+                      onTap: () async {
+                        TimeOfDay? start = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.now(),
+                        );
+                        if (start != null) {
+                          TimeOfDay? end = await showTimePicker(
+                            context: context,
+                            initialTime: start,
                           );
-                        }).toList(),
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  // Time Section
-                  commonText("Time", isBold: true, size: 14),
-                  const SizedBox(height: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 12,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.access_time_rounded, size: 18),
-                        const SizedBox(width: 8),
-                        commonText(timeRange, size: 13, isBold: true),
-                        const Spacer(),
-                        commonText(
-                          "$dealCount Deals",
-                          size: 13,
-                          color: Colors.grey.shade600,
+                          if (end != null) {
+                            setState(() {
+                              selectedTimeRange =
+                                  "${start.format(context)} - ${end.format(context)}";
+                            });
+                          }
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                      ],
+                        child: Row(
+                          children: [
+                            const Icon(Icons.access_time_rounded, size: 18),
+                            const SizedBox(width: 8),
+                            commonText(selectedTimeRange, size: 13, isBold: true),
+                            const Spacer(),
+                            commonText(
+                              "$dealCount Deals",
+                              size: 13,
+                              color: Colors.grey.shade600,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
 
-                  const SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
-                  // CTA Button
-                  commonButton(
-                    "Go to deal",
-                    onTap: onDealTap,
-                    color: AppColors.primaryColor,
-                    textColor: Colors.white,
-                  ),
-                ],
+                    // CTA Button
+                    commonButton(
+                      "Go to deal",
+                      onTap: () {
+                        // Use selectedDayState and selectedTimeRange here
+                        print("Selected Day: $selectedDayState");
+                        print("Selected Time: $selectedTimeRange");
+             
+                        onDealTap();
+                      },
+                      color: AppColors.primaryColor,
+                      textColor: Colors.white,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
-    );
-  }
+          );
+        },
+      );
+    },
+  );
+}
+
+
 
   void showMenuBottomSheet(BuildContext context) {
     showModalBottomSheet(

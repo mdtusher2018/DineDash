@@ -7,8 +7,15 @@ import 'package:dine_dash/view/user/home/RestaurantDetailsPage.dart';
 import 'package:dine_dash/view/user/notification/notification.dart';
 import 'package:flutter/material.dart';
 
-class UserHomeView extends StatelessWidget {
+class UserHomeView extends StatefulWidget {
   const UserHomeView({super.key});
+
+  @override
+  State<UserHomeView> createState() => _UserHomeViewState();
+}
+
+class _UserHomeViewState extends State<UserHomeView> {
+String selectedLocation = 'Rampura, Dhaka.';
 
   @override
   Widget build(BuildContext context) {
@@ -20,30 +27,59 @@ class UserHomeView extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           children: [
             /// Top location + bell icon
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children:  [
-                    commonText("Rampura, Dhaka.", size: 18, fontWeight: FontWeight.bold),
-                    Icon(Icons.arrow_drop_down,color: AppColors.primaryColor,),
-                  ],
-                ),
-                GestureDetector(
-                  onTap: () {
-                    navigateToPage(UserNotificationsPage());
-                  },
-                  child: Material(
-                    borderRadius: BorderRadius.circular(100),
-                    elevation: 2,
-                    child: Padding(
-                      padding: EdgeInsets.all(8),
-                      
-                      child: Icon(Icons.notifications_active, color: Colors.orange),
-                    )),
-                ),
-              ],
+      
+Row(
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  children: [
+    Row(
+      children: [
+        DropdownButtonHideUnderline(
+          child: DropdownButton<String>(
+            value: selectedLocation,
+            icon: Icon(Icons.arrow_drop_down, color: AppColors.primaryColor),
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
+            onChanged: (String? newValue) {
+              if (newValue != null) {
+                setState(() {
+                  selectedLocation = newValue;
+                });
+              }
+            },
+            items: <String>[
+              'Rampura, Dhaka.',
+              'Gulshan, Dhaka.',
+              'Banani, Dhaka.',
+              'Dhanmondi, Dhaka.',
+            ].map<DropdownMenuItem<String>>((String location) {
+              return DropdownMenuItem<String>(
+                value: location,
+                child: Text(location),
+              );
+            }).toList(),
+          ),
+        ),
+      ],
+    ),
+    GestureDetector(
+      onTap: () {
+        navigateToPage(UserNotificationsPage());
+      },
+      child: Material(
+        borderRadius: BorderRadius.circular(100),
+        elevation: 2,
+        child: Padding(
+          padding: EdgeInsets.all(8),
+          child: Icon(Icons.notifications_active, color: Colors.orange),
+        ),
+      ),
+    ),
+  ],
+),
+
 
             const SizedBox(height: 16),
 

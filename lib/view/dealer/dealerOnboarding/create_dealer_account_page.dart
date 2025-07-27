@@ -1,3 +1,4 @@
+import 'package:dine_dash/view/dealer/rootpage.dart';
 import 'package:dine_dash/view/res/colors.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 
@@ -138,6 +139,7 @@ void showPendingDialog(BuildContext context) {
               onTap: () {
    
                 Navigator.pop(context); // Close the dialog
+                navigateToPage(DealerRootPage());
               }),
               const SizedBox(height: 16),
             ],

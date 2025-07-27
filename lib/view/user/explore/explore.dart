@@ -1,8 +1,10 @@
 import 'package:dine_dash/view/res/colors.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
-import 'package:dine_dash/view/dealer/home_and_deal/BusinessDealsPage.dart';
 import 'package:dine_dash/view/user/common_designs/common_design.dart';
+import 'package:dine_dash/view/user/home/RestaurantDetailsPage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
@@ -16,6 +18,7 @@ class _ExplorePageState extends State<ExplorePage> {
 
   String selectedExpense = 'Expense';
   String selectedSortBy = 'Gulshan';
+  RxString selectedLocation = 'Rampura, Dhaka.'.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -150,20 +153,50 @@ class _ExplorePageState extends State<ExplorePage> {
 
   /// List of Business Cards
   Widget _buildListView() {
+
     return SingleChildScrollView(
       child: Column(
         children: [
-          Row(
-            children: [
-              commonText(
-                "Rampura, Dhaka.",
-                size: 18,
-                fontWeight: FontWeight.bold,
-                color: AppColors.gray,
+Row(
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  children: [
+  
+      
+        Obx(
+           () {
+            return DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                value: selectedLocation.value,
+                icon: Icon(Icons.arrow_drop_down, color: AppColors.primaryColor),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+                onChanged: (String? newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      selectedLocation.value = newValue;
+                    });
+                  }
+                },
+                items: <String>[
+                  'Rampura, Dhaka.',
+                  'Gulshan, Dhaka.',
+                  'Banani, Dhaka.',
+                  'Dhanmondi, Dhaka.',
+                ].map<DropdownMenuItem<String>>((String location) {
+                  return DropdownMenuItem<String>(
+                    value: location,
+                    child: Text(location),
+                  );
+                }).toList(),
               ),
-              Icon(Icons.arrow_drop_down, color: AppColors.primaryColor),
-            ],
-          ),
+            );
+          }
+        ),
+      ],
+    ),
 
           const SizedBox(height: 16),
 
@@ -282,13 +315,11 @@ class _ExplorePageState extends State<ExplorePage> {
 
           const SizedBox(height: 12),
 
-          ListView(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            children: [
-              InkWell(
+          ListView.separated(itemCount: 4,
+          shrinkWrap: true,
+            itemBuilder: (context, index) => InkWell(
                 onTap: () {
-                  navigateToPage(BusinessDealsPage());
+                    navigateToPage(RestaurantDetailsPage());
                 },
                 child: BusinessCard(
                   imageUrl:
@@ -301,42 +332,10 @@ class _ExplorePageState extends State<ExplorePage> {
                   location: "Gulshan 2, Dhaka.",
                   tags: ["Free cold drinks", "2 for 1"],
                 ),
-              ),
-              SizedBox(height: 8),
-              InkWell(
-                onTap: () {
-                  navigateToPage(BusinessDealsPage());
-                },
-                child: BusinessCard(
-                  imageUrl:
-                      "https://tse4.mm.bing.net/th/id/OIP.r3wgjJHOPaQo1GnGCkMnwgHaE8?rs=1&pid=ImgDetMain&o=7&rm=3",
-                  title: "Football Mania",
-                  rating: 4,
-                  reviewCount: 120,
-                  priceRange: "€50–5000",
-                  openTime: "9 AM - 10 PM",
-                  location: "Gulshan 2, Dhaka.",
-                  tags: ["2 for 1"],
-                ),
-              ),
-              SizedBox(height: 8),
-              InkWell(
-                onTap: () {
-                  navigateToPage(BusinessDealsPage());
-                },
-                child: BusinessCard(
-                  imageUrl:
-                      "https://tse4.mm.bing.net/th/id/OIP.r3wgjJHOPaQo1GnGCkMnwgHaE8?rs=1&pid=ImgDetMain&o=7&rm=3",
-                  title: "Football Mania",
-                  rating: 4,
-                  reviewCount: 120,
-                  priceRange: "€50–5000",
-                  openTime: "9 AM - 10 PM",
-                  location: "Gulshan 2, Dhaka.",
-                  tags: ["2 for 1"],
-                ),
-              ),
-            ],
+              ), separatorBuilder: (context, index) =>   SizedBox(height: 8),
+            
+            physics: NeverScrollableScrollPhysics(),
+          
           ),
         ],
       ),

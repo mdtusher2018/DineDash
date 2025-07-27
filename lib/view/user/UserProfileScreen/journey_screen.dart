@@ -35,23 +35,26 @@ class JourneyScreen extends StatelessWidget {
                     mainAxisAlignment:MainAxisAlignment.center,
                     children: [
                       journeybox(icon: 'assets/images/deals.png', digit: '3', title: 'Deals',),
-                      journeybox(icon: 'assets/images/savings.png', digit: '11 €', title: 'Savings',),
+                      // journeybox(icon: 'assets/images/savings.png', digit: '11 €', title: 'Savings',),
+               journeybox(icon: 'assets/images/visited.png', digit: '4', title: 'Visited Place',),
                     ],
                   ),
                   Row(
                     spacing: 11,
                     mainAxisAlignment:MainAxisAlignment.center,
                     children: [
-                      journeybox(icon: 'assets/images/visited.png', digit: '4', title: 'Visited Place',),
+                      // journeybox(icon: 'assets/images/visited.png', digit: '4', title: 'Visited Place',),
                       journeybox(icon: 'assets/images/locations.png', digit: '2', title: 'Cities',),
+                            journeybox(icon: 'assets/images/star.png', digit: '6', title: 'Ratings',),
                     ],
                   ),
                   Row(
                     spacing: 11,
                     mainAxisAlignment:MainAxisAlignment.center,
                     children: [
-                      journeybox(icon: 'assets/images/star.png', digit: '6', title: 'Ratings',),
+                      // journeybox(icon: 'assets/images/star.png', digit: '6', title: 'Ratings',),
                       journeybox(icon: 'assets/images/review.png', digit: '1', title: 'Review',),
+                      Expanded(child: SizedBox())
                     ],
                   ),
 

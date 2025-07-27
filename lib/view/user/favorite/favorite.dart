@@ -1,6 +1,7 @@
 import 'package:dine_dash/view/res/colors.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:dine_dash/view/user/common_designs/common_design.dart';
+import 'package:dine_dash/view/user/home/RestaurantDetailsPage.dart';
 import 'package:flutter/material.dart';
 
 class UserFavoritePage extends StatefulWidget {
@@ -12,7 +13,7 @@ class UserFavoritePage extends StatefulWidget {
 
 class _UserFavoritePageState extends State<UserFavoritePage> {
 
-List<String> favorite=[];
+List<String> favorite=[""];
 
   @override
   Widget build(BuildContext context) {
@@ -68,16 +69,21 @@ List<String> favorite=[];
                    ListView.builder(
                     itemCount: 4,
                     itemBuilder: (context, index) {
-                return BusinessCard(
-                imageUrl: "https://tse4.mm.bing.net/th/id/OIP.r3wgjJHOPaQo1GnGCkMnwgHaE8?rs=1&pid=ImgDetMain&o=7&rm=3",
-                title: "Football Mania",
-                rating: 4,
-                reviewCount: 120,
-                priceRange: "€50–5000",
-                openTime: "9 AM - 10 PM",
-                location: "Gulshan 2, Dhaka.",
-                tags: ["2 for 1"],
-              );
+                return GestureDetector(
+                  onTap: () {
+                    navigateToPage(RestaurantDetailsPage());
+                  },
+                  child: BusinessCard(
+                  imageUrl: "https://tse4.mm.bing.net/th/id/OIP.r3wgjJHOPaQo1GnGCkMnwgHaE8?rs=1&pid=ImgDetMain&o=7&rm=3",
+                  title: "Football Mania",
+                  rating: 4,
+                  reviewCount: 120,
+                  priceRange: "€50–5000",
+                  openTime: "9 AM - 10 PM",
+                  location: "Gulshan 2, Dhaka.",
+                  tags: ["2 for 1"],
+                                ),
+                );
                   },))
             ],
           ),

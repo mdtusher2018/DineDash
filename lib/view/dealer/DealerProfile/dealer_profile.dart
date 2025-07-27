@@ -1,3 +1,5 @@
+import 'package:dine_dash/dealer_user_chooser.dart';
+import 'package:dine_dash/view/res/colors.dart';
 import 'package:dine_dash/view/user_dealer_common/about_us.dart';
 import 'package:dine_dash/view/user_dealer_common/contact_us.dart';
 import 'package:dine_dash/view/user_dealer_common/edit_profile.dart';
@@ -6,6 +8,7 @@ import 'package:dine_dash/view/user_dealer_common/settings.dart';
 import 'package:dine_dash/view/user_dealer_common/tearms_and_condition.dart';
 import 'package:dine_dash/view/user/root_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../res/commonWidgets.dart';
 
@@ -112,19 +115,26 @@ class DealerProfile extends StatelessWidget {
               ),
             ),
             SizedBox(height: 62,),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16,vertical: 20),
-              decoration: BoxDecoration(
-                  border: Border(
-                    bottom:BorderSide(color: Colors.grey.shade300),
-                    top:BorderSide(color: Colors.grey.shade300),)
-              ),
-              child:Row(
-                spacing: 10,
-                children: [
-                  Image.asset("assets/images/logout.png",height: 35,width: 35,fit: BoxFit.fill,),
-                  commonText("Log Out",size: 16,fontWeight: FontWeight.w600),
-                ],
+            GestureDetector(
+              onTap: () {
+                showLogoutDialog(context, (){
+                  Get.offAll(DealerUserChooeser());
+                });
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 16,vertical: 20),
+                decoration: BoxDecoration(
+                    border: Border(
+                      bottom:BorderSide(color: Colors.grey.shade300),
+                      top:BorderSide(color: Colors.grey.shade300),)
+                ),
+                child:Row(
+                  spacing: 10,
+                  children: [
+                    Image.asset("assets/images/logout.png",height: 35,width: 35,fit: BoxFit.fill,),
+                    commonText("Log Out",size: 16,fontWeight: FontWeight.w600),
+                  ],
+                ),
               ),
             ),
             SizedBox(height: 50,),
@@ -134,6 +144,63 @@ class DealerProfile extends StatelessWidget {
       ),
     );
   }
+
+
+  Future<void> showLogoutDialog(
+    BuildContext context,
+    VoidCallback onLogout,
+  ) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: commonText(
+            "Do you want to Log Out?",
+            size: 18,
+            fontWeight: FontWeight.w500,
+            textAlign: TextAlign.center,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          actions: [
+            Row(
+              children: [
+                Expanded(
+                  child: commonButton(
+                    "Cancel",
+                    color: Color(0xFFDDDDDD),
+                    textColor: Colors.black,
+                    height: 40,
+                    width: 100,boarderRadious: 10,
+                    onTap: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                    },
+                  ),
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: commonButton(
+                    "Log Out",
+                    color: AppColors.primaryColor,
+                    textColor: Colors.white,
+                    height: 40,
+                    boarderRadious: 10,
+                    width: 100,
+                    onTap: onLogout
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
+
+
 }
 class buildRowCon extends StatelessWidget {
   const buildRowCon({
@@ -204,3 +271,6 @@ class buildcontainer extends StatelessWidget {
     );
   }
 }
+
+
+

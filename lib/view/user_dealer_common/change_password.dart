@@ -125,7 +125,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
               textColor: AppColors.white,
               onTap: () {
-                // Handle change password logic here
+                Get.back();
                 print("Password changed!");
               },
             ),

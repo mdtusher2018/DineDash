@@ -1,6 +1,7 @@
 import 'package:dine_dash/view/res/colors.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 // Assuming all common widgets are in this file
 
 class AddBusiness2ndScreen extends StatefulWidget {
@@ -92,8 +93,8 @@ class _AddBusiness2ndScreenState extends State<AddBusiness2ndScreen> {
         child: commonButton(
           "Add Business",
           onTap: () {
-            // Implement your business save logic
-            print("Business Added!");
+            Get.back();
+            Get.back();
           },
         ),
       ),

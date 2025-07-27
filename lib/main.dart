@@ -1,4 +1,8 @@
 import 'package:dine_dash/dealer_user_chooser.dart';
+import 'package:dine_dash/view/dealer/home_and_deal/dealer_homepage.dart';
+import 'package:dine_dash/view/dealer/rootpage.dart';
+import 'package:dine_dash/view/res/colors.dart';
+import 'package:dine_dash/view/user/root_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,12 +21,17 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        appBarTheme: AppBarTheme(
+          surfaceTintColor: Colors.transparent,
+          backgroundColor: AppColors.white
+        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),scaffoldBackgroundColor: AppColors.white,
+        bottomSheetTheme: BottomSheetThemeData(backgroundColor: AppColors.white)
       ),
       // home: RootPage(),
       debugShowCheckedModeBanner: false,
-      // home: DealerBusinessPage(),
-      home: DealerUserChooeser(),
+      home: DealerRootPage(),
+      
     );
   }
 }

@@ -27,17 +27,17 @@ class ReminderScreen extends StatelessWidget {
               SizedBox(height: 12,),
               commonText("How was your experience at The Rio Lounge?",size: 22,fontWeight: FontWeight.w700),
               SizedBox(height: 50,),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    commonText("Savings:",size: 18,fontWeight: FontWeight.w700),
-                    commonText("11 €",size: 18,fontWeight: FontWeight.w700),
-                  ],
-                ),
-              ),
-              SizedBox(child: Divider(height: 1,color: Colors.grey,)),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(vertical: 15),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       commonText("Savings:",size: 18,fontWeight: FontWeight.w700),
+              //       commonText("11 €",size: 18,fontWeight: FontWeight.w700),
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(child: Divider(height: 1,color: Colors.grey,)),
               SizedBox(height: 20,),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
@@ -112,7 +112,7 @@ class ReminderScreen extends StatelessWidget {
                   );
                 }).toList(),
               )),
-              SizedBox(height: 132,),
+              SizedBox(height: 170,),
               commonButton("Continue",onTap: (){
                 Get.to(()=> RattingPage());
               }),

@@ -1,3 +1,4 @@
+import 'package:dine_dash/view/dealer/home_and_deal/edit_deals.dart';
 import 'package:dine_dash/view/res/colors.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:dine_dash/view/dealer/home_and_deal/create_deal.dart';
@@ -78,8 +79,20 @@ class _DealerDealsPageState extends State<DealerDealsPage> {
               location: deal["location"],
               benefitText: deal["benefit"],
               status: deal["status"],
-              onEdit: () => print("Edit ${deal["title"]}"),
-              onDelete: () => print("Delete ${deal["title"]}"),
+              onEdit: () {
+                navigateToPage(EditDealScreen());
+              },
+              onDelete: () {
+                  showDeleteConfirmationDialog(
+                    context: context,
+                    title: "Delete Item",
+                    message: "Are you sure you want to delete this item? This action cannot be undone.",
+                    onDelete: () {
+                      // Perform deletion logic here
+                      print("Item deleted");
+                    },
+                  );
+              },
               onToggleStatus: () {
                 showPauseReasonDialog(context, (reason) {
                   print("User wants to pause because: $reason");

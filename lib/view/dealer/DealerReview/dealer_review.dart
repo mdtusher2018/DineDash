@@ -63,7 +63,7 @@ class _DealerReviewState extends State<DealerReview> {
               SizedBox(height: 15,),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 15),
-            height: 240,
+            height: 200,
             width: MediaQuery.sizeOf(context).width,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -73,16 +73,18 @@ class _DealerReviewState extends State<DealerReview> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 10),
-                commonText("Rating Distribution", size: 16, fontWeight: FontWeight.w700),
+                commonText("Rating Distribution", size: 16, fontWeight: FontWeight.w700),           
+                SizedBox(height: 10),
                 Expanded(
                   child: ListView.builder(
+                    padding: EdgeInsets.all(0),
                     itemCount:ratting.length,
                     itemBuilder: (context, index) {
                       double ratingValue = double.parse(ratting[index]['ratting']);
                       return Row(
                         spacing: 10,
                         children: [
-                          Text("${5 - index}*", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+                          commonText("${5 - index}*", size: 20, fontWeight: FontWeight.w500),
                           Expanded(
                             child: RatingProgressBar(rating: ratingValue),
                           ),
@@ -95,7 +97,7 @@ class _DealerReviewState extends State<DealerReview> {
             ),
           ),
 
-          SizedBox(height: 15,),
+          SizedBox(height: 16,),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 height: 340,
@@ -133,8 +135,9 @@ class _DealerReviewState extends State<DealerReview> {
                 ),
               ),
 
-              SizedBox(height: 15,),
+              SizedBox(height: 16,),
               ListView.builder(
+                padding: EdgeInsets.all(0),
                 shrinkWrap: true,
                   physics: ScrollPhysics(),
                   itemCount: 3,

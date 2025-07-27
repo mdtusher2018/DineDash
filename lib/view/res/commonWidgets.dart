@@ -628,3 +628,53 @@ AppBar commonAppBar({
     centerTitle: isCenter,
   );
 }
+void showDeleteConfirmationDialog({
+  required BuildContext context,
+  required String title,
+  required String message,
+  required VoidCallback onDelete,
+}) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        title: Text(
+          title,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+        content: Text(
+          message,
+          style: const TextStyle(fontSize: 14),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text(
+              "Cancel",
+              style: TextStyle(fontWeight: FontWeight.bold,color: AppColors.black),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Close dialog first
+              onDelete(); // Trigger delete action
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.red,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: const Text("Delete",style: TextStyle(color: AppColors.white),),
+          ),
+        ],
+      );
+    },
+  );
+}
