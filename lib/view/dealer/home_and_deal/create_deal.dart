@@ -1,6 +1,7 @@
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/view/res/colors.dart';
+import 'package:get/get.dart';
 // if needed, import your widget file
 
 class AddDealScreen extends StatefulWidget {
@@ -316,7 +317,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
             commonButton(
               "Create Deal",
               onTap: () {
-                // Handle deal submission
+                Get.back();
               },
               haveNextIcon: false,
             ),SizedBox(height: 24,)

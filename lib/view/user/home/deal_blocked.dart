@@ -115,15 +115,13 @@ Future.delayed(Duration(milliseconds: 1200), () {
               fit: StackFit.expand,
               alignment: Alignment.center,
               children: [
-                    Center(
-                    child: Positioned.fill(
+                    Positioned.fill(
                       child: Lottie.asset(
                         'assets/animation image/animation.json',
                         repeat: false,
                         fit: BoxFit.cover,
                       ),
                     ),
-                  ),
                 // Background scale animation
                 AnimatedBuilder(
                   animation: _bgScale,
@@ -162,15 +160,13 @@ Future.delayed(Duration(milliseconds: 1200), () {
                     ),
                   ),
                 ),
-                Center(
-                    child: Positioned.fill(
-                      child: Lottie.asset(
-                        'assets/animation image/animation.json',
-                        repeat: false,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                Positioned.fill(
+                  child: Lottie.asset(
+                    'assets/animation image/animation.json',
+                    repeat: false,
+                    fit: BoxFit.cover,
                   ),
+                ),
                   
               
               ],

@@ -112,15 +112,13 @@ Future.delayed(Duration(milliseconds: 1200), () {
               fit: StackFit.expand,
               alignment: Alignment.center,
               children: [
-                    Center(
-                    child: Positioned.fill(
+                    Positioned.fill(
                       child: Lottie.asset(
                         'assets/animation image/animation.json',
                         repeat: false,
                         fit: BoxFit.cover,
                       ),
                     ),
-                  ),
                 // Background scale animation
                 AnimatedBuilder(
                   animation: _bgScale,
@@ -159,58 +157,56 @@ Future.delayed(Duration(milliseconds: 1200), () {
                     ),
                   ),
                 ),
-                Center(
-                    child: Positioned.fill(
-                      child: Lottie.asset(
-                        'assets/animation image/animation.json',
-                        repeat: false,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                Positioned.fill(
+                  child: Lottie.asset(
+                    'assets/animation image/animation.json',
+                    repeat: false,
+                    fit: BoxFit.cover,
                   ),
+                ),
                   
               
               ],
             ),
           ),
-      Expanded(
-        flex: 2,
-  child: FadeTransition(
-    opacity: _fadeTitle,
-    child: Container(
-      constraints: BoxConstraints(maxWidth: 320),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SlideTransition(
-            position: _slideTitle,
-            child: commonText("Deal redeemed!", size: 21, isBold: true),
-          ),
-          SizedBox(height: 8),
-          SlideTransition(
-            position: _slideDetails,
-            child: commonText(
-              "Congratulations, you’ve discovered a new restaurant in your town!",
-              textAlign: TextAlign.center,
-              size: 16,
-            ),
-          ),
-          SizedBox(height: 16),
-      
-          Spacer(flex: 3),
-          FadeTransition(
-            opacity: _fadeButton,
-            child: commonButton("Continue",onTap: () {
-              Get.back();
-              Get.back();
-            },),
-          ),
-          Spacer(),
-        ],
-      ),
-    ),
-  ),
-)
+          Expanded(
+              flex: 2,
+              child: FadeTransition(
+                opacity: _fadeTitle,
+                child: Container(
+                  constraints: BoxConstraints(maxWidth: 320),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SlideTransition(
+                        position: _slideTitle,
+                        child: commonText("Deal redeemed!", size: 21, isBold: true),
+                      ),
+                      SizedBox(height: 8),
+                      SlideTransition(
+                        position: _slideDetails,
+                        child: commonText(
+                          "Congratulations, you’ve discovered a new restaurant in your town!",
+                          textAlign: TextAlign.center,
+                          size: 16,
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                  
+                      Spacer(flex: 3),
+                      FadeTransition(
+                        opacity: _fadeButton,
+                        child: commonButton("Continue",onTap: () {
+                          Get.back();
+                          Get.back();
+                        },),
+                      ),
+                      Spacer(),
+                    ],
+                  ),
+                ),
+              ),
+            )
 
         ],
       ),
