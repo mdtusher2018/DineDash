@@ -1,6 +1,5 @@
 import 'package:dine_dash/dealer_user_chooser.dart';
 import 'package:dine_dash/view/res/colors.dart';
-import 'package:dine_dash/view/user/user_subscription.dart';
 import 'package:dine_dash/view/user_dealer_common/about_us.dart';
 import 'package:dine_dash/view/user_dealer_common/contact_us.dart';
 import 'package:dine_dash/view/user_dealer_common/edit_profile.dart';

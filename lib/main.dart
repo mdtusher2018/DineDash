@@ -1,8 +1,5 @@
 import 'package:dine_dash/dealer_user_chooser.dart';
-import 'package:dine_dash/view/dealer/home_and_deal/dealer_homepage.dart';
-import 'package:dine_dash/view/dealer/rootpage.dart';
 import 'package:dine_dash/view/res/colors.dart';
-import 'package:dine_dash/view/user/root_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
