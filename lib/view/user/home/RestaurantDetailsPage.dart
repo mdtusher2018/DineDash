@@ -1,5 +1,6 @@
 import 'package:dine_dash/view/user/home/all_review.dart';
 import 'package:dine_dash/view/user/home/deal_blocked.dart';
+import 'package:dine_dash/view/user/user_subscription.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:dine_dash/view/res/colors.dart';
@@ -277,6 +278,7 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
                               "Lorem ipsum dolor sit amet consectetur. Rhoncus molestie amet non pellentesque.",
                           duration: "60 Days",
                           location: "Gulshan 2.",
+                          subscriptionRequired: true
                         ),
                         buildDealCard(
                           title: "Free cold drinks",
@@ -380,6 +382,7 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
     required String subText,
     required String duration,
     required String location,
+     bool subscriptionRequired=false//testing purpose remove while api intregration
   }) {
     return Stack(
       children: [
@@ -481,9 +484,11 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
                     selectedDay: "Today",
                     timeRange: "12:00 - 20:00",
                     dealCount: 15,
+                    subscriptionRequired: subscriptionRequired,
                     onDealTap: () {
                       Get.back();
-                      navigateToPage(DealBlockedPage());
+
+                      navigateToPage((subscriptionRequired)?SubscriptionView():DealBlockedPage());
                     },
                   );
                 },
@@ -725,6 +730,7 @@ void showDealBottomSheet(
   required String timeRange,
   required int dealCount,
   required VoidCallback onDealTap,
+  bool subscriptionRequired=false//testing purpose remove while api intregration
 }) {
   showModalBottomSheet(
     context: context,
@@ -756,7 +762,41 @@ void showDealBottomSheet(
                     ),
                   ],
                 ),
-                child: Column(
+                child: (subscriptionRequired)?
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 16),
+                    Icon(
+                      Icons.lock_outline_rounded,
+                      size: 48,
+                      color: AppColors.primaryColor,
+                    ),
+                    const SizedBox(height: 16),
+                    commonText(
+                      "Subscription Required",
+                      size: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    const SizedBox(height: 8),
+                    commonText(
+                      "You need an active subscription to access this deal.\nPlease subscribe to continue.",
+                      size: 14,
+                      color: Colors.grey.shade700,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 24),
+                    commonButton(
+                      "View Subscription Plans",
+                      onTap: () {
+                        onDealTap(); // Replace with actual navigation to plans
+                      },
+                      color: AppColors.primaryColor,
+                      textColor: Colors.white,
+                    ),
+                  ],
+                ):
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Title
