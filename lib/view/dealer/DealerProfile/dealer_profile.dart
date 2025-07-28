@@ -1,5 +1,6 @@
 import 'package:dine_dash/dealer_user_chooser.dart';
 import 'package:dine_dash/view/res/colors.dart';
+import 'package:dine_dash/view/user/user_subscription.dart';
 import 'package:dine_dash/view/user_dealer_common/about_us.dart';
 import 'package:dine_dash/view/user_dealer_common/contact_us.dart';
 import 'package:dine_dash/view/user_dealer_common/edit_profile.dart';
@@ -54,28 +55,7 @@ class DealerProfile extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 15,),
-                  // GestureDetector(
-                  //   onTap: (){
-                  //     // Get.to(()=>JourneyScreen());
-                  //   },
-                  //   child: Container(
-                  //     height: 84,
-                  //     width: double.infinity,
-                  //     decoration: BoxDecoration(
-                  //       borderRadius: BorderRadius.circular(10),
-                  //       border: Border.all(color: Colors.grey.shade300),
-                  //     ),
-                  //     child: Row(
-                  //       mainAxisAlignment: MainAxisAlignment.center,
-                  //       children: [
-                  //         commonText("Your Journey",size: 22,fontWeight: FontWeight.w600),
-                  //         SizedBox(width: 50,),
-                  //         Image.asset("assets/images/track.png",height: 66,width: 66,),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-                  // SizedBox(height: 15,),
+  
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -99,6 +79,9 @@ class DealerProfile extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
+                  //   buildRowCon(image: 'assets/images/subscription.png', title: 'Subscription', onTap: () {
+                  //   navigateToPage(SubscriptionView());
+                  // },),
                   buildRowCon(image: 'assets/images/policy.png', title: 'Privacy Policy', onTap: () {
                     navigateToPage(PrivacyPolicyScreen());
                   },),
