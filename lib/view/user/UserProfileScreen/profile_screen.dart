@@ -106,6 +106,7 @@ class ProfileScreen extends StatelessWidget {
                     buildRowCon(image: 'assets/images/subscription.png', title: 'Subscription', onTap: () {
                       navigateToPage(SubscriptionView());
                     },),
+       
                   buildRowCon(image: 'assets/images/policy.png', title: 'Privacy Policy', onTap: () {
                     navigateToPage(PrivacyPolicyScreen());
                   },),
@@ -115,6 +116,13 @@ class ProfileScreen extends StatelessWidget {
                   buildRowCon(image: 'assets/images/about.png', title: 'About Us', onTap: () {
                     navigateToPage(AboutUsPage());
                   },),
+                               buildRowCon(
+  image: 'assets/images/language.png', // Add a globe or language icon in your assets
+  title: 'Language', // This should be localized later
+  onTap: () {
+    _showLanguageSelector(context);
+  },
+),
                   buildRowCon(image: 'assets/images/become.png', title: 'Become a Dealer', onTap: () {
                     navigateToPage(DealerOnboardingView());
                   },),
@@ -202,6 +210,46 @@ class ProfileScreen extends StatelessWidget {
       },
     );
   }
+
+
+
+void _showLanguageSelector(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+    ),
+    builder: (context) {
+      return Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            commonText("Select Language", size: 18, fontWeight: FontWeight.w600),
+            const SizedBox(height: 16),
+            ListTile(
+              leading: const Icon(Icons.language,color: AppColors.primaryColor),
+              title: commonText('English'),
+              onTap: () {
+                Get.updateLocale(const Locale('en', 'US'));
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.language,color: AppColors.primaryColor,),
+              title: commonText('Deutsch'),
+              onTap: () {
+                Get.updateLocale(const Locale('de', 'DE'));
+                Navigator.pop(context);
+              },
+            ),
+            // Add more languages here
+          ],
+        ),
+      );
+    },
+  );
+}
 
 
 

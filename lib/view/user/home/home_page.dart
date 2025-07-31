@@ -4,6 +4,7 @@ import 'package:dine_dash/view/res/colors.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:dine_dash/view/user/common_designs/common_design.dart';
 import 'package:dine_dash/view/user/home/RestaurantDetailsPage.dart';
+import 'package:dine_dash/view/user/home/list_of_resturants.dart';
 import 'package:dine_dash/view/user/notification/notification.dart';
 import 'package:flutter/material.dart';
 
@@ -112,19 +113,29 @@ Row(
             const SizedBox(height: 24),
 
             /// Sections
-            buildSection("Nearby Open Restaurants"),
+            buildSection("Nearby Open Restaurants",() {
+              navigateToPage(SeeAllResturentPage(title: "Nearby Open Restaurants"));
+            },),
             buildHorizontalList(),
 
-            buildSection("Activities"),
+            buildSection("Activities",() {
+              navigateToPage(SeeAllResturentPage(title: "Activities"));
+            }),
             buildHorizontalList(),
 
-            buildSection("Hot Deals 🔥"),
+            buildSection("Hot Deals 🔥",() {
+              navigateToPage(SeeAllResturentPage(title: "Hot Deals 🔥"));
+            }),
             buildHorizontalList(),
 
-            buildSection("Top rated Restaurants"),
+            buildSection("Top rated Restaurants",() {
+              navigateToPage(SeeAllResturentPage(title: "Top rated Restaurants"));
+            }),
             buildHorizontalList(),
 
-            buildSection("New"),
+            buildSection("New",() {
+              navigateToPage(SeeAllResturentPage(title: "New"));
+            }),
             buildHorizontalList(),
           ],
         ),
@@ -133,14 +144,16 @@ Row(
   }
 
   /// Section title with "See all"
-  Widget buildSection(String title) {
+  Widget buildSection(String title,Function() ontap) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           commonText(title, fontWeight: FontWeight.bold, size: 16),
-          commonText("See all", color: Colors.blueGrey,isBold: true),
+          GestureDetector(
+            onTap: ontap,
+            child: commonText("See all", color: Colors.blueGrey,isBold: true)),
         ],
       ),
     );

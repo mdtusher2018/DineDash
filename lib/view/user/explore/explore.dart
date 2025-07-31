@@ -16,7 +16,7 @@ class ExplorePage extends StatefulWidget {
 class _ExplorePageState extends State<ExplorePage> {
   bool showMap = false;
 
-  String selectedExpense = 'Expense';
+  String? selectedExpense ;
   String selectedSortBy = 'Gulshan';
   RxString selectedLocation = 'Rampura, Dhaka.'.obs;
 
@@ -81,6 +81,7 @@ class _ExplorePageState extends State<ExplorePage> {
                   toggleButton(
                     icon: "assets/images/bottom nav/explore_u.png",
                     label: 'List',
+
                     isSelected: !showMap,
                     onTap: () => setState(() => showMap = false),
                     isleft: false,
@@ -126,7 +127,7 @@ class _ExplorePageState extends State<ExplorePage> {
           children: [
             Image.asset(
               icon,
-              color: isSelected ? Colors.white : AppColors.primaryColor,
+              color: isSelected ? Colors.white : AppColors.primaryColor,width: 24,
             ),
             const SizedBox(width: 6),
             commonText(
@@ -240,30 +241,20 @@ Row(
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: DropdownButton<String>(
-                      value: selectedExpense,
+                      value: selectedExpense,hint: commonText("What do you want to do"),
                       isExpanded: true,
                       icon: const Icon(
                         Icons.keyboard_arrow_down_rounded,
                         size: 18,
                       ),
                       items:
-                          ['Expense', 'Low to High', 'High to Low'].map((
+                          ['Restaurants', 'Activities'].map((
                             String value,
                           ) {
                             return DropdownMenuItem<String>(
                               value: value,
-                              child: Row(
-                                children: [
-                                  if (value == 'Expense')
-                                    Image.asset(
-                                      "assets/images/filter.png",
-                                      height: 20,
-                                    ),
-                                  if (value == 'Expense')
-                                    const SizedBox(width: 8),
-                                  commonText(value),
-                                ],
-                              ),
+                              
+                              child: commonText(value),
                             );
                           }).toList(),
                       onChanged: (String? newValue) {

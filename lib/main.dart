@@ -1,4 +1,5 @@
 import 'package:dine_dash/dealer_user_chooser.dart';
+import 'package:dine_dash/translations/app_translations.dart';
 import 'package:dine_dash/view/res/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Flutter Demo',
+        translations: AppTranslations(), 
+  locale: Locale('en', 'US'),
+  fallbackLocale: Locale('en', 'US'),
       theme: ThemeData(
         appBarTheme: AppBarTheme(
           surfaceTintColor: Colors.transparent,

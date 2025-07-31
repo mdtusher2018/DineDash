@@ -148,7 +148,7 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
                     children: [
                       Expanded(
                         child: OutlinedButton.icon(
-                          icon: Image.asset("assets/images/menu.png"),
+                          icon: Image.asset("assets/images/menu.png",width: 24,),
                           label: commonText("Menu", isBold: true, size: 14),
                           onPressed: () {
                             showMenuBottomSheet(context);
@@ -471,7 +471,7 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
 
               /// Book button
               commonButton(
-                "Book deal",
+                (subscriptionRequired)?"Subscribe to book a deal":"Book deal",
                 color: AppColors.primaryColor,
                 height: 40,
                 onTap: () {

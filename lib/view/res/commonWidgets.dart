@@ -16,7 +16,7 @@ Widget commonText(
   TextAlign textAlign = TextAlign.left,
 }) {
   return Text(
-    text,
+    text.tr,
     overflow: TextOverflow.ellipsis,
     maxLines: maxline,
     softWrap: softwarp,
@@ -65,9 +65,9 @@ Widget commonTextfieldWithTitle(
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          commonText(title, size: textSize, fontWeight: FontWeight.w500),
+          commonText(title.tr, size: textSize, fontWeight: FontWeight.w500),
           if (optional)
-            commonText("(Optional)", size: textSize, color: Colors.grey),
+            commonText("(Optional)".tr, size: textSize, color: Colors.grey),
         ],
       ),
       const SizedBox(height: 8),
@@ -183,7 +183,7 @@ Widget commonButton(
                       children: [
                         commonText(
                           textAlign: textalign,
-                          title,
+                          title.tr,
                           size: textSize,
                           color: textColor,
                           isBold: true,
@@ -246,7 +246,7 @@ Widget commonBorderButton(
                 const SizedBox(width: 8),
               ],
               if (icon != null) ...[icon, const SizedBox(width: 8)],
-              commonText(title, size: 18, color: textColor, isBold: true),
+              commonText(title.tr, size: 18, color: textColor, isBold: true),
             ],
           ),
         ),
@@ -318,197 +318,6 @@ Widget buildOTPTextField(
   );
 }
 
-Widget commonRadioGroup(
-  String group,
-  List<String> values,
-  String selectedValue,
-
-  Function(String) onChanged, {
-  int crossAxisCount = 2,
-  bool alignCenter = false,
-  double childRatio = 4.0,
-  Map<String, Widget>? conditionalWidgets, // <-- NEW
-}) {
-  final showExtra = (String val) {
-    return conditionalWidgets != null && conditionalWidgets.containsKey(val);
-  };
-
-  if (crossAxisCount == 1) {
-    return Column(
-      children:
-          values.map((val) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Radio<String>(
-                      value: val,
-                      groupValue: selectedValue,
-                      onChanged: (newVal) => onChanged(newVal!),
-                      activeColor: AppColors.primaryColor,
-                    ),
-                    Flexible(child: commonText(val, size: 14)),
-                  ],
-                ),
-                if (selectedValue == val && showExtra(val))
-                  Padding(
-                    padding: const EdgeInsets.only(left: 40, bottom: 12),
-                    child: conditionalWidgets![val]!,
-                  ),
-              ],
-            );
-          }).toList(),
-    );
-  }
-
-  if (alignCenter) {
-    return Wrap(
-      spacing: 12,
-      runSpacing: 8,
-      alignment: WrapAlignment.center,
-      children:
-          values.map((val) {
-            return IntrinsicWidth(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Radio<String>(
-                    value: val,
-                    groupValue: selectedValue,
-                    onChanged: (newVal) => onChanged(newVal!),
-                    activeColor: AppColors.primaryColor,
-                  ),
-                  Flexible(child: commonText(val, size: 14)),
-                ],
-              ),
-            );
-          }).toList(),
-    );
-  }
-
-  return GridView.count(
-    crossAxisCount: crossAxisCount,
-    shrinkWrap: true,
-    physics: const NeverScrollableScrollPhysics(),
-    childAspectRatio: childRatio,
-    children:
-        values.map((val) {
-          return Align(
-            alignment: Alignment.centerLeft,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Radio<String>(
-                  value: val,
-                  groupValue: selectedValue,
-                  onChanged: (newVal) => onChanged(newVal!),
-                  activeColor: AppColors.primaryColor,
-                ),
-                Flexible(child: commonText(val, size: 14)),
-              ],
-            ),
-          );
-        }).toList(),
-  );
-}
-
-Widget commonNumberInputField({
-  required String hintText,
-  required int value,
-  required TextEditingController controller,
-  required Function(int) onChanged,
-}) {
-  return Container(
-    margin: const EdgeInsets.symmetric(vertical: 4),
-    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(12),
-      boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4)],
-    ),
-    child: Row(
-      children: [
-        SizedBox(width: 10),
-        Expanded(
-          child: TextField(
-            controller: controller,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: hintText,
-              hintStyle: const TextStyle(color: Colors.grey),
-              isCollapsed: true,
-              contentPadding: const EdgeInsets.symmetric(vertical: 8),
-            ),
-            onChanged: (text) {
-              final parsed = int.tryParse(text);
-              if (parsed != null) {
-                onChanged(parsed);
-              }
-            },
-            style: const TextStyle(fontSize: 14),
-          ),
-        ),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            InkWell(
-              child: const Icon(Icons.keyboard_arrow_up),
-              onTap: () {
-                final current = int.tryParse(controller.text) ?? 0;
-                final updated = current + 1;
-                controller.text = updated.toString();
-                onChanged(updated);
-              },
-            ),
-            InkWell(
-              child: const Icon(Icons.keyboard_arrow_down),
-              onTap: () {
-                final current = int.tryParse(controller.text) ?? 0;
-                if (current > 0) {
-                  final updated = current - 1;
-                  controller.text = updated.toString();
-                  onChanged(updated);
-                }
-              },
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
-}
-
-Widget commonRadioGroupWithWidgetsOnly({
-  required String selectedValue,
-  required List<Widget> widgets, // Widgets with text/row layout
-  required Function(String) onChanged,
-}) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: List.generate(widgets.length, (index) {
-      final val = index.toString(); // use index as unique string value
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Radio<String>(
-                value: val,
-                groupValue: selectedValue,
-                onChanged: (newVal) => onChanged(newVal!),
-                activeColor: AppColors.primaryColor,
-              ),
-              Expanded(child: widgets[index]),
-            ],
-          ),
-        ],
-      );
-    }),
-  );
-}
-
 Widget commonTextField({
   TextEditingController? controller,
   String? hintText,
@@ -525,7 +334,7 @@ Widget commonTextField({
 
       style: const TextStyle(fontSize: 14),
       decoration: InputDecoration(
-        hintText: hintText,
+        hintText: hintText?.tr,
         hintStyle: TextStyle(fontSize: 12, color: Colors.grey),
         filled: true,
         fillColor: Colors.white,
@@ -569,7 +378,7 @@ Widget commonCheckbox({
         ), // Reduce extra spacing
         side: const BorderSide(color: Colors.black26),
       ),
-      if (label.isNotEmpty) Flexible(child: commonText(label, size: textSize)),
+      if (label.isNotEmpty) Flexible(child: commonText(label.tr, size: textSize)),
     ],
   );
 }
@@ -594,7 +403,7 @@ Widget commonDropdown<T>({
         isExpanded: true,
         underline: SizedBox(),
         value: value,
-        hint: commonText(hint, size: 14),
+        hint: commonText(hint.tr, size: 14),
         items:
             items.map<DropdownMenuItem<T>>((T item) {
               return DropdownMenuItem<T>(
@@ -624,7 +433,7 @@ AppBar commonAppBar({
               onTap: () {Get.back();},
               child: Icon(Icons.arrow_back_ios, color: textColor),
             ),
-    title: commonText(title, size: 20, isBold: true, color: textColor),
+    title: commonText(title.tr, size: 20, isBold: true, color: textColor),
     centerTitle: isCenter,
   );
 }
@@ -642,7 +451,7 @@ void showDeleteConfirmationDialog({
           borderRadius: BorderRadius.circular(16),
         ),
         title: Text(
-          title,
+          title.tr,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,
@@ -655,9 +464,9 @@ void showDeleteConfirmationDialog({
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text(
-              "Cancel",
-              style: TextStyle(fontWeight: FontWeight.bold,color: AppColors.black),
+            child:  commonText(
+              "Cancel".tr,
+              fontWeight: FontWeight.bold,color: AppColors.black
             ),
           ),
           ElevatedButton(
@@ -671,7 +480,7 @@ void showDeleteConfirmationDialog({
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            child: const Text("Delete",style: TextStyle(color: AppColors.white),),
+            child: commonText("Delete".tr,color: AppColors.white),
           ),
         ],
       );
