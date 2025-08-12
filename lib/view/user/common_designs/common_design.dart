@@ -117,7 +117,7 @@ class BusinessCard extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(Icons.location_on, size: 16, color: Colors.blue),
+                    const Icon(Icons.location_on, size: 20, color: Colors.blue),
                     const SizedBox(width: 4),
                     Expanded(
                       child: commonText(

@@ -224,17 +224,17 @@ class _DealerDealsPageState extends State<DealerDealsPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  actionButton(Image.asset("assets/images/lucide_edit.png"), "Edit", onEdit),
+                  actionButton(Image.asset("assets/images/editb.png",width: 22,), "Edit", onEdit),
                   actionButton(
                     status == "Active"
-                        ? Image.asset("assets/images/pause.png")
-                        : Image.asset("assets/images/play.png"),
+                        ? Image.asset("assets/images/pause.png",width: 20,)
+                        : Image.asset("assets/images/play.png",width: 20,),
                     status == "Active" ? "Pause" : "Active",
                     onToggleStatus,
                     color: AppColors.primaryColor,
                   ),
                   actionButton(
-                    Image.asset("assets/images/delete.png"),
+                    Image.asset("assets/images/delete.png",width: 20,),
                     "Delete",
                     onDelete,
                     color: Colors.red,

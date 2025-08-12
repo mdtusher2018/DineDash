@@ -40,7 +40,9 @@ backgroundColor: AppColors.primaryColor,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 16),
-                Image.asset(ImagePaths.verificationPageImage),
+                SizedBox(
+                  width: 240,height: 240,
+                  child: Image.asset(ImagePaths.verificationPageImage)),
                 const SizedBox(height: 10),
                 RichText(
                   text: TextSpan(

@@ -35,7 +35,9 @@ class _UserForgotPasswordScreenState extends State<UserForgotPasswordScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
         
-                Image.asset(ImagePaths.forgetPageImage),
+                SizedBox(
+                  width: 240,height: 240,
+                  child: Image.asset(ImagePaths.forgetPageImage)),
             
       
                 RichText(

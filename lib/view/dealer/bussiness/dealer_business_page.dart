@@ -99,7 +99,7 @@ class DealerBusinessPage extends StatelessWidget {
                                                     print("Item deleted");
                                                   },
                                                 );
-                                          }, icon: Image.asset("assets/images/delete.png")),
+                                          }, icon: Image.asset("assets/images/delete.png",width: 18,)),
                                         ],
                                       )
                                     ],

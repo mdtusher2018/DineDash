@@ -81,7 +81,7 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
                       ),
                       Row(
                         children: [
-                          Image.asset("assets/images/medel.png"),
+                          Image.asset("assets/images/medel.png",width: 16,),
                           SizedBox(width: 4),
                           commonText(
                             "5.0",
@@ -422,7 +422,7 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
                               color: AppColors.lightBlue,
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: Image.asset("assets/images/time222.png"),
+                            child: Image.asset("assets/images/time222.png",width: 24,),
                           ),
                           const SizedBox(width: 4),
                           Column(
@@ -436,34 +436,34 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: Center(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 8,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.lightBlue,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Image.asset("assets/images/location2.png"),
-                          ),
-                          const SizedBox(width: 4),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              commonText("Location", size: 12),
-                              commonText(location, size: 12, isBold: true),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // Expanded(
+                  //   child: Center(
+                  //     child: Row(
+                  //       mainAxisSize: MainAxisSize.min,
+                  //       children: [
+                  //         Container(
+                  //           padding: EdgeInsets.symmetric(
+                  //             horizontal: 12,
+                  //             vertical: 8,
+                  //           ),
+                  //           decoration: BoxDecoration(
+                  //             color: AppColors.lightBlue,
+                  //             borderRadius: BorderRadius.circular(8),
+                  //           ),
+                  //           child: Image.asset("assets/images/location2.png",width: 24,),
+                  //         ),
+                  //         const SizedBox(width: 4),
+                  //         Column(
+                  //           crossAxisAlignment: CrossAxisAlignment.start,
+                  //           children: [
+                  //             commonText("Location", size: 12),
+                  //             commonText(location, size: 12, isBold: true),
+                  //           ],
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
 
@@ -592,6 +592,7 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
           children: [
             Image.asset(
               "assets/images/location2.png",
+              width: 24,
               color: AppColors.primaryColor,
             ),
             const SizedBox(width: 8),
@@ -651,7 +652,7 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset("assets/images/clock.png"),
+            Image.asset("assets/images/clock.png",width: 24,),
             const SizedBox(width: 8),
             Expanded(
               child: Column(

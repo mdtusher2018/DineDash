@@ -65,10 +65,10 @@ class SettingsScreen extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        margin: const EdgeInsets.symmetric(horizontal: 8),
 
         child: ListTile(
-          leading: Image.asset(icon, color: iconColor, width: 24),
+          leading: Image.asset(icon, color: iconColor, width: 20,fit: BoxFit.fill),
           title: commonText(title, size: 16, color: AppColors.black),
           trailing: (haveArrow) ? Icon(Icons.arrow_forward_ios_outlined) : null,
         ),

@@ -43,7 +43,7 @@ class _UserSignInSignUpChooeserState extends State<UserSignInSignUpChooeser> {
                 ),
                 SizedBox(height: 20),
                 commonText(
-                  "Now continue after register in \"DEALR\".",
+                  "Now continue after register in \"USER\".",
                   size: 14,
                   color: AppColors.white,
                 ),

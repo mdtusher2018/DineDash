@@ -1,3 +1,4 @@
+import 'package:dine_dash/view/res/colors.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:dine_dash/view/dealer/home_and_deal/BusinessDealsPage.dart';
 import 'package:dine_dash/view/dealer/home_and_deal/create_deal.dart';
@@ -233,7 +234,7 @@ class buildStack extends StatelessWidget {
             child:Column(
               spacing: 5,
               children: [
-                Image.asset(icon,height: 30,width: 30,fit: BoxFit.fill,),
+                Image.asset(icon,height: 30,width: 30,fit: BoxFit.fill,color: AppColors.black,colorBlendMode: BlendMode.srcIn,),
                 commonText(text,size: 26,fontWeight: FontWeight.w700),
                 commonText(title,size: 16,fontWeight: FontWeight.w700),
               ],

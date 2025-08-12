@@ -112,13 +112,13 @@ Widget commonTextfieldWithTitle(
                 prefixIcon:
                     assetIconPath != null
                         ? Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Container(
-                            height: 16,
-                            width: 16,
+                          padding: const EdgeInsets.all(12.0),
+                          child: SizedBox(
+                            height:10,
+                            width: 10,
                             child: FittedBox(
                               fit: BoxFit.scaleDown,
-                              child: Image.asset(assetIconPath, scale: 2),
+                              child: Image.asset(assetIconPath,),
                             ),
                           ),
                         )
@@ -191,7 +191,15 @@ Widget commonButton(
                         if (haveNextIcon)
                           Padding(
                             padding: const EdgeInsets.only(left: 8.0),
-                            child: Image.asset("assets/images/arrow.png"),
+                            child: Container(
+                              padding: EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColors.white.withOpacity(0.2)
+                                
+                              ),
+                              child: Icon(Icons.arrow_forward,color: AppColors.white,size: 22,),
+                            ),
                           ),
                       ],
                     ),

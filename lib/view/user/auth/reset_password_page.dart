@@ -37,7 +37,9 @@ class _UserResetPasswordScreenState extends State<UserResetPasswordScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 20),
-                Image.asset(ImagePaths.resetPageImage),
+                SizedBox(
+                  width: 240,height: 240,
+                  child: Image.asset(ImagePaths.resetPageImage)),
                 const SizedBox(height: 10),
                 RichText(
                   text: TextSpan(

@@ -113,7 +113,7 @@ class _DealerReviewState extends State<DealerReview> {
                       SizedBox(height: 10),
                       Row(
                         children: [
-                          Image.asset("assets/images/filter.png", height: 25, width: 25),
+                          Image.asset("assets/images/filter.png", height: 20, width: 20),
                           SizedBox(width: 5),
                           commonText("Filters", size: 18, fontWeight: FontWeight.w700),
                         ],

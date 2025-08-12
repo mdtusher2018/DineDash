@@ -37,8 +37,9 @@ class _UserRootPageState extends State<UserRootPage> {
     return BottomNavigationBarItem(
       icon: Image.asset(
         isSelected ? selectedAsset : unselectedAsset,
-        width: 24,
-        height: 24,
+        width: 30,
+        height: 30,
+        
       ),
       label: label,
     );
