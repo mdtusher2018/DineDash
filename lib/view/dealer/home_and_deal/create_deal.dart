@@ -14,6 +14,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
   final TextEditingController reusableAfterController = TextEditingController();
   final TextEditingController maxClaimsController = TextEditingController();
   final TextEditingController dealTitleController = TextEditingController();
+  final TextEditingController benefitController=TextEditingController();
 
   String? selectedBusiness;
   String? selectedDealType;
@@ -49,13 +50,13 @@ class _AddDealScreenState extends State<AddDealScreen> {
               hint: "Select your business",
               onChanged: (val) => setState(() => selectedBusiness = val),
             ),
-            const SizedBox(height: 16),
-                     commonTextfieldWithTitle(
-              "Deal Title*",
-              dealTitleController,
-              hintText: "e.g., Happy Hour Special",
+            // const SizedBox(height: 16),
+            //          commonTextfieldWithTitle(
+            //   "Deal Title*",
+            //   dealTitleController,
+            //   hintText: "e.g., Happy Hour Special",
               
-            ),
+            // ),
             const SizedBox(height: 30),
 
             /// Description
@@ -256,7 +257,16 @@ class _AddDealScreenState extends State<AddDealScreen> {
                 ),
               );
             }),
+  const SizedBox(height: 8),
 
+            /// Max Claims
+            commonTextfieldWithTitle(
+              "Benefit Amount*",
+              benefitController,
+              hintText: "e.g. 100",
+              keyboardType: TextInputType.number,
+            ),
+              const SizedBox(height: 16),
             Row(
               children: [
                 Expanded(

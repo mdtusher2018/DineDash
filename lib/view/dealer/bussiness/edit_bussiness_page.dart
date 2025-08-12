@@ -1,14 +1,15 @@
+import 'package:dine_dash/view/dealer/bussiness/edit_business_2nd_page.dart';
 import 'package:dine_dash/view/res/colors.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
-import 'package:dine_dash/view/dealer/bussiness/add_new_bussiness.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
-class AddBusinessScreenFrist extends StatefulWidget {
+class EditBusinessScreenFrist extends StatefulWidget {
   @override
-  _AddBusinessScreenFristState createState() => _AddBusinessScreenFristState();
+  _EditBusinessScreenFristState createState() => _EditBusinessScreenFristState();
 }
 
-class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
+class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
   // Controllers
   final TextEditingController businessNameController = TextEditingController();
   final TextEditingController zipController = TextEditingController();
@@ -142,7 +143,7 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Add Business"),
+      appBar: commonAppBar(title: "Edit Business"),
       backgroundColor: AppColors.white,
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -182,7 +183,7 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
                  commonDropdown<String>(
               items: allCategories,
               value: selecteategory,
-              hint: "Select your business",
+              hint: "Select a category",
               onChanged: (val){
  setState(() {
               selecteategory = val;
@@ -227,6 +228,39 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
                 ),
               ),
             ),SizedBox(height: 8,),
+
+
+commonText("Business Image", size: 14, fontWeight: FontWeight.w500),
+SizedBox(height: 8,),
+GestureDetector(
+      onTap: (){},
+      child: DottedBorder(
+        options: RoundedRectDottedBorderOptions(radius: Radius.circular(16)),
+        child: Container(
+                padding: EdgeInsets.all(16),
+                width: double.infinity,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+            Image.asset("assets/images/Upload.png",width: 30,),
+                SizedBox(height: 12),
+              
+              commonText(
+                "Upload your image",
+                size: 16
+              ),
+              SizedBox(height: 6),
+          
+           
+            ],
+          ),
+        ),
+      ),
+    ),
+
+    SizedBox(height: 16,),
+
              commonText("Location",size: 16,isBold: true),
             SizedBox(height: 8,),
             commonTextfieldWithTitle(
@@ -274,7 +308,7 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
             commonButton(
               "Next",
               onTap: () {
-                navigateToPage(AddBusiness2ndScreen());
+                navigateToPage(EditBusiness2ndScreen());
               },
             ),
             const SizedBox(height: 32),

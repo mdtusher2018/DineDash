@@ -19,6 +19,7 @@ class _DealerDealsPageState extends State<DealerDealsPage> {
           "Lorem ipsum dolor sit amet consectetur. Rhoncus molestie amet non pellentesque.",
       "duration": "60 Days",
       "location": "Chef's Table",
+      'redeemed':"36",
       "benefit": "6 € Benefit",
       "status": "Active",
     },
@@ -28,6 +29,7 @@ class _DealerDealsPageState extends State<DealerDealsPage> {
           "Lorem ipsum dolor sit amet consectetur. Rhoncus molestie amet non pellentesque.",
       "duration": "60 Days",
       "location": "Chef's Table",
+      'redeemed':"36",
       "benefit": "6 € Benefit",
       "status": "Paused",
     },
@@ -76,6 +78,7 @@ class _DealerDealsPageState extends State<DealerDealsPage> {
               title: deal["title"],
               subText: deal["subText"],
               duration: deal["duration"],
+              redeemed: deal['redeemed'],
               location: deal["location"],
               benefitText: deal["benefit"],
               status: deal["status"],
@@ -112,6 +115,7 @@ class _DealerDealsPageState extends State<DealerDealsPage> {
     required String subText,
     required String duration,
     required String location,
+    required String redeemed,
     required String benefitText,
     required String status, // "Active" or "Paused"
     required VoidCallback onEdit,
@@ -201,7 +205,7 @@ class _DealerDealsPageState extends State<DealerDealsPage> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Image.asset(
-                            "assets/images/location2.png",
+                            "assets/images/user.png",
                             height: 20,
                           ),
                         ),
@@ -209,8 +213,8 @@ class _DealerDealsPageState extends State<DealerDealsPage> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            commonText("Location", size: 12),
-                            commonText(location, size: 12, isBold: true),
+                            commonText("REDEENED", size: 12),
+                            commonText(redeemed, size: 12, isBold: true),
                           ],
                         ),
                       ],

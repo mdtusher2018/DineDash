@@ -1,7 +1,7 @@
 
 import 'package:dine_dash/view/res/commonWidgets.dart';
+import 'package:dine_dash/view/user/deals/reminder_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:lottie/lottie.dart'; // Add this import
 
 
@@ -197,8 +197,7 @@ Future.delayed(Duration(milliseconds: 1200), () {
                       FadeTransition(
                         opacity: _fadeButton,
                         child: commonButton("Continue",onTap: () {
-                          Get.back();
-                          Get.back();
+                         navigateToPage(ReminderScreen(),replace: true);
                         },),
                       ),
                       Spacer(),

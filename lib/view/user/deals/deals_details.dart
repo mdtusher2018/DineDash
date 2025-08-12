@@ -1,20 +1,44 @@
 
 
 import 'package:dine_dash/view/user/deals/deal_redeem.dart';
-import 'package:dine_dash/view/user/deals/reminder_screen.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:shake/shake.dart';
 
 import '../../../controller/deal_details_controller/deal_details_controller.dart';
 
 
-class DealsDetails extends StatelessWidget {
+class DealsDetails extends StatefulWidget {
   const DealsDetails({super.key});
 
+  @override
+  State<DealsDetails> createState() => _DealsDetailsState();
+}
+
+class _DealsDetailsState extends State<DealsDetails> {
+
+    ShakeDetector? detector;
+
+  @override
+  void initState() {
+    super.initState();
+
+    detector = ShakeDetector.autoStart(
+      onPhoneShake: (event) {
+        navigateToPage(DealRedeemPage());
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    detector?.stopListening();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     final DealDetailsController controller = Get.put(DealDetailsController());
@@ -265,30 +289,25 @@ class DealsDetails extends StatelessWidget {
                             SizedBox(
                               height: 20,
                             ),
-                            GestureDetector(
-                              onTap: (){
-                                navigateToPage(DealRedeemPage());
-                              },
-                              child: Container(
-                                height: 48,
-                                width:double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: Colors.blueAccent)
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  spacing: 10,
-                                  children: [
-                                    Image.asset("assets/images/shakephone.png",height: 30,width: 30,fit: BoxFit.cover,),
-                                    commonText("Shake your phone to redeem",size: 18,fontWeight: FontWeight.w500),
-                                  ],
-                                ),
+                            Container(
+                              height: 48,
+                              width:double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: Colors.blueAccent)
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                spacing: 10,
+                                children: [
+                                  Image.asset("assets/images/shakephone.png",height: 30,width: 30,fit: BoxFit.cover,),
+                                  commonText("Shake your phone to redeem",size: 18,fontWeight: FontWeight.w500),
+                                ],
                               ),
                             ),
                             SizedBox(height: 15,),
                             commonButton("You can redeem from here also",onTap: (){
-                              Get.to(() => ReminderScreen());
+                              Get.to(() => DealRedeemPage());
                             }),
 
 

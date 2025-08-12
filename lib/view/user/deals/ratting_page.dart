@@ -16,7 +16,10 @@ class RattingPage extends StatelessWidget {
     final DealDetailsController controller = Get.put(DealDetailsController());
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(backgroundColor: Colors.white,),
+      appBar: AppBar(backgroundColor: Colors.white,leading: BackButton(onPressed: () {
+        Navigator.of(context).popUntil((route) => route.isFirst);
+
+      },),),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14,vertical: 5),
         child: SingleChildScrollView(

@@ -1,6 +1,6 @@
+import 'package:dine_dash/view/dealer/bussiness/edit_bussiness_page.dart';
 import 'package:dine_dash/view/dealer/home_and_deal/BusinessDealsPage.dart';
-import 'package:dine_dash/view/dealer/bussiness/add_bussiness.dart';
-import 'package:dine_dash/view/dealer/home_and_deal/edit_deals.dart';
+import 'package:dine_dash/view/dealer/bussiness/add_business_screen_frist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -86,7 +86,7 @@ class DealerBusinessPage extends StatelessWidget {
                                         children: [
                                           GestureDetector(
                                             onTap: (){
-                                              navigateToPage(EditDealScreen());
+                                              navigateToPage(EditBusinessScreenFrist());
                                             },
                                               child: Image.asset("assets/images/editb.png",height: 20,width: 20,)),
                                           IconButton(onPressed: (){

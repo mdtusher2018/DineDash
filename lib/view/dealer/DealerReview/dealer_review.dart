@@ -35,8 +35,9 @@ class _DealerReviewState extends State<DealerReview> {
             children: [
               SizedBox(height: 64,),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+                  SizedBox(),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -51,13 +52,14 @@ class _DealerReviewState extends State<DealerReview> {
                       commonText("Average Rating",size: 14,fontWeight: FontWeight.w400),
                     ],
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      commonText("60",size: 30,fontWeight: FontWeight.w600),
-                      commonText("Positive Reviews",size: 14,fontWeight: FontWeight.w400),
-                    ],
-                  ),
+                  SizedBox()
+                  // Column(
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   children: [
+                  //     commonText("60",size: 30,fontWeight: FontWeight.w600),
+                  //     commonText("Positive Reviews",size: 14,fontWeight: FontWeight.w400),
+                  //   ],
+                  // ),
                 ],
               ),
               SizedBox(height: 15,),

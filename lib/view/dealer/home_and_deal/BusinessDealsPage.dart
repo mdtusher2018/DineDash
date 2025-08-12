@@ -1,3 +1,5 @@
+import 'package:dine_dash/view/dealer/bussiness/add_menu_page.dart';
+import 'package:dine_dash/view/dealer/bussiness/edit_menu_page.dart';
 import 'package:dine_dash/view/dealer/home_and_deal/edit_deals.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:dine_dash/view/dealer/home_and_deal/create_deal.dart';
@@ -64,13 +66,86 @@ class _BusinessDealsPageState extends State<BusinessDealsPage>
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: [_buildDealsTab(), buildReviewsTab()],
+              children: [_buildDealsTab(), menuTab(), buildReviewsTab()],
             ),
           ),
         ],
       ),
     );
   }
+
+Widget menuTab(){
+  return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                      commonBorderButton("+ Add Items", onTap: () {
+                   navigateToPage(AddMenuScreen());
+          }),
+          SizedBox(height: 16,),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          commonText("Example from the",size: 14),
+                                      commonText("Menu", size: 18, isBold: true),
+                        ],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                           navigateToPage(EditMenuScreen());
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 8,vertical: 4),
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 1),
+                          borderRadius: BorderRadius.circular(4)
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset("assets/images/editb.png",width: 16,),
+                            commonText(" Edit",size: 12),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                Divider(),
+                commonText("The Rio Lounge",size: 16,fontWeight: FontWeight.w600),
+                ListView.builder(
+                  itemCount: 4,
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      minVerticalPadding: 8,
+                      minTileHeight: 0,
+
+                      contentPadding: EdgeInsets.all(0),
+                      title: commonText(
+                        "OPERA VEGAN",
+                        size: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      subtitle: commonText("Schoklade/Kaffe/Mango"),
+                      trailing: commonText("10 €"),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+}
+
 
   Widget _buildHeaderCard() {
     return Material(
@@ -173,6 +248,7 @@ class _BusinessDealsPageState extends State<BusinessDealsPage>
       unselectedLabelColor: Colors.grey,
       tabs: [
         Tab(child: commonText("Deals (2)", size: 14, isBold: true)),
+        Tab(child: commonText("Menu",size: 14,isBold: true),),
         Tab(child: commonText("Reviews (120)", size: 14, isBold: true)),
       ],
     );
