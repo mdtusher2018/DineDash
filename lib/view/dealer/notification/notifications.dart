@@ -3,6 +3,7 @@
 import 'package:dine_dash/view/res/colors.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DealerNotificationsPage extends StatelessWidget {
    DealerNotificationsPage({super.key});
@@ -12,7 +13,7 @@ List<String> notification=["",""];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Notification"),
+      appBar: commonAppBar(title: "Notification".tr),
       body:(notification.isEmpty)? _noNotificationsView()
       :
       ListView.separated(
@@ -76,7 +77,7 @@ Widget _noNotificationsView() {
             const SizedBox(height: 20),
             
             commonText(
-              "There’s no notifications",
+              "There’s no notifications".tr,
               size: 21,
               isBold: true,
              
@@ -84,7 +85,7 @@ Widget _noNotificationsView() {
             const SizedBox(height: 10),
             // Text for "Your notifications will appear on this page"
             commonText(
-              "Your notifications will appear on this page.",
+              "Your notifications will appear on this page.".tr,
               size: 18,
            
             ),

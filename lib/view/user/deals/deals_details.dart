@@ -109,49 +109,59 @@ class _DealsDetailsState extends State<DealsDetails> {
                               }).toList(),
                             )),
                             SizedBox(height: 10,),
-                            Row(
+                              Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  height: 31,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(color: Colors.black)
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 20),
-                                    child: Row(
-                                      spacing: 10,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.location_on_rounded,color: Colors.black,size: 22,),
-                                        commonText("Direction",size: 16,fontWeight: FontWeight.w600),
-                                      ],
+                                Expanded(
+                                  child: Container(
+                                    height: 31,
+                                    width: 150,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(color: Colors.black)
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 20),
+                                      child: Row(
+                                        spacing: 10,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.location_on_rounded,color: Colors.black,size: 20,),
+                                          Flexible(child: FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: commonText("Direction".tr,size: 16,fontWeight: FontWeight.w600))),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  height: 31,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(color: Colors.black)
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 5),
-                                    child: Row(
-                                      spacing: 10,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.share,color: Colors.black,size: 22,),
-                                        commonText("Share",size: 16,fontWeight: FontWeight.w600),
-                                      ],
+                                SizedBox(width: 12,),
+                                Expanded(
+                                  child: Container(
+                                    height: 31,
+                                    width: 150,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(color: Colors.black)
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 5),
+                                      child: Row(
+                                        spacing: 10,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.share,color: Colors.black,size: 20,),
+                                          Flexible(child: FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: commonText("Share".tr,size: 16,fontWeight: FontWeight.w600))),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
                               ],
                             ),
+                           
                             SizedBox(height: 20,),
                             Stack(
                               children: [
@@ -193,7 +203,7 @@ class _DealsDetailsState extends State<DealsDetails> {
                                                     Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
-                                                        commonText("Reusable After",size: 12,fontWeight: FontWeight.w400),
+                                                        commonText("Reusable After".tr,size: 12,fontWeight: FontWeight.w400),
                                                         commonText("60 Days",size: 14,fontWeight: FontWeight.w700),
                                                       ],
                                                     )
@@ -214,7 +224,7 @@ class _DealsDetailsState extends State<DealsDetails> {
                                                     Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
-                                                        commonText("LOCATION",size: 12,fontWeight: FontWeight.w400),
+                                                        commonText("LOCATION".tr,size: 12,fontWeight: FontWeight.w400),
                                                         commonText("Gulshan 2.",size: 14,fontWeight: FontWeight.w700),
                                                       ],
                                                     )
@@ -254,7 +264,7 @@ class _DealsDetailsState extends State<DealsDetails> {
                                   spacing: 10,
                                   children: [
                                     Image.asset("assets/images/date.png",height: 30,width: 30,),
-                                    commonText("Saturday",size: 16,fontWeight: FontWeight.w500),
+                                    commonText("Saturday".tr,size: 16,fontWeight: FontWeight.w500),
                                   ],
                                 ),
                                 SizedBox(
@@ -301,12 +311,12 @@ class _DealsDetailsState extends State<DealsDetails> {
                                 spacing: 10,
                                 children: [
                                   Image.asset("assets/images/shakephone.png",height: 30,width: 30,fit: BoxFit.cover,),
-                                  commonText("Shake your phone to redeem",size: 18,fontWeight: FontWeight.w500),
+                                  commonText("Shake your phone to redeem".tr,size: 18,fontWeight: FontWeight.w500),
                                 ],
                               ),
                             ),
                             SizedBox(height: 15,),
-                            commonButton("You can redeem from here also",onTap: (){
+                            commonButton("You can redeem from here also".tr,onTap: (){
                               Get.to(() => DealRedeemPage());
                             }),
 

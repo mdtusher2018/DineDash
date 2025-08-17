@@ -5,6 +5,7 @@ import 'package:dine_dash/view/user/auth/sign_in_page.dart';
 import 'package:dine_dash/view/user/auth/verify_email.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CreateUserAccount extends StatefulWidget {
   const CreateUserAccount({super.key});
@@ -36,7 +37,7 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Create Account",backGroundColor: AppColors.primaryColor,textColor: AppColors.white),
+      appBar: commonAppBar(title: "Create Account".tr,backGroundColor: AppColors.primaryColor,textColor: AppColors.white),
       backgroundColor: AppColors.primaryColor,
       bottomSheet: SizedBox(
         height: double.infinity,
@@ -54,27 +55,27 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
         
                   // Full Name TextField
                   commonTextfieldWithTitle(
-                    "Full name",
+                    "Full name".tr,
                     fullNameController,
-                    hintText: "Enter your email",
+                    hintText: "Enter your email".tr,
                     assetIconPath: ImagePaths.userIcon,
                   ),
                   const SizedBox(height: 15),
         
                   // Email TextField
                   commonTextfieldWithTitle(
-                    "Email",
+                    "Email".tr,
                     emailController,
-                    hintText: "Enter your email",
+                    hintText: "Enter your email".tr,
                     assetIconPath: ImagePaths.emailIcon,
                     keyboardType: TextInputType.emailAddress,
                   ),
                   const SizedBox(height: 15),
         
                       commonTextfieldWithTitle(
-                    "Postcode",
+                    "Postcode".tr,
                     posterCodeController,
-                    hintText: "Enter your postcode",
+                    hintText: "Enter your postcode".tr,
                     assetIconPath: ImagePaths.locationIcon,
                     keyboardType: TextInputType.emailAddress,
                   ),
@@ -82,9 +83,9 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
         
                   // Password TextField
                   commonTextfieldWithTitle(
-                    "Password",
+                    "Password".tr,
                     passwordController,
-                    hintText: "Enter your password",
+                    hintText: "Enter your password".tr,
                     assetIconPath: ImagePaths.lockIcon,
         
                     isPasswordVisible: isPasswordVisible,
@@ -99,9 +100,9 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
         
                   // Confirm Password TextField
                   commonTextfieldWithTitle(
-                    "Confirm Password",
+                    "Confirm Password".tr,
                     confirmPasswordController,
-                    hintText: "Enter your password",
+                    hintText: "Enter your password".tr,
                     assetIconPath: ImagePaths.lockIcon,
         
                     isPasswordVisible: isConfirmPasswordVisible,
@@ -126,14 +127,14 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
                       ),
                       RichText(
                         text: TextSpan(
-                          text: "Agree with ",
+                          text: "Agree with ".tr,
                           style: const TextStyle(
                             fontSize: 14,
                             color: AppColors.black,
                           ),
                           children: [
                             TextSpan(
-                              text: "Terms and Conditions",
+                              text: "Terms and Conditions".tr,
                               style: const TextStyle(
                                 decoration: TextDecoration.underline,
                                 color: AppColors.black,
@@ -150,7 +151,7 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
         
                   // Sign Up Button
                   commonButton(
-                    "Sign Up",
+                    "Sign Up".tr,
                     onTap: () {
           navigateToPage(UserEmailVerificationScreen());
                     },
@@ -161,7 +162,7 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
         
                   // Sign Up with Google
                   commonBorderButton(
-                    "Sign Up With Google",
+                    "Sign Up With Google".tr,
                     imagePath: ImagePaths.googleIcon,
         
                     onTap: () {},
@@ -176,13 +177,13 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      commonText("Already have an account? ", size: 14.0),
+                      commonText("Already have an account? ".tr, size: 14.0),
                       GestureDetector(
                         onTap: () {
                           navigateToPage(UserSignInScreen());
                         },
                         child: commonText(
-                          "Sign In",
+                          "Sign In".tr,
                           size: 14.0,
                           color: AppColors.black,
                           isBold: true,

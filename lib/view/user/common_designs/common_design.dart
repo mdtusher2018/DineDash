@@ -1,6 +1,7 @@
 import 'package:dine_dash/view/res/colors.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class BusinessCard extends StatelessWidget {
   final String imageUrl;
@@ -70,7 +71,7 @@ class BusinessCard extends StatelessWidget {
                         ),
                         Flexible(
                           child: commonText(
-                            "Price Range : $priceRange",
+                            "${"Price Range :".tr}$priceRange",
                             size: 12,fontWeight: FontWeight.w600
                           ),
                         ),
@@ -100,7 +101,7 @@ class BusinessCard extends StatelessWidget {
                    
                         Flexible(
                           child: commonText(
-                            "Open Time : $openTime",
+                            "${"Open Time :".tr} $openTime",
                                              size: 12,fontWeight: FontWeight.w600
                           ),
                         ),
@@ -121,7 +122,7 @@ class BusinessCard extends StatelessWidget {
                     const SizedBox(width: 4),
                     Expanded(
                       child: commonText(
-                        "Location : $location",
+                        "${"Location :".tr} $location",
                    size: 12,
                         maxline:2,fontWeight: FontWeight.w600
                       ),

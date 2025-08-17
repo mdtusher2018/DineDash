@@ -90,41 +90,50 @@ class RattingPage extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  height: 31,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(color: Colors.black)
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 20),
-                                    child: Row(
-                                      spacing: 10,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.location_on_rounded,color: Colors.black,size: 22,),
-                                        commonText("Direction",size: 16,fontWeight: FontWeight.w600),
-                                      ],
+                                Expanded(
+                                  child: Container(
+                                    height: 31,
+                                    width: 150,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(color: Colors.black)
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 20),
+                                      child: Row(
+                                        spacing: 10,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.location_on_rounded,color: Colors.black,size: 20,),
+                                          Flexible(child: FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: commonText("Direction".tr,size: 16,fontWeight: FontWeight.w600))),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  height: 31,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(color: Colors.black)
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 5),
-                                    child: Row(
-                                      spacing: 10,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.share,color: Colors.black,size: 22,),
-                                        commonText("Share",size: 16,fontWeight: FontWeight.w600),
-                                      ],
+                                SizedBox(width: 12,),
+                                Expanded(
+                                  child: Container(
+                                    height: 31,
+                                    width: 150,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(color: Colors.black)
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 5),
+                                      child: Row(
+                                        spacing: 10,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.share,color: Colors.black,size: 20,),
+                                          Flexible(child: FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: commonText("Share".tr,size: 16,fontWeight: FontWeight.w600))),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -171,7 +180,7 @@ class RattingPage extends StatelessWidget {
                                                       Column(
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
-                                                          commonText("Reusable After",size: 12,fontWeight: FontWeight.w400),
+                                                          commonText("Reusable After".tr,size: 12,fontWeight: FontWeight.w400),
                                                           commonText("60 Days",size: 14,fontWeight: FontWeight.w700),
                                                         ],
                                                       )
@@ -192,7 +201,7 @@ class RattingPage extends StatelessWidget {
                                                       Column(
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
-                                                          commonText("LOCATION",size: 12,fontWeight: FontWeight.w400),
+                                                          commonText("LOCATION".tr,size: 12,fontWeight: FontWeight.w400),
                                                           commonText("Gulshan 2.",size: 14,fontWeight: FontWeight.w700),
                                                         ],
                                                       )
@@ -249,7 +258,7 @@ class RattingPage extends StatelessWidget {
                               ],
                             ),
                             SizedBox(height: 16,),
-                            Center(child: commonText("Your Ratting",size: 20,fontWeight: FontWeight.w600)),
+                            Center(child: commonText("Your Ratting".tr,size: 20,fontWeight: FontWeight.w600)),
                             SizedBox(height: 10,),
                             Center(child: RatingBar.builder(
                               initialRating: 3,

@@ -4,6 +4,7 @@ import 'package:dine_dash/view/dealer/rootpage.dart';
 import 'package:dine_dash/view/res/image_paths.dart';
 import 'package:dine_dash/view/user/onboarding/UserOnboarding.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DealerUserChooeser extends StatefulWidget {
   const DealerUserChooeser({super.key});
@@ -35,20 +36,20 @@ class _DealerUserChooeserState extends State<DealerUserChooeser> {
                 Center(child: Image.asset(ImagePaths.logo)),
                 Spacer(flex: 5),
                 commonText(
-                  "Welcome!",
+                  "Welcome!".tr,
                   size: 21,
                   isBold: true,
                   color: AppColors.white,
                 ),
                 SizedBox(height: 20),
                 commonText(
-                  "Are You Dealer or User?",
+                  "Are You Dealer or User?".tr,
                   size: 14,
                   color: AppColors.white,
                 ),
                 SizedBox(height: 20),
                 commonButton(
-                  "User",
+                  "User".tr,
                   onTap: () {
                     navigateToPage(UserOnboardingView());
                   },
@@ -56,7 +57,7 @@ class _DealerUserChooeserState extends State<DealerUserChooeser> {
 
                 SizedBox(height: 20),
                 commonBorderButton(
-                  "Dealer",
+                  "Dealer".tr,
                   textColor: AppColors.white,
                   onTap: () {
                     navigateToPage(DealerRootPage());

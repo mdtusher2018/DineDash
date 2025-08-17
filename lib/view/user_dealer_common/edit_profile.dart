@@ -20,7 +20,7 @@ class EditProfileView extends StatelessWidget {
         elevation: 1,
         centerTitle: true,
         title: commonText(
-          "Edit Profile",
+          "Edit Profile".tr,
           size: 20,
           isBold: true,
           color: Colors.black87,
@@ -67,9 +67,9 @@ class EditProfileView extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
                     commonTextfieldWithTitle(
-                      "Email",
+                      "Email".tr,
                       emailController,
-                      hintText: "Enter your email",
+                      hintText: "Enter your email".tr,
                       issuffixIconVisible: false,
                       enable: true,
                       textSize: 14.0,
@@ -77,9 +77,9 @@ class EditProfileView extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     commonTextfieldWithTitle(
-                      "Full name",
+                      "Full name".tr,
                       nameController,
-                      hintText: "Enter your name",
+                      hintText: "Enter your name".tr,
                       issuffixIconVisible: false,
                       enable: true,
                       textSize: 14.0,
@@ -88,9 +88,9 @@ class EditProfileView extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     commonTextfieldWithTitle(
-                      "Postcode",
+                      "Postcode".tr,
                       postcodeController,
-                      hintText: "Enter your postcode",
+                      hintText: "Enter your postcode".tr,
                       issuffixIconVisible: false,
                       enable: true,
                       textSize: 14.0,
@@ -104,7 +104,7 @@ class EditProfileView extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: commonButton("Save",onTap: () {
+              child: commonButton("Save".tr,onTap: () {
                 Get.back();
               },),
             ),

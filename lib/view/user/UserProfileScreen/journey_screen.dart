@@ -1,5 +1,6 @@
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class JourneyScreen extends StatelessWidget {
   const JourneyScreen({super.key});
@@ -23,9 +24,9 @@ class JourneyScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20,),
-              commonText("Your Journey",size: 26,fontWeight: FontWeight.w700),
+              commonText("Your Journey".tr,size: 26,fontWeight: FontWeight.w700),
               SizedBox(height: 5,),
-              commonText("Discovering new restaurants, trying delicious dishes while paying less, a review of your culinary journey!",size: 18,fontWeight: FontWeight.w400,textAlign: TextAlign.center),
+              commonText("Discovering new restaurants, trying delicious dishes while paying less, a review of your culinary journey!".tr,size: 18,fontWeight: FontWeight.w400,textAlign: TextAlign.center),
               SizedBox(height: 20,),
               Column(
                 spacing: 20,
@@ -106,7 +107,7 @@ class journeybox extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 commonText(digit,size: 26,fontWeight: FontWeight.w700),
-                commonText(title,size: 16,fontWeight: FontWeight.w400,textAlign: TextAlign.start),
+                commonText(title.tr,size: 16,fontWeight: FontWeight.w400,textAlign: TextAlign.start),
               ],
             )
           ],

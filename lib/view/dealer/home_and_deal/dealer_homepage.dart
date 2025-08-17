@@ -5,6 +5,7 @@ import 'package:dine_dash/view/dealer/home_and_deal/create_deal.dart';
 import 'package:dine_dash/view/dealer/notification/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 
 class DealerHomepage extends StatelessWidget {
   const DealerHomepage({super.key});
@@ -22,7 +23,7 @@ class DealerHomepage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  commonText("Hi Dealer!!",size: 18,fontWeight: FontWeight.w700),
+                  commonText("Hi Dealer!".tr,size: 18,fontWeight: FontWeight.w700),
                   IconButton(onPressed: (){
                     navigateToPage(DealerNotificationsPage());
                   }, icon: Icon(Icons.notifications_active,color: Colors.orange,)),
@@ -45,7 +46,7 @@ class DealerHomepage extends StatelessWidget {
                     spacing: 10,
                     children: [
                       Icon(Icons.add,size: 28,),
-                      commonText("Quick Add Deal",size: 18,fontWeight: FontWeight.w500)
+                      commonText("Quick Add Deal".tr,size: 18,fontWeight: FontWeight.w500)
                     ],
                   ),
                 ),
@@ -80,18 +81,18 @@ class DealerHomepage extends StatelessWidget {
                       spacing: 10,
                       children: [
                         Image.asset("assets/images/Vector.png",height: 20,width: 30,fit: BoxFit.fill,),
-                        commonText("Monthly Performance",size: 16,fontWeight: FontWeight.w500),
+                        commonText("Monthly Performance".tr,size: 16,fontWeight: FontWeight.w500),
                       ],
                     ),
                     commonText("2530",size: 36,fontWeight: FontWeight.w600),
-                    commonText("Total monthly deals redeems across all restaurants.",size: 14,fontWeight: FontWeight.w600),
+                    commonText("Total monthly deals redeems across all restaurants.".tr,size: 14,fontWeight: FontWeight.w600),
                   ],
                 ),
               ),
               SizedBox(height: 12),
               Align(
                 alignment: Alignment.centerLeft,
-                child: commonText("Your Restaurants",size: 18,isBold: true)),
+                child: commonText("Your Restaurants".tr,size: 18,isBold: true)),
               ListView.builder(
                 shrinkWrap: true,
                 padding: EdgeInsets.all(0),
@@ -124,69 +125,71 @@ class DealerHomepage extends StatelessWidget {
                           ),
                           child: Image.asset("assets/images/resturant.png",fit: BoxFit.fill,),
                         ),
-                        Column(
-                          spacing:2,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            commonText("Chef's Table",size: 20,fontWeight: FontWeight.w600),
-                            Row(
-                              children: [
-                                Icon(Icons.location_on_rounded,size: 25,color: Colors.blueAccent,),
-                                commonText("Downtown, 123 Main St",size:16,fontWeight: FontWeight.w400),
-                              ],
-                            ),
-                            Row(
-                              spacing: 10,
-                              children: [
-                                Container(
-                                  height: 22,
-                                  width: 60,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    color: Color(0xffB7CDF5),
+                        Expanded(
+                          child: Column(
+                            spacing:2,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              commonText("Chef's Table",size: 20,fontWeight: FontWeight.w600),
+                              Row(
+                                children: [
+                                  Icon(Icons.location_on_rounded,size: 20,color: Colors.blueAccent,),
+                                  Expanded(child: commonText("Downtown, 123 Main St",size:14,fontWeight: FontWeight.w400)),
+                                ],
+                              ),
+                              Row(
+                                spacing: 10,
+                                children: [
+                                  Container(
+                                    height: 22,
+                                    width: 60,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: Color(0xffB7CDF5),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        commonText("2 deals",size: 14,fontWeight: FontWeight.w400),
+                                      ],
+                                    ),
                                   ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      commonText("2 deals",size: 14,fontWeight: FontWeight.w400),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height: 22,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    color: Color(0xffFFF9C2),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      commonText("4.8",size: 14,fontWeight: FontWeight.w400),
-                                      RatingBar.builder(
-                                        initialRating: 3,
-                                        itemSize: 15,
-                                        minRating: 1,
-                                        direction: Axis.horizontal,
-                                        allowHalfRating: true,
-                                        itemCount: 1,
-                                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                                        itemBuilder: (context, _) => Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
+                                  Container(
+                                    height: 22,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: Color(0xffFFF9C2),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        commonText("4.8",size: 14,fontWeight: FontWeight.w400),
+                                        RatingBar.builder(
+                                          initialRating: 3,
+                                          itemSize: 15,
+                                          minRating: 1,
+                                          direction: Axis.horizontal,
+                                          allowHalfRating: true,
+                                          itemCount: 1,
+                                          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                                          itemBuilder: (context, _) => Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          onRatingUpdate: (rating) {
+                                            print(rating);
+                                          },
                                         ),
-                                        onRatingUpdate: (rating) {
-                                          print(rating);
-                                        },
-                                      ),
-                                      commonText("(120)",size: 14,fontWeight: FontWeight.w400),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                            commonText("56 deals redeemed this month",size: 14,fontWeight: FontWeight.w400),
-                          ],
+                                        commonText("(120)",size: 14,fontWeight: FontWeight.w400),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Flexible(child: commonText("_ deals redeemed this month".trParams({'number':"56"}),size: 14,fontWeight: FontWeight.w400,maxline: 1)),
+                            ],
+                          ),
                         )
                       ],
                     ),
@@ -235,8 +238,8 @@ class buildStack extends StatelessWidget {
               spacing: 5,
               children: [
                 Image.asset(icon,height: 30,width: 30,fit: BoxFit.fill,color: AppColors.black,colorBlendMode: BlendMode.srcIn,),
-                commonText(text,size: 26,fontWeight: FontWeight.w700),
-                commonText(title,size: 16,fontWeight: FontWeight.w700),
+                commonText(text.tr,size: 26,fontWeight: FontWeight.w700),
+                commonText(title.tr,size: 16,fontWeight: FontWeight.w700),
               ],
             ))
       ],

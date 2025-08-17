@@ -6,6 +6,7 @@ import 'package:dine_dash/view/dealer/DealerReview/widget/shortbydropdown.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 
 class DealerReview extends StatefulWidget {
   const DealerReview({super.key,});
@@ -42,24 +43,17 @@ class _DealerReviewState extends State<DealerReview> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       commonText("120 ",size: 30,fontWeight: FontWeight.w600),
-                      commonText("Total Reviews",size: 14,fontWeight: FontWeight.w400),
+                      commonText("Total Reviews".tr,size: 14,fontWeight: FontWeight.w400),
                     ],
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       commonText("4.7",size: 30,fontWeight: FontWeight.w600),
-                      commonText("Average Rating",size: 14,fontWeight: FontWeight.w400),
+                      commonText("Average Rating".tr,size: 14,fontWeight: FontWeight.w400),
                     ],
                   ),
                   SizedBox()
-                  // Column(
-                  //   crossAxisAlignment: CrossAxisAlignment.center,
-                  //   children: [
-                  //     commonText("60",size: 30,fontWeight: FontWeight.w600),
-                  //     commonText("Positive Reviews",size: 14,fontWeight: FontWeight.w400),
-                  //   ],
-                  // ),
                 ],
               ),
               SizedBox(height: 15,),
@@ -75,7 +69,7 @@ class _DealerReviewState extends State<DealerReview> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 10),
-                commonText("Rating Distribution", size: 16, fontWeight: FontWeight.w700),           
+                commonText("Rating Distribution".tr, size: 16, fontWeight: FontWeight.w700),           
                 SizedBox(height: 10),
                 Expanded(
                   child: ListView.builder(
@@ -117,7 +111,7 @@ class _DealerReviewState extends State<DealerReview> {
                         children: [
                           Image.asset("assets/images/filter.png", height: 20, width: 20),
                           SizedBox(width: 5),
-                          commonText("Filters", size: 18, fontWeight: FontWeight.w700),
+                          commonText("Filters".tr, size: 18, fontWeight: FontWeight.w700),
                         ],
                       ),
                       SizedBox(height: 10),
@@ -202,16 +196,18 @@ class _DealerReviewState extends State<DealerReview> {
                       commonText("Amazing food and great service! The happy hour deal was fantastic. Will definitely come back.",size: 14,fontWeight: FontWeight.w500,color: Color(0xff555555)),
                       Container(
                         height: 32,
-                        width: 150,
+                        constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width/2),
+                        padding: EdgeInsets.symmetric(horizontal: 10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: Color(0xffB7CDF5),
                         ),
                         child: Row(
+                          mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            commonText("Used :",size: 16,fontWeight: FontWeight.w400),
-                            commonText(" Free Drinks",size: 16,fontWeight: FontWeight.w400),
+                            commonText("Used :",size: 14,fontWeight: FontWeight.w400),
+                            commonText(" Free Drinks",size: 14,fontWeight: FontWeight.w400),
                           ],
                         ),
                       ),

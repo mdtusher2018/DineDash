@@ -25,26 +25,17 @@ class ReminderScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 12,),
-              commonText("How was your experience at The Rio Lounge?",size: 22,fontWeight: FontWeight.w700),
+              commonText( "How was your experience at?".trParams(
+    {'restaurantName': "The Rio Lounge"}
+  ),size: 22,fontWeight: FontWeight.w700),
               SizedBox(height: 50,),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(vertical: 15),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       commonText("Savings:",size: 18,fontWeight: FontWeight.w700),
-              //       commonText("11 €",size: 18,fontWeight: FontWeight.w700),
-              //     ],
-              //   ),
-              // ),
-              // SizedBox(child: Divider(height: 1,color: Colors.grey,)),
-              SizedBox(height: 20,),
+     
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    commonText("Rating:",size: 18,fontWeight: FontWeight.w700),
+                    commonText("Rating:".tr,size: 18,fontWeight: FontWeight.w700),
                     RatingBar.builder(
                       initialRating: 3,
                       itemSize: 25,
@@ -66,12 +57,12 @@ class ReminderScreen extends StatelessWidget {
               ),
               SizedBox(child: Divider(height: 1,color: Colors.grey,)),
               SizedBox(height: 20,),
-              commonText("Comment:",size: 18,fontWeight: FontWeight.w600),
+              commonText("Comment:".tr,size: 18,fontWeight: FontWeight.w600),
               SizedBox(height: 10,),
               TextFormField(
                 maxLines: 3,
                 decoration: InputDecoration(
-                  hintText: "Let others know about your experience..",
+                  hintText: "Let others know about your experience..".tr,
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(color: Colors.black),
@@ -113,11 +104,11 @@ class ReminderScreen extends StatelessWidget {
                 }).toList(),
               )),
               SizedBox(height: 170,),
-              commonButton("Continue",onTap: (){
+              commonButton("Continue".tr,onTap: (){
                 Get.to(()=> RattingPage());
               }),
               SizedBox(height: 10,),
-              Center(child: TextButton(onPressed: (){}, child:commonText("Remind me later",size: 18,fontWeight: FontWeight.w600))),
+              Center(child: TextButton(onPressed: (){}, child:commonText("Remind me later".tr,size: 18,fontWeight: FontWeight.w600))),
               SizedBox(height: 20,),
 
             ],

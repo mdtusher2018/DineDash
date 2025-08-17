@@ -10,7 +10,7 @@ class TermsAndConditonScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: commonText("Terms and Condition", size: 18, isBold: true),
+        title: commonText("Terms and Condition".tr, size: 18, isBold: true),
         leading: InkWell(
           onTap: () {
             Get.back();

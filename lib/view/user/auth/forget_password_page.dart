@@ -3,6 +3,7 @@ import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:dine_dash/view/res/image_paths.dart';
 import 'package:dine_dash/view/user/auth/otp_verification_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 class UserForgotPasswordScreen extends StatefulWidget {
@@ -24,7 +25,7 @@ class _UserForgotPasswordScreenState extends State<UserForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Get Verification Code",backGroundColor: AppColors.primaryColor,textColor: AppColors.white),
+      appBar: commonAppBar(title: "Get Verification Code".tr,backGroundColor: AppColors.primaryColor,textColor: AppColors.white),
       backgroundColor: AppColors.primaryColor,
       bottomSheet: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20),
@@ -47,12 +48,12 @@ class _UserForgotPasswordScreenState extends State<UserForgotPasswordScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                     children: [
-                      const TextSpan(
-                        text: "Forget Your ",
+                       TextSpan(
+                        text: "Forget Your ".tr,
                         style: TextStyle(color: Colors.black),
                       ),
-                         const TextSpan(
-                        text: "Password",
+                          TextSpan(
+                        text: "Password".tr,
                         style: TextStyle(color: AppColors.primaryColor),
                       ),
                         const TextSpan(
@@ -65,7 +66,7 @@ class _UserForgotPasswordScreenState extends State<UserForgotPasswordScreen> {
             
                 const SizedBox(height: 5),
                 commonText(
-                  "Enter your email address to reset your password.",
+                  "Enter your email address to reset your password.".tr,
                   textAlign: TextAlign.center,
                   size: 14.0,
                 ),
@@ -73,16 +74,16 @@ class _UserForgotPasswordScreenState extends State<UserForgotPasswordScreen> {
             
                 // Email TextField
                 commonTextfieldWithTitle(
-                  "Email",
+                  "Email".tr,
                   emailController,
-                  hintText: "Enter your email",
+                  hintText: "Enter your email".tr,
                   assetIconPath: ImagePaths.emailIcon,
                   keyboardType: TextInputType.emailAddress,
                 ),
 
               const SizedBox(height: 40),
                 commonButton(
-                  "Get Verification Code",
+                  "Get Verification Code".tr,
                   textColor: Colors.white,
                   onTap: () {
                  navigateToPage(UserOTPVerificationScreen());

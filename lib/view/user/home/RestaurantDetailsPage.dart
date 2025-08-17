@@ -149,7 +149,7 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
                       Expanded(
                         child: OutlinedButton.icon(
                           icon: Image.asset("assets/images/menu.png",width: 24,),
-                          label: commonText("Menu", isBold: true, size: 14),
+                          label: commonText("Menu".tr, isBold: true, size: 14),
                           onPressed: () {
                             showMenuBottomSheet(context);
                           },
@@ -208,7 +208,7 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
                         Icon(Icons.circle, size: 4, color: Colors.red),
                         const SizedBox(width: 8),
                         commonText(
-                          "Currently Closed",
+                          "Currently Closed".tr,
                           color: Colors.red,
                           isBold: true,
                         ),
@@ -216,7 +216,7 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
                         Icon(Icons.access_time, color: Colors.red, size: 16),
                         SizedBox(width: 4),
                         commonText(
-                          "Opens at 11:00 AM",
+                          'Opens at {time}'.trParams({'time': '11:00 AM'}),
                           color: Colors.red,
                           size: 12,
                         ),
@@ -237,7 +237,7 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
                     child: Row(
                       children: [
                         tabButton(
-                          "Deals",
+                          "Deals".tr,
                           0,
                           selectedIndex: selectedTabIndex,
                           onTap: (i) {
@@ -245,7 +245,7 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
                           },
                         ),
                         tabButton(
-                          "Reviews",
+                          "Reviews".tr,
                           1,
                           selectedIndex: selectedTabIndex,
                           onTap: (i) {
@@ -253,7 +253,7 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
                           },
                         ),
                         tabButton(
-                          "Information",
+                          "Information".tr,
                           2,
                           selectedIndex: selectedTabIndex,
                           onTap: (i) {
@@ -295,7 +295,7 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         commonText(
-                          "Ratings & Reviews",
+                          "Ratings & Reviews".tr,
                           size: 16,
                           isBold: true,
                           color: AppColors.primaryColor,
@@ -334,7 +334,7 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
                           },
                         ),
 
-                        commonButton("All reviews (36)",onTap: () {
+                        commonButton("All reviews {number}".trParams({'number':'24'}),onTap: () {
                           Get.to(AllReviewPage());
                         },),
                       ],
@@ -436,34 +436,7 @@ class _RestaurantDetailsPageState extends State<RestaurantDetailsPage> {
                       ),
                     ),
                   ),
-                  // Expanded(
-                  //   child: Center(
-                  //     child: Row(
-                  //       mainAxisSize: MainAxisSize.min,
-                  //       children: [
-                  //         Container(
-                  //           padding: EdgeInsets.symmetric(
-                  //             horizontal: 12,
-                  //             vertical: 8,
-                  //           ),
-                  //           decoration: BoxDecoration(
-                  //             color: AppColors.lightBlue,
-                  //             borderRadius: BorderRadius.circular(8),
-                  //           ),
-                  //           child: Image.asset("assets/images/location2.png",width: 24,),
-                  //         ),
-                  //         const SizedBox(width: 4),
-                  //         Column(
-                  //           crossAxisAlignment: CrossAxisAlignment.start,
-                  //           children: [
-                  //             commonText("Location", size: 12),
-                  //             commonText(location, size: 12, isBold: true),
-                  //           ],
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
+     
                 ],
               ),
 

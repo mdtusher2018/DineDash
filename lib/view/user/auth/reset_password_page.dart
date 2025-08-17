@@ -2,6 +2,7 @@ import 'package:dine_dash/view/res/colors.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:dine_dash/view/res/image_paths.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class UserResetPasswordScreen extends StatefulWidget {
   const UserResetPasswordScreen({super.key});
@@ -26,7 +27,7 @@ class _UserResetPasswordScreenState extends State<UserResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Reset Password",backGroundColor: AppColors.primaryColor,textColor: AppColors.white),
+      appBar: commonAppBar(title: "Reset Password".tr,backGroundColor: AppColors.primaryColor,textColor: AppColors.white),
       backgroundColor: AppColors.primaryColor,
       bottomSheet: SizedBox(
         height: double.infinity,
@@ -48,26 +49,26 @@ class _UserResetPasswordScreenState extends State<UserResetPasswordScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                     children: [
-                      const TextSpan(
-                        text: "Now Reset Your ",
+                       TextSpan(
+                        text: "Now Reset Your ".tr,
                         style: TextStyle(color: Colors.black),
                       ),
-                   const TextSpan(
-                        text: "Password.",
+                    TextSpan(
+                        text: "Password.".tr,
                         style: TextStyle(color: AppColors.primaryColor),
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 5),
-                commonText("Password  must have 6-8 characters.", size: 14.0),
+                commonText("Password  must have 6-8 characters.".tr, size: 14.0),
                 const SizedBox(height: 30),
             
                 // New Password TextField
                 commonTextfieldWithTitle(
-                  "New Password",
+                  "New Password".tr,
                   newPasswordController,
-                  hintText: "Enter your password",
+                  hintText: "Enter your password".tr,
                   assetIconPath: ImagePaths.lockIcon,
             
                   isPasswordVisible: isPasswordVisible,
@@ -82,9 +83,9 @@ class _UserResetPasswordScreenState extends State<UserResetPasswordScreen> {
             
                 // Confirm New Password TextField
                 commonTextfieldWithTitle(
-                  "Confirm New Password",
+                  "Confirm New Password".tr,
                   confirmPasswordController,
-                  hintText: "Enter your password",
+                  hintText: "Enter your password".tr,
                   assetIconPath: ImagePaths.lockIcon,
             
                   isPasswordVisible: isConfirmPasswordVisible,
@@ -97,7 +98,7 @@ class _UserResetPasswordScreenState extends State<UserResetPasswordScreen> {
                 ),
                    SizedBox(height: 20,),
                 commonButton(
-                  "Reset Password",
+                  "Reset Password".tr,
                   textColor: Colors.white,
                   onTap: () {
                    

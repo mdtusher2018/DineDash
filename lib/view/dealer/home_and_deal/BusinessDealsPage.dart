@@ -1,6 +1,7 @@
 import 'package:dine_dash/view/dealer/bussiness/add_menu_page.dart';
 import 'package:dine_dash/view/dealer/bussiness/edit_menu_page.dart';
 import 'package:dine_dash/view/dealer/home_and_deal/edit_deals.dart';
+import 'package:dine_dash/view/dealer/home_and_deal/widgets/buildDealCard.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:dine_dash/view/dealer/home_and_deal/create_deal.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,6 @@ class BusinessDealsPage extends StatefulWidget {
 class _BusinessDealsPageState extends State<BusinessDealsPage>
     with TickerProviderStateMixin {
   late TabController _tabController;
-
   List<Map<String, dynamic>> deals = [
     {
       "title": "2 for 1",
@@ -27,6 +27,7 @@ class _BusinessDealsPageState extends State<BusinessDealsPage>
           "Lorem ipsum dolor sit amet consectetur. Rhoncus molestie amet non pellentesque.",
       "duration": "60 Days",
       "location": "Chef's Table",
+      'redeemed':"36",
       "benefit": "6 € Benefit",
       "status": "Active",
     },
@@ -36,6 +37,7 @@ class _BusinessDealsPageState extends State<BusinessDealsPage>
           "Lorem ipsum dolor sit amet consectetur. Rhoncus molestie amet non pellentesque.",
       "duration": "60 Days",
       "location": "Chef's Table",
+      'redeemed':"36",
       "benefit": "6 € Benefit",
       "status": "Paused",
     },
@@ -43,7 +45,7 @@ class _BusinessDealsPageState extends State<BusinessDealsPage>
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
 
@@ -272,6 +274,7 @@ Widget menuTab(){
               title: deal["title"],
               subText: deal["subText"],
               duration: deal["duration"],
+              redeemed: deal["redeemed"],
               location: deal["location"],
               benefitText: deal["benefit"],
               status: deal["status"],
@@ -302,10 +305,6 @@ Widget menuTab(){
       ),
     );
   }
-
-
-
-
 
   Widget buildReviewsTab() {
     return SingleChildScrollView(
@@ -430,262 +429,6 @@ Widget menuTab(){
             height: 48,
             onTap: () => Get.to(AllReviewPage()),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildDealCard({
-    required String title,
-    required String subText,
-    required String duration,
-    required String location,
-    required String benefitText,
-    required String status, // "Active" or "Paused"
-    required VoidCallback onEdit,
-    required VoidCallback onDelete,
-    required VoidCallback onToggleStatus,
-  }) {
-    Color statusColor = status == "Active" ? Color(0xFF90EE90) : Color(0xFFFFDF00);
-    Color textColor = status == "Active" ? Color(0xFF056608) : Color(0xFF735900);
-    
-
-    return Stack(
-      children: [
-        Container(
-          margin: const EdgeInsets.only(top: 16, bottom: 16),
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.primaryColor),
-            color: Colors.blue.shade50,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /// Title + Status Row
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(child: commonText(title, size: 16, isBold: true)),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: statusColor,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: commonText(
-                      status,
-                      size: 12,
-                      color: textColor,
-                      isBold: true,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-
-              /// Subtitle
-              commonText(subText, size: 13, color: Colors.black87),
-              const SizedBox(height: 12),
-
-              /// Reusable & Location
-              Row(
-                children: [
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: AppColors.lightBlue,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Image.asset(
-                            "assets/images/time222.png",
-                            height: 20,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            commonText("Reusable After", size: 12),
-                            commonText(duration, size: 12, isBold: true),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: AppColors.lightBlue,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Image.asset(
-                            "assets/images/location2.png",
-                            height: 20,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            commonText("Location", size: 12),
-                            commonText(location, size: 12, isBold: true),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-
-              /// Actions: Edit | Pause/Active | Delete
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  actionButton(Image.asset("assets/images/editb.png",width: 22,), "Edit", onEdit),
-                  actionButton(
-                    status == "Active"
-                        ? Image.asset("assets/images/pause.png",width: 20,)
-                        : Image.asset("assets/images/play.png",width: 20,),
-                    status == "Active" ? "Pause" : "Active",
-                    onToggleStatus,
-                    color: AppColors.primaryColor,
-                  ),
-                  actionButton(
-                    Image.asset("assets/images/delete.png",width: 18,),
-                    "Delete",
-                    onDelete,
-                    color: Colors.red,
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.location_on,
-                    size: 16,
-                    color: AppColors.primaryColor,
-                  ),
-                  const SizedBox(width: 6),
-                  commonText(location, size: 14),
-                ],
-              ),
-            ],
-          ),
-        ),
-
-        /// Benefit Badge
-        Align(
-          alignment: Alignment.topCenter,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              color: AppColors.primaryColor,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: commonText(
-              benefitText,
-              color: Colors.white,
-              size: 12,
-              isBold: true,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  void showPauseReasonDialog(BuildContext context, Function(String) onSubmit) {
-    final TextEditingController reasonController = TextEditingController();
-
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (ctx) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          insetPadding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                /// Title
-                commonText(
-                  "Why do you want to pause this deal?",
-                  size: 16,
-                  textAlign: TextAlign.center,
-                  isBold: true,
-                ),
-
-                const SizedBox(height: 16),
-
-                /// Reason input field (no title)
-                Row(
-                  children: [
-                    Expanded(
-                      child: commonTextField(
-                        controller: reasonController,
-                        hintText: "Enter your reason...",
-                        keyboardType: TextInputType.text,
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 24),
-
-                /// Submit button
-                commonButton(
-                  "Submit",
-                  onTap: () {
-                    final reason = reasonController.text.trim();
-                    if (reason.isNotEmpty) {
-                      Navigator.of(context).pop(); // close dialog
-                      onSubmit(reason); // pass back reason
-                    } else {
-                      // optional: show error toast/snackbar
-                    }
-                  },
-                  height: 48,
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget actionButton(
-    Widget icon,
-    String label,
-    VoidCallback onTap, {
-    Color color = Colors.black87,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Column(
-        children: [
-          // Icon(icon, size: 20, color: color),
-          icon,
-          const SizedBox(height: 4),
-          commonText(label, size: 12, color: color),
         ],
       ),
     );

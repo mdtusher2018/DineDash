@@ -5,6 +5,7 @@ import 'package:dine_dash/view/user/explore/explore.dart';
 import 'package:dine_dash/view/user/favorite/favorite.dart';
 import 'package:dine_dash/view/user/home/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class UserRootPage extends StatefulWidget {
   @override
@@ -79,7 +80,7 @@ class _UserRootPageState extends State<UserRootPage> {
         unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
         items: List.generate(5, (index) {
           return _buildNavItem(
-            labels[index],
+            labels[index].tr,
             selectedIcons[index],
             unselectedIcons[index],
             _selectedIndex == index,

@@ -30,24 +30,24 @@ class _AddDealScreenState extends State<AddDealScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
          backgroundColor: AppColors.white,
-      appBar: commonAppBar(title: "Add Deal"),
+      appBar: commonAppBar(title: "Add Deal".tr),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             commonText(
-              "Add a new deal to attract more customers to your restaurant.",
+              "Add a new deal to attract more customers to your restaurant.".tr,
               size: 14,
             ),
             const SizedBox(height: 20),
 
-            commonText("Business*", size: 16, fontWeight: FontWeight.w500),
+            commonText("Business*".tr, size: 16, fontWeight: FontWeight.w500),
             SizedBox(height: 8),
             commonDropdown<String>(
               items: businessList,
               value: selectedBusiness,
-              hint: "Select your business",
+              hint: "Select your business".tr,
               onChanged: (val) => setState(() => selectedBusiness = val),
             ),
             // const SizedBox(height: 16),
@@ -63,7 +63,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
             commonTextfieldWithTitle(
               "Description",
               descriptionController,
-              hintText: "Describe your deal...",
+              hintText: "Describe your deal...".tr,
               maxLine: 3,
             ),
             const SizedBox(height: 16),
@@ -73,7 +73,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 commonText(
-                  "Active Time Frames*",
+                  "Active Time Frames*".tr,
                   size: 16,
                   fontWeight: FontWeight.w500,
                 ),
@@ -99,7 +99,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                         ),
                         SizedBox(width: 4),
                         commonText(
-                          "Add",
+                          "Add".tr,
                           size: 14,
                           
                         ),
@@ -148,7 +148,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                                   ),
                                   SizedBox(width: 4),
                                   commonText(
-                                    "Remove",
+                                    "Remove".tr,
                                     size: 14,
                                     color: Colors.red,
                                   ),
@@ -159,13 +159,13 @@ class _AddDealScreenState extends State<AddDealScreen> {
                         const SizedBox(height: 8),
 
                         Row(
-                          children: [commonText("Day", size: 14, isBold: true)],
+                          children: [commonText("Day".tr, size: 14, isBold: true)],
                         ),
                         SizedBox(height: 8),
                         commonDropdown<String>(
                           items: days,
                           value: timeFrames[index].day,
-                          hint: "Select day",
+                          hint: "Select day".tr,
                           onChanged: (val) {
                             setState(() {
                               timeFrames[index].day = val;
@@ -191,7 +191,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                                                 index,
                                               ),
                                           child: commonTextfieldWithTitle(
-                                            "Start Time",
+                                            "Start Time".tr,
                                             TextEditingController(
                                               text:
                                                   timeFrames[index].startTime !=
@@ -201,7 +201,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                                                           .format(context)
                                                       : '',
                                             ),
-                                            hintText: "Start Time",
+                                            hintText: "Start Time".tr,
                                           ),
                                         ),
                                       ),
@@ -225,7 +225,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                                                 index,
                                               ),
                                           child: commonTextfieldWithTitle(
-                                            "End Time",
+                                            "End Time".tr,
                                             TextEditingController(
                                               text:
                                                   timeFrames[index].endTime !=
@@ -235,7 +235,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                                                           .format(context)
                                                       : '',
                                             ),
-                                            hintText: "End Time",
+                                            hintText: "End Time".tr,
                                           ),
                                         ),
                                       ),
@@ -248,7 +248,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                         ),
                         const SizedBox(height: 6),
                         commonText(
-                          "* Time frames must be at least 4 hours long",
+                          "* Time frames must be at least 4 hours long".tr,
                           size: 12,
                         ),
                       ],
@@ -261,7 +261,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
 
             /// Max Claims
             commonTextfieldWithTitle(
-              "Benefit Amount*",
+              "Benefit Amount*".tr,
               benefitController,
               hintText: "e.g. 100",
               keyboardType: TextInputType.number,
@@ -274,7 +274,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       commonText(
-                        "Deal Type*",
+                        "Deal Type*".tr,
                         size: 14,
                         fontWeight: FontWeight.bold,
                       ),
@@ -282,7 +282,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                       commonDropdown<String>(
                         items: dealTypes,
                         value: selectedDealType,
-                        hint: "Deal Type",
+                        hint: "Deal Type".tr,
                         onChanged:
                             (val) => setState(() => selectedDealType = val),
                       ),
@@ -295,7 +295,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       commonText(
-                        "Reusable After*",
+                        "Reusable After*".tr,
                         size: 14,
                         fontWeight: FontWeight.bold,
                       ),
@@ -316,16 +316,16 @@ class _AddDealScreenState extends State<AddDealScreen> {
 
             /// Max Claims
             commonTextfieldWithTitle(
-              "Maximum Claims*",
+              "Maximum Claims*".tr,
               maxClaimsController,
-              hintText: "e.g. 100",
+              hintText: "e.g. 100".tr,
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 30),
 
             /// Create Deal Button
             commonButton(
-              "Create Deal",
+              "Create Deal".tr,
               onTap: () {
                 Get.back();
               },

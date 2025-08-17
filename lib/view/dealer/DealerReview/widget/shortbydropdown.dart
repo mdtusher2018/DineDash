@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../../../controller/Review_controller/review_controller.dart';
 
@@ -18,7 +17,7 @@ class ShortByDropdown extends StatelessWidget {
 
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-          hintText: 'Select your sort', // typo fixed from "short"
+          hintText: 'Select your sort'.tr, 
           hintStyle: TextStyle(color: Colors.grey.shade400),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),

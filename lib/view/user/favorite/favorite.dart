@@ -3,6 +3,7 @@ import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:dine_dash/view/user/common_designs/common_design.dart';
 import 'package:dine_dash/view/user/home/RestaurantDetailsPage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class UserFavoritePage extends StatefulWidget {
   const UserFavoritePage({super.key});
@@ -30,12 +31,12 @@ List<String> favorite=[""];
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Row(
-                      children: const [
+                      children:  [
                        
                         Expanded(
                           child: TextField(
                             decoration: InputDecoration(
-                              hintText: "Search restaurants, foods...",
+                              hintText: "Search restaurants, foods...".tr,
                               border: InputBorder.none,
                             ),
                           ),
@@ -57,11 +58,11 @@ List<String> favorite=[""];
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Image.asset("assets/images/favorite.png"),
-                        commonText("No favorites yet",size: 16,isBold: true),
+                        commonText("No favorites yet".tr,size: 16,isBold: true),
                         SizedBox(height: 16,),
-                        commonText("Start exploring our recipes and save your favorites to build your personal collection",size: 14,fontWeight: FontWeight.w500,textAlign: TextAlign.center),
+                        commonText("Start exploring our recipes and save your favorites to build your personal collection".tr,size: 14,fontWeight: FontWeight.w500,textAlign: TextAlign.center),
                         SizedBox(height: 16,),
-                        commonButton("Start Exploring",width: 160,boarderRadious: 50,height: 60)
+                        commonButton("Start Exploring".tr,width: 160,boarderRadious: 50,height: 60)
                       ],
                     ),
                   ))

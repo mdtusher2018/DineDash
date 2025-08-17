@@ -10,7 +10,7 @@ class AboutUsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: commonText("About Us", size: 18, isBold: true),
+        title: commonText("About Us".tr, size: 18, isBold: true),
         leading: InkWell(
           onTap: () {
             Get.back();

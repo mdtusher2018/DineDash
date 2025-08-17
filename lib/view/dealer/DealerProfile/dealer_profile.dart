@@ -294,7 +294,7 @@ class buildcontainer extends StatelessWidget {
           spacing: 5,
           children: [
             Image.asset(image,height: 32,width: 32,fit: BoxFit.cover,),
-            commonText(title,size: 14,fontWeight: FontWeight.w500),
+            commonText(title,size: 14,fontWeight: FontWeight.w500,textAlign: TextAlign.center),
           ],
         ),
       ),

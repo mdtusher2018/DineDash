@@ -5,6 +5,7 @@ import 'package:dine_dash/view/dealer/DealerReview/dealer_review.dart';
 import 'package:dine_dash/view/res/colors.dart';
 import 'package:dine_dash/view/dealer/home_and_deal/dealer_deals.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DealerRootPage extends StatefulWidget {
   @override
@@ -80,7 +81,7 @@ class _DealerRootPageState extends State<DealerRootPage> {
         unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
         items: List.generate(5, (index) {
           return _buildNavItem(
-            labels[index],
+            labels[index].tr,
             selectedIcons[index],
             unselectedIcons[index],
             _selectedIndex == index,

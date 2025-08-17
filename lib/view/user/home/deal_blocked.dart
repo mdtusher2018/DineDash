@@ -182,13 +182,13 @@ Future.delayed(Duration(milliseconds: 1200), () {
         children: [
           SlideTransition(
             position: _slideTitle,
-            child: commonText("Deal booked!", size: 21, isBold: true),
+            child: commonText("Deal booked!".tr, size: 21, isBold: true),
           ),
           SizedBox(height: 8),
           SlideTransition(
             position: _slideDetails,
             child: commonText(
-              "Enjoy the deal at The Rio Lounge. To reserve a table, please contact the restaurant.",
+              "Enjoy the deal at The Rio Lounge. To reserve a table, please contact the restaurant.".tr,
               textAlign: TextAlign.center,
               size: 16,
             ),
@@ -202,7 +202,18 @@ Future.delayed(Duration(milliseconds: 1200), () {
                 Column(
                   children: [
                     Icon(Icons.calendar_month_outlined),
-                    commonText("Saturday")
+                    commonText("Saturday".tr)
+/*
+  'Monday': 'Montag',
+  'Tuesday': 'Dienstag',
+  'Wednesday': 'Mittwoch',
+  'Thursday': 'Donnerstag',
+  'Friday': 'Freitag',
+  'Saturday': 'Samstag',
+  'Sunday': 'Sonntag',
+*/
+
+
                   ],
                 ),
                 SizedBox(width: 16),
@@ -220,7 +231,7 @@ Future.delayed(Duration(milliseconds: 1200), () {
           Spacer(flex: 3),
           FadeTransition(
             opacity: _fadeButton,
-            child: commonButton("Go to deals",onTap: () {
+            child: commonButton("Go to deals".tr,onTap: () {
               Get.back();
             },),
           ),

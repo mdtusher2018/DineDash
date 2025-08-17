@@ -2,6 +2,7 @@ import 'package:dine_dash/view/res/colors.dart';
 import 'package:dine_dash/view/user/auth/sign_in_sign_up_chooeser.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
+import 'package:get/get.dart';
 
 
 class UserOnboardingView extends StatefulWidget {
@@ -98,7 +99,7 @@ class _UserOnboardingViewState extends State<UserOnboardingView> {
                     Row(
                       children: [
                         commonText(
-                          data.title,
+                          data.title.tr,
                           size: 24,
                           isBold: true,
                          color: AppColors.white,
@@ -114,7 +115,7 @@ class _UserOnboardingViewState extends State<UserOnboardingView> {
                       children: [
                         Flexible(
                           child: commonText(
-                            data.subtitle,
+                            data.subtitle.tr,
                             size: 14,
                             color: AppColors.white,
                             
@@ -127,7 +128,7 @@ class _UserOnboardingViewState extends State<UserOnboardingView> {
 
                     /// Next or Get Started
                     commonButton(
-                      index == pages.length - 1 ? "Start Managing" : "Next",
+                      index == pages.length - 1 ? "Start Managing".tr : "Next".tr,
                       haveNextIcon: true,
                       onTap: nextPage,
                     ),
@@ -142,7 +143,7 @@ class _UserOnboardingViewState extends State<UserOnboardingView> {
                           _pageController.jumpToPage(pages.length - 1);
                         },
                         child: commonText(
-                          "Skip",
+                          "Skip".tr,
                           color: Colors.white,
                           size: 14,
                           isBold: true,

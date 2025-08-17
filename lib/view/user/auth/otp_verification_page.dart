@@ -3,6 +3,7 @@ import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:dine_dash/view/res/image_paths.dart';
 import 'package:dine_dash/view/user/auth/reset_password_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class UserOTPVerificationScreen extends StatefulWidget {
 
@@ -29,7 +30,7 @@ class _UserOTPVerificationScreenState extends State<UserOTPVerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Verify Email",textColor: AppColors.white,backGroundColor: AppColors.primaryColor),
+      appBar: commonAppBar(title: "Verify Email".tr,textColor: AppColors.white,backGroundColor: AppColors.primaryColor),
 backgroundColor: AppColors.primaryColor,
       bottomSheet: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -52,17 +53,17 @@ backgroundColor: AppColors.primaryColor,
                       fontWeight: FontWeight.bold,
                     ),
                     children: [
-                      const TextSpan(
-                        text: "Enter ",
+                      TextSpan(
+                        text: "Enter ".tr,
                         style: TextStyle(color: Colors.black),
                       ),
                   
-                        const TextSpan(
-                        text: "Verification ",
+                         TextSpan(
+                        text: "Verification ".tr,
                         style: TextStyle(color: AppColors.primaryColor),
                       ),
-                      const TextSpan(
-                        text: " Code.",
+                       TextSpan(
+                        text: " Code.".tr,
                         style: TextStyle(color: Colors.black),
                       ),
                     ],
@@ -70,7 +71,7 @@ backgroundColor: AppColors.primaryColor,
                 ),
                 const SizedBox(height: 8),
                 commonText(
-                  "Enter the code that was sent to your email.",
+                  "Enter the code that was sent to your email.".tr,
                   size: 14.0,
                 ),
                 const SizedBox(height: 20),
@@ -97,14 +98,14 @@ backgroundColor: AppColors.primaryColor,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     commonText(
-                      "Didn't receive the code? ",
+                      "Didn't receive the code? ".tr,
                       size: 14.0,
                     
                     ),
                     GestureDetector(
                       onTap: () {},
                       child: commonText(
-                        "Resend",
+                        "Resend".tr,
                         size: 14.0,
                         color: Colors.black,
                         isBold: true,
@@ -116,7 +117,7 @@ backgroundColor: AppColors.primaryColor,
             
                 // Verify Button
                 commonButton(
-                  "Verify",
+                  "Verify".tr,
             
                   textColor: Colors.white,
                   onTap: () {

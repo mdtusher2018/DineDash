@@ -29,40 +29,40 @@ class _EditDealScreenState extends State<EditDealScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
          backgroundColor: AppColors.white,
-      appBar: commonAppBar(title: "Edit Deal"),
+      appBar: commonAppBar(title: "Edit Deal".tr),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             commonText(
-              "Add a new deal to attract more customers to your restaurant.",
+              "Add a new deal to attract more customers to your restaurant.".tr,
               size: 14,
             ),
             const SizedBox(height: 20),
 
-            commonText("Business*", size: 16, fontWeight: FontWeight.w500),
+            commonText("Business*".tr, size: 16, fontWeight: FontWeight.w500),
             SizedBox(height: 8),
             commonDropdown<String>(
               items: businessList,
               value: selectedBusiness,
-              hint: "Select your business",
+              hint: "Select your business".tr,
               onChanged: (val) => setState(() => selectedBusiness = val),
             ),
             const SizedBox(height: 16),
                      commonTextfieldWithTitle(
-              "Deal Title*",
+              "Deal Title*".tr,
               dealTitleController,
-              hintText: "e.g., Happy Hour Special",
+              hintText: "e.g., Happy Hour Special".tr,
               
             ),
             const SizedBox(height: 30),
 
             /// Description
             commonTextfieldWithTitle(
-              "Description",
+              "Description".tr,
               descriptionController,
-              hintText: "Describe your deal...",
+              hintText: "Describe your deal...".tr,
               maxLine: 3,
             ),
             const SizedBox(height: 16),
@@ -72,7 +72,7 @@ class _EditDealScreenState extends State<EditDealScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 commonText(
-                  "Active Time Frames*",
+                  "Active Time Frames*".tr,
                   size: 16,
                   fontWeight: FontWeight.w500,
                 ),
@@ -98,7 +98,7 @@ class _EditDealScreenState extends State<EditDealScreen> {
                         ),
                         SizedBox(width: 4),
                         commonText(
-                          "Add",
+                          "Add".tr,
                           size: 14,
                           
                         ),
@@ -147,7 +147,7 @@ class _EditDealScreenState extends State<EditDealScreen> {
                                   ),
                                   SizedBox(width: 4),
                                   commonText(
-                                    "Remove",
+                                    "Remove".tr,
                                     size: 14,
                                     color: Colors.red,
                                   ),
@@ -158,13 +158,13 @@ class _EditDealScreenState extends State<EditDealScreen> {
                         const SizedBox(height: 8),
 
                         Row(
-                          children: [commonText("Day", size: 14, isBold: true)],
+                          children: [commonText("Day".tr, size: 14, isBold: true)],
                         ),
                         SizedBox(height: 8),
                         commonDropdown<String>(
                           items: days,
                           value: timeFrames[index].day,
-                          hint: "Select day",
+                          hint: "Select day".tr,
                           onChanged: (val) {
                             setState(() {
                               timeFrames[index].day = val;
@@ -190,7 +190,7 @@ class _EditDealScreenState extends State<EditDealScreen> {
                                                 index,
                                               ),
                                           child: commonTextfieldWithTitle(
-                                            "Start Time",
+                                            "Start Time".tr,
                                             TextEditingController(
                                               text:
                                                   timeFrames[index].startTime !=
@@ -200,7 +200,7 @@ class _EditDealScreenState extends State<EditDealScreen> {
                                                           .format(context)
                                                       : '',
                                             ),
-                                            hintText: "Start Time",
+                                            hintText: "Start Time".tr,
                                           ),
                                         ),
                                       ),
@@ -224,7 +224,7 @@ class _EditDealScreenState extends State<EditDealScreen> {
                                                 index,
                                               ),
                                           child: commonTextfieldWithTitle(
-                                            "End Time",
+                                            "End Time".tr,
                                             TextEditingController(
                                               text:
                                                   timeFrames[index].endTime !=
@@ -234,7 +234,7 @@ class _EditDealScreenState extends State<EditDealScreen> {
                                                           .format(context)
                                                       : '',
                                             ),
-                                            hintText: "End Time",
+                                            hintText: "End Time".tr,
                                           ),
                                         ),
                                       ),
@@ -247,7 +247,7 @@ class _EditDealScreenState extends State<EditDealScreen> {
                         ),
                         const SizedBox(height: 6),
                         commonText(
-                          "* Time frames must be at least 4 hours long",
+                          "* Time frames must be at least 4 hours long".tr,
                           size: 12,
                         ),
                       ],
@@ -264,7 +264,7 @@ class _EditDealScreenState extends State<EditDealScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       commonText(
-                        "Deal Type*",
+                        "Deal Type*".tr,
                         size: 14,
                         fontWeight: FontWeight.bold,
                       ),
@@ -285,7 +285,7 @@ class _EditDealScreenState extends State<EditDealScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       commonText(
-                        "Reusable After*",
+                        "Reusable After*".tr,
                         size: 14,
                         fontWeight: FontWeight.bold,
                       ),
@@ -306,7 +306,7 @@ class _EditDealScreenState extends State<EditDealScreen> {
 
             /// Max Claims
             commonTextfieldWithTitle(
-              "Maximum Claims*",
+              "Maximum Claims*".tr,
               maxClaimsController,
               hintText: "e.g. 100",
               keyboardType: TextInputType.number,
@@ -315,7 +315,7 @@ class _EditDealScreenState extends State<EditDealScreen> {
 
             /// Create Deal Button
             commonButton(
-              "Save",
+              "Save".tr,
               onTap: () {
                 Get.back();
               },

@@ -2,6 +2,7 @@ import 'package:dine_dash/view/res/colors.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:dine_dash/view/user_dealer_common/change_password.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 class SettingsScreen extends StatelessWidget {
@@ -14,7 +15,7 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.white,
         elevation: 0,
-        title: commonText("General Settings", size: 18, isBold: true),
+        title: commonText("General Settings".tr, size: 18, isBold: true),
         centerTitle: true,
       ),
 
@@ -29,7 +30,7 @@ class SettingsScreen extends StatelessWidget {
               // Security
               _buildSettingOption(
                 icon: "assets/images/Lock 3.png",
-                title: "Change Password",
+                title: "Change Password".tr,
                 iconColor: AppColors.primaryColor,
                 haveArrow: true,
                 onTap: () {
@@ -40,7 +41,7 @@ class SettingsScreen extends StatelessWidget {
               // Help
               _buildSettingOption(
                 icon: "assets/images/delete.png",
-                title: "Delete Account",
+                title: "Delete Account".tr,
                 iconColor: Colors.red,
                 onTap: () {
                   showDeleteAccountDialog(context, () {
@@ -85,7 +86,7 @@ class SettingsScreen extends StatelessWidget {
       builder: (context) {
         return AlertDialog(
           title: commonText(
-            "Do you want to delete your account?",
+            "Do you want to delete your account?".tr,
             size: 18,
             fontWeight: FontWeight.w500,
             textAlign: TextAlign.center,
@@ -98,7 +99,7 @@ class SettingsScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: commonButton(
-                    "Cancel",
+                    "Cancel".tr,
                     color: Color(0xFFDDDDDD),
                     textColor: Colors.black,
                     height: 40,
@@ -111,7 +112,7 @@ class SettingsScreen extends StatelessWidget {
                 SizedBox(width: 10),
                 Expanded(
                   child: commonButton(
-                    "Delete",
+                    "Delete".tr,
                     color: AppColors.red,
                     textColor: Colors.white,
                     height: 40,

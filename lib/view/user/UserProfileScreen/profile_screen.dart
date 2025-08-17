@@ -71,7 +71,7 @@ class ProfileScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          commonText("Your Journey",size: 22,fontWeight: FontWeight.w600),
+                          commonText("Your Journey".tr,size: 22,fontWeight: FontWeight.w600),
                           SizedBox(width: 50,),
                           Image.asset("assets/images/track.png",height: 66,width: 66,),
                         ],
@@ -147,7 +147,7 @@ class ProfileScreen extends StatelessWidget {
                   spacing: 10,
                   children: [
                     Image.asset("assets/images/logout.png",height: 35,width: 35,fit: BoxFit.fill,),
-                    commonText("Log Out",size: 16,fontWeight: FontWeight.w600,),
+                    commonText("Log Out".tr,size: 16,fontWeight: FontWeight.w600,),
                   ],
                 ),
               ),
@@ -168,7 +168,7 @@ class ProfileScreen extends StatelessWidget {
       builder: (context) {
         return AlertDialog(
           title: commonText(
-            "Do you want to Log Out?",
+            "Do you want to Log Out?".tr,
             size: 18,
             fontWeight: FontWeight.w500,
             textAlign: TextAlign.center,
@@ -181,7 +181,7 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: commonButton(
-                    "Cancel",
+                    "Cancel".tr,
                     color: Color(0xFFDDDDDD),
                     textColor: Colors.black,
                     height: 40,
@@ -194,7 +194,7 @@ class ProfileScreen extends StatelessWidget {
                 SizedBox(width: 10),
                 Expanded(
                   child: commonButton(
-                    "Log Out",
+                    "Log Out".tr,
                     color: AppColors.primaryColor,
                     textColor: Colors.white,
                     height: 40,
@@ -283,7 +283,7 @@ class buildRowCon extends StatelessWidget {
               spacing: 10,
               children: [
                 Image.asset(image,height: 35,width: 35,fit: BoxFit.fill,),
-                commonText(title,size: 16,fontWeight: FontWeight.w600),
+                commonText(title.tr,size: 16,fontWeight: FontWeight.w600),
               ],
             ),
             Icon(Icons.arrow_forward_ios_rounded,color: Colors.grey.shade400,size: 25,),
@@ -320,7 +320,7 @@ class buildcontainer extends StatelessWidget {
           spacing: 5,
           children: [
             Image.asset(image,height: 35,width: 35,fit: BoxFit.cover,),
-            commonText(title,size: 14,fontWeight: FontWeight.w500),
+            commonText(title.tr,size: 14,fontWeight: FontWeight.w500),
           ],
         ),
       ),

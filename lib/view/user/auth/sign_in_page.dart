@@ -5,6 +5,7 @@ import 'package:dine_dash/view/user/auth/create_user_account.dart';
 import 'package:dine_dash/view/user/auth/forget_password_page.dart';
 import 'package:dine_dash/view/user/root_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class UserSignInScreen extends StatefulWidget {
   const UserSignInScreen({super.key});
@@ -31,7 +32,7 @@ class _UserSignInScreenState extends State<UserSignInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: commonAppBar(
-        title: "Sign In to Your Account",
+        title: "Sign In to Your Account".tr,
         backGroundColor: AppColors.primaryColor,
         textColor: AppColors.white,
       ),
@@ -48,9 +49,9 @@ class _UserSignInScreenState extends State<UserSignInScreen> {
                 SizedBox(height: 20),
                 // Email TextField
                 commonTextfieldWithTitle(
-                  "Email",
+                  "Email".tr,
                   emailController,
-                  hintText: "Enter your email",
+                  hintText: "Enter your email".tr,
                   assetIconPath: ImagePaths.emailIcon,
                   keyboardType: TextInputType.emailAddress,
                 ),
@@ -58,9 +59,9 @@ class _UserSignInScreenState extends State<UserSignInScreen> {
 
                 // Password TextField with Visibility Toggle
                 commonTextfieldWithTitle(
-                  "Password",
+                  "Password".tr,
                   passwordController,
-                  hintText: "Enter your password",
+                  hintText: "Enter your password".tr,
                   assetIconPath: ImagePaths.lockIcon,
 
                   isPasswordVisible: isPasswordVisible,
@@ -86,7 +87,7 @@ class _UserSignInScreenState extends State<UserSignInScreen> {
                             });
                           },
                         ),
-                        commonText("Remember me", size: 12.0),
+                        commonText("Remember me".tr, size: 12.0),
                       ],
                     ),
                     GestureDetector(
@@ -94,7 +95,7 @@ class _UserSignInScreenState extends State<UserSignInScreen> {
                         navigateToPage(UserForgotPasswordScreen());
                       },
                       child: commonText(
-                        "Forgot Password",
+                        "Forgot Password".tr,
                         size: 12.0,
                         isBold: true,
                       ),
@@ -105,7 +106,7 @@ class _UserSignInScreenState extends State<UserSignInScreen> {
                 const SizedBox(height: 20),
                 // Sign In Button
                 commonButton(
-                  "Sign In",
+                  "Sign In".tr,
                   onTap: () {
                     navigateToPage(UserRootPage());
                   },
@@ -115,7 +116,7 @@ class _UserSignInScreenState extends State<UserSignInScreen> {
 
                 // Sign In with Google
                 commonBorderButton(
-                  "Sign In With Google",
+                  "Sign In With Google".tr,
                   imagePath: ImagePaths.googleIcon,
 
                   onTap: () {
@@ -129,13 +130,13 @@ class _UserSignInScreenState extends State<UserSignInScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    commonText("Don't have an account? ", size: 12.0),
+                    commonText("Don't have an account? ".tr, size: 12.0),
                     GestureDetector(
                       onTap: () {
                         navigateToPage(CreateUserAccount());
                       },
                       child: commonText(
-                        "Sign Up",
+                        "Sign Up".tr,
                         size: 12.0,
                         color: AppColors.black,
                         isBold: true,

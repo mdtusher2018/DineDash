@@ -92,7 +92,7 @@ Widget commonTextfieldWithTitle(
               obscureText: isPasswordVisible,
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.all(12.0),
-                hintText: hintText,
+                hintText: hintText.tr,
                 fillColor: AppColors.white,
                 filled: true,
                 hintStyle: TextStyle(fontSize: 14, color: AppColors.gray),

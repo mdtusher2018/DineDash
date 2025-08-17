@@ -7,6 +7,7 @@ import 'package:dine_dash/view/user/home/RestaurantDetailsPage.dart';
 import 'package:dine_dash/view/user/home/list_of_resturants.dart';
 import 'package:dine_dash/view/user/notification/notification.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class UserHomeView extends StatefulWidget {
   const UserHomeView({super.key});
@@ -94,12 +95,12 @@ Row(
                 borderRadius: BorderRadius.circular(30),
               ),
               child: Row(
-                children: const [
+                children: [
                  
                   Expanded(
                     child: TextField(
                       decoration: InputDecoration(
-                        hintText: "Search restaurants, foods...",
+                        hintText: "Search restaurants, foods...".tr,
                         border: InputBorder.none,
                       ),
                     ),
@@ -150,10 +151,10 @@ Row(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          commonText(title, fontWeight: FontWeight.bold, size: 16),
+          commonText(title.tr, fontWeight: FontWeight.bold, size: 16),
           GestureDetector(
             onTap: ontap,
-            child: commonText("See all", color: Colors.blueGrey,isBold: true)),
+            child: commonText("See all".tr, color: Colors.blueGrey,isBold: true)),
         ],
       ),
     );

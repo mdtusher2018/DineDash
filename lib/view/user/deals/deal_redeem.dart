@@ -2,6 +2,7 @@
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:dine_dash/view/user/deals/reminder_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart'; // Add this import
 
 
@@ -180,13 +181,13 @@ Future.delayed(Duration(milliseconds: 1200), () {
                     children: [
                       SlideTransition(
                         position: _slideTitle,
-                        child: commonText("Deal redeemed!", size: 21, isBold: true),
+                        child: commonText("Deal redeemed!".tr, size: 21, isBold: true),
                       ),
                       SizedBox(height: 8),
                       SlideTransition(
                         position: _slideDetails,
                         child: commonText(
-                          "Congratulations, you’ve discovered a new restaurant in your town!",
+                          "Congratulations, you’ve discovered a new restaurant in your town!".tr,
                           textAlign: TextAlign.center,
                           size: 16,
                         ),
@@ -196,7 +197,7 @@ Future.delayed(Duration(milliseconds: 1200), () {
                       Spacer(flex: 3),
                       FadeTransition(
                         opacity: _fadeButton,
-                        child: commonButton("Continue",onTap: () {
+                        child: commonButton("Continue".tr,onTap: () {
                          navigateToPage(ReminderScreen(),replace: true);
                         },),
                       ),

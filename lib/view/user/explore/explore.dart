@@ -46,11 +46,11 @@ class _ExplorePageState extends State<ExplorePage> {
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Row(
-                  children: const [
+                  children: [
                     Expanded(
                       child: TextField(
                         decoration: InputDecoration(
-                          hintText: "Search restaurants, foods...",
+                          hintText: "Search restaurants, foods...".tr,
                           border: InputBorder.none,
                         ),
                       ),
@@ -209,11 +209,11 @@ Row(
               borderRadius: BorderRadius.circular(30),
             ),
             child: Row(
-              children: const [
+              children:  [
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(
-                      hintText: "Search restaurants, foods...",
+                      hintText: "Search restaurants, foods...".tr,
                       border: InputBorder.none,
                     ),
                   ),
@@ -241,7 +241,7 @@ Row(
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: DropdownButton<String>(
-                      value: selectedExpense,hint: commonText("What do you want to do"),
+                      value: selectedExpense,hint: commonText("What do you want to do".tr),
                       isExpanded: true,
                       icon: const Icon(
                         Icons.keyboard_arrow_down_rounded,

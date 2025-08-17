@@ -15,7 +15,7 @@ class RattingDropdown extends StatelessWidget {
             : controller.selectedRatting.value,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-          hintText: 'Select your ratting',
+          hintText: 'Select your ratting'.tr,
           hintStyle: TextStyle(color: Colors.grey.shade100),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),

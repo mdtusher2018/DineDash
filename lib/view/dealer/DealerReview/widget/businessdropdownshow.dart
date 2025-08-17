@@ -15,7 +15,7 @@ class BusinessDropdown extends StatelessWidget {
             : controller.selectedBusiness.value,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-          hintText: 'Select your business',
+          hintText: 'Select your business'.tr,
           hintStyle: TextStyle(color: Colors.grey.shade100),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),

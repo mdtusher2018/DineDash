@@ -35,7 +35,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             Navigator.pop(context);
           },
         ),
-        title: commonText("Change Password", size: 18, isBold: true),
+        title: commonText("Change Password".tr, size: 18, isBold: true),
         centerTitle: true,
       ),
       body: Container(
@@ -48,9 +48,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
             // Current Password Field
             commonTextfieldWithTitle(
-              "Current Password",
+              "Current Password".tr,
               currentPasswordController,
-              hintText: "Enter your password",
+              hintText: "Enter your password".tr,
               assetIconPath: ImagePaths.lockIcon,
 
               isPasswordVisible: isCurrentPasswordVisible,
@@ -65,9 +65,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
             // New Password Field
             commonTextfieldWithTitle(
-              "New Password",
+              "New Password".tr,
               newPasswordController,
-              hintText: "Enter your password",
+              hintText: "Enter your password".tr,
               assetIconPath: ImagePaths.lockIcon,
 
               isPasswordVisible: isNewPasswordVisible,
@@ -82,9 +82,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
             // Confirm New Password Field
             commonTextfieldWithTitle(
-              "Confirm New Password",
+              "Confirm New Password".tr,
               confirmPasswordController,
-              hintText: "Enter your password",
+              hintText: "Enter your password".tr,
               assetIconPath: ImagePaths.lockIcon,
 
               isPasswordVisible: isConfirmPasswordVisible,
@@ -106,7 +106,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   },
                   child: Column(
                     children: [
-                      commonText("Forgot Password", isBold: true),
+                      commonText("Forgot Password".tr, isBold: true),
                       Container(
                         width: 95,
                         height: 0.5,
@@ -121,12 +121,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
             // Change Password Button
             commonButton(
-              "Change Password",
+              "Change Password".tr,
 
               textColor: AppColors.white,
               onTap: () {
                 Get.back();
-                print("Password changed!");
+                print("Password changed!".tr);
               },
             ),
           ],
