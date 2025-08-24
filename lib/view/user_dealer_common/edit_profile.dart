@@ -16,7 +16,7 @@ class EditProfileView extends StatelessWidget {
     return Scaffold(
       
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        
         elevation: 1,
         centerTitle: true,
         title: commonText(

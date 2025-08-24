@@ -266,6 +266,7 @@ class DealsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 64),
         child: SingleChildScrollView(

@@ -1,4 +1,5 @@
 
+import 'package:dine_dash/view/res/colors.dart';
 import 'package:dine_dash/view/user/deals/ratting_page.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,8 @@ class ReminderScreen extends StatelessWidget {
     final DealDetailsController controller = Get.put(DealDetailsController());
     // TextEditingController commentController=TextEditingController();
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(backgroundColor: Colors.white),
+      backgroundColor: AppColors.white,
+      appBar: AppBar(backgroundColor: AppColors.white),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SingleChildScrollView(

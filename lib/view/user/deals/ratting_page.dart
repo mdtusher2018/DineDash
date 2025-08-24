@@ -1,4 +1,5 @@
 
+import 'package:dine_dash/view/res/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -15,8 +16,8 @@ class RattingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final DealDetailsController controller = Get.put(DealDetailsController());
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(backgroundColor: Colors.white,leading: BackButton(onPressed: () {
+      
+      appBar: AppBar(backgroundColor: AppColors.white,leading: BackButton(onPressed: () {
         Navigator.of(context).popUntil((route) => route.isFirst);
 
       },),),

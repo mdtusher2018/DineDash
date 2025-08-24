@@ -31,10 +31,9 @@ class BusinessCard extends StatelessWidget {
       margin: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: Colors.white,
-        boxShadow: const [
-          BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
-        ],
+        color: AppColors.white,
+        border: Border.all(width: 2,color: Colors.grey.withOpacity(0.2)),
+      
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

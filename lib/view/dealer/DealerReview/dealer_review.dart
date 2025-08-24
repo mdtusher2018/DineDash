@@ -28,7 +28,7 @@ class _DealerReviewState extends State<DealerReview> {
       { "ratting": "2.5"},
     ];
     return Scaffold(
-      backgroundColor: Colors.white,
+      
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SingleChildScrollView(

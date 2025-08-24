@@ -1,5 +1,6 @@
 
 
+import 'package:dine_dash/view/res/colors.dart';
 import 'package:dine_dash/view/user/deals/deal_redeem.dart';
 import 'package:dine_dash/view/res/commonWidgets.dart';
 import 'package:dotted_line/dotted_line.dart';
@@ -43,8 +44,8 @@ class _DealsDetailsState extends State<DealsDetails> {
   Widget build(BuildContext context) {
     final DealDetailsController controller = Get.put(DealDetailsController());
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(backgroundColor: Colors.white,),
+      
+      appBar: AppBar(backgroundColor: AppColors.white,),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14,vertical: 5),
         child: SingleChildScrollView(

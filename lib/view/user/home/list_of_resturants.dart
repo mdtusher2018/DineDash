@@ -23,7 +23,7 @@ class _SeeAllResturentPageState extends State<SeeAllResturentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:commonAppBar(title: widget.title.tr),
-      backgroundColor: Colors.white,
+      
       body: ListView.separated(itemCount: 4,
       padding: EdgeInsets.all(16),
           shrinkWrap: true,
