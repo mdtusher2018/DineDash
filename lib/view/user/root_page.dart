@@ -70,6 +70,7 @@ class _UserRootPageState extends State<UserRootPage> {
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
+        backgroundColor: AppColors.white,
         selectedFontSize: 12,
         unselectedFontSize: 12,
         selectedItemColor: AppColors.primaryColor, // selected text color
