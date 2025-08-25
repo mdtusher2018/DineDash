@@ -70,6 +70,7 @@ class _DealerRootPageState extends State<DealerRootPage> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
+        backgroundColor: AppColors.white,
         onTap: _onItemTapped,
         selectedFontSize: 12,
         unselectedFontSize: 12,
