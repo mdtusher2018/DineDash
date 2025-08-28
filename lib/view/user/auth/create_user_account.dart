@@ -125,24 +125,26 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
                           });
                         },
                       ),
-                      RichText(
-                        text: TextSpan(
-                          text: "Agree with ".tr,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: AppColors.black,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: "Terms and Conditions".tr,
-                              style: const TextStyle(
-                                decoration: TextDecoration.underline,
-                                color: AppColors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              recognizer: TapGestureRecognizer()..onTap = () {},
+                      Flexible(
+                        child: RichText(
+                          text: TextSpan(
+                            text: "Agree with ".tr,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: AppColors.black,
                             ),
-                          ],
+                            children: [
+                              TextSpan(
+                                text: "Terms and Conditions".tr,
+                                style: const TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: AppColors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                recognizer: TapGestureRecognizer()..onTap = () {},
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],

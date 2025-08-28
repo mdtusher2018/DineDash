@@ -35,7 +35,7 @@ class DealerBusinessPage extends StatelessWidget {
                   spacing: 10,
                   children: [
                     Icon(Icons.add,size: 28,),
-                    commonText("Add New Business",size: 18,fontWeight: FontWeight.w500)
+                    Flexible(child: commonText("Add New Business",size: 18,fontWeight: FontWeight.w500))
                   ],
                 ),
               ),

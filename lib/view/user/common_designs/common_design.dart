@@ -68,6 +68,7 @@ class BusinessCard extends StatelessWidget {
                             size: 14, fontWeight: FontWeight.bold
                           ),
                         ),
+                        SizedBox(width: 16,),
                         Flexible(
                           child: commonText(
                             "${"Price Range :".tr}$priceRange",
@@ -97,11 +98,11 @@ class BusinessCard extends StatelessWidget {
                               commonText("($reviewCount)",fontWeight: FontWeight.w600),
                             ],
                           ),
-                   
+                   SizedBox(width: 16,),
                         Flexible(
                           child: commonText(
                             "${"Open Time :".tr} $openTime",
-                                             size: 12,fontWeight: FontWeight.w600
+                                             size: 12,fontWeight: FontWeight.w600,textAlign: TextAlign.right
                           ),
                         ),
                       ],

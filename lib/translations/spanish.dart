@@ -235,6 +235,7 @@ Map<String, String> de_DE = {
   "Submit": "Absenden",
 
   "Add Deal": "Deal hinzufügen",
+  "+ Add Deal":"+ Deal hinzufügen",
   "Benefit Amount*": "Vorteilsbetrag*",
   "Deal Type": "Angebotstyp",
   "Create Deal": "Deal erstellen",

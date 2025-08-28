@@ -233,6 +233,7 @@ Map<String, String> en_US = {
   "Submit": "Submit",
 
   "Add Deal": "Add Deal",
+  "+ Add Deal":"+ Add Deal",
   "Benefit Amount*": "Benefit Amount*",
   "Deal Type": "Deal Type",
   "Create Deal": "Create Deal",
