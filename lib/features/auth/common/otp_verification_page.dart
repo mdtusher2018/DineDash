@@ -1,19 +1,19 @@
 import 'package:dine_dash/features/view%20must%20be%20edited/res/colors.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/res/commonWidgets.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/res/image_paths.dart';
-import 'package:dine_dash/features/auth/reset_password_page.dart';
+import 'package:dine_dash/features/auth/common/reset_password_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class UserOTPVerificationScreen extends StatefulWidget {
+class OTPVerificationScreen extends StatefulWidget {
 
-  UserOTPVerificationScreen({super.key});
+  OTPVerificationScreen({super.key});
 
   @override
-  State<UserOTPVerificationScreen> createState() => _UserOTPVerificationScreenState();
+  State<OTPVerificationScreen> createState() => _OTPVerificationScreenState();
 }
 
-class _UserOTPVerificationScreenState extends State<UserOTPVerificationScreen> {
+class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
   final List<TextEditingController> otpControllers = List.generate(
     4,
     (_) => TextEditingController(),
@@ -121,7 +121,7 @@ backgroundColor: AppColors.primaryColor,
             
                   textColor: Colors.white,
                   onTap: () {
-               navigateToPage(UserResetPasswordScreen());
+               navigateToPage(ResetPasswordScreen());
                   },
                 ),
                 const SizedBox(height: 30),

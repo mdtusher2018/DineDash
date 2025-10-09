@@ -5,15 +5,15 @@ import 'package:dine_dash/features/view%20must%20be%20edited/user/root_page.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class UserEmailVerificationScreen extends StatefulWidget {
+class EmailVerificationScreen extends StatefulWidget {
 
-  UserEmailVerificationScreen({super.key});
+  EmailVerificationScreen({super.key});
 
   @override
-  State<UserEmailVerificationScreen> createState() => _UserEmailVerificationScreenState();
+  State<EmailVerificationScreen> createState() => _EmailVerificationScreenState();
 }
 
-class _UserEmailVerificationScreenState extends State<UserEmailVerificationScreen> {
+class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   final List<TextEditingController> otpControllers = List.generate(
     4,
     (_) => TextEditingController(),

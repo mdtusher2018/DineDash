@@ -1,20 +1,20 @@
 import 'package:dine_dash/features/view%20must%20be%20edited/res/colors.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/res/commonWidgets.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/res/image_paths.dart';
-import 'package:dine_dash/features/auth/create_user_account.dart';
-import 'package:dine_dash/features/auth/forget_password_page.dart';
+import 'package:dine_dash/features/auth/user/create_user_account.dart';
+import 'package:dine_dash/features/auth/common/forget_password_page.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/user/root_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class UserSignInScreen extends StatefulWidget {
-  const UserSignInScreen({super.key});
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
 
   @override
-  State<UserSignInScreen> createState() => _UserSignInScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _UserSignInScreenState extends State<UserSignInScreen> {
+class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool rememberMe = false;
@@ -92,7 +92,7 @@ class _UserSignInScreenState extends State<UserSignInScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        navigateToPage(UserForgotPasswordScreen());
+                        navigateToPage(ForgotPasswordScreen());
                       },
                       child: commonText(
                         "Forgot Password".tr,

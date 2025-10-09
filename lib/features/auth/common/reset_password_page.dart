@@ -4,14 +4,14 @@ import 'package:dine_dash/features/view%20must%20be%20edited/res/image_paths.dar
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class UserResetPasswordScreen extends StatefulWidget {
-  const UserResetPasswordScreen({super.key});
+class ResetPasswordScreen extends StatefulWidget {
+  const ResetPasswordScreen({super.key});
 
   @override
-  State<UserResetPasswordScreen> createState() => _UserResetPasswordScreenState();
+  State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
 }
 
-class _UserResetPasswordScreenState extends State<UserResetPasswordScreen> {
+class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final TextEditingController newPasswordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();

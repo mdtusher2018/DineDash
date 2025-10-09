@@ -1,5 +1,5 @@
 import 'package:dine_dash/features/view%20must%20be%20edited/res/colors.dart';
-import 'package:dine_dash/features/auth/sign_in_sign_up_chooeser.dart';
+import 'package:dine_dash/features/auth/common/sign_in_sign_up_chooeser.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/res/commonWidgets.dart';
 import 'package:get/get.dart';
@@ -45,7 +45,7 @@ class _UserOnboardingViewState extends State<UserOnboardingView> {
         curve: Curves.easeInOut,
       );
     } else {
-      navigateToPage(UserSignInSignUpChooeser(),clearStack: true);
+      navigateToPage(SignInSignUpChooeser(),clearStack: true);
     }
   }
 

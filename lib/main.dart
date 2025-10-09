@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:dine_dash/dealer_user_chooser.dart';
+import 'package:dine_dash/features/auth/common/sign_in_page.dart';
 import 'package:dine_dash/translations/app_translations.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/res/colors.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
       ),
       // home: RootPage(),
       debugShowCheckedModeBanner: false,
-      home: DealerUserChooeser(),
+      home: SignInScreen(),
     );
   }
 }

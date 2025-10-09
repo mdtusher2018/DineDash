@@ -11,7 +11,7 @@ import 'package:dine_dash/features/view%20must%20be%20edited/user/root_page.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../res/commonWidgets.dart';
+import '../../view must be edited/res/commonWidgets.dart';
 
 class DealerProfile extends StatelessWidget {
   const DealerProfile({super.key});

@@ -1,8 +1,8 @@
 import 'package:dine_dash/features/view%20must%20be%20edited/res/colors.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/res/commonWidgets.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/res/image_paths.dart';
-import 'package:dine_dash/features/auth/sign_in_page.dart';
-import 'package:dine_dash/features/auth/verify_email.dart';
+import 'package:dine_dash/features/auth/common/sign_in_page.dart';
+import 'package:dine_dash/features/auth/common/verify_email.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -155,7 +155,7 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
                   commonButton(
                     "Sign Up".tr,
                     onTap: () {
-          navigateToPage(UserEmailVerificationScreen());
+          navigateToPage(EmailVerificationScreen());
                     },
                   ),
                   const SizedBox(height: 20),
@@ -182,7 +182,7 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
                       commonText("Already have an account? ".tr, size: 14.0),
                       GestureDetector(
                         onTap: () {
-                          navigateToPage(UserSignInScreen());
+                          navigateToPage(SignInScreen());
                         },
                         child: commonText(
                           "Sign In".tr,

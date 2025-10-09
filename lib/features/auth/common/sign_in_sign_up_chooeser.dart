@@ -1,20 +1,20 @@
 import 'package:dine_dash/features/view%20must%20be%20edited/res/colors.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/res/commonWidgets.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/res/image_paths.dart';
-import 'package:dine_dash/features/auth/create_user_account.dart';
-import 'package:dine_dash/features/auth/sign_in_page.dart';
+import 'package:dine_dash/features/auth/user/create_user_account.dart';
+import 'package:dine_dash/features/auth/common/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class UserSignInSignUpChooeser extends StatefulWidget {
-  const UserSignInSignUpChooeser({super.key});
+class SignInSignUpChooeser extends StatefulWidget {
+  const SignInSignUpChooeser({super.key});
 
   @override
-  State<UserSignInSignUpChooeser> createState() =>
-      _UserSignInSignUpChooeserState();
+  State<SignInSignUpChooeser> createState() =>
+      _SignInSignUpChooeserState();
 }
 
-class _UserSignInSignUpChooeserState extends State<UserSignInSignUpChooeser> {
+class _SignInSignUpChooeserState extends State<SignInSignUpChooeser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +52,7 @@ class _UserSignInSignUpChooeserState extends State<UserSignInSignUpChooeser> {
                 commonButton(
                   "Sign In".tr,
                   onTap: () {
-                    navigateToPage(UserSignInScreen());
+                    navigateToPage(SignInScreen());
                   },
                 ),
 

@@ -1,4 +1,4 @@
-import 'package:dine_dash/features/view%20must%20be%20edited/dealer/dealerOnboarding/create_dealer_account_page.dart';
+import 'package:dine_dash/features/auth/dealer/create_dealer_account_page.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/res/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/res/commonWidgets.dart';
