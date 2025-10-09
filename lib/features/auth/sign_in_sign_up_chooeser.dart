@@ -1,19 +1,20 @@
 import 'package:dine_dash/features/view%20must%20be%20edited/res/colors.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/res/commonWidgets.dart';
-import 'package:dine_dash/features/view%20must%20be%20edited/dealer/rootpage.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/res/image_paths.dart';
-import 'package:dine_dash/features/view%20must%20be%20edited/user/onboarding/UserOnboarding.dart';
+import 'package:dine_dash/features/auth/create_user_account.dart';
+import 'package:dine_dash/features/auth/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class DealerUserChooeser extends StatefulWidget {
-  const DealerUserChooeser({super.key});
+class UserSignInSignUpChooeser extends StatefulWidget {
+  const UserSignInSignUpChooeser({super.key});
 
   @override
-  State<DealerUserChooeser> createState() => _DealerUserChooeserState();
+  State<UserSignInSignUpChooeser> createState() =>
+      _UserSignInSignUpChooeserState();
 }
 
-class _DealerUserChooeserState extends State<DealerUserChooeser> {
+class _UserSignInSignUpChooeserState extends State<UserSignInSignUpChooeser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,24 +44,24 @@ class _DealerUserChooeserState extends State<DealerUserChooeser> {
                 ),
                 SizedBox(height: 20),
                 commonText(
-                  "Are You Dealer or User?".tr,
+                  "Now continue after register in \"USER\".".tr,
                   size: 14,
                   color: AppColors.white,
                 ),
                 SizedBox(height: 20),
                 commonButton(
-                  "User".tr,
+                  "Sign In".tr,
                   onTap: () {
-                    navigateToPage(UserOnboardingView());
+                    navigateToPage(UserSignInScreen());
                   },
                 ),
 
                 SizedBox(height: 20),
                 commonBorderButton(
-                  "Dealer".tr,
+                  "Sign Up".tr,
                   textColor: AppColors.white,
                   onTap: () {
-                    navigateToPage(DealerRootPage());
+                    navigateToPage(CreateUserAccount());
                   },
                 ),
                 SizedBox(height: 40),
