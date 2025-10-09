@@ -2,7 +2,7 @@ import 'package:dine_dash/features/view%20must%20be%20edited/dealer/bussiness/de
 import 'package:dine_dash/features/view%20must%20be%20edited/dealer/home_and_deal/dealer_homepage.dart';
 import 'package:dine_dash/features/profile/dealer/dealer_profile.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/dealer/DealerReview/dealer_review.dart';
-import 'package:dine_dash/features/view%20must%20be%20edited/res/colors.dart';
+import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/dealer/home_and_deal/dealer_deals.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

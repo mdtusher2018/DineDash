@@ -1,5 +1,5 @@
 import 'package:dine_dash/dealer_user_chooser.dart';
-import 'package:dine_dash/features/view%20must%20be%20edited/res/colors.dart';
+import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/profile/widgets/common_dialog.dart';
 import 'package:dine_dash/features/profile/common/about_us.dart';
 import 'package:dine_dash/features/profile/common/contact_us.dart';

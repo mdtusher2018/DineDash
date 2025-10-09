@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:dine_dash/features/view%20must%20be%20edited/res/colors.dart';
+import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/res/commonWidgets.dart';
-import 'package:dine_dash/features/view%20must%20be%20edited/res/image_paths.dart';
+import 'package:dine_dash/core/utils/image_paths.dart';
 import 'package:get/get.dart';
 
 class EditProfileView extends StatelessWidget {

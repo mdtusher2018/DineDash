@@ -42,6 +42,9 @@ dependencies:
   dotted_border: ^3.1.0
   shake: ^3.0.0
   get_storage: ^2.1.1
+  app_links: ^6.4.1
+  flutter_riverpod: ^3.0.2
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:

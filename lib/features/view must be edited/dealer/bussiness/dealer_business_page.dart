@@ -1,7 +1,7 @@
 import 'package:dine_dash/features/view%20must%20be%20edited/dealer/bussiness/edit_bussiness_page.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/dealer/home_and_deal/BusinessDealsPage.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/dealer/bussiness/add_business_screen_frist.dart';
-import 'package:dine_dash/features/view%20must%20be%20edited/res/colors.dart';
+import 'package:dine_dash/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 

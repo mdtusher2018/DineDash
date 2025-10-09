@@ -1,6 +1,6 @@
-import 'package:dine_dash/features/view%20must%20be%20edited/res/colors.dart';
+import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/res/commonWidgets.dart';
-import 'package:dine_dash/features/view%20must%20be%20edited/res/image_paths.dart';
+import 'package:dine_dash/core/utils/image_paths.dart';
 import 'package:dine_dash/features/auth/user/create_user_account.dart';
 import 'package:dine_dash/features/auth/common/sign_in_page.dart';
 import 'package:flutter/material.dart';

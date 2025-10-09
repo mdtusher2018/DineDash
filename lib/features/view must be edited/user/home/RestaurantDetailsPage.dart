@@ -3,7 +3,7 @@ import 'package:dine_dash/features/view%20must%20be%20edited/user/home/deal_bloc
 import 'package:dine_dash/features/view%20must%20be%20edited/user/user_subscription.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/res/commonWidgets.dart';
-import 'package:dine_dash/features/view%20must%20be%20edited/res/colors.dart';
+import 'package:dine_dash/core/utils/colors.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 

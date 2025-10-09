@@ -1,5 +1,5 @@
 import 'package:dine_dash/features/view%20must%20be%20edited/dealer/rootpage.dart';
-import 'package:dine_dash/features/view%20must%20be%20edited/res/colors.dart';
+import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/view%20must%20be%20edited/res/commonWidgets.dart';
 
 import 'package:flutter/material.dart';
