@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
-import 'package:dine_dash/features/auth/common/sign_in_page.dart';
+import 'package:dine_dash/dependency.dart';
+import 'package:dine_dash/features/auth/common/sign_in/sign_in_page.dart';
 import 'package:dine_dash/core/translations/app_translations.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:get_storage/get_storage.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
+  await DependencyInjection.init();
 
   final box = GetStorage();
   String? langCode = box.read('langCode') ?? 'de';
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       translations: AppTranslations(),
-      //     locale: initialLocale??Locale('de', 'DE'),
+      // locale: initialLocale??Locale('de', 'DE'),
       // fallbackLocale: Locale('de', 'DE'),
       locale: initialLocale ?? Locale('en', 'EN'),
       fallbackLocale: Locale('en', 'EN'),

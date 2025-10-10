@@ -1,8 +1,8 @@
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/features/auth/user/user_sign_up_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/core/utils/image_paths.dart';
-import 'package:dine_dash/features/auth/common/sign_in_page.dart';
-import 'package:dine_dash/features/auth/common/verify_email.dart';
+import 'package:dine_dash/features/auth/common/sign_in/sign_in_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,6 +15,10 @@ class CreateUserAccount extends StatefulWidget {
 }
 
 class _CreateUserAccountState extends State<CreateUserAccount> {
+
+
+final controller = Get.find<SignUpController>();
+
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -152,11 +156,16 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
                   const SizedBox(height: 20),
         
                   // Sign Up Button
-                  commonButton(
-                    "Sign Up".tr,
-                    onTap: () {
-          navigateToPage(EmailVerificationScreen());
-                    },
+                  Obx(
+                    () {
+                      return commonButton(
+                        "Sign Up".tr,
+                        isLoading: controller.isLoading.value,
+                        onTap: () {
+                                controller.signUp(fullName: fullNameController.text, email: emailController.text, postalCode: posterCodeController.text, password: passwordController.text,confirlPassword: confirmPasswordController.text);
+                        },
+                      );
+                    }
                   ),
                   const SizedBox(height: 20),
         

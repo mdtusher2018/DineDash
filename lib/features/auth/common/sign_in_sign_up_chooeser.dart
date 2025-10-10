@@ -2,7 +2,7 @@ import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/core/utils/image_paths.dart';
 import 'package:dine_dash/features/auth/user/create_user_account.dart';
-import 'package:dine_dash/features/auth/common/sign_in_page.dart';
+import 'package:dine_dash/features/auth/common/sign_in/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

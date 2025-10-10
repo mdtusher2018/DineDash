@@ -1,9 +1,9 @@
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/features/auth/common/sign_in/sign_in_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/core/utils/image_paths.dart';
 import 'package:dine_dash/features/auth/user/create_user_account.dart';
 import 'package:dine_dash/features/auth/common/forget_password_page.dart';
-import 'package:dine_dash/features/user_root_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,6 +20,8 @@ class _SignInScreenState extends State<SignInScreen> {
   bool rememberMe = false;
   bool isPasswordVisible = false;
   int selectedPlayerType = 0; // 0: Player, 1: Coach
+
+  final controller = Get.find<SignInController>();
 
   @override
   void dispose() {
@@ -105,18 +107,26 @@ class _SignInScreenState extends State<SignInScreen> {
 
                 const SizedBox(height: 20),
                 // Sign In Button
-                commonButton(
-                  "Sign In".tr,
-                  onTap: () {
-                    navigateToPage(UserRootPage());
-                  },
-                ),
+                Obx(() {
+                  return commonButton(
+                    "Sign In".tr,
+                    isLoading: controller.isLoading.value,
+                    onTap: () {
+                      controller.login(
+                        email: emailController.text,
+                        password: passwordController.text,
+                        rememberMe: rememberMe,
+                      );
+                    },
+                  );
+                }),
 
                 const SizedBox(height: 20),
 
                 // Sign In with Google
                 commonBorderButton(
                   "Sign In With Google".tr,
+
                   imagePath: ImagePaths.googleIcon,
 
                   onTap: () {
@@ -138,6 +148,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: commonText(
                         "Sign Up".tr,
                         size: 12.0,
+
                         color: AppColors.black,
                         isBold: true,
                       ),
