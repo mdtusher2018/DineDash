@@ -1,7 +1,7 @@
 import 'package:dine_dash/core/utils/colors.dart';
-import 'package:dine_dash/features/view%20must%20be%20edited/res/commonWidgets.dart';
+import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/core/utils/image_paths.dart';
-import 'package:dine_dash/features/view%20must%20be%20edited/user/root_page.dart';
+import 'package:dine_dash/features/user_root_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

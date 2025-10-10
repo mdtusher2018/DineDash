@@ -7,11 +7,11 @@ import 'package:dine_dash/features/profile/common/edit_profile.dart';
 import 'package:dine_dash/features/profile/common/privacy_policy.dart';
 import 'package:dine_dash/features/profile/common/settings.dart';
 import 'package:dine_dash/features/profile/common/tearms_and_condition.dart';
-import 'package:dine_dash/features/view%20must%20be%20edited/user/root_page.dart';
+import 'package:dine_dash/features/user_root_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../view must be edited/res/commonWidgets.dart';
+import 'package:dine_dash/res/commonWidgets.dart';
 
 class DealerProfile extends StatelessWidget {
   const DealerProfile({super.key});

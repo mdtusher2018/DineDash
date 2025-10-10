@@ -1,4 +1,4 @@
-import 'package:dine_dash/features/view%20must%20be%20edited/res/commonWidgets.dart';
+import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
