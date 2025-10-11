@@ -1,4 +1,5 @@
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/features/auth/common/reset_password/reset_password_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/core/utils/image_paths.dart';
 import 'package:flutter/material.dart';
@@ -24,10 +25,15 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     super.dispose();
   }
 
+  final controller = Get.find<ResetPasswordController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Reset Password".tr,backGroundColor: AppColors.primaryColor,textColor: AppColors.white),
+      appBar: commonAppBar(
+        title: "Reset Password".tr,
+        backGroundColor: AppColors.primaryColor,
+        textColor: AppColors.white,
+      ),
       backgroundColor: AppColors.primaryColor,
       bottomSheet: SizedBox(
         height: double.infinity,
@@ -39,8 +45,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               children: [
                 const SizedBox(height: 20),
                 SizedBox(
-                  width: 240,height: 240,
-                  child: Image.asset(ImagePaths.resetPageImage)),
+                  width: 240,
+                  height: 240,
+                  child: Image.asset(ImagePaths.resetPageImage),
+                ),
                 const SizedBox(height: 10),
                 RichText(
                   text: TextSpan(
@@ -49,11 +57,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                     children: [
-                       TextSpan(
+                      TextSpan(
                         text: "Now Reset Your ".tr,
                         style: TextStyle(color: Colors.black),
                       ),
-                    TextSpan(
+                      TextSpan(
                         text: "Password.".tr,
                         style: TextStyle(color: AppColors.primaryColor),
                       ),
@@ -61,16 +69,19 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   ),
                 ),
                 const SizedBox(height: 5),
-                commonText("Password  must have 6-8 characters.".tr, size: 14.0),
+                commonText(
+                  "Password  must have 6-8 characters.".tr,
+                  size: 14.0,
+                ),
                 const SizedBox(height: 30),
-            
+
                 // New Password TextField
                 commonTextfieldWithTitle(
                   "New Password".tr,
                   newPasswordController,
                   hintText: "Enter your password".tr,
                   assetIconPath: ImagePaths.lockIcon,
-            
+
                   isPasswordVisible: isPasswordVisible,
                   issuffixIconVisible: true,
                   changePasswordVisibility: () {
@@ -80,14 +91,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   },
                 ),
                 const SizedBox(height: 15),
-            
+
                 // Confirm New Password TextField
                 commonTextfieldWithTitle(
                   "Confirm New Password".tr,
                   confirmPasswordController,
                   hintText: "Enter your password".tr,
                   assetIconPath: ImagePaths.lockIcon,
-            
+
                   isPasswordVisible: isConfirmPasswordVisible,
                   issuffixIconVisible: true,
                   changePasswordVisibility: () {
@@ -96,14 +107,20 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     });
                   },
                 ),
-                   SizedBox(height: 20,),
-                commonButton(
-                  "Reset Password".tr,
-                  textColor: Colors.white,
-                  onTap: () {
-                   
-                  },
-                ),
+                SizedBox(height: 20),
+                Obx(() {
+                  return commonButton(
+                    "Reset Password".tr,
+                    isLoading: controller.isLoading.value,
+                    textColor: Colors.white,
+                    onTap: () {
+                      controller.resetPassword(
+                        password: newPasswordController.text,
+                        confirmPassword: confirmPasswordController.text,
+                      );
+                    },
+                  );
+                }),
                 const SizedBox(height: 20),
               ],
             ),

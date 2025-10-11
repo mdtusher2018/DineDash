@@ -1,19 +1,19 @@
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/features/auth/common/email_verification/email_verification_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/core/utils/image_paths.dart';
-import 'package:dine_dash/features/auth/common/reset_password_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class OTPVerificationScreen extends StatefulWidget {
-
-  OTPVerificationScreen({super.key});
+class EmailVerificationScreen extends StatefulWidget {
+  EmailVerificationScreen({super.key});
 
   @override
-  State<OTPVerificationScreen> createState() => _OTPVerificationScreenState();
+  State<EmailVerificationScreen> createState() =>
+      _EmailVerificationScreenState();
 }
 
-class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
+class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   final List<TextEditingController> otpControllers = List.generate(
     4,
     (_) => TextEditingController(),
@@ -27,11 +27,17 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
     super.dispose();
   }
 
+  final controller = Get.find<EmailVerificationController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Verify Email".tr,textColor: AppColors.white,backGroundColor: AppColors.primaryColor),
-backgroundColor: AppColors.primaryColor,
+      appBar: commonAppBar(
+        title: "Verify Email".tr,
+        textColor: AppColors.white,
+        backGroundColor: AppColors.primaryColor,
+      ),
+      backgroundColor: AppColors.primaryColor,
       bottomSheet: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Container(
@@ -44,7 +50,8 @@ backgroundColor: AppColors.primaryColor,
                 SizedBox(
                   width: 240,
                   height: 240,
-                  child: Image.asset(ImagePaths.verificationPageImage)),
+                  child: Image.asset(ImagePaths.verificationPageImage),
+                ),
                 const SizedBox(height: 10),
                 RichText(
                   text: TextSpan(
@@ -57,12 +64,12 @@ backgroundColor: AppColors.primaryColor,
                         text: "Enter ".tr,
                         style: TextStyle(color: Colors.black),
                       ),
-                  
-                         TextSpan(
+
+                      TextSpan(
                         text: "Verification ".tr,
                         style: TextStyle(color: AppColors.primaryColor),
                       ),
-                       TextSpan(
+                      TextSpan(
                         text: " Code.".tr,
                         style: TextStyle(color: Colors.black),
                       ),
@@ -75,7 +82,7 @@ backgroundColor: AppColors.primaryColor,
                   size: 14.0,
                 ),
                 const SizedBox(height: 20),
-            
+
                 // OTP Fields
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -92,18 +99,16 @@ backgroundColor: AppColors.primaryColor,
                   ),
                 ),
                 const SizedBox(height: 24),
-            
+
                 // Resend Code
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    commonText(
-                      "Didn't receive the code? ".tr,
-                      size: 14.0,
-                    
-                    ),
+                    commonText("Didn't receive the code? ".tr, size: 14.0),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        controller.resendOTP();
+                      },
                       child: commonText(
                         "Resend".tr,
                         size: 14.0,
@@ -113,17 +118,24 @@ backgroundColor: AppColors.primaryColor,
                     ),
                   ],
                 ),
-                   SizedBox(height: 20,),
-            
+                SizedBox(height: 20),
+
                 // Verify Button
-                commonButton(
-                  "Verify".tr,
-            
-                  textColor: Colors.white,
-                  onTap: () {
-               navigateToPage(ResetPasswordScreen());
-                  },
-                ),
+                Obx(() {
+                  return commonButton(
+                    "Verify".tr,
+                    isLoading: controller.isLoading.value,
+                    textColor: Colors.white,
+                    onTap: () {
+                      controller.verifyEmail(
+                        otp:
+                            otpControllers.map((e) {
+                              return e.text;
+                            }).join(),
+                      );
+                    },
+                  );
+                }),
                 const SizedBox(height: 30),
               ],
             ),

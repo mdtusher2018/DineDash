@@ -73,10 +73,10 @@ extension NumDurationFormatter on num {
   }
 }
 
-Map<String, dynamic>? decodeJwtPayload(String token) {
+Map<String, dynamic> decodeJwtPayload(String token) {
   try {
     final parts = token.split('.');
-    if (parts.length != 3) return null;
+    if (parts.length != 3) return {};
 
     final payload = parts[1];
     final normalized = base64Url.normalize(payload);
@@ -85,7 +85,7 @@ Map<String, dynamic>? decodeJwtPayload(String token) {
 
     return json.decode(payloadString) as Map<String, dynamic>;
   } catch (e) {
-    return null;
+    return {};
   }
 }
 

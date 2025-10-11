@@ -6,8 +6,8 @@ import 'package:dine_dash/core/validators/auth_validator.dart';
 
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
 import 'package:dine_dash/core/services/localstorage/storage_key.dart';
-import 'package:dine_dash/features/auth/common/verify_email.dart';
-import 'package:dine_dash/features/auth/user/user_sign_up_model.dart';
+import 'package:dine_dash/features/auth/common/email_verification/verify_email.dart';
+import 'package:dine_dash/features/auth/user/user_sign_up_response.dart';
 import 'package:get/get.dart';
 
 class SignUpController extends BaseController {

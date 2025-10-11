@@ -1,7 +1,8 @@
+
 import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/validators/auth_validator.dart';
-import 'package:dine_dash/features/auth/common/sign_in/sign_in_model.dart';
+import 'package:dine_dash/features/auth/common/sign_in/sign_in_response.dart';
 import 'package:dine_dash/features/dealer_root_page.dart';
 import 'package:dine_dash/features/user_root_page.dart';
 import 'package:get/get.dart';
@@ -20,7 +21,6 @@ class SignInController extends BaseController {
     required String password,
     required bool rememberMe,
   }) async {
-
     final validationMessage = AuthValidator.validateSignIn(
       email: email,
       password: password,

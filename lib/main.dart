@@ -1,20 +1,24 @@
 // ignore_for_file: must_be_immutable
+import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
+import 'package:dine_dash/core/services/localstorage/storage_key.dart';
+import 'package:dine_dash/dealer_user_chooser.dart';
 import 'package:dine_dash/dependency.dart';
-import 'package:dine_dash/features/auth/common/sign_in/sign_in_page.dart';
 import 'package:dine_dash/core/translations/app_translations.dart';
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/features/auth/common/forget_password/forget_password_page.dart';
+import 'package:dine_dash/features/auth/common/sign_in/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await GetStorage.init();
   await DependencyInjection.init();
 
-  final box = GetStorage();
-  String? langCode = box.read('langCode') ?? 'de';
-  String? countryCode = box.read('countryCode') ?? 'DE';
+  final LocalStorageService _localStorage = Get.find();
+  String? langCode =
+      await _localStorage.getString(StorageKey.languageCode) ?? 'de';
+  String? countryCode =
+      await _localStorage.getString(StorageKey.countryCode) ?? 'DE';
 
   runApp(MyApp(initialLocale: Locale(langCode, countryCode)));
 }
@@ -31,7 +35,7 @@ class MyApp extends StatelessWidget {
       translations: AppTranslations(),
       // locale: initialLocale??Locale('de', 'DE'),
       // fallbackLocale: Locale('de', 'DE'),
-      locale: initialLocale ?? Locale('en', 'EN'),
+      locale: Locale('en', 'EN'),
       fallbackLocale: Locale('en', 'EN'),
       theme: ThemeData(
         appBarTheme: AppBarTheme(

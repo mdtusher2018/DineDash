@@ -1,11 +1,12 @@
+import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
+import 'package:dine_dash/core/services/localstorage/storage_key.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 void showLanguageSelector(BuildContext context) {
-  final box = GetStorage();
+  final LocalStorageService _localStorage = Get.find();
   showModalBottomSheet(
     context: context,
     shape: const RoundedRectangleBorder(
@@ -31,8 +32,9 @@ void showLanguageSelector(BuildContext context) {
               title: commonText('English'),
               onTap: () {
                 Get.updateLocale(const Locale('en', 'US'));
-                box.write('langCode', 'en');
-                box.write('countryCode', 'US');
+
+                _localStorage.saveString(StorageKey.languageCode, 'en');
+                _localStorage.saveString(StorageKey.countryCode, 'US');
                 Navigator.pop(context);
               },
             ),
@@ -44,8 +46,8 @@ void showLanguageSelector(BuildContext context) {
               title: commonText('Deutsch'),
               onTap: () {
                 Get.updateLocale(const Locale('de', 'DE'));
-                box.write('langCode', 'de');
-                box.write('countryCode', 'DE');
+                _localStorage.saveString(StorageKey.languageCode, 'de');
+                _localStorage.saveString(StorageKey.countryCode, 'DE');
                 Navigator.pop(context);
               },
             ),

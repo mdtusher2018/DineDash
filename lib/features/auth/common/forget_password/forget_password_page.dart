@@ -1,10 +1,9 @@
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/features/auth/common/forget_password/forget_password_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/core/utils/image_paths.dart';
-import 'package:dine_dash/features/auth/common/otp_verification_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 
 class ForgotPasswordScreen extends StatefulWidget {
   ForgotPasswordScreen({super.key});
@@ -22,10 +21,16 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     super.dispose();
   }
 
+  final controller = Get.find<ForgetPasswordController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Get Verification Code".tr,backGroundColor: AppColors.primaryColor,textColor: AppColors.white),
+      appBar: commonAppBar(
+        title: "Get Verification Code".tr,
+        backGroundColor: AppColors.primaryColor,
+        textColor: AppColors.white,
+      ),
       backgroundColor: AppColors.primaryColor,
       bottomSheet: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20),
@@ -35,12 +40,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-        
                 SizedBox(
-                  width: 240,height: 240,
-                  child: Image.asset(ImagePaths.forgetPageImage)),
-            
-      
+                  width: 240,
+                  height: 240,
+                  child: Image.asset(ImagePaths.forgetPageImage),
+                ),
+
                 RichText(
                   text: TextSpan(
                     style: const TextStyle(
@@ -48,22 +53,22 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                     children: [
-                       TextSpan(
+                      TextSpan(
                         text: "Forget Your ".tr,
                         style: TextStyle(color: Colors.black),
                       ),
-                          TextSpan(
+                      TextSpan(
                         text: "Password".tr,
                         style: TextStyle(color: AppColors.primaryColor),
                       ),
-                        const TextSpan(
+                      const TextSpan(
                         text: "?",
                         style: TextStyle(color: Colors.black),
                       ),
                     ],
                   ),
                 ),
-            
+
                 const SizedBox(height: 5),
                 commonText(
                   "Enter your email address to reset your password.".tr,
@@ -71,7 +76,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   size: 14.0,
                 ),
                 const SizedBox(height: 30),
-            
+
                 // Email TextField
                 commonTextfieldWithTitle(
                   "Email".tr,
@@ -81,14 +86,17 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   keyboardType: TextInputType.emailAddress,
                 ),
 
-              const SizedBox(height: 40),
-                commonButton(
-                  "Get Verification Code".tr,
-                  textColor: Colors.white,
-                  onTap: () {
-                 navigateToPage(OTPVerificationScreen());
-                  },
-                ),
+                const SizedBox(height: 40),
+                Obx(() {
+                  return commonButton(
+                    "Get Verification Code".tr,
+                    textColor: Colors.white,
+                    isLoading: controller.isLoading.value,
+                    onTap: () {
+                      controller.forgetPassword(email: emailController.text);
+                    },
+                  );
+                }),
                 const SizedBox(height: 20),
               ],
             ),

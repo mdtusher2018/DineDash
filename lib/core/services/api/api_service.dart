@@ -16,53 +16,65 @@ class ApiService {
     final token = await _localStorage.getString(StorageKey.token);
     log(token.toString());
     final headers = {
+      'Accept-Language': 'en',
       'Content-Type': 'application/json',
       if (token != null) 'Authorization': 'Bearer $token',
       if (token != null) 'SignUpToken': 'signUpToken $token',
       if (token != null) 'Forget-password': 'Forget-password $token',
+
       if (extra != null) ...extra,
     };
     return headers;
   }
 
-  
-  Future<dynamic> get(String endpoint, {Map<String, String>? extraHeaders}) async {
+  Future<dynamic> get(
+    String endpoint, {
+    Map<String, String>? extraHeaders,
+  }) async {
     final url = Uri.parse('${ApiEndpoints.baseUrl}$endpoint');
     final headers = await _getHeaders(extra: extraHeaders);
     return _client.get(url, headers: headers);
   }
 
-  
-  Future<dynamic> post(String endpoint, Map<String, dynamic> body, {Map<String, String>? extraHeaders}) async {
+  Future<dynamic> post(
+    String endpoint,
+    Map<String, dynamic> body, {
+    Map<String, String>? extraHeaders,
+  }) async {
     final url = Uri.parse('${ApiEndpoints.baseUrl}$endpoint');
     final headers = await _getHeaders(extra: extraHeaders);
     return _client.post(url, headers: headers, body: body);
   }
 
-  
-  Future<dynamic> put(String endpoint, Map<String, dynamic> body, {Map<String, String>? extraHeaders}) async {
+  Future<dynamic> put(
+    String endpoint,
+    Map<String, dynamic> body, {
+    Map<String, String>? extraHeaders,
+  }) async {
     final url = Uri.parse('${ApiEndpoints.baseUrl}$endpoint');
     final headers = await _getHeaders(extra: extraHeaders);
     return _client.put(url, headers: headers, body: body);
   }
 
-  
-  Future<dynamic> patch(String endpoint, Map<String, dynamic> body, {Map<String, String>? extraHeaders}) async {
+  Future<dynamic> patch(
+    String endpoint,
+    Map<String, dynamic> body, {
+    Map<String, String>? extraHeaders,
+  }) async {
     final url = Uri.parse('${ApiEndpoints.baseUrl}$endpoint');
     final headers = await _getHeaders(extra: extraHeaders);
     return _client.patch(url, headers: headers, body: body);
   }
 
-  
-  Future<dynamic> delete(String endpoint, {Map<String, String>? extraHeaders}) async {
+  Future<dynamic> delete(
+    String endpoint, {
+    Map<String, String>? extraHeaders,
+  }) async {
     final url = Uri.parse('${ApiEndpoints.baseUrl}$endpoint');
     final headers = await _getHeaders(extra: extraHeaders);
     return _client.delete(url, headers: headers);
   }
 
-
-
- 
   Future<dynamic> multipart(
     String endpoint, {
     String method = 'POST',
@@ -82,10 +94,4 @@ class ApiService {
       bodyFieldName: bodyFieldName,
     );
   }
-
-
-
-
-
-
 }

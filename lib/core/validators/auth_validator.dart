@@ -21,35 +21,76 @@ class AuthValidator {
     return null;
   }
 
+  static String? validateSignUp({
+    required String fullName,
+    required String email,
+    required String postalCode,
+    required String password,
+    required String confirmPassword,
+  }) {
+    if (fullName.isNullOrEmpty || !fullName.isValidName) {
+      return "Please enter a valid full name";
+    }
+    if (email.isNullOrEmpty || !email.isValidEmail) {
+      return "Please enter a valid email address";
+    }
+    if (postalCode.isNullOrEmpty) {
+      return "Postal code can't be empty";
+    }
+    if (password.isNullOrEmpty || !password.isValidPassword) {
+      return "Password must be 6–16 characters with letters & numbers";
+    }
+    if (confirmPassword.isNullOrEmpty) {
+      return "Please confirm your password";
+    }
+    if (password != confirmPassword) {
+      return "Passwords do not match";
+    }
+    return null; // All validations passed
+  }
+
+  static String? validateEmailAndOTPVerification({required String otp}) {
+    if (otp.isNullOrEmpty) {
+      return "OTP can't be empty";
+    }
+    if (otp.length < 4) {
+      return "Invalid OTP";
+    }
+    return null;
+  }
 
 
-static String? validateSignUp({
-  required String fullName,
-  required String email,
-  required String postalCode,
-  required String password,
-  required String confirmPassword,
-}) {
-  if (fullName.isNullOrEmpty || !fullName.isValidName) {
-    return "Please enter a valid full name";
+
+
+  static String? validateForgetPassword({required String email}) {
+    if (email.isNullOrEmpty) {
+      return "Email can't be Empty";
+    }
+
+    if (email.isNullOrEmpty || !email.isValidEmail) {
+      return "Please enter a valid email address";
+    }
+    return null; // All validations passed
   }
-  if (email.isNullOrEmpty || !email.isValidEmail) {
-    return "Please enter a valid email address";
+
+
+
+  static String? validateResetPassword({
+    required String password,
+    required String confirmPassword,
+  }) {
+    if (password.isNullOrEmpty || !password.isValidPassword) {
+      return "Password must be 6–16 characters with letters & numbers";
+    }
+    if (confirmPassword.isNullOrEmpty) {
+      return "Please confirm your password";
+    }
+    if (password != confirmPassword) {
+      return "Passwords do not match";
+    }
+    return null; // All validations passed
   }
-  if (postalCode.isNullOrEmpty) {
-    return "Postal code can't be empty";
-  }
-  if (password.isNullOrEmpty || !password.isValidPassword) {
-    return "Password must be 6–16 characters with letters & numbers";
-  }
-  if (confirmPassword.isNullOrEmpty) {
-    return "Please confirm your password";
-  }
-  if (password != confirmPassword) {
-    return "Passwords do not match";
-  }
-  return null; // All validations passed
-}
+
 
 
 }
