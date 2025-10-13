@@ -1,6 +1,6 @@
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,25 +28,50 @@ class RestaurantCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
+    // Responsive font sizing
+    final titleSize = width * 0.035; // roughly 14px on mid-size phones
+    final smallTextSize = width * 0.03; // 12px-ish
+    final imageHeight = width * 0.4; // dynamic image height
+
     return Container(
-      margin: const EdgeInsets.all(4),
+      constraints: BoxConstraints(maxHeight: 300),
+      margin: const EdgeInsets.all(6),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: AppColors.white,
-        border: Border.all(width: 2,color: Colors.grey.withOpacity(0.2)),
-      
+        border: Border.all(width: 1.5, color: Colors.grey.withOpacity(0.2)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           /// Image
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            child: Image.network(
-              imageUrl,
-              height: 150,
-              width: double.infinity,
-              fit: BoxFit.cover,
+          Expanded(
+            child: ClipRRect(
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(12),
+              ),
+              child: Image.network(
+                getFullImagePath(imageUrl),
+                height: imageHeight,
+                width: double.infinity,
+                fit: BoxFit.cover,
+                errorBuilder:
+                    (_, __, ___) => Container(
+                      height: imageHeight,
+                      color: Colors.grey[200],
+                      alignment: Alignment.center,
+                      child: const Icon(Icons.image_not_supported, size: 40),
+                    ),
+              ),
             ),
           ),
 
@@ -55,77 +80,82 @@ class RestaurantCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                /// Title + Price/Time Row
-                Column(
-               
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          child: commonText(
-                            title,maxline: 2,
-                            size: 14, fontWeight: FontWeight.bold
-                          ),
-                        ),
-                        SizedBox(width: 16,),
-                        Flexible(
-                          child: commonText(
-                            "${"Price Range :".tr}$priceRange",
-                            size: 12,fontWeight: FontWeight.w600
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                /// Title + Price Range
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                    Row(
-                            children: [
-                              Row(
-                                children: List.generate(5, (index) {
-                                  return Icon(
-                                    index < rating.floor()
-                                        ? Icons.star
-                                        : Icons.star_border,
-                                    size: 16,
-                                    color: Colors.orange,
-                                  );
-                                }),
-                              ),
-                              const SizedBox(width: 4),
-                              commonText("($reviewCount)",fontWeight: FontWeight.w600),
-                            ],
-                          ),
-                   SizedBox(width: 16,),
-                        Flexible(
-                          child: commonText(
-                            "${"Open Time :".tr} $openTime",
-                                             size: 12,fontWeight: FontWeight.w600,textAlign: TextAlign.right
-                          ),
-                        ),
-                      ],
-                    )
+                  spacing: 16,
+
+                  children: [
+                    Flexible(
+                      child: commonText(
+                        title,
+                        maxline: 1,
+                        size: titleSize,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Flexible(
+                      child: commonText(
+                        "${"Price Range :".tr} $priceRange",
+                        maxline: 1,
+                        size: smallTextSize,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ],
                 ),
 
+                const SizedBox(height: 6),
 
-  
+                /// Rating + Open Time
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  spacing: 16,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ...List.generate(5, (index) {
+                          return Icon(
+                            index < rating.floor()
+                                ? Icons.star
+                                : Icons.star_border,
+                            size: smallTextSize * 1.3,
+                            color: Colors.orange,
+                          );
+                        }),
+                        const SizedBox(width: 4),
+                        commonText(
+                          "($reviewCount)",
+                          maxline: 1,
+                          fontWeight: FontWeight.w600,
+                          size: smallTextSize,
+                        ),
+                      ],
+                    ),
+                    commonText(
+                      "${"Open Time :".tr} $openTime",
+                      size: smallTextSize,
+                      maxline: 1,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ],
+                ),
+
                 const SizedBox(height: 8),
 
-                /// Location Row
+                /// Location
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(Icons.location_on, size: 20, color: Colors.blue),
+                    const Icon(Icons.location_on, size: 18, color: Colors.blue),
                     const SizedBox(width: 4),
                     Expanded(
                       child: commonText(
                         "${"Location :".tr} $location",
-                   size: 12,
-                        maxline:2,fontWeight: FontWeight.w600
+                        size: smallTextSize,
+                        maxline: 1,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],
@@ -134,26 +164,31 @@ class RestaurantCard extends StatelessWidget {
                 const SizedBox(height: 8),
 
                 /// Tags
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: tags
-                      .map((tag) => Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                            decoration: BoxDecoration(
-                              color: AppColors.lightBlue,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: commonText(
-                              tag,
-                              
-                            ),
-                          ))
-                      .toList(),
-                ),
+                if (tags.isNotEmpty)
+                  Wrap(
+                    spacing: 6,
+                    runSpacing: 6,
+                    children:
+                        tags
+                            .take(3) // ✅ show only first 3 tags
+                            .map(
+                              (tag) => Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 5,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.lightBlue,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: commonText(tag, size: smallTextSize),
+                              ),
+                            )
+                            .toList(),
+                  ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

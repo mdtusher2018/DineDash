@@ -1,4 +1,5 @@
 import 'package:dine_dash/features/business/user/all_review_of_business.dart';
+import 'package:dine_dash/features/business/user/bussiness%20details/business_details_controller.dart';
 import 'package:dine_dash/features/deals/user/user_deal_blocked.dart';
 import 'package:dine_dash/features/profile/user/user_subscription.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,8 @@ import 'package:share_plus/share_plus.dart';
 
 
 class UserBusinessDetailsPage extends StatefulWidget {
-  const UserBusinessDetailsPage({super.key});
+  const UserBusinessDetailsPage({super.key,required this.businessId});
+  final String businessId;
 
   @override
   State<UserBusinessDetailsPage> createState() => _UserBusinessDetailsPageState();
@@ -17,6 +19,15 @@ class UserBusinessDetailsPage extends StatefulWidget {
 
 class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
   int selectedTabIndex = 0;
+
+  final BusinessDetailController controller = Get.find<BusinessDetailController>();
+
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.fetchBusinessDetail(widget.businessId);
+  }
 
   @override
   Widget build(BuildContext context) {

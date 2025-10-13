@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
+import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/services/localstorage/storage_key.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 
@@ -9,11 +10,13 @@ import 'api_client.dart';
 class ApiService {
   final ApiClient _client;
   final LocalStorageService _localStorage;
+  final SessionMemory _sessionMemory;
 
-  ApiService(this._client, this._localStorage);
+  ApiService(this._client, this._localStorage,this._sessionMemory);
 
   Future<Map<String, String>> _getHeaders({Map<String, String>? extra}) async {
-    final token = await _localStorage.getString(StorageKey.token);
+    String? token = await _localStorage.getString(StorageKey.token);
+    token??=_sessionMemory.token;
     log(token.toString());
     final headers = {
       'Accept-Language': 'en',

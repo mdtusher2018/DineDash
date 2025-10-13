@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/features/home/user/home_page_controller.dart';
+import 'package:dine_dash/features/home/user/home_page_response.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/res/user_resturant_card.dart';
-import 'package:dine_dash/features/business/user/user_business_details_page.dart';
+import 'package:dine_dash/features/business/user/bussiness%20details/user_business_details_page.dart';
 import 'package:dine_dash/features/business/user/list_of_business.dart';
 import 'package:dine_dash/features/notification/user_notification.dart';
 import 'package:flutter/material.dart';
@@ -17,183 +19,209 @@ class UserHomeView extends StatefulWidget {
 }
 
 class _UserHomeViewState extends State<UserHomeView> {
-String selectedLocation = 'Rampura, Dhaka.';
+  String selectedLocation = 'Rampura, Dhaka.';
+
+  final HomeController controller = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-
       body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            /// Top location + bell icon
-      
-Row(
-  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  children: [
-    Row(
+        child: Obx(() {
+          if (controller.isLoading.value) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          final homeData = controller.homeData.value;
+
+          if (homeData == null) {
+            return Center(child: commonText("No data available"));
+          }
+
+          return ListView(
+            padding: const EdgeInsets.all(16),
+            children: [
+              /// Top location + bell icon
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: selectedLocation,
+                          icon: Icon(
+                            Icons.arrow_drop_down,
+                            color: AppColors.primaryColor,
+                          ),
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                          onChanged: (String? newValue) {
+                            if (newValue != null) {
+                              setState(() {
+                                selectedLocation = newValue;
+                              });
+                            }
+                          },
+                          items:
+                              <String>[
+                                'Rampura, Dhaka.',
+                                'Gulshan, Dhaka.',
+                                'Banani, Dhaka.',
+                                'Dhanmondi, Dhaka.',
+                              ].map<DropdownMenuItem<String>>((
+                                String location,
+                              ) {
+                                return DropdownMenuItem<String>(
+                                  value: location,
+                                  child: Text(location),
+                                );
+                              }).toList(),
+                        ),
+                      ),
+                    ],
+                  ),
+                  GestureDetector(
+                    onTap: () => navigateToPage(UserNotificationsPage()),
+                    child: Material(
+                      borderRadius: BorderRadius.circular(100),
+                      elevation: 2,
+                      child: const Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Icon(
+                          Icons.notifications_active,
+                          color: Colors.orange,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 16),
+
+              const PromotionBanner(),
+
+              const SizedBox(height: 20),
+
+              /// Search bar
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: AppColors.lightBlue.withOpacity(0.4),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: "Search restaurants, foods...".tr,
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    const Icon(Icons.search),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 24),
+
+              /// Sections dynamically populated
+              buildSection("Nearby Open Restaurants", homeData.restaurants, () {
+                navigateToPage(
+                  ListOfBusinessPage(title: "Nearby Open Restaurants"),
+                );
+              }),
+
+              buildSection("Activities", homeData.activities, () {
+                navigateToPage(ListOfBusinessPage(title: "Activities"));
+              }),
+
+              buildSection("Hot Deals 🔥", homeData.hotDeals, () {
+                navigateToPage(ListOfBusinessPage(title: "Hot Deals 🔥"));
+              }),
+
+              buildSection("Top rated Restaurants", homeData.topRated, () {
+                navigateToPage(
+                  ListOfBusinessPage(title: "Top rated Restaurants"),
+                );
+              }),
+
+              buildSection("New", homeData.newRestaurants, () {
+                navigateToPage(ListOfBusinessPage(title: "New"));
+              }),
+            ],
+          );
+        }),
+      ),
+    );
+  }
+
+  Widget buildSection(String title, List<Restaurant> items, Function() onTap) {
+    if (items.isEmpty) return const SizedBox.shrink();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        DropdownButtonHideUnderline(
-          child: DropdownButton<String>(
-            value: selectedLocation,
-            icon: Icon(Icons.arrow_drop_down, color: AppColors.primaryColor),
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-            onChanged: (String? newValue) {
-              if (newValue != null) {
-                setState(() {
-                  selectedLocation = newValue;
-                });
-              }
-            },
-            items: <String>[
-              'Rampura, Dhaka.',
-              'Gulshan, Dhaka.',
-              'Banani, Dhaka.',
-              'Dhanmondi, Dhaka.',
-            ].map<DropdownMenuItem<String>>((String location) {
-              return DropdownMenuItem<String>(
-                value: location,
-                child: Text(location),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              commonText(title.tr, fontWeight: FontWeight.bold, size: 16),
+              GestureDetector(
+                onTap: onTap,
+                child: commonText(
+                  "See all".tr,
+                  color: Colors.blueGrey,
+                  isBold: true,
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 300,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              final restaurant = items[index];
+              return Padding(
+                padding: const EdgeInsets.only(right: 12),
+                child: SizedBox(
+                  width: 360,
+                  child: InkWell(
+                    onTap:
+                        () => navigateToPage(
+                          UserBusinessDetailsPage(businessId: restaurant.id,), //restaurantId: restaurant.id
+                        ),
+                    child: RestaurantCard(
+                      imageUrl: restaurant.image ?? "",
+                      title: restaurant.name,
+                      rating: restaurant.rating.toDouble(),
+                      reviewCount: restaurant.userRatingsTotal,
+                      priceRange: restaurant.priceRangeText,
+                      openTime: restaurant.openingHoursText,
+                      location: restaurant.formattedAddress ?? "N/A",
+                      tags: restaurant.deals.map((e) => e.dealType).toList(),
+                    ),
+                  ),
+                ),
               );
-            }).toList(),
+            },
           ),
         ),
       ],
-    ),
-    GestureDetector(
-      onTap: () {
-        navigateToPage(UserNotificationsPage());
-      },
-      child: Material(
-        borderRadius: BorderRadius.circular(100),
-        elevation: 2,
-        child: Padding(
-          padding: EdgeInsets.all(8),
-          child: Icon(Icons.notifications_active, color: Colors.orange),
-        ),
-      ),
-    ),
-  ],
-),
-
-
-            const SizedBox(height: 16),
-
-             PromotionBanner(), // 👈 This is where you call it
-          SizedBox(height: 20),
-            /// Search bar
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                color: AppColors.lightBlue.withOpacity(0.4),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Row(
-                children: [
-                 
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: "Search restaurants, foods...".tr,
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),SizedBox(width: 8),
-                   Icon(Icons.search,),
-                  
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 24),
-
-            /// Sections
-            buildSection("Nearby Open Restaurants",() {
-              navigateToPage(ListOfBusinessPage(title: "Nearby Open Restaurants"));
-            },),
-            buildHorizontalList(),
-
-            buildSection("Activities",() {
-              navigateToPage(ListOfBusinessPage(title: "Activities"));
-            }),
-            buildHorizontalList(),
-
-            buildSection("Hot Deals 🔥",() {
-              navigateToPage(ListOfBusinessPage(title: "Hot Deals 🔥"));
-            }),
-            buildHorizontalList(),
-
-            buildSection("Top rated Restaurants",() {
-              navigateToPage(ListOfBusinessPage(title: "Top rated Restaurants"));
-            }),
-            buildHorizontalList(),
-
-            buildSection("New",() {
-              navigateToPage(ListOfBusinessPage(title: "New"));
-            }),
-            buildHorizontalList(),
-          ],
-        ),
-      ),
     );
-  }
-
-  /// Section title with "See all"
-  Widget buildSection(String title,Function() ontap) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          commonText(title.tr, fontWeight: FontWeight.bold, size: 16),
-          GestureDetector(
-            onTap: ontap,
-            child: commonText("See all".tr, color: Colors.blueGrey,isBold: true)),
-        ],
-      ),
-    );
-  }
-
-  /// Horizontally scrollable list of BusinessCard widgets
-  Widget buildHorizontalList() {
-    return SingleChildScrollView(
-  scrollDirection: Axis.horizontal,
-  child: Row(
-    children: List.generate(5, (index) {
-      return Padding(
-        padding: const EdgeInsets.only(right: 12),
-        child: SizedBox(
-          width: 320,
-          child: InkWell(
-            onTap: () {
-              navigateToPage(UserBusinessDetailsPage());
-            },
-            child: RestaurantCard(
-              imageUrl: "https://tse4.mm.bing.net/th/id/OIP.r3wgjJHOPaQo1GnGCkMnwgHaE8?rs=1&pid=ImgDetMain&o=7&rm=3",
-              title: "The Rio Lounge",
-              rating: 4.0,
-              reviewCount: 120,
-              priceRange: "€50–5000",
-              openTime: "9 AM - 10 PM",
-              location: "Gulshan 2, Dhaka.",
-              tags: ["Free cold drinks", "2 for 1"],
-            ),
-          ),
-        ),
-      );
-    }),
-  ),
-)
-;
   }
 }
-
 
 class PromotionBanner extends StatefulWidget {
   const PromotionBanner({super.key});
@@ -267,10 +295,20 @@ class _PromotionBannerState extends State<PromotionBanner> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children:  [
-                      commonText("ICE CREAM DAY", size: 14, fontWeight: FontWeight.bold, color: Colors.white),
-                      commonText("GET YOUR SWEET\nICE CREAM",  size: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                      commonText("40% OFF",  size: 14, color: Colors.white),
+                    children: [
+                      commonText(
+                        "ICE CREAM DAY",
+                        size: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                      commonText(
+                        "GET YOUR SWEET\nICE CREAM",
+                        size: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                      commonText("40% OFF", size: 14, color: Colors.white),
                     ],
                   ),
                 ),
@@ -301,10 +339,3 @@ class _PromotionBannerState extends State<PromotionBanner> {
     );
   }
 }
-
-
-
-
-
-
-

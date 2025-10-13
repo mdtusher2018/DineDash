@@ -1,7 +1,7 @@
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/res/user_resturant_card.dart';
-import 'package:dine_dash/features/business/user/user_business_details_page.dart';
+import 'package:dine_dash/features/business/user/bussiness%20details/user_business_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -310,7 +310,7 @@ Row(
           shrinkWrap: true,
             itemBuilder: (context, index) => InkWell(
                 onTap: () {
-                    navigateToPage(UserBusinessDetailsPage());
+                    navigateToPage(UserBusinessDetailsPage(businessId: "",));
                 },
                 child: RestaurantCard(
                   imageUrl:

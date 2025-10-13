@@ -1,11 +1,9 @@
 // ignore_for_file: must_be_immutable
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
 import 'package:dine_dash/core/services/localstorage/storage_key.dart';
-import 'package:dine_dash/dealer_user_chooser.dart';
 import 'package:dine_dash/dependency.dart';
 import 'package:dine_dash/core/translations/app_translations.dart';
 import 'package:dine_dash/core/utils/colors.dart';
-import 'package:dine_dash/features/auth/common/forget_password/forget_password_page.dart';
 import 'package:dine_dash/features/auth/common/sign_in/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
