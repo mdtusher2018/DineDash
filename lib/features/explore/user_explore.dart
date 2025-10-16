@@ -362,32 +362,39 @@ class _UserExplorePageState extends State<UserExplorePage> {
 
           const SizedBox(height: 12),
 
-          ListView.separated(
-            itemCount: controller.businessList.length,
-            shrinkWrap: true,
-            itemBuilder:
-                (context, index) => InkWell(
-                  onTap: () {
-                    navigateToPage(UserBusinessDetailsPage(businessId: controller.businessList[index].id));
-                  },
-                  child:RestaurantCard(
-                          imageUrl: getFullImagePath(controller.businessList[index].image ?? ""),
-
-                          title: controller.businessList[index].name,
-                          rating: controller.businessList[index].rating.toDouble(),
-                          reviewCount: controller.businessList[index].userRatingsTotal,
-                          priceRange:
-                              controller.businessList[index].priceRange != null
-                                  ? "€${controller.businessList[index].priceRange!.min}-${controller.businessList[index].priceRange!.max}"
-                                  : "N/A",
-                          openTime: controller.businessList[index].openTimeText,
-                          location: controller.businessList[index].addressText,
-                          tags: controller.businessList[index].types,
-                        ),
-                ),
-            separatorBuilder: (context, index) => SizedBox(height: 8),
-
-            physics: NeverScrollableScrollPhysics(),
+          Obx(
+            () {
+              if (controller.isLoading.value) {
+                return Center(child: CircularProgressIndicator());
+              }
+              return ListView.separated(
+                itemCount: controller.businessList.length,
+                shrinkWrap: true,
+                itemBuilder:
+                    (context, index) => InkWell(
+                      onTap: () {
+                        navigateToPage(UserBusinessDetailsPage(businessId: controller.businessList[index].id));
+                      },
+                      child:RestaurantCard(
+                              imageUrl: getFullImagePath(controller.businessList[index].image ?? ""),
+              
+                              title: controller.businessList[index].name,
+                              rating: controller.businessList[index].rating.toDouble(),
+                              reviewCount: controller.businessList[index].userRatingsTotal,
+                              priceRange:
+                                  controller.businessList[index].priceRange != null
+                                      ? "€${controller.businessList[index].priceRange!.min}-${controller.businessList[index].priceRange!.max}"
+                                      : "N/A",
+                              openTime: controller.businessList[index].openTimeText,
+                              location: controller.businessList[index].addressText,
+                              tags: controller.businessList[index].types,
+                            ),
+                    ),
+                separatorBuilder: (context, index) => SizedBox(height: 8),
+              
+                physics: NeverScrollableScrollPhysics(),
+              );
+            }
           ),
         ],
       ),
