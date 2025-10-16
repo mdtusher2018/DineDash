@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/core/validators/auth_validator.dart';
@@ -20,7 +18,9 @@ class EmailVerificationController extends BaseController {
   RxBool isResendOTPTrue = false.obs;
 
   Future<void> verifyEmail({required String otp}) async {
-    final validationMessage = AuthValidator.validateEmailAndOTPVerification(otp: otp);
+    final validationMessage = AuthValidator.validateEmailAndOTPVerification(
+      otp: otp,
+    );
     if (validationMessage != null) {
       showSnackBar(validationMessage, isError: true);
       return;
@@ -33,8 +33,13 @@ class EmailVerificationController extends BaseController {
           "purpose":
               (isResendOTPTrue.value) ? "resend-otp" : "email-verification",
         };
-        final response = await _apiService.post(ApiEndpoints.emailVerification, body);
-        final emailVerificationResponse = EmailVerificationResponse.fromJson(response);
+        final response = await _apiService.post(
+          ApiEndpoints.emailVerification,
+          body,
+        );
+        final emailVerificationResponse = EmailVerificationResponse.fromJson(
+          response,
+        );
 
         if (emailVerificationResponse.statusCode == 201) {
           final token = emailVerificationResponse.accessToken;
@@ -46,10 +51,6 @@ class EmailVerificationController extends BaseController {
           } else if ((decodeJwtPayload(token)["currentRole"] == "business")) {
             Get.offAll(() => DealerRootPage());
           } else {
-            /*
-              This is only navigate if their have any missing information with role.
-              This is important to have role
-            */
             Get.offAll(DealerUserChooeser());
           }
 
@@ -62,13 +63,11 @@ class EmailVerificationController extends BaseController {
   }
 
   Future<void> resendOTP() async {
-
     await safeCall<void>(
       task: () async {
         String token = await _localStorage.getString(StorageKey.token) ?? "";
 
-String email=decodeJwtPayload(token)["email"]??"";
-log(token.toString()+"====="+email.toString());
+        String email = decodeJwtPayload(token)["email"] ?? "";
         final body = {"email": email};
         final response = await _apiService.post(ApiEndpoints.resendOTP, body);
         final resendOTPResponse = EmailVerificationResponse.fromJson(response);
@@ -82,4 +81,3 @@ log(token.toString()+"====="+email.toString());
     );
   }
 }
-

@@ -1,12 +1,16 @@
-
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/business_details_response.dart';
+import 'package:dine_dash/features/business/user/bussiness%20details/menu_response.dart';
+import 'package:dine_dash/model/business_model.dart';
 import 'package:get/get.dart';
 import 'package:dine_dash/core/base/base_controller.dart';
 
 class BusinessDetailController extends BaseController {
-  final Rx<BusinessAttributes?> businessDetail = Rx<BusinessAttributes?>(null);
+  final Rx<BusinessModel?> businessDetail = Rx<BusinessModel?>(null);
+
+  Rxn<List<MenuItem>> menuData = Rxn<List<MenuItem>>();
+
   final ApiService _apiService = Get.find();
 
   Future<void> fetchBusinessDetail(String businessId) async {
@@ -25,5 +29,51 @@ class BusinessDetailController extends BaseController {
         }
       },
     );
+  }
+
+  Future<void> fetchMenu({required String businessId}) async {
+    await safeCall(
+      task: () async {
+        final response = await _apiService.get(ApiEndpoints.menu(businessId));
+        final menuResponse = MenuResponse.fromJson(response);
+
+        if (menuResponse.statusCode == 201 &&
+            menuResponse.data.menu.isNotEmpty) {
+          menuData.value = menuResponse.data.menu;
+        } else {
+          menuData.value = [];
+        }
+      },
+    );
+  }
+
+  /// 🔹 Like a business
+  Future<bool> likeBusiness(String businessId) async {
+    return await safeCall(
+          showLoading: false,
+          task: () async {
+            final response = await _apiService.post(ApiEndpoints.addFavorite, {
+              "business": businessId,
+            });
+            return response['statusCode'] == 201;
+          },
+        ) ??
+        false;
+  }
+
+  /// 🔹 Unlike a business
+  Future<bool> unlikeBusiness(String favoriteId) async {
+    return await safeCall(
+          showLoading: false,
+          task: () async {
+            final response = await _apiService.get(
+              ApiEndpoints.removeFavorite(favoriteId),
+            );
+
+            // Success if statusCode 200
+            return response['statusCode'] == 200;
+          },
+        ) ??
+        false;
   }
 }

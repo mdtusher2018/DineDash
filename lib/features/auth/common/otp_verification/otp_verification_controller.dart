@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/core/validators/auth_validator.dart';
@@ -20,22 +18,27 @@ class OTPVerificationController extends BaseController {
   RxBool isResendOTPTrue = false.obs;
 
   Future<void> verifyOTP({required String otp}) async {
-    final validationMessage = AuthValidator.validateEmailAndOTPVerification(otp: otp);
+    final validationMessage = AuthValidator.validateEmailAndOTPVerification(
+      otp: otp,
+    );
     if (validationMessage != null) {
       showSnackBar(validationMessage, isError: true);
       return;
     }
-log(otp);
+
     await safeCall<void>(
       task: () async {
-
         final body = {
           "otp": otp,
-          "purpose":
-              (isResendOTPTrue.value) ? "resend-otp" : "forget-password",
+          "purpose": (isResendOTPTrue.value) ? "resend-otp" : "forget-password",
         };
-        final response = await _apiService.post(ApiEndpoints.emailVerification, body);
-        final otpVerificationResponse = OTPVerificationResponse.fromJson(response);
+        final response = await _apiService.post(
+          ApiEndpoints.emailVerification,
+          body,
+        );
+        final otpVerificationResponse = OTPVerificationResponse.fromJson(
+          response,
+        );
 
         if (otpVerificationResponse.statusCode == 201) {
           final token = otpVerificationResponse.accessToken;
@@ -63,13 +66,12 @@ log(otp);
   }
 
   Future<void> resendOTP() async {
-
     await safeCall<void>(
       task: () async {
         String token = await _localStorage.getString(StorageKey.token) ?? "";
 
-String email=decodeJwtPayload(token)["email"]??"";
-log(token.toString()+"====="+email.toString());
+        String email = decodeJwtPayload(token)["email"] ?? "";
+
         final body = {"email": email};
         final response = await _apiService.post(ApiEndpoints.resendOTP, body);
         final resendOTPResponse = OTPVerificationResponse.fromJson(response);
@@ -83,4 +85,3 @@ log(token.toString()+"====="+email.toString());
     );
   }
 }
-

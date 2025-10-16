@@ -1,4 +1,4 @@
-import 'package:dine_dash/core/utils/helper.dart';
+import 'package:dine_dash/core/utils/extentions.dart';
 
 class AuthValidator {
   /// Validate Sign In fields

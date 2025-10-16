@@ -4,22 +4,26 @@ class SessionMemory {
   SessionMemory._internal();
 
   String? _token;
-  bool? _isUser;
-
-  void setToken(String token) {
-    _token = token;
-  }
-
+  void setToken(String token) => _token = token;
   String? get token => _token;
 
-  void setRole(bool isUser) {
-    _isUser = isUser;
+  bool? _isUser;
+  void setRole(bool isUser) => _isUser = isUser;
+  bool? get roleIsUser => _isUser;
+
+  double? _latitude, _longitude;
+  void setUserLocation(double latitude, double longitude) {
+    _latitude = latitude;
+    _longitude = longitude;
   }
 
-  bool? get roleIsUser => _isUser;
+  (double?, double?) get userLocation => (_latitude, _longitude);
+  
 
   void clear() {
     _token = null;
     _isUser = null;
+    _latitude = null;
+    _longitude = null;
   }
 }

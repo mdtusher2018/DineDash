@@ -1,6 +1,10 @@
+import 'package:dine_dash/core/base/base_controller.dart';
+import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
-
+import 'package:geolocator/geolocator.dart';
 import 'dart:convert';
+
+import 'package:get/get.dart';
 
 String getFullImagePath(String imagePath) {
   if (imagePath.isEmpty) {
@@ -54,22 +58,46 @@ String formatDuration(Duration d) {
   return "$h:$m:$s";
 }
 
-extension NumDurationFormatter on num {
-  String formatDuration() {
-    final duration = Duration(seconds: toInt());
+Future<String> calculateDistance({
+  required double targetLatitude,
+  required double targetLongitude,
+}) async {
+  try {
+    final SessionMemory session = Get.find();
+    var (lat, lon) = session.userLocation;
 
-    final hours = duration.inHours;
-    final minutes = duration.inMinutes.remainder(60);
-    final secs = duration.inSeconds.remainder(60);
+    if (lat == null || lon == null) {
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        permission = await Geolocator.requestPermission();
+      }
 
-    if (hours > 0) {
-      return "${hours.toString().padLeft(2, '0')}:"
-          "${minutes.toString().padLeft(2, '0')}:"
-          "${secs.toString().padLeft(2, '0')}";
-    } else {
-      return "${minutes.toString().padLeft(2, '0')}:"
-          "${secs.toString().padLeft(2, '0')}";
+      final currentPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+
+      lat = currentPosition.latitude;
+      lon = currentPosition.longitude;
+
+      session.setUserLocation(lat, lon);
     }
+
+    final distanceInMeters = Geolocator.distanceBetween(
+      lat,
+      lon,
+      targetLatitude,
+      targetLongitude,
+    );
+
+    if (distanceInMeters >= 1000) {
+      final distanceInKm = distanceInMeters / 1000;
+      return "${distanceInKm.toStringAsFixed(1)} km";
+    } else {
+      return "${distanceInMeters.toStringAsFixed(0)} m";
+    }
+  } catch (e) {
+    return "N/A";
   }
 }
 
@@ -89,24 +117,44 @@ Map<String, dynamic> decodeJwtPayload(String token) {
   }
 }
 
-extension InputValidator on String {
-  bool get isNullOrEmpty => trim().isEmpty;
+Future<Position> getCurrentPosition({required BaseController? controller}) async {
+  Position fallbackPosition = Position(
+    latitude: 23.8103,
+    longitude: 90.4125,
+    timestamp: DateTime.now(),
+    accuracy: 1,
+    altitude: 0,
+    heading: 0,
+    speed: 0,
+    speedAccuracy: 0,
+    altitudeAccuracy: 0,
+    headingAccuracy: 0,
+  );
 
-  /// Validates email format
-  bool get isValidEmail {
-    final emailRegex = RegExp(
-      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-    );
-    return emailRegex.hasMatch(trim());
-  }
+  return (await controller?.safeCall<Position>(
+        task: () async {
+          try {
+            LocationPermission permission = await Geolocator.checkPermission();
 
-  bool get isValidPassword {
-    final passRegex = RegExp(r'^.{6,16}$');
-    return passRegex.hasMatch(trim());
-  }
+            if (permission == LocationPermission.deniedForever ||
+                permission == LocationPermission.denied) {
+              permission = await Geolocator.requestPermission();
+            }
 
-  bool get isValidName {
-    final nameRegex = RegExp(r"^[a-zA-Z\s]{2,50}$");
-    return nameRegex.hasMatch(trim());
-  }
+            if (permission == LocationPermission.denied ||
+                permission == LocationPermission.deniedForever) {
+              return fallbackPosition;
+            }
+
+            final position = await Geolocator.getCurrentPosition();
+
+            return position;
+          } catch (_) {
+            return fallbackPosition;
+          }
+        },
+        showErrorSnack: true,
+        showLoading: false,
+      )) ??
+      fallbackPosition;
 }

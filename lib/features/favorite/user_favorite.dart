@@ -1,4 +1,6 @@
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/core/utils/helper.dart';
+import 'package:dine_dash/features/favorite/favorite_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/res/user_resturant_card.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/user_business_details_page.dart';
@@ -13,8 +15,15 @@ class UserFavoritePage extends StatefulWidget {
 }
 
 class _UserFavoritePageState extends State<UserFavoritePage> {
+  List<String> favorite = [""];
+  final FavoriteController controller = Get.find<FavoriteController>();
+  final TextEditingController searchTermController = TextEditingController();
 
-List<String> favorite=[""];
+  @override
+  void initState() {
+    super.initState();
+    controller.fetchFavoriteList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,68 +33,107 @@ List<String> favorite=[""];
         child: SafeArea(
           child: Column(
             children: [
-                               Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    decoration: BoxDecoration(
-                      color: AppColors.lightBlue.withOpacity(0.4),
-                      borderRadius: BorderRadius.circular(30),
+              /// Search bar
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: AppColors.lightBlue.withOpacity(0.4),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: searchTermController,
+                        onChanged:
+                            (value) =>
+                                controller.searchQuery.value =
+                                    value, // 🔥 updates filter live
+                        decoration: InputDecoration(
+                          hintText: "Search restaurants, foods...".tr,
+                          border: InputBorder.none,
+                        ),
+                      ),
                     ),
-                    child: Row(
-                      children:  [
-                       
-                        Expanded(
-                          child: TextField(
-                            decoration: InputDecoration(
-                              hintText: "Search restaurants, foods...".tr,
-                              border: InputBorder.none,
+                    const SizedBox(width: 8),
+                    const Icon(Icons.search),
+                  ],
+                ),
+              ),
+              SizedBox(height: 16),
+              Expanded(
+                child: Obx(() {
+                  if (controller.favoriteData.value == null) {
+                    // Loading or empty
+                    return Center(child: CircularProgressIndicator());
+                  }
+
+                  // final favorites = controller.favoriteData.value!.attributes;
+               
+
+                  if (controller.filteredFavorites.isEmpty) {
+                    return Center(
+                      child: Container(
+                        constraints: BoxConstraints(maxWidth: 330),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset("assets/images/favorite.png"),
+                            commonText(
+                              "No favorites yet".tr,
+                              size: 16,
+                              isBold: true,
                             ),
-                          ),
-                        ),SizedBox(width: 8),
-                         Icon(Icons.search,),
-                        
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 16,),
-                  Expanded(child:
-                  (favorite.isEmpty)?
-                  
-                  Center(child: Container(
-                    constraints: BoxConstraints(
-                      maxWidth: 330
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset("assets/images/favorite.png"),
-                        commonText("No favorites yet".tr,size: 16,isBold: true),
-                        SizedBox(height: 16,),
-                        commonText("Start exploring our recipes and save your favorites to build your personal collection".tr,size: 14,fontWeight: FontWeight.w500,textAlign: TextAlign.center),
-                        SizedBox(height: 16,),
-                        commonButton("Start Exploring".tr,width: 160,boarderRadious: 50,height: 60)
-                      ],
-                    ),
-                  ))
-                  :                 
-                   ListView.builder(
-                    itemCount: 4,
+                            SizedBox(height: 16),
+                            commonText(
+                              "Start exploring our recipes and save your favorites to build your personal collection"
+                                  .tr,
+                              size: 14,
+                              fontWeight: FontWeight.w500,
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 16),
+                            commonButton(
+                              "Start Exploring".tr,
+                              width: 160,
+                              boarderRadious: 50,
+                              height: 60,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+
+                  return ListView.builder(
+                    itemCount: controller.filteredFavorites.length,
                     itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    navigateToPage(UserBusinessDetailsPage(businessId: "",));
-                  },
-                  child: RestaurantCard(
-                  imageUrl: "https://tse4.mm.bing.net/th/id/OIP.r3wgjJHOPaQo1GnGCkMnwgHaE8?rs=1&pid=ImgDetMain&o=7&rm=3",
-                  title: "Football Mania",
-                  rating: 4,
-                  reviewCount: 120,
-                  priceRange: "€50–5000",
-                  openTime: "9 AM - 10 PM",
-                  location: "Gulshan 2, Dhaka.",
-                  tags: ["2 for 1"],
-                                ),
-                );
-                  },))
+                      final business = controller.filteredFavorites[index];
+                      return GestureDetector(
+                        onTap: () {
+                          navigateToPage(
+                            UserBusinessDetailsPage(businessId: business.id),
+                          );
+                        },
+                        child: RestaurantCard(
+                          imageUrl: getFullImagePath(business.image ?? ""),
+
+                          title: business.name,
+                          rating: business.rating.toDouble(),
+                          reviewCount: business.userRatingsTotal,
+                          priceRange:
+                              business.priceRange != null
+                                  ? "€${business.priceRange!.min}-${business.priceRange!.max}"
+                                  : "N/A",
+                          openTime: business.openTimeText,
+                          location: business.addressText,
+                          tags: business.types,
+                        ),
+                      );
+                    },
+                  );
+                }),
+              ),
             ],
           ),
         ),

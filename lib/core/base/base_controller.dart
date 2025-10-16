@@ -11,9 +11,10 @@ abstract class BaseController extends GetxController {
     String? successMessage,
     bool showErrorSnack = true,
     bool showSuccessSnack = false,
+    bool showLoading = true, // ✅ new flag
   }) async {
     try {
-      isLoading.value = true;
+    if (showLoading)  isLoading.value = true;
       errorMessage.value = '';
 
       final result = await task();
@@ -31,7 +32,7 @@ abstract class BaseController extends GetxController {
       if (showErrorSnack) showSnackBar(errorMessage.value, isError: true);
       return null;
     } finally {
-      isLoading.value = false;
+      if (showLoading) isLoading.value = false;
     }
   }
 

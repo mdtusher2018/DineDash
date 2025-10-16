@@ -9,6 +9,9 @@ import 'package:dine_dash/features/auth/common/reset_password/reset_password_con
 import 'package:dine_dash/features/auth/common/sign_in/sign_in_controller.dart';
 import 'package:dine_dash/features/auth/user/user_sign_up_controller.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/business_details_controller.dart';
+import 'package:dine_dash/features/city_location_helper/city_controller.dart';
+import 'package:dine_dash/features/explore/user_explore_controller.dart';
+import 'package:dine_dash/features/favorite/favorite_controller.dart';
 import 'package:dine_dash/features/home/user/home_page_controller.dart';
 import 'package:get/get.dart';
 
@@ -26,7 +29,11 @@ class DependencyInjection {
     final apiClient = ApiClient();
     Get.put<ApiClient>(apiClient, permanent: true);
 
-    final apiService = ApiService(apiClient, localStorageService,sessionMemoryService);
+    final apiService = ApiService(
+      apiClient,
+      localStorageService,
+      sessionMemoryService,
+    );
     Get.put<ApiService>(apiService, permanent: true);
 
     // ---------- Controllers ----------
@@ -54,5 +61,11 @@ class DependencyInjection {
       BusinessDetailController(),
       permanent: true,
     );
+
+    Get.put<FavoriteController>(FavoriteController(), permanent: true);
+
+    Get.put<CityController>(CityController(), permanent: true);
+
+    Get.put<UserExploreController>(UserExploreController(), permanent: true);
   }
 }
