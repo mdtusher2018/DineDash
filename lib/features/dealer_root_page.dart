@@ -1,6 +1,6 @@
-import 'package:dine_dash/features/business/dealer/dealer_business_root_page.dart';
+import 'package:dine_dash/features/business/dealer/dealer_business_root_page/dealer_business_root_page.dart';
 import 'package:dine_dash/features/home/dealer/dealer_homepage.dart';
-import 'package:dine_dash/features/profile/dealer/dealer_profile.dart';
+import 'package:dine_dash/features/profile/user/profile/profile_screen.dart';
 import 'package:dine_dash/features/ratting/dealer/dealer_review.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/deals/dealer/dealer_deals_root_page.dart';
@@ -20,7 +20,7 @@ class _DealerRootPageState extends State<DealerRootPage> {
     DealerDealsRootPage(),
     DealerBusinessPage(),
     DealerReview(),
-    DealerProfile(),
+    ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {

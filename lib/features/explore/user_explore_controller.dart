@@ -1,3 +1,4 @@
+
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/services/localstorage/session_memory.dart';
@@ -16,6 +17,10 @@ class UserExploreController extends BaseController {
   var businessList = <BusinessModel>[].obs;
 
   SessionMemory sessionMemory = Get.find();
+
+  int currentPage = 1;
+  int totalPages = 1;
+  bool isLoadingMore = false;
 
   Future<void> fetchBusinessesOnMap({
     double? latitude,
@@ -43,6 +48,7 @@ class UserExploreController extends BaseController {
           ApiEndpoints.nearbyBusinesses(lat: lat, lng: lng),
         );
 
+
         final parsed = UserExploreMapResponse.fromJson(response);
 
         if (parsed.statusCode == 200) {
@@ -55,20 +61,63 @@ class UserExploreController extends BaseController {
     );
   }
 
-  Future<void> fetchBusinessesList() async {
+  Future<void> fetchBusinessesList({
+    String? city,
+    String? searchTerm,
+    String? sortBy,
+    bool loadMore = false,
+  }) async {
+    if (isLoadingMore) return;
+
+    if (!loadMore) {
+      currentPage = 1;
+      totalPages = 1;
+      businessList.clear();
+    }
+    if (loadMore && currentPage >= totalPages) {
+      return;
+    }
+    isLoadingMore = loadMore;
+
     await safeCall(
       task: () async {
-        final response = await _apiService.get(ApiEndpoints.businessNearestList);
-        final favoriteResponse = UserExploreBusinessListResponse.fromJson(
-          response,
+        final response = await _apiService.get(
+          ApiEndpoints.businessNearestList(
+            city: city,
+            searchTerm: searchTerm,
+            sortBy: sortBy,
+            page: currentPage,
+          ),
         );
 
-        if (favoriteResponse.statusCode == 200) {
-          businessList.assignAll(favoriteResponse.businesses);
+        final userExploreBusinessListResponse =
+            UserExploreBusinessListResponse.fromJson(response);
+
+        if (userExploreBusinessListResponse.statusCode == 200) {
+          businessList.assignAll(userExploreBusinessListResponse.businesses);
+
+          totalPages = userExploreBusinessListResponse.pagination.totalPages;
+          currentPage = userExploreBusinessListResponse.pagination.currentPage;
+
+          if (loadMore) {
+            businessList.addAll(userExploreBusinessListResponse.businesses);
+          } else {
+            businessList.assignAll(userExploreBusinessListResponse.businesses);
+          }
+
+          businessList.refresh();
         } else {
-          throw Exception(favoriteResponse.message);
+          throw Exception(userExploreBusinessListResponse.message);
         }
       },
     );
+  }
+
+  /// Call this to load next page
+  Future<void> loadMoreBusinesses() async {
+    if (currentPage < totalPages && !isLoadingMore) {
+      currentPage++;
+      await fetchBusinessesList(loadMore: true);
+    }
   }
 }

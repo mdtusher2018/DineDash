@@ -1,22 +1,36 @@
+import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/dealer_user_chooser.dart';
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/features/profile/user/profile/profile_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
-import 'package:dine_dash/features/onboarding/DealerOnboarding.dart';
 import 'package:dine_dash/features/profile/widgets/common_dialog.dart';
 import 'package:dine_dash/features/profile/user/user_subscription.dart';
-import 'package:dine_dash/features/profile/common/about_us.dart';
+import 'package:dine_dash/features/profile/common/static_content/about_us.dart';
 import 'package:dine_dash/features/profile/common/contact_us.dart';
-import 'package:dine_dash/features/profile/common/edit_profile.dart';
-import 'package:dine_dash/features/profile/common/privacy_policy.dart';
+import 'package:dine_dash/features/profile/common/edit_profile/edit_profile.dart';
+import 'package:dine_dash/features/profile/common/static_content/privacy_policy.dart';
 import 'package:dine_dash/features/profile/common/settings.dart';
-import 'package:dine_dash/features/profile/common/tearms_and_condition.dart';
+import 'package:dine_dash/features/profile/common/static_content/tearms_and_condition.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'journey_screen.dart';
+import '../journey_screen.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  final controller = Get.find<ProfileController>();
+
+  @override
+  void initState() {
+    super.initState();
+    controller.fetchProfile();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,68 +43,90 @@ class ProfileScreen extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(height: 74),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          commonText(
-                            "Jhon Doi",
-                            size: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          commonText(
-                            "example.gmail.com",
-                            size: 16,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xff555555),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        height: 77,
-                        width: 77,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: ClipOval(
-                          child: Image.asset(
-                            "assets/images/profilepic.png",
-                            fit: BoxFit.cover,
+                  Obx(() {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            commonText(
+                              controller.isLoading.value
+                                  ? "Loading..."
+                                  : controller.userModel.value != null
+                                  ? controller.userModel.value!.fullName
+                                  : "N/A",
+                              size: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            commonText(
+                              controller.isLoading.value
+                                  ? "Loading..."
+                                  : controller.userModel.value != null
+                                  ? controller.userModel.value!.email
+                                  : "N/A",
+                              size: 16,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xff555555),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          height: 77,
+                          width: 77,
+                          decoration: BoxDecoration(shape: BoxShape.circle),
+                          child: ClipOval(
+                            child: Image.network(
+                              !controller.isLoading.value ||
+                                      controller.userModel.value != null
+                                  ? getFullImagePath(
+                                    controller.userModel.value!.image!,
+                                  )
+                                  : "https://tse3.mm.bing.net/th/id/OIP.ARKjkmC8CHiN18CdgXJ9ngHaHa?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3",
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    );
+                  }),
                   SizedBox(height: 15),
-                  GestureDetector(
-                    onTap: () {
-                      Get.to(() => JourneyScreen());
-                    },
-                    child: Container(
-                      height: 84,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.grey.shade300),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          commonText(
-                            "Your Journey".tr,
-                            size: 22,
-                            fontWeight: FontWeight.w600,
+
+                  Obx(() {
+                    if (controller.currentRole.value == 'user') {
+                      return GestureDetector(
+                        onTap: () {
+                          Get.to(() => JourneyScreen());
+                        },
+                        child: Container(
+                          height: 84,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.grey.shade300),
                           ),
-                          SizedBox(width: 50),
-                          Image.asset(
-                            "assets/images/track.png",
-                            height: 66,
-                            width: 66,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              commonText(
+                                "Your Journey".tr,
+                                size: 22,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              SizedBox(width: 50),
+                              Image.asset(
+                                "assets/images/track.png",
+                                height: 66,
+                                width: 66,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
+                        ),
+                      );
+                    } else {
+                      return SizedBox.shrink();
+                    }
+                  }),
                   SizedBox(height: 15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -99,7 +135,19 @@ class ProfileScreen extends StatelessWidget {
                         image: 'assets/images/edit.png',
                         title: 'Edit Profile',
                         onTap: () {
-                          navigateToPage(EditProfileView());
+                          if (controller.userModel.value != null) {
+                            navigateToPage(
+                              EditProfileView(
+                                email: controller.userModel.value!.email,
+                                name: controller.userModel.value!.fullName,
+                                postcode:
+                                    controller.userModel.value!.postalCode
+                                        .toString(),
+                                profileImage:
+                                    controller.userModel.value!.image ?? "",
+                              ),
+                            );
+                          }
                         },
                       ),
                       buildcontainer(
@@ -123,17 +171,24 @@ class ProfileScreen extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Divider(thickness: 2, color: Colors.grey.shade300),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  buildRowCon(
-                    image: 'assets/images/subscription.png',
-                    title: 'Subscription',
-                    onTap: () {
-                      navigateToPage(SubscriptionView());
-                    },
-                  ),
+                  Obx(() {
+                    if (controller.currentRole.value == 'user') {
+                      return buildRowCon(
+                        image: 'assets/images/subscription.png',
+                        title: 'Subscription',
+                        onTap: () {
+                          navigateToPage(SubscriptionView());
+                        },
+                      );
+                    } else {
+                      return SizedBox.shrink();
+                    }
+                  }),
 
                   buildRowCon(
                     image: 'assets/images/policy.png',
@@ -146,7 +201,7 @@ class ProfileScreen extends StatelessWidget {
                     image: 'assets/images/termscon.png',
                     title: 'Terms and Condition',
                     onTap: () {
-                      navigateToPage(TermsAndConditonScreen());
+                      navigateToPage(TermsAndConditionScreen());
                     },
                   ),
                   buildRowCon(
@@ -164,13 +219,16 @@ class ProfileScreen extends StatelessWidget {
                       showLanguageSelector(context);
                     },
                   ),
-                  buildRowCon(
-                    image: 'assets/images/become.png',
-                    title: 'Become a Dealer',
-                    onTap: () {
-                      navigateToPage(DealerOnboardingView());
-                    },
-                  ),
+                  Obx(() {
+                    return buildRowCon(
+                      image: 'assets/images/become.png',
+                      title:
+                          'Become a ${(controller.currentRole.value == 'user' ? "Dealer" : "User")}',
+                      onTap: () {
+                        controller.switchAccount();
+                      },
+                    );
+                  }),
                 ],
               ),
             ),

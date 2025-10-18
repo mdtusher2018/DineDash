@@ -1,6 +1,6 @@
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
-import 'package:dine_dash/features/profile/common/change_password.dart';
+import 'package:dine_dash/features/profile/common/change%20password/change_password.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,6 +1,7 @@
 import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/core/utils/helper.dart';
+import 'package:dine_dash/features/city_location_helper/city_controller.dart';
 import 'package:dine_dash/features/explore/user_explore_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/res/user_resturant_card.dart';
@@ -20,12 +21,13 @@ class _UserExplorePageState extends State<UserExplorePage> {
   bool showMap = false;
 
   UserExploreController controller = Get.find<UserExploreController>();
+  final CityController cityController = Get.find<CityController>();
+  final TextEditingController searchTermController = TextEditingController();
   SessionMemory sessionMemory = Get.find();
   GoogleMapController? _mapController;
 
   String? selectedExpense;
-  String selectedSortBy = 'Gulshan';
-  RxString selectedLocation = 'Rampura, Dhaka.'.obs;
+  String selectedSortBy = 'Low';
 
   @override
   void initState() {
@@ -211,159 +213,228 @@ class _UserExplorePageState extends State<UserExplorePage> {
   }
 
   Widget _buildListView() {
-
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Obx(() {
-                return DropdownButtonHideUnderline(
+    return NotificationListener(
+      onNotification: (notification) {
+        if (notification is ScrollEndNotification &&
+            notification.metrics.pixels ==
+                notification.metrics.maxScrollExtent &&
+            !controller.isLoadingMore &&
+            controller.currentPage < controller.totalPages) {
+          controller.fetchBusinessesList(
+            city: cityController.selectedCity.split('-').first,
+            searchTerm:
+                searchTermController.text.trim().isNotEmpty
+                    ? searchTermController.text.trim()
+                    : null,
+            sortBy: selectedSortBy,
+            loadMore: true,
+          );
+        }
+        return false;
+      },
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Obx(() {
+              return Align(
+                alignment: Alignment.centerLeft,
+                child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
-                    value: selectedLocation.value,
+                    value:
+                        cityController.selectedCity.value.isEmpty
+                            ? null
+                            : cityController.selectedCity.value,
                     icon: Icon(
                       Icons.arrow_drop_down,
                       color: AppColors.primaryColor,
                     ),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
                     onChanged: (String? newValue) {
                       if (newValue != null) {
-                        setState(() {
-                          selectedLocation.value = newValue;
-                        });
+                        cityController.selectedCity.value = newValue;
+
+                        controller.fetchBusinessesList(
+                          city: newValue.split('-').first,
+                          searchTerm:
+                              searchTermController.text.trim().isNotEmpty
+                                  ? searchTermController.text.trim()
+                                  : null,
+                          sortBy: selectedSortBy,
+                        );
                       }
                     },
+                    hint:
+                        cityController.isLoading.value
+                            ? const SizedBox(
+                              height: 18,
+                              width: 18,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                            : Text(
+                              cityController.cities.isEmpty
+                                  ? "No locations"
+                                  : "Select location",
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.grey,
+                              ),
+                            ),
                     items:
-                        <String>[
-                          'Rampura, Dhaka.',
-                          'Gulshan, Dhaka.',
-                          'Banani, Dhaka.',
-                          'Dhanmondi, Dhaka.',
-                        ].map<DropdownMenuItem<String>>((String location) {
+                        cityController.cities.map((city) {
+                          // use a unique identifier for each dropdown value
+                          final uniqueValue =
+                              "${city.cityName}-${city.postalCode}";
                           return DropdownMenuItem<String>(
-                            value: location,
-                            child: Text(location),
+                            value: uniqueValue,
+                            child: Text(
+                              "${city.cityName} (${city.postalCode})",
+                            ),
                           );
                         }).toList(),
                   ),
-                );
-              }),
-            ],
-          ),
+                ),
+              );
+            }),
 
-          const SizedBox(height: 16),
-
-          /// Search bar
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            decoration: BoxDecoration(
-              color: AppColors.lightBlue.withOpacity(0.4),
-              borderRadius: BorderRadius.circular(30),
+            const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: AppColors.lightBlue.withOpacity(0.4),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: searchTermController,
+                      decoration: InputDecoration(
+                        hintText: "Search restaurants, foods...".tr,
+                        border: InputBorder.none,
+                      ),
+                      onChanged: (value) {
+                        if (value.trim().isEmpty) {
+                          controller.fetchBusinessesList(
+                            city: cityController.selectedCity.split('-').first,
+                            searchTerm: null,
+                            sortBy: selectedSortBy,
+                          );
+                        }
+                      },
+                      onSubmitted: (value) {
+                        controller.fetchBusinessesList(
+                          city: cityController.selectedCity.split('-').first,
+                          searchTerm:
+                              searchTermController.text.trim().isNotEmpty
+                                  ? searchTermController.text.trim()
+                                  : null,
+                          sortBy: selectedSortBy,
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  const Icon(Icons.search),
+                ],
+              ),
             ),
-            child: Row(
+
+            const SizedBox(height: 16),
+
+            /// Filter and Sort
+            Row(
               children: [
                 Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: "Search restaurants, foods...".tr,
-                      border: InputBorder.none,
+                  child: DropdownButtonHideUnderline(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 0,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.lightBlue),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: DropdownButton<String>(
+                        value: selectedExpense,
+                        hint: commonText("What do you want to do".tr),
+                        isExpanded: true,
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          size: 18,
+                        ),
+                        items:
+                            ['Restaurants', 'Activities'].map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+
+                                child: commonText(value),
+                              );
+                            }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedExpense = newValue!;
+                          });
+                        },
+                      ),
                     ),
                   ),
                 ),
-                SizedBox(width: 8),
-                Icon(Icons.search),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: DropdownButtonHideUnderline(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 0,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.lightBlue),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: DropdownButton<String>(
+                        value: selectedSortBy,
+                        isExpanded: true,
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          size: 18,
+                        ),
+                        items:
+                            ['Low', 'Hign'].map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: commonText("Sort By: $value"),
+                              );
+                            }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedSortBy = newValue!;
+                            controller.fetchBusinessesList(
+                              city:
+                                  cityController.selectedCity.split('-').first,
+                              searchTerm:
+                                  searchTermController.text.trim().isNotEmpty
+                                      ? searchTermController.text.trim()
+                                      : null,
+                              sortBy: newValue,
+                            );
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
-          ),
 
-          const SizedBox(height: 16),
+            const SizedBox(height: 12),
 
-          /// Filter and Sort
-          Row(
-            children: [
-              Expanded(
-                child: DropdownButtonHideUnderline(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 0,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.lightBlue),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: DropdownButton<String>(
-                      value: selectedExpense,
-                      hint: commonText("What do you want to do".tr),
-                      isExpanded: true,
-                      icon: const Icon(
-                        Icons.keyboard_arrow_down_rounded,
-                        size: 18,
-                      ),
-                      items:
-                          ['Restaurants', 'Activities'].map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-
-                              child: commonText(value),
-                            );
-                          }).toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedExpense = newValue!;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: DropdownButtonHideUnderline(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 0,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.lightBlue),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: DropdownButton<String>(
-                      value: selectedSortBy,
-                      isExpanded: true,
-                      icon: const Icon(
-                        Icons.keyboard_arrow_down_rounded,
-                        size: 18,
-                      ),
-                      items:
-                          ['Gulshan', 'Banani', 'Uttara'].map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: commonText("Sort By: $value"),
-                            );
-                          }).toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedSortBy = newValue!;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-
-          const SizedBox(height: 12),
-
-          Obx(
-            () {
+            Obx(() {
               if (controller.isLoading.value) {
                 return Center(child: CircularProgressIndicator());
               }
@@ -373,30 +444,38 @@ class _UserExplorePageState extends State<UserExplorePage> {
                 itemBuilder:
                     (context, index) => InkWell(
                       onTap: () {
-                        navigateToPage(UserBusinessDetailsPage(businessId: controller.businessList[index].id));
+                        navigateToPage(
+                          UserBusinessDetailsPage(
+                            businessId: controller.businessList[index].id,
+                          ),
+                        );
                       },
-                      child:RestaurantCard(
-                              imageUrl: getFullImagePath(controller.businessList[index].image ?? ""),
-              
-                              title: controller.businessList[index].name,
-                              rating: controller.businessList[index].rating.toDouble(),
-                              reviewCount: controller.businessList[index].userRatingsTotal,
-                              priceRange:
-                                  controller.businessList[index].priceRange != null
-                                      ? "€${controller.businessList[index].priceRange!.min}-${controller.businessList[index].priceRange!.max}"
-                                      : "N/A",
-                              openTime: controller.businessList[index].openTimeText,
-                              location: controller.businessList[index].addressText,
-                              tags: controller.businessList[index].types,
-                            ),
+                      child: RestaurantCard(
+                        imageUrl: getFullImagePath(
+                          controller.businessList[index].image ?? "",
+                        ),
+
+                        title: controller.businessList[index].name,
+                        rating:
+                            controller.businessList[index].rating.toDouble(),
+                        reviewCount:
+                            controller.businessList[index].userRatingsTotal,
+                        priceRange:
+                            controller.businessList[index].priceRange != null
+                                ? "€${controller.businessList[index].priceRange!.min}-${controller.businessList[index].priceRange!.max}"
+                                : "N/A",
+                        openTime: controller.businessList[index].openTimeText,
+                        location: controller.businessList[index].addressText,
+                        tags: controller.businessList[index].types,
+                      ),
                     ),
                 separatorBuilder: (context, index) => SizedBox(height: 8),
-              
+
                 physics: NeverScrollableScrollPhysics(),
               );
-            }
-          ),
-        ],
+            }),
+          ],
+        ),
       ),
     );
   }

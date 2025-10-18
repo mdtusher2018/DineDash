@@ -1,4 +1,5 @@
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/features/profile/common/change%20password/change_password_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/core/utils/image_paths.dart';
 import 'package:dine_dash/features/auth/common/forget_password/forget_password_page.dart';
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
-  const ChangePasswordScreen({Key? key}) : super(key: key);
+  const ChangePasswordScreen({super.key});
 
   @override
   _ChangePasswordScreenState createState() => _ChangePasswordScreenState();
@@ -23,9 +24,25 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   bool isNewPasswordVisible = false;
   bool isConfirmPasswordVisible = false;
 
+  final ChangePasswordController controller =
+      Get.find<ChangePasswordController>();
+
+  void _handleChangePassword() {
+    final oldPassword = currentPasswordController.text.trim();
+    final newPassword = newPasswordController.text.trim();
+    final confirmPassword = confirmPasswordController.text.trim();
+
+    controller.changePassword(
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+      confirmPassword: confirmPassword,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(   backgroundColor: AppColors.white,
+    return Scaffold(
+      backgroundColor: AppColors.white,
       appBar: AppBar(
         backgroundColor: AppColors.white,
         elevation: 0,
@@ -43,7 +60,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         height: double.infinity,
         child: Column(
           children: [
-        
             const SizedBox(height: 10),
 
             // Current Password Field
@@ -107,11 +123,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   child: Column(
                     children: [
                       commonText("Forgot Password".tr, isBold: true),
-                      Container(
-                        width: 95,
-                        height: 0.5,
-                        color: AppColors.black,
-                      )
+                      Container(width: 95, height: 0.5, color: AppColors.black),
                     ],
                   ),
                 ),
@@ -120,15 +132,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             const SizedBox(height: 30),
 
             // Change Password Button
-            commonButton(
-              "Change Password".tr,
-
-              textColor: AppColors.white,
-              onTap: () {
-                Get.back();
-                print("Password changed!".tr);
-              },
-            ),
+            Obx(() {
+              return commonButton(
+                "Change Password".tr,
+                isLoading: controller.isLoading.value,
+                textColor: AppColors.white,
+                onTap: _handleChangePassword,
+              );
+            }),
           ],
         ),
       ),

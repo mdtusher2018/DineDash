@@ -13,6 +13,10 @@ import 'package:dine_dash/features/city_location_helper/city_controller.dart';
 import 'package:dine_dash/features/explore/user_explore_controller.dart';
 import 'package:dine_dash/features/favorite/favorite_controller.dart';
 import 'package:dine_dash/features/home/user/home_page_controller.dart';
+import 'package:dine_dash/features/notification/user%20notification/user_notification_controller.dart';
+import 'package:dine_dash/features/profile/common/change%20password/change_password_controller.dart';
+import 'package:dine_dash/features/profile/common/static_content/static_content_controller.dart';
+import 'package:dine_dash/features/profile/user/profile/profile_controller.dart';
 import 'package:get/get.dart';
 
 class DependencyInjection {
@@ -67,5 +71,18 @@ class DependencyInjection {
     Get.put<CityController>(CityController(), permanent: true);
 
     Get.put<UserExploreController>(UserExploreController(), permanent: true);
+    Get.put<UserNotificationController>(
+      UserNotificationController(),
+      permanent: true,
+    );
+    Get.put<ProfileController>(ProfileController(), permanent: true);
+    Get.put<StaticContentController>(
+      StaticContentController(),
+      permanent: true,
+    );
+    Get.put<ChangePasswordController>(
+      ChangePasswordController(),
+      permanent: true,
+    );
   }
 }

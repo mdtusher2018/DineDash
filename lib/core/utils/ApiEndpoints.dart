@@ -20,31 +20,34 @@ class ApiEndpoints {
   static String verifyOTP = "auth/verify-otp";
 
   static String userHomePage({String? city, String? searchTerm}) {
-  final params = <String, String>{};
+    final params = <String, String>{};
 
-  if (city != null && city.isNotEmpty) params['cityName'] = city;
-  if (searchTerm != null && searchTerm.isNotEmpty) params['name'] = searchTerm;
+    if (city != null && city.isNotEmpty) params['cityName'] = city;
+    if (searchTerm != null && searchTerm.isNotEmpty)
+      params['name'] = searchTerm;
 
-  if (params.isEmpty) return "home";
+    if (params.isEmpty) return "home";
 
-  final queryString = params.entries.map((e) => "${e.key}=${e.value}").join("&");
-  return "home?$queryString";
-}
-
+    final queryString = params.entries
+        .map((e) => "${e.key}=${e.value}")
+        .join("&");
+    return "home?$queryString";
+  }
 
   static String favoriteList({String? city, String? searchTerm}) {
-  final params = <String, String>{};
+    final params = <String, String>{};
 
-  if (city != null && city.isNotEmpty) params['cityName'] = city;
-  if (searchTerm != null && searchTerm.isNotEmpty) params['name'] = searchTerm;
+    if (city != null && city.isNotEmpty) params['cityName'] = city;
+    if (searchTerm != null && searchTerm.isNotEmpty)
+      params['name'] = searchTerm;
 
-  if (params.isEmpty) return "favourite/myfavourites";
+    if (params.isEmpty) return "favourite/myfavourites";
 
-  final queryString = params.entries.map((e) => "${e.key}=${e.value}").join("&");
-  return "favourite/myfavourites?$queryString";
-}
-
-
+    final queryString = params.entries
+        .map((e) => "${e.key}=${e.value}")
+        .join("&");
+    return "favourite/myfavourites?$queryString";
+  }
 
   static String menu(String businessId) => "menu/all-byBusinessId/$businessId";
 
@@ -52,14 +55,56 @@ class ApiEndpoints {
       "business/businessById/$businessId";
 
   static String addFavorite = "favourite/add";
-  static String businessNearestList = "business/nearest-list";
 
-  static String cities="city/all";
-  
+  static String businessNearestList({
+    String? city,
+    String? searchTerm,
+    String? sortBy,
+    required int page,
+  }) {
+    final params = <String, String>{};
+
+    if (city != null && city.isNotEmpty)
+      params['cityName'] = city.toLowerCase();
+    if (searchTerm != null && searchTerm.isNotEmpty)
+      params['name'] = searchTerm.toLowerCase();
+    if (sortBy != null && sortBy.isNotEmpty)
+      params['priceSort'] = sortBy.toLowerCase();
+    params['page'] = page.toString();
+    if (params.isEmpty) return "business/nearest-list";
+
+    final queryString = params.entries
+        .map((e) => "${e.key}=${e.value}")
+        .join("&");
+    return "business/nearest-list?$queryString";
+  }
+
+  static String cities = "city/all";
+
+  static String userProfile = "users/user-details";
+
+  static String updateProfile = "users/";
+
+  static String changePassword = "auth/change-password";
+
   static String removeFavorite(String businessId) =>
       "favourite/unfavourite/$businessId";
 
   static String nearbyBusinesses({required double lat, required double lng}) {
     return "business/nearest-map?lat=$lat&lng=$lng";
   }
+
+  static String userNotifications({required int page}) {
+    return "notifications/notification-userend?page=$page&limit=10";
+  }
+
+  static String markNotificationAsRead(String notificationId) {
+    return "notifications/read/$notificationId";
+  }
+
+  static String staticContent(String type) {
+    return "static-contents?type=$type";
+  }
+
+  static String switchAccount = "auth/switch-account";
 }
