@@ -476,7 +476,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                                   'number': business.totalReview.toString(),
                                 }),
                                 onTap: () {
-                                  Get.to(AllReviewOfBusinessPage());
+                                  Get.to(AllReviewOfBusinessPage(feedBacks: business.feedbacks!,));
                                 },
                               ),
                           ],

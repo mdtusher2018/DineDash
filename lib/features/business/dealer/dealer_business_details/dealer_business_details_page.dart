@@ -1,4 +1,7 @@
+import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/features/business/dealer/add_menu_page.dart';
+import 'package:dine_dash/features/business/dealer/dealer_business_details/dealer_business_details_controller.dart';
+import 'package:dine_dash/features/business/dealer/dealer_business_details/dealer_business_details_response.dart';
 import 'package:dine_dash/features/business/dealer/edit_menu_page.dart';
 import 'package:dine_dash/features/deals/dealer/edit_deals.dart';
 import 'package:dine_dash/features/deals/dealer/widgets/buildDealCard.dart';
@@ -8,146 +11,152 @@ import 'package:flutter/material.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:get/get.dart';
 
-import '../user/all_review_of_business.dart';
+import '../../user/all_review_of_business.dart';
 
 class DealerBusinessDetailsPage extends StatefulWidget {
-  const DealerBusinessDetailsPage({Key? key}) : super(key: key);
+  const DealerBusinessDetailsPage({super.key, required this.businessId});
+  final String businessId;
 
   @override
-  State<DealerBusinessDetailsPage> createState() => _DealerBusinessDetailsPageState();
+  State<DealerBusinessDetailsPage> createState() =>
+      _DealerBusinessDetailsPageState();
 }
 
 class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
     with TickerProviderStateMixin {
   late TabController _tabController;
-  List<Map<String, dynamic>> deals = [
-    {
-      "title": "2 for 1",
-      "subText":
-          "Lorem ipsum dolor sit amet consectetur. Rhoncus molestie amet non pellentesque.",
-      "duration": "60 Days",
-      "location": "Chef's Table",
-      'redeemed':"36",
-      "benefit": "6 € Benefit",
-      "status": "Active",
-    },
-    {
-      "title": "Free Drinks",
-      "subText":
-          "Lorem ipsum dolor sit amet consectetur. Rhoncus molestie amet non pellentesque.",
-      "duration": "60 Days",
-      "location": "Chef's Table",
-      'redeemed':"36",
-      "benefit": "6 € Benefit",
-      "status": "Paused",
-    },
-  ];
+
+  final controller = Get.find<DealerBusinessDetailController>();
 
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
     super.initState();
+    controller.fetchBusinessDetail(widget.businessId);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: commonAppBar(title: "Chef’s Table"),
-      backgroundColor: AppColors.white,
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: _buildHeaderCard(),
-          ),
-          const SizedBox(height: 10),
-          _buildStatsRow(),
-          const SizedBox(height: 16),
-          Divider(height: 1),
-          _buildTabBar(),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [_buildDealsTab(), menuTab(), buildReviewsTab()],
+    return Obx(() {
+      if (controller.isLoading.value ||
+          controller.businessDetail.value == null) {
+        return Scaffold(
+          appBar: commonAppBar(title: "Business Details"),
+          body:
+              (controller.isLoading.value)
+                  ? const Center(child: CircularProgressIndicator())
+                  : Center(child: commonText("No Data Found")),
+        );
+      }
+      return Scaffold(
+        appBar: commonAppBar(title: controller.businessDetail.value!.name),
+        backgroundColor: AppColors.white,
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: _buildHeaderCard(),
             ),
-          ),
-        ],
-      ),
-    );
+            const SizedBox(height: 10),
+            _buildStatsRow(),
+            const SizedBox(height: 16),
+            Divider(height: 1),
+            _buildTabBar(),
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: [_buildDealsTab(), menuTab(), buildReviewsTab()],
+              ),
+            ),
+          ],
+        ),
+      );
+    });
   }
 
-Widget menuTab(){
-  return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+  Widget menuTab() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            commonBorderButton(
+              "+ Add Items",
+              onTap: () {
+                navigateToPage(AddMenuScreen());
+              },
+            ),
+            SizedBox(height: 16),
+            Row(
               children: [
-                      commonBorderButton("+ Add Items", onTap: () {
-                   navigateToPage(AddMenuScreen());
-          }),
-          SizedBox(height: 16,),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          commonText("Example from the",size: 14),
-                                      commonText("Menu", size: 18, isBold: true),
-                        ],
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                           navigateToPage(EditMenuScreen());
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 8,vertical: 4),
-                        decoration: BoxDecoration(
-                          border: Border.all(width: 1),
-                          borderRadius: BorderRadius.circular(4)
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image.asset("assets/images/editb.png",width: 16,),
-                            commonText(" Edit",size: 12),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      commonText("Example from the", size: 14),
+                      commonText("Menu", size: 18, isBold: true),
+                    ],
+                  ),
                 ),
-                Divider(),
-                commonText("The Rio Lounge",size: 16,fontWeight: FontWeight.w600),
-                ListView.builder(
-                  itemCount: 4,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      minVerticalPadding: 8,
-                      minTileHeight: 0,
-
-                      contentPadding: EdgeInsets.all(0),
-                      title: commonText(
-                        "OPERA VEGAN",
-                        size: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      subtitle: commonText("Schoklade/Kaffe/Mango"),
-                      trailing: commonText("10 €"),
-                    );
+                GestureDetector(
+                  onTap: () {
+                    navigateToPage(EditMenuScreen());
                   },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset("assets/images/editb.png", width: 16),
+                        commonText(" Edit", size: 12),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
-          ),
-        );
-}
+            Divider(),
 
+            ListView.builder(
+              itemCount: controller.businessDetail.value!.menuData.length,
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return ListTile(
+                  minVerticalPadding: 8,
+                  minTileHeight: 0,
+
+                  contentPadding: EdgeInsets.all(0),
+                  title: commonText(
+                    controller.businessDetail.value!.menuData[index].itemName,
+                    size: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  subtitle: commonText(
+                    controller
+                        .businessDetail
+                        .value!
+                        .menuData[index]
+                        .description,
+                  ),
+                  trailing: commonText(
+                    controller.businessDetail.value!.menuData[index].price
+                        .toStringAsFixed(2),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   Widget _buildHeaderCard() {
     return Material(
@@ -164,7 +173,7 @@ Widget menuTab(){
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.network(
-                "https://tse4.mm.bing.net/th/id/OIP.r3wgjJHOPaQo1GnGCkMnwgHaE8?rs=1&pid=ImgDetMain&o=7&rm=3",
+                getFullImagePath(controller.businessDetail.value!.image ?? ""),
                 height: 60,
                 width: 60,
                 fit: BoxFit.cover,
@@ -175,7 +184,11 @@ Widget menuTab(){
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  commonText("Chef’s Table", size: 16, isBold: true),
+                  commonText(
+                    controller.businessDetail.value!.name,
+                    size: 16,
+                    isBold: true,
+                  ),
                   const SizedBox(height: 4),
                   Row(
                     children: [
@@ -186,8 +199,9 @@ Widget menuTab(){
                       ),
                       const SizedBox(width: 4),
                       commonText(
-                        "Downtown, 123 Main St",
-                        size: 13,
+                        controller.businessDetail.value!.formattedAddress ??
+                            "N/A",
+
                         color: Colors.black87,
                       ),
                     ],
@@ -201,12 +215,9 @@ Widget menuTab(){
                     ),
 
                     child: commonText(
-                      "2 active deals",
+                      "${controller.businessDetail.value!.activeDealCount} active deals",
                       size: 12,
-                      color: Color(0xFF168368)
-                      
-                      
-
+                      color: Color(0xFF168368),
                     ),
                   ),
                 ],
@@ -223,9 +234,18 @@ Widget menuTab(){
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: [
-          _buildStatBox("2", "Active Deals"),
-          _buildStatBox("3", "Total Reviews"),
-          _buildStatBox("3", "Redeemed Deals"),
+          _buildStatBox(
+            controller.businessDetail.value!.activeDealCount.toString(),
+            "Active Deals",
+          ),
+          _buildStatBox(
+            controller.businessDetail.value!.totalReview.toString(),
+            "Total Reviews",
+          ),
+          _buildStatBox(
+            controller.businessDetail.value!.redeemCount.toString(),
+            "Redeemed Deals",
+          ),
         ],
       ),
     );
@@ -249,9 +269,21 @@ Widget menuTab(){
       labelColor: AppColors.primaryColor,
       unselectedLabelColor: Colors.grey,
       tabs: [
-        Tab(child: commonText("Deals (2)", size: 14, isBold: true)),
-        Tab(child: commonText("Menu",size: 14,isBold: true),),
-        Tab(child: commonText("Reviews (120)", size: 14, isBold: true)),
+        Tab(
+          child: commonText(
+            "Deals (${controller.businessDetail.value!.activeDealCount})",
+            size: 14,
+            isBold: true,
+          ),
+        ),
+        Tab(child: commonText("Menu", size: 14, isBold: true)),
+        Tab(
+          child: commonText(
+            "Reviews (${controller.businessDetail.value!.totalReview})",
+            size: 14,
+            isBold: true,
+          ),
+        ),
       ],
     );
   }
@@ -262,36 +294,39 @@ Widget menuTab(){
       child: Column(
         children: [
           /// + Add Deal button
-          commonBorderButton("+ Add Deal", onTap: () {
-                   navigateToPage(AddDealScreen());
-          }),
+          commonBorderButton(
+            "+ Add Deal",
+            onTap: () {
+              navigateToPage(AddDealScreen());
+            },
+          ),
 
           const SizedBox(height: 20),
 
           /// Deal Cards
-          ...deals.map(
+          ...controller.businessDetail.value!.dealsData.map(
             (deal) => buildDealCard(
-              title: deal["title"],
-              subText: deal["subText"],
-              duration: deal["duration"],
-              redeemed: deal["redeemed"],
-              location: deal["location"],
-              benefitText: deal["benefit"],
-              status: deal["status"],
+              title: deal.dealType,
+              subText: deal.description,
+              duration: deal.reuseableAfter.toString(),
+              redeemed: deal.redeemCount.toString(),
+              location: controller.businessDetail.value!.name,
+              benefitText: deal.benefitAmount.toString(),
+              status: deal.isActive ? "Active" : "Paused",
               onEdit: () {
                 navigateToPage(EditDealScreen());
               },
-              onDelete: (){
-
-    showDeleteConfirmationDialog(
-      context: context,
-      title: "Delete Item",
-      message: "Are you sure you want to delete this item? This action cannot be undone.",
-      onDelete: () {
-        // Perform deletion logic here
-        print("Item deleted");
-      },);
-
+              onDelete: () {
+                showDeleteConfirmationDialog(
+                  context: context,
+                  title: "Delete Item",
+                  message:
+                      "Are you sure you want to delete this item? This action cannot be undone.",
+                  onDelete: () {
+                    // Perform deletion logic here
+                    print("Item deleted");
+                  },
+                );
               },
               onToggleStatus: () {
                 showPauseReasonDialog(context, (reason) {
@@ -333,25 +368,39 @@ Widget menuTab(){
                       children: [
                         Row(
                           children: [
-                            commonText("4.8", size: 28, isBold: true),
+                            commonText(
+                              controller.businessDetail.value!.rating
+                                  .toString(),
+                              size: 28,
+                              isBold: true,
+                            ),
                             const SizedBox(width: 4),
                             Icon(Icons.star, size: 24),
                           ],
                         ),
                         const SizedBox(height: 4),
                         commonText(
-                          "120 Ratings \n&\n50 Reviews",
+                          "${controller.businessDetail.value!.userRatingsTotal} Ratings \n&\n${controller.businessDetail.value!.totalReview} Reviews",
                           size: 12,
                           textAlign: TextAlign.center,
                         ),
                       ],
                     ),
                     const SizedBox(width: 16),
+
                     Expanded(
                       child: Column(
                         children: List.generate(5, (index) {
                           int star = 5 - index;
-                          double percent = [0.9, 0.8, 0.5, 0.3, 0.1][index];
+
+                          double percent =
+                              controller
+                                  .businessDetail
+                                  .value
+                                  ?.ratingCounts
+                                  ?.ratingPercentages[star] ??
+                              0.0;
+
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 2),
                             child: Row(
@@ -371,7 +420,8 @@ Widget menuTab(){
                                         ),
                                       ),
                                       FractionallySizedBox(
-                                        widthFactor: percent,
+                                        widthFactor:
+                                            percent, // 👈 dynamic width
                                         child: Container(
                                           height: 8,
                                           decoration: BoxDecoration(
@@ -399,44 +449,45 @@ Widget menuTab(){
           const SizedBox(height: 20),
 
           /// Reviews List
-          buildReviewItem(
-            name: "John Doe",
-            stars: 4,
-            timeAgo: "2 days ago",
-            comment:
-                "Amazing food and great service! The happy hour deal was fantastic. Will definitely come back.",
-          ),
-          buildReviewItem(
-            name: "Emily Smith",
-            stars: 5,
-            timeAgo: "1 month ago",
-            comment:
-                "Great atmosphere and lovely staff. Everything went smoothly with the voucher.",
-          ),
-          buildReviewItem(
-            name: "John Doe",
-            stars: 4,
-            timeAgo: "2 days ago",
-            comment:
-                "Good food quality and the student discount was helpful. Atmosphere could be better.",
-          ),
+          ...controller.businessDetail.value!.feedbacksData
+              .take(
+                controller.businessDetail.value!.feedbacksData.length < 3
+                    ? controller.businessDetail.value!.feedbacksData.length
+                    : 3,
+              )
+              .map(
+                (feedBack) => _buildReviewItem(
+                  name: feedBack.reviewer.fullName,
+                  image: feedBack.reviewer.image,
+                  stars: feedBack.rating,
+                  timeAgo: timeAgo(feedBack.createdAt.toString()),
+                  comment: feedBack.text,
+                ),
+              ),
 
           const SizedBox(height: 20),
 
           /// All Reviews Button
-          commonButton(
-            "All reviews (36)",
-            height: 48,
-            onTap: () => Get.to(AllReviewOfBusinessPage()),
-          ),
+          if (controller.businessDetail.value!.totalReview > 3)
+            commonButton(
+              "All reviews (${controller.businessDetail.value!.totalReview})",
+              height: 48,
+              onTap:
+                  () => Get.to(
+                    AllReviewOfBusinessPage(
+                      feedBacks: controller.businessDetail.value!.feedbacksData,
+                    ),
+                  ),
+            ),
         ],
       ),
     );
   }
 
-  Widget buildReviewItem({
+  Widget _buildReviewItem({
     required String name,
-    required int stars,
+    required String image,
+    required num stars,
     required String timeAgo,
     required String comment,
   }) {
@@ -455,9 +506,7 @@ Widget menuTab(){
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: NetworkImage(
-                      "https://tse1.mm.bing.net/th/id/OIP.HNY2Wi4N2JYdkAAU9oLPVgHaLH?rs=1&pid=ImgDetMain&o=7&rm=3",
-                    ),
+                    image: NetworkImage(getFullImagePath(image)),
                     fit: BoxFit.cover,
                   ),
                 ),

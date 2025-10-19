@@ -8,10 +8,14 @@ import 'package:dine_dash/features/auth/common/otp_verification/otp_verification
 import 'package:dine_dash/features/auth/common/reset_password/reset_password_controller.dart';
 import 'package:dine_dash/features/auth/common/sign_in/sign_in_controller.dart';
 import 'package:dine_dash/features/auth/user/user_sign_up_controller.dart';
+import 'package:dine_dash/features/business/dealer/add_business/add_business_controller.dart';
+import 'package:dine_dash/features/business/dealer/dealer_business_details/dealer_business_details_controller.dart';
+import 'package:dine_dash/features/business/dealer/dealer_business_root_page/dealer_all_business_controller.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/business_details_controller.dart';
 import 'package:dine_dash/features/city_location_helper/city_controller.dart';
 import 'package:dine_dash/features/explore/user_explore_controller.dart';
 import 'package:dine_dash/features/favorite/favorite_controller.dart';
+import 'package:dine_dash/features/home/dealer/dealer_homepage_controller.dart';
 import 'package:dine_dash/features/home/user/home_page_controller.dart';
 import 'package:dine_dash/features/notification/user%20notification/user_notification_controller.dart';
 import 'package:dine_dash/features/profile/common/change%20password/change_password_controller.dart';
@@ -82,6 +86,22 @@ class DependencyInjection {
     );
     Get.put<ChangePasswordController>(
       ChangePasswordController(),
+      permanent: true,
+    );
+    Get.put<DealerHomepageController>(
+      DealerHomepageController(),
+      permanent: true,
+    );
+    Get.put<DealerBusinessDetailController>(
+      DealerBusinessDetailController(),
+      permanent: true,
+    );
+    Get.put<DealerAllBusinessController>(
+      DealerAllBusinessController(),
+      permanent: true,
+    );
+    Get.put<DealerAddBusinessController>(
+      DealerAddBusinessController(),
       permanent: true,
     );
   }

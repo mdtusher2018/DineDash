@@ -90,7 +90,7 @@ Widget buildDealCard({
                                 FittedBox(
                                   fit: BoxFit.scaleDown,
                                   child: commonText("Reusable After".tr, size: 12,maxline: 1)),
-                                commonText(duration, size: 12, isBold: true),
+                                commonText("$duration Days", size: 12, isBold: true),
                               ],
                             ),
                           ),
@@ -180,7 +180,7 @@ Widget buildDealCard({
               borderRadius: BorderRadius.circular(10),
             ),
             child: commonText(
-              benefitText,
+              "$benefitText € Benefit",
               color: Colors.white,
               size: 12,
               isBold: true,

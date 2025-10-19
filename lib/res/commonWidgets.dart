@@ -58,6 +58,7 @@ Widget commonTextfieldWithTitle(
   int maxLine = 1,
   String? Function(String?)? onValidate,
   Function(String?)? onFieldSubmit,
+  onchanged
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,6 +86,7 @@ Widget commonTextfieldWithTitle(
               controller: controller,
               enabled: enable,
               focusNode: focusNode,
+              onChanged: onchanged,
               validator: onValidate,
               onFieldSubmitted: onFieldSubmit,
               keyboardType: keyboardType,
@@ -445,6 +447,7 @@ AppBar commonAppBar({
     centerTitle: isCenter,
   );
 }
+
 void showDeleteConfirmationDialog({
   required BuildContext context,
   required String title,

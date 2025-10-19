@@ -1,8 +1,14 @@
 class ApiEndpoints {
+
+
+  static String mapKey="AIzaSyBuSZJklSc1j0D4kqhkJcmyArcZbWujbXQ";
+
   static const String baseUrl =
       'http://147.93.29.184:8020/api/v1/'; // Replace with actual base URL
   static const String baseImageUrl =
       'http://147.93.29.184:8020'; // Replace with actual base image URL
+
+      
   // static const String baseUrl =
   //     'http://10.10.10.33:8020/api/v1/'; // Replace with actual base URL
   // static const String baseImageUrl =
@@ -107,4 +113,18 @@ class ApiEndpoints {
   }
 
   static String switchAccount = "auth/switch-account";
+
+  static String createBusiness="business/add-business";
+
+
+
+  static String dealerBusinessDetail(String businessId) =>
+      "business/my-businessDetails/$businessId";
+
+  static String dealerHomepageAllBusiness(int page) => "business/home?$page";
+
+static String dealerAllBusiness(int page) => "business/my-business?$page";
+
+  // static String deleteDeal(String dealId) =>
+  //     "deal/delete-deal-req/$dealId";
 }

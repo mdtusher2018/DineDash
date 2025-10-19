@@ -1,4 +1,3 @@
-
 import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -46,13 +45,19 @@ class BusinessModel {
         list != null ? List<String>.from(list.map((e) => e.toString())) : [];
 
     List<OpeningHour> parseOpeningHours(dynamic list) =>
-        list != null ? (list as List).map((e) => OpeningHour.fromJson(e)).toList() : [];
+        list != null
+            ? (list as List).map((e) => OpeningHour.fromJson(e)).toList()
+            : [];
 
     List<DealData> parseDeals(dynamic list) =>
-        list != null ? (list as List).map((e) => DealData.fromJson(e)).toList() : [];
+        list != null
+            ? (list as List).map((e) => DealData.fromJson(e)).toList()
+            : [];
 
     List<FeedbackData>? parseFeedbacks(dynamic list) =>
-        list != null ? (list as List).map((e) => FeedbackData.fromJson(e)).toList() : null;
+        list != null
+            ? (list as List).map((e) => FeedbackData.fromJson(e)).toList()
+            : null;
 
     return BusinessModel(
       id: json['_id'] ?? '',
@@ -67,11 +72,15 @@ class BusinessModel {
       totalReview: json['totalReview'] ?? 0,
       redeemCount: json['redeemCount'] ?? 0,
       openingHours: parseOpeningHours(json['openingHours']),
-      location: json['location'] != null ? Location.fromJson(json['location']) : null,
+      location:
+          json['location'] != null ? Location.fromJson(json['location']) : null,
       deals: parseDeals(json['dealsData'] ?? json['deals']),
       feedbacks: parseFeedbacks(json['feedbacksData']),
       isFavourite: json['isFavourite'] ?? false,
-      priceRange: json['priceRange'] != null ? PriceRange.fromJson(json['priceRange']) : null,
+      priceRange:
+          json['priceRange'] != null
+              ? PriceRange.fromJson(json['priceRange'])
+              : null,
     );
   }
 
@@ -105,7 +114,9 @@ class BusinessModel {
   String get addressText => formattedAddress ?? "N/A";
 
   String get priceRangeText {
-    if (priceRange != null && priceRange!.min != null && priceRange!.max != null) {
+    if (priceRange != null &&
+        priceRange!.min != null &&
+        priceRange!.max != null) {
       return "€${priceRange!.min}-${priceRange!.max}";
     }
     return "N/A";
@@ -173,7 +184,8 @@ class Location {
   factory Location.fromJson(Map<String, dynamic> json) {
     return Location(
       type: json['type'] ?? '',
-      coordinates: (json['coordinates'] as List?)
+      coordinates:
+          (json['coordinates'] as List?)
               ?.map((e) => (e as num).toDouble())
               .toList() ??
           [],
@@ -217,7 +229,7 @@ class FeedbackData {
   final String id;
   final num rating;
   final String text;
-  final DateTime createdAt;
+  final String createdAt;
   final ReviewerData reviewer;
 
   FeedbackData({
@@ -233,12 +245,11 @@ class FeedbackData {
       id: json['_id'] ?? '',
       rating: json['rating'] ?? 0,
       text: json['text'] ?? '',
-      createdAt: json['createdAt'] != null
-          ? DateTime.parse(json['createdAt'])
-          : DateTime.now(),
-      reviewer: json['reviewerData'] != null
-          ? ReviewerData.fromJson(json['reviewerData'])
-          : ReviewerData(id: '', fullName: 'Unknown', image: ''),
+      createdAt: json['createdAt'] ?? '',
+      reviewer:
+          json['reviewerData'] != null
+              ? ReviewerData.fromJson(json['reviewerData'])
+              : ReviewerData(id: '', fullName: 'Unknown', image: ''),
     );
   }
 }
@@ -248,11 +259,7 @@ class ReviewerData {
   final String fullName;
   final String image;
 
-  ReviewerData({
-    required this.id,
-    required this.fullName,
-    required this.image,
-  });
+  ReviewerData({required this.id, required this.fullName, required this.image});
 
   factory ReviewerData.fromJson(Map<String, dynamic> json) {
     return ReviewerData(
