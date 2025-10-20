@@ -1,5 +1,5 @@
 
-import 'package:dine_dash/model/business_model.dart';
+import 'package:dine_dash/core/models/business_model.dart';
 import 'package:intl/intl.dart';
 
 class BusinessDetailResponse {

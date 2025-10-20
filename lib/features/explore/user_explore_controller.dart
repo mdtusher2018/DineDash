@@ -6,7 +6,7 @@ import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/features/explore/user_explore_list_response.dart';
 import 'package:dine_dash/features/explore/user_explore_map_response.dart';
-import 'package:dine_dash/model/business_model.dart';
+import 'package:dine_dash/core/models/business_model.dart';
 import 'package:get/get.dart';
 
 class UserExploreController extends BaseController {

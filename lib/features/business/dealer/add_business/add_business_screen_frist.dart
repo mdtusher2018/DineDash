@@ -342,6 +342,7 @@
 //   TimeOfDayRange({required this.start, required this.end});
 // }
 
+
 import 'dart:io';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/business/dealer/add_business/add_business_controller.dart';
@@ -388,8 +389,8 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
     "Tuesday": false,
     "Wednesday": false,
     "Thursday": false,
-    "Friday": false,
-    "Saturday": false,
+    "Friday": true,
+    "Saturday": true,
   };
 
   Map<String, TimeOfDayRange> timings = {
@@ -695,7 +696,7 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
 
             const SizedBox(height: 24),
             commonButton(
-              "Next",
+              "Add Business",
               onTap: () async {
                 final openingHoursList =
                     closedDays.entries
@@ -712,7 +713,6 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
                           },
                         )
                         .toList();
-
                 await controller.createBusiness(
                   name: businessNameController.text.trim(),
                   types: selectedCategories,

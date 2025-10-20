@@ -1,4 +1,4 @@
-import 'dart:developer';
+
 import 'dart:io';
 
 import 'package:dine_dash/core/base/base_controller.dart';
@@ -12,7 +12,8 @@ import 'package:dine_dash/features/dealer_root_page.dart';
 import 'package:dine_dash/features/profile/common/edit_profile/edit_profile_response.dart';
 import 'package:dine_dash/features/profile/user/profile/profile_response.dart';
 import 'package:dine_dash/features/profile/user/profile/switch_account_response.dart';
-import 'package:dine_dash/model/user_model.dart'; // The model that holds user attributes
+import 'package:dine_dash/features/user_root_page.dart';
+import 'package:dine_dash/core/models/user_model.dart'; // The model that holds user attributes
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:get/get.dart';
 
@@ -90,7 +91,6 @@ class ProfileController extends BaseController {
 
         if (switchResponse.statusCode == 200 &&
             switchResponse.data?.attributes?.user != null) {
-          // Update user model
           userModel.value = switchResponse.data!.attributes!.user!;
 
           if (switchResponse.data!.attributes!.accessToken != null) {
@@ -98,7 +98,6 @@ class ProfileController extends BaseController {
               switchResponse.data!.attributes!.accessToken!,
             );
 
-            // Set role to false for dealer, true for user
             _sessionMemory.setRole(false);
 
             String localStorageToken =
@@ -111,10 +110,15 @@ class ProfileController extends BaseController {
             }
           }
 
-          updateCurrentRoleFromToken();
-          navigateToPage(DealerRootPage(), clearStack: true);
+          await updateCurrentRoleFromToken();
+          if (currentRole.value == 'user') {
 
-          showSnackBar('Account switched successfully!', isError: false);
+            navigateToPage(UserRootPage(), clearStack: true);
+          } else {
+            navigateToPage(DealerRootPage(), clearStack: true);
+          }
+
+          showSnackBar('Account switched to ${currentRole.value} successfully!', isError: false);
         } else {
           throw Exception(switchResponse.message);
         }
@@ -122,7 +126,7 @@ class ProfileController extends BaseController {
     );
   }
 
-  void updateCurrentRoleFromToken() async {
+  Future<void> updateCurrentRoleFromToken() async {
     String? token = await _localStorageService.getString(StorageKey.token);
     token ??= _sessionMemory.token;
 
@@ -130,6 +134,5 @@ class ProfileController extends BaseController {
     final role = payload['currentRole'] as String?;
 
     if (role != null) currentRole.value = role;
-    log('Current role updated: $role');
   }
 }

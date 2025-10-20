@@ -1,5 +1,5 @@
 import 'package:dine_dash/features/home/dealer/dealer_homepage_all_business_response.dart';
-import 'package:dine_dash/model/dealer_business_model.dart';
+import 'package:dine_dash/core/models/dealer_business_model.dart';
 import 'package:get/get.dart';
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
@@ -14,11 +14,16 @@ class DealerHomepageController extends BaseController {
   // Pagination
   var currentPage = 1.obs;
   var totalPages = 1.obs;
+  var loadingMore=false.obs;
+
 
   /// Fetch business list
   Future<void> fetchDealerHomepageData({int page = 1}) async {
+    if (loadingMore.value) return;
     safeCall(
+      showLoading: page<2,
       task: () async {
+        loadingMore.value=true;
         final response = await _apiService.get(
           ApiEndpoints.dealerHomepageAllBusiness(page),
         );
@@ -29,6 +34,7 @@ class DealerHomepageController extends BaseController {
 
         if (businessResponse.statusCode == 200) {
           if (page == 1) {
+            businesses.value=[];
             businessSummary.value = businessResponse.summary;
             businesses.value = businessResponse.results;
           } else {
@@ -39,8 +45,14 @@ class DealerHomepageController extends BaseController {
         } else {
           errorMessage.value = businessResponse.message;
         }
+        loadingMore.value=false;
       },
     );
   }
 
+  void fetchmore() {
+    if (currentPage.value < totalPages.value) {
+      fetchDealerHomepageData(page: (currentPage.value + 1));
+    }
+  }
 }

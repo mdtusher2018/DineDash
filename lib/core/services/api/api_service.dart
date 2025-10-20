@@ -1,3 +1,4 @@
+
 import 'dart:developer';
 import 'dart:io';
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
@@ -17,7 +18,6 @@ class ApiService {
   Future<Map<String, String>> _getHeaders({Map<String, String>? extra}) async {
     String? token = await _localStorage.getString(StorageKey.token);
     token??=_sessionMemory.token;
-    log(token.toString());
     final headers = {
       'Accept-Language': 'en',
       'Content-Type': 'application/json',
@@ -35,13 +35,14 @@ class ApiService {
     Map<String, String>? extraHeaders,
   }) async {
     final url = Uri.parse('${ApiEndpoints.baseUrl}$endpoint');
+    log(url.toString());
     final headers = await _getHeaders(extra: extraHeaders);
     return _client.get(url, headers: headers);
   }
 
   Future<dynamic> post(
     String endpoint,
-    Map<String, dynamic> body, {
+    dynamic body, {
     Map<String, String>? extraHeaders,
   }) async {
     final url = Uri.parse('${ApiEndpoints.baseUrl}$endpoint');

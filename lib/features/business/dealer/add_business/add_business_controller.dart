@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:dine_dash/features/business/dealer/add_business/add_business_2nd_page.dart';
+import 'package:dine_dash/features/business/dealer/add_menu/add_menu_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:get/get.dart';
 import 'package:dine_dash/core/base/base_controller.dart';
@@ -90,7 +90,13 @@ class DealerAddBusinessController extends BaseController {
         );
 
         if (response['statusCode'] == 201 || response['status'] == true) {
-          navigateToPage(AddBusiness2ndScreen());
+          String id = response['data']?['attributes']?['_id'] ?? "";
+          if (id.isNotEmpty) {
+            Get.back();
+            navigateToPage(AddMenuScreen(businessId: id));
+          } else {
+            Get.back();
+          }
           showSnackBar("Business created successfully");
         } else {
           throw Exception(response['message'] ?? "Something went wrong");

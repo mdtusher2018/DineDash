@@ -105,32 +105,37 @@ class _UserFavoritePageState extends State<UserFavoritePage> {
                     );
                   }
 
-                  return ListView.builder(
-                    itemCount: controller.filteredFavorites.length,
-                    itemBuilder: (context, index) {
-                      final business = controller.filteredFavorites[index];
-                      return GestureDetector(
-                        onTap: () {
-                          navigateToPage(
-                            UserBusinessDetailsPage(businessId: business.id),
-                          );
-                        },
-                        child: RestaurantCard(
-                          imageUrl: getFullImagePath(business.image ?? ""),
-
-                          title: business.name,
-                          rating: business.rating.toDouble(),
-                          reviewCount: business.userRatingsTotal,
-                          priceRange:
-                              business.priceRange != null
-                                  ? "€${business.priceRange!.min}-${business.priceRange!.max}"
-                                  : "N/A",
-                          openTime: business.openTimeText,
-                          location: business.addressText,
-                          tags: business.types,
-                        ),
-                      );
+                  return RefreshIndicator(
+                    onRefresh: () async{
+                      controller.fetchFavoriteList();
                     },
+                    child: ListView.builder(
+                      itemCount: controller.filteredFavorites.length,
+                      itemBuilder: (context, index) {
+                        final business = controller.filteredFavorites[index];
+                        return GestureDetector(
+                          onTap: () {
+                            navigateToPage(
+                              UserBusinessDetailsPage(businessId: business.id),
+                            );
+                          },
+                          child: RestaurantCard(
+                            imageUrl: getFullImagePath(business.image ?? ""),
+                    
+                            title: business.name,
+                            rating: business.rating.toDouble(),
+                            reviewCount: business.userRatingsTotal,
+                            priceRange:
+                                business.priceRange != null
+                                    ? "€${business.priceRange!.min}-${business.priceRange!.max}"
+                                    : "N/A",
+                            openTime: business.openTimeText,
+                            location: business.addressText,
+                            tags: business.types,
+                          ),
+                        );
+                      },
+                    ),
                   );
                 }),
               ),

@@ -1,4 +1,4 @@
-import 'package:dine_dash/model/user_model.dart';
+import 'package:dine_dash/core/models/user_model.dart';
 
 class UpdateProfileResponse {
   final String status;

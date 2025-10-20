@@ -1,5 +1,5 @@
-import 'package:dine_dash/model/dealer_business_model.dart';
-import 'package:dine_dash/model/pagination_model.dart';
+import 'package:dine_dash/core/models/dealer_business_model.dart';
+import 'package:dine_dash/core/models/pagination_model.dart';
 
 class DealerHomepageAllBusinessResponse {
   final int status;

@@ -2,7 +2,7 @@ import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/business_details_response.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/menu_response.dart';
-import 'package:dine_dash/model/business_model.dart';
+import 'package:dine_dash/core/models/business_model.dart';
 import 'package:get/get.dart';
 import 'package:dine_dash/core/base/base_controller.dart';
 

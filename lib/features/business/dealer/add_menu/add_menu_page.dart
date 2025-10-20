@@ -1,10 +1,14 @@
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/features/business/dealer/add_menu/add_menu_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // Assuming all common widgets are in this file
 
 class AddMenuScreen extends StatefulWidget {
+  final String businessId;
+  const AddMenuScreen({required this.businessId, super.key});
+
   @override
   _AddMenuScreenState createState() => _AddMenuScreenState();
 }
@@ -16,8 +20,8 @@ class _AddMenuScreenState extends State<AddMenuScreen> {
       TextEditingController();
   final TextEditingController priceController = TextEditingController();
 
-  // To hold more items if "Add More Item" is clicked
   List<Map<String, TextEditingController>> itemList = [];
+  final controller = Get.find<DealerAddMenuController>();
 
   @override
   void initState() {
@@ -90,12 +94,28 @@ class _AddMenuScreenState extends State<AddMenuScreen> {
       // Bottom Button
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: commonButton(
-          "Add Menu",
-          onTap: () {
-            Get.back();
-           
-          },
+        child: Obx(
+           () {
+            return commonButton(
+              "Add Menu",
+              isLoading: controller.isLoading.value,
+              onTap: () async {
+                final items =
+                    itemList.map((item) {
+                      return {
+                        "itemName": item['name']!.text.trim(),
+                        "description": item['description']!.text.trim(),
+                        "price": item['price']!.text.trim(),
+                      };
+                    }).toList();
+            
+                await controller.addMenuItems(
+                  businessId: widget.businessId,
+                  items: items,
+                );
+              },
+            );
+          }
         ),
       ),
     );

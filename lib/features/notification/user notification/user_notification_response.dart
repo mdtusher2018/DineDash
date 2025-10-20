@@ -1,4 +1,4 @@
-import 'package:dine_dash/model/pagination_model.dart';
+import 'package:dine_dash/core/models/pagination_model.dart';
 
 class NotificationResponse {
   final String status;

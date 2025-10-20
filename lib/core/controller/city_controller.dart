@@ -1,7 +1,7 @@
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
-import 'package:dine_dash/features/city_location_helper/city_model.dart';
+import 'package:dine_dash/core/models/city_model.dart';
 import 'package:get/get.dart';
 
 class CityController extends BaseController {

@@ -116,14 +116,22 @@ class ApiEndpoints {
 
   static String createBusiness="business/add-business";
 
+  static String addMenu="menu/add";
+
+  static String deleteBusiness(String businessId)=>"business/delete/$businessId";
+
 
 
   static String dealerBusinessDetail(String businessId) =>
       "business/my-businessDetails/$businessId";
 
-  static String dealerHomepageAllBusiness(int page) => "business/home?$page";
+  static String dealerHomepageAllBusiness(int page) => "business/home?page=$page";
 
-static String dealerAllBusiness(int page) => "business/my-business?$page";
+static String dealerAllBusiness(int page) => "business/my-business?page=$page";
+
+  static String review="feedback/myall-feedback";
+
+  static String dealerMyBusinessNameList="business/my-business-names";
 
   // static String deleteDeal(String dealId) =>
   //     "deal/delete-deal-req/$dealId";

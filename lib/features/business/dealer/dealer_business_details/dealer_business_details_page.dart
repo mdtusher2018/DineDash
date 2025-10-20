@@ -1,5 +1,5 @@
 import 'package:dine_dash/core/utils/helper.dart';
-import 'package:dine_dash/features/business/dealer/add_menu_page.dart';
+import 'package:dine_dash/features/business/dealer/add_menu/add_menu_page.dart';
 import 'package:dine_dash/features/business/dealer/dealer_business_details/dealer_business_details_controller.dart';
 import 'package:dine_dash/features/business/dealer/dealer_business_details/dealer_business_details_response.dart';
 import 'package:dine_dash/features/business/dealer/edit_menu_page.dart';
@@ -64,8 +64,28 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
             _buildTabBar(),
             Expanded(
               child: TabBarView(
+                physics: NeverScrollableScrollPhysics(),
                 controller: _tabController,
-                children: [_buildDealsTab(), menuTab(), buildReviewsTab()],
+                children: [
+                  RefreshIndicator(
+                    onRefresh: () async {
+                      controller.fetchBusinessDetail(widget.businessId);
+                    },
+                    child: _buildDealsTab(),
+                  ),
+                  RefreshIndicator(
+                    onRefresh: () async {
+                      controller.fetchBusinessDetail(widget.businessId);
+                    },
+                    child: menuTab(),
+                  ),
+                  RefreshIndicator(
+                    onRefresh: () async {
+                      controller.fetchBusinessDetail(widget.businessId);
+                    },
+                    child: buildReviewsTab(),
+                  ),
+                ],
               ),
             ),
           ],
@@ -78,13 +98,18 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             commonBorderButton(
               "+ Add Items",
               onTap: () {
-                navigateToPage(AddMenuScreen());
+                navigateToPage(
+                  AddMenuScreen(
+                    businessId: controller.businessDetail.value!.id,
+                  ),
+                );
               },
             ),
             SizedBox(height: 16),
@@ -290,6 +315,7 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
 
   Widget _buildDealsTab() {
     return SingleChildScrollView(
+      physics: AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
@@ -343,6 +369,7 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
 
   Widget buildReviewsTab() {
     return SingleChildScrollView(
+      physics: AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

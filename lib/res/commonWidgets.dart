@@ -396,16 +396,19 @@ Widget commonCheckbox({
 Widget commonDropdown<T>({
   required List<T> items,
   required T? value,
+  Color color=Colors.white,
+  double elevation= 1,
   required String hint,
   required void Function(T?) onChanged,
+    String Function(T)? labelBuilder,
 }) {
   return Material(
-    elevation: 1,
+    elevation: elevation,
     borderRadius: BorderRadius.circular(12),
     child: Container(
       padding: EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: color,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.grey.shade300),
       ),
@@ -413,12 +416,17 @@ Widget commonDropdown<T>({
         isExpanded: true,
         underline: SizedBox(),
         value: value,
+        
         hint: commonText(hint.tr, size: 14),
         items:
             items.map<DropdownMenuItem<T>>((T item) {
+                final label = labelBuilder != null
+              ? labelBuilder(item)
+              : item.toString(); 
+
               return DropdownMenuItem<T>(
                 value: item,
-                child: commonText(item.toString(), size: 14),
+                child: commonText(label, size: 14),
               );
             }).toList(),
         onChanged: onChanged,

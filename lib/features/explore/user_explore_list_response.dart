@@ -1,5 +1,5 @@
-import 'package:dine_dash/model/business_model.dart';
-import 'package:dine_dash/model/pagination_model.dart';
+import 'package:dine_dash/core/models/business_model.dart';
+import 'package:dine_dash/core/models/pagination_model.dart';
 
 class UserExploreBusinessListResponse {
   final int statusCode;

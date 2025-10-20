@@ -8,7 +8,7 @@ import 'package:dine_dash/features/business/user/bussiness%20details/menu_respon
 import 'package:dine_dash/features/business/user/map_screen.dart';
 import 'package:dine_dash/features/deals/user/user_deal_blocked.dart';
 import 'package:dine_dash/features/profile/user/user_subscription.dart';
-import 'package:dine_dash/model/business_model.dart';
+import 'package:dine_dash/core/models/business_model.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/core/utils/colors.dart';
@@ -92,398 +92,403 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
             children: [
               /// Content
               Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.all(16),
-                  children: [
-                    /// Handle Indicator
-                    Center(
-                      child: Container(
-                        height: 5,
-                        width: 40,
-                        margin: const EdgeInsets.only(bottom: 16),
-                        decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          borderRadius: BorderRadius.circular(10),
+                child: RefreshIndicator(
+                  onRefresh: () async{
+                    controller.fetchBusinessDetail(widget.businessId);
+                  },
+                  child: ListView(
+                    padding: const EdgeInsets.all(16),
+                    children: [
+                      /// Handle Indicator
+                      Center(
+                        child: Container(
+                          height: 5,
+                          width: 40,
+                          margin: const EdgeInsets.only(bottom: 16),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
                       ),
-                    ),
-
-                    /// Title, Tags, Rating
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Flexible(
-                          child: commonText(
-                            business.name,
-                            size: 18,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Image.asset("assets/images/medel.png", width: 16),
-                            SizedBox(width: 4),
-                            commonText(
-                              business.rating.toStringAsFixed(1),
-                              size: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            SizedBox(width: 4),
-                            Icon(Icons.star, color: Colors.orange, size: 16),
-                            commonText(
-                              "(${business.totalReview})",
-                              size: 12,
-                              color: Colors.grey,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-
-                    Wrap(
-                      spacing: 8,
-                      children:
-                          business.deals
-                              .map(
-                                (tag) => Container(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 4,
-                                  ),
-
-                                  decoration: BoxDecoration(
-                                    color: AppColors.lightBlue,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: commonText(tag.dealType),
-                                ),
-                              )
-                              .toList(),
-                    ),
-                    const SizedBox(height: 8),
-
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.location_on,
-                          size: 16,
-                          color: AppColors.primaryColor,
-                        ),
-                        SizedBox(width: 4),
-                        Flexible(
-                          child: commonText(
-                            business.formattedAddress.toString(),
-                            size: 12,
-                            maxline: 1,
-                          ),
-                        ),
-                        SizedBox(width: 4),
-                        FutureBuilder<String>(
-                          future:
-                              business
-                                  .distanceFromCurrentUser, // the async getter
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return commonText(
-                                "(calculating...)",
-                                size: 12,
-                                color: Colors.grey,
-                              );
-                            } else if (snapshot.hasError) {
-                              return commonText(
-                                "",
-                                size: 12,
-                                color: Colors.grey,
-                              );
-                            } else {
-                              final distance = snapshot.data;
-                              return commonText(
-                                ((distance != null) && distance.isNotEmpty)
-                                    ? "($distance)"
-                                    : "",
-                                size: 12,
-                              );
-                            }
-                          },
-                        ),
-
-                        SizedBox(width: 16),
-                        commonText(
-                          "€€€€",
-                          color: Colors.green,
-                          isBold: true,
-                          size: 14,
-                        ),
-                        SizedBox(width: 20),
-                      ],
-                    ),
-
-                    const SizedBox(height: 12),
-
-                    /// Action Buttons
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Expanded(
-                          child: OutlinedButton.icon(
-                            icon: Image.asset(
-                              "assets/images/menu.png",
-                              width: 24,
-                            ),
-                            label: commonText(
-                              "Menu".tr,
-                              isBold: true,
-                              size: 14,
-                            ),
-                            onPressed: () {
-                              showMenuBottomSheet(context);
-                            },
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        IconButton(
-                          onPressed: () {
-                            if (business.isFavourite) {
-                              controller.unlikeBusiness(widget.businessId).then(
-                                (value) {
-                                  if (value) {
-                                    final updated =
-                                        controller.businessDetail.value!;
-                                    updated.isFavourite = false;
-                                    controller.businessDetail.refresh();
-                                  }
-                                },
-                              );
-                            } else {
-                              controller.likeBusiness(widget.businessId).then((
-                                value,
-                              ) {
-                                if (value) {
-                                  final updated =
-                                      controller.businessDetail.value!;
-                                  updated.isFavourite = true;
-                                  controller.businessDetail.refresh();
-                                }
-                              });
-                            }
-                          },
-                          icon: Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                width: 1,
-                                color: AppColors.black,
-                              ),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(
-                              business.isFavourite
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
-                              color: AppColors.red,
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            final String shareText =
-                                "Check out this awesome business on DineDesh!";
-                            final String shareLink = "Share this Resturent";
-                            Share.share('$shareText\n$shareLink');
-                          },
-                          icon: Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                width: 1,
-                                color: AppColors.black,
-                              ),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(Icons.share_outlined),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    Divider(),
-                    SizedBox(height: 6),
-
-                    /// Closed banner
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.red.shade100,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
+                  
+                      /// Title, Tags, Rating
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Spacer(),
-                          Icon(Icons.circle, size: 4, color: Colors.red),
-                          const SizedBox(width: 8),
-                          commonText(
-                            "Currently Closed".tr,
-                            color: Colors.red,
-                            isBold: true,
+                          Flexible(
+                            child: commonText(
+                              business.name,
+                              size: 18,
+                              fontWeight: FontWeight.w800,
+                            ),
                           ),
-                          Spacer(),
-                          Icon(Icons.access_time, color: Colors.red, size: 16),
-                          SizedBox(width: 4),
-                          commonText(
-                            'Opens at {time}'.trParams({
-                              'time': business.openTimeText.split('-').first,
-                            }),
-                            color: Colors.red,
-                            size: 12,
-                          ),
-                          Spacer(),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 16),
-
-                    /// Tab bar (static for now)
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: AppColors.lightBlue,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        children: [
-                          tabButton(
-                            "Deals".tr,
-                            0,
-                            selectedIndex: selectedTabIndex,
-                            onTap: (i) {
-                              setState(() => selectedTabIndex = i);
-                            },
-                          ),
-                          tabButton(
-                            "Reviews".tr,
-                            1,
-                            selectedIndex: selectedTabIndex,
-                            onTap: (i) {
-                              setState(() => selectedTabIndex = i);
-                            },
-                          ),
-                          tabButton(
-                            "Information".tr,
-                            2,
-                            selectedIndex: selectedTabIndex,
-                            onTap: (i) {
-                              setState(() => selectedTabIndex = i);
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Divider(),
-
-                    const SizedBox(height: 8),
-
-                    /// Deal Cards
-                    if (selectedTabIndex == 0)
-                      ListView.builder(
-                        itemCount: business.deals.length,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          final deal = business.deals[index];
-                          return buildDealCard(
-                            title: deal.dealType,
-                            subText: deal.description,
-                            duration: "${deal.reuseableAfter} Days",
-                            subscriptionRequired: true,
-                            isActive: deal.isActive,
-                          );
-                        },
-                      ),
-
-                    if (selectedTabIndex == 1)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          commonText(
-                            "Ratings & Reviews".tr,
-                            size: 16,
-                            isBold: true,
-                            color: AppColors.primaryColor,
-                          ),
-
                           Row(
                             children: [
+                              Image.asset("assets/images/medel.png", width: 16),
+                              SizedBox(width: 4),
                               commonText(
                                 business.rating.toStringAsFixed(1),
-                                size: 18,
-                                isBold: true,
+                                size: 14,
+                                fontWeight: FontWeight.w500,
                               ),
-                              SizedBox(width: 8),
-                              Row(
-                                children: List.generate(5, (index) {
-                                  double rating = business.rating;
-                                  if (rating >= index + 1) {
-                                    // Full star
-                                    return Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
-                                      size: 20,
-                                    );
-                                  } else if (rating > index &&
-                                      rating < index + 1) {
-                                    // Half star (optional)
-                                    return Icon(
-                                      Icons.star_half,
-                                      color: Colors.amber,
-                                      size: 20,
-                                    );
-                                  } else {
-                                    // Empty star
-                                    return Icon(
-                                      Icons.star_border,
-                                      color: Colors.grey.shade400,
-                                      size: 20,
-                                    );
-                                  }
-                                }),
+                              SizedBox(width: 4),
+                              Icon(Icons.star, color: Colors.orange, size: 16),
+                              commonText(
+                                "(${business.totalReview})",
+                                size: 12,
+                                color: Colors.grey,
                               ),
                             ],
                           ),
-
-                          commonText(
-                            "${business.userRatingsTotal} ratings | ${business.totalReview} reviews",
-                            color: Colors.blueGrey,
-                            isBold: true,
-                          ),
-                          if (business.feedbacks != null) ...[
-                            ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: min(business.feedbacks!.length, 3),
-                              itemBuilder: (context, index) {
-                                return buildReviews(business.feedbacks![index]);
-                              },
-                            ),
-
-                            if (business.feedbacks!.length > 5)
-                              commonButton(
-                                "All reviews {number}".trParams({
-                                  'number': business.totalReview.toString(),
-                                }),
-                                onTap: () {
-                                  Get.to(AllReviewOfBusinessPage(feedBacks: business.feedbacks!,));
-                                },
-                              ),
-                          ],
                         ],
                       ),
-                    if (selectedTabIndex == 2) restaurantInfoTab(business),
-                  ],
+                      const SizedBox(height: 8),
+                  
+                      Wrap(
+                        spacing: 8,
+                        children:
+                            business.deals
+                                .map(
+                                  (tag) => Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 4,
+                                    ),
+                  
+                                    decoration: BoxDecoration(
+                                      color: AppColors.lightBlue,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: commonText(tag.dealType),
+                                  ),
+                                )
+                                .toList(),
+                      ),
+                      const SizedBox(height: 8),
+                  
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            size: 16,
+                            color: AppColors.primaryColor,
+                          ),
+                          SizedBox(width: 4),
+                          Flexible(
+                            child: commonText(
+                              business.formattedAddress.toString(),
+                              size: 12,
+                              maxline: 1,
+                            ),
+                          ),
+                          SizedBox(width: 4),
+                          FutureBuilder<String>(
+                            future:
+                                business
+                                    .distanceFromCurrentUser, // the async getter
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return commonText(
+                                  "(calculating...)",
+                                  size: 12,
+                                  color: Colors.grey,
+                                );
+                              } else if (snapshot.hasError) {
+                                return commonText(
+                                  "",
+                                  size: 12,
+                                  color: Colors.grey,
+                                );
+                              } else {
+                                final distance = snapshot.data;
+                                return commonText(
+                                  ((distance != null) && distance.isNotEmpty)
+                                      ? "($distance)"
+                                      : "",
+                                  size: 12,
+                                );
+                              }
+                            },
+                          ),
+                  
+                          SizedBox(width: 16),
+                          commonText(
+                            "€€€€",
+                            color: Colors.green,
+                            isBold: true,
+                            size: 14,
+                          ),
+                          SizedBox(width: 20),
+                        ],
+                      ),
+                  
+                      const SizedBox(height: 12),
+                  
+                      /// Action Buttons
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: OutlinedButton.icon(
+                              icon: Image.asset(
+                                "assets/images/menu.png",
+                                width: 24,
+                              ),
+                              label: commonText(
+                                "Menu".tr,
+                                isBold: true,
+                                size: 14,
+                              ),
+                              onPressed: () {
+                                showMenuBottomSheet(context);
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          IconButton(
+                            onPressed: () {
+                              if (business.isFavourite) {
+                                controller.unlikeBusiness(widget.businessId).then(
+                                  (value) {
+                                    if (value) {
+                                      final updated =
+                                          controller.businessDetail.value!;
+                                      updated.isFavourite = false;
+                                      controller.businessDetail.refresh();
+                                    }
+                                  },
+                                );
+                              } else {
+                                controller.likeBusiness(widget.businessId).then((
+                                  value,
+                                ) {
+                                  if (value) {
+                                    final updated =
+                                        controller.businessDetail.value!;
+                                    updated.isFavourite = true;
+                                    controller.businessDetail.refresh();
+                                  }
+                                });
+                              }
+                            },
+                            icon: Container(
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1,
+                                  color: AppColors.black,
+                                ),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                business.isFavourite
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: AppColors.red,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              final String shareText =
+                                  "Check out this awesome business on DineDesh!";
+                              final String shareLink = "Share this Resturent";
+                              Share.share('$shareText\n$shareLink');
+                            },
+                            icon: Container(
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1,
+                                  color: AppColors.black,
+                                ),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(Icons.share_outlined),
+                            ),
+                          ),
+                        ],
+                      ),
+                  
+                      Divider(),
+                      SizedBox(height: 6),
+                  
+                      /// Closed banner
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.red.shade100,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          children: [
+                            Spacer(),
+                            Icon(Icons.circle, size: 4, color: Colors.red),
+                            const SizedBox(width: 8),
+                            commonText(
+                              "Currently Closed".tr,
+                              color: Colors.red,
+                              isBold: true,
+                            ),
+                            Spacer(),
+                            Icon(Icons.access_time, color: Colors.red, size: 16),
+                            SizedBox(width: 4),
+                            commonText(
+                              'Opens at {time}'.trParams({
+                                'time': business.openTimeText.split('-').first,
+                              }),
+                              color: Colors.red,
+                              size: 12,
+                            ),
+                            Spacer(),
+                          ],
+                        ),
+                      ),
+                  
+                      const SizedBox(height: 16),
+                  
+                      /// Tab bar (static for now)
+                      Container(
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: AppColors.lightBlue,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          children: [
+                            tabButton(
+                              "Deals".tr,
+                              0,
+                              selectedIndex: selectedTabIndex,
+                              onTap: (i) {
+                                setState(() => selectedTabIndex = i);
+                              },
+                            ),
+                            tabButton(
+                              "Reviews".tr,
+                              1,
+                              selectedIndex: selectedTabIndex,
+                              onTap: (i) {
+                                setState(() => selectedTabIndex = i);
+                              },
+                            ),
+                            tabButton(
+                              "Information".tr,
+                              2,
+                              selectedIndex: selectedTabIndex,
+                              onTap: (i) {
+                                setState(() => selectedTabIndex = i);
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Divider(),
+                  
+                      const SizedBox(height: 8),
+                  
+                      /// Deal Cards
+                      if (selectedTabIndex == 0)
+                        ListView.builder(
+                          itemCount: business.deals.length,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            final deal = business.deals[index];
+                            return buildDealCard(
+                              title: deal.dealType,
+                              subText: deal.description,
+                              duration: "${deal.reuseableAfter} Days",
+                              subscriptionRequired: true,
+                              isActive: deal.isActive,
+                            );
+                          },
+                        ),
+                  
+                      if (selectedTabIndex == 1)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            commonText(
+                              "Ratings & Reviews".tr,
+                              size: 16,
+                              isBold: true,
+                              color: AppColors.primaryColor,
+                            ),
+                  
+                            Row(
+                              children: [
+                                commonText(
+                                  business.rating.toStringAsFixed(1),
+                                  size: 18,
+                                  isBold: true,
+                                ),
+                                SizedBox(width: 8),
+                                Row(
+                                  children: List.generate(5, (index) {
+                                    double rating = business.rating;
+                                    if (rating >= index + 1) {
+                                      // Full star
+                                      return Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                        size: 20,
+                                      );
+                                    } else if (rating > index &&
+                                        rating < index + 1) {
+                                      // Half star (optional)
+                                      return Icon(
+                                        Icons.star_half,
+                                        color: Colors.amber,
+                                        size: 20,
+                                      );
+                                    } else {
+                                      // Empty star
+                                      return Icon(
+                                        Icons.star_border,
+                                        color: Colors.grey.shade400,
+                                        size: 20,
+                                      );
+                                    }
+                                  }),
+                                ),
+                              ],
+                            ),
+                  
+                            commonText(
+                              "${business.userRatingsTotal} ratings | ${business.totalReview} reviews",
+                              color: Colors.blueGrey,
+                              isBold: true,
+                            ),
+                            if (business.feedbacks != null) ...[
+                              ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: min(business.feedbacks!.length, 3),
+                                itemBuilder: (context, index) {
+                                  return buildReviews(business.feedbacks![index]);
+                                },
+                              ),
+                  
+                              if (business.feedbacks!.length > 5)
+                                commonButton(
+                                  "All reviews {number}".trParams({
+                                    'number': business.totalReview.toString(),
+                                  }),
+                                  onTap: () {
+                                    Get.to(AllReviewOfBusinessPage(feedBacks: business.feedbacks!,));
+                                  },
+                                ),
+                            ],
+                          ],
+                        ),
+                      if (selectedTabIndex == 2) restaurantInfoTab(business),
+                    ],
+                  ),
                 ),
               ),
             ],

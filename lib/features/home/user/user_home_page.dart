@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/core/utils/helper.dart';
-import 'package:dine_dash/features/city_location_helper/city_controller.dart';
+import 'package:dine_dash/core/controller/city_controller.dart';
 import 'package:dine_dash/features/home/user/home_page_controller.dart';
-import 'package:dine_dash/model/business_model.dart';
+import 'package:dine_dash/core/models/business_model.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/res/user_resturant_card.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/user_business_details_page.dart';
@@ -46,168 +46,173 @@ class _UserHomeViewState extends State<UserHomeView> {
             return Center(child: commonText("No data available"));
           }
 
-          return ListView(
-            padding: const EdgeInsets.all(16),
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // 🔸 City Dropdown
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      value:
-                          cityController.selectedCity.value.isEmpty
-                              ? null
-                              : cityController.selectedCity.value,
-                      icon: Icon(
-                        Icons.arrow_drop_down,
-                        color: AppColors.primaryColor,
-                      ),
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                      onChanged: (String? newValue) {
-                        if (newValue != null) {
-                          cityController.selectedCity.value = newValue;
-
-                          controller.fetchHomeData(
-                            city: newValue.split('-').first,
-                            searchTerm:
-                                searchTermController.text.trim().isNotEmpty
-                                    ? searchTermController.text.trim()
-                                    : null,
-                          );
-                        }
-                      },
-                      hint:
-                          cityController.isLoading.value
-                              ? const SizedBox(
-                                height: 18,
-                                width: 18,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                ),
-                              )
-                              : Text(
-                                cityController.cities.isEmpty
-                                    ? "No locations"
-                                    : "Select location",
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                      items:
-                          cityController.cities.map((city) {
-                            // use a unique identifier for each dropdown value
-                            final uniqueValue =
-                                "${city.cityName}-${city.postalCode}";
-                            return DropdownMenuItem<String>(
-                              value: uniqueValue,
-                              child: Text(
-                                "${city.cityName} (${city.postalCode})",
-                              ),
-                            );
-                          }).toList(),
-                    ),
-                  ),
-
-                  // 🔸 Notification Icon
-                  GestureDetector(
-                    onTap: () => navigateToPage(UserNotificationsPage()),
-                    child: Material(
-                      borderRadius: BorderRadius.circular(100),
-                      elevation: 2,
-                      child: const Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Icon(
-                          Icons.notifications_active,
-                          color: Colors.orange,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 16),
-
-              PromotionBanner(banners: controller.homeData.value!.quotesImages),
-
-              const SizedBox(height: 20),
-
-              /// Search bar
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  color: AppColors.lightBlue.withOpacity(0.4),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Row(
+          return RefreshIndicator(
+            onRefresh: () async{
+              controller.fetchHomeData();
+            },
+            child: ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
-                      child: TextField(
-                        controller: searchTermController,
-                        decoration: InputDecoration(
-                          hintText: "Search restaurants, foods...".tr,
-                          border: InputBorder.none,
+                    // 🔸 City Dropdown
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value:
+                            cityController.selectedCity.value.isEmpty
+                                ? null
+                                : cityController.selectedCity.value,
+                        icon: Icon(
+                          Icons.arrow_drop_down,
+                          color: AppColors.primaryColor,
                         ),
-                        onChanged: (value) {
-                          if (value.trim().isEmpty) {
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            cityController.selectedCity.value = newValue;
+            
                             controller.fetchHomeData(
-                              city:
-                                  cityController.selectedCity.split('-').first,
-                              searchTerm: null,
+                              city: newValue.split('-').first,
+                              searchTerm:
+                                  searchTermController.text.trim().isNotEmpty
+                                      ? searchTermController.text.trim()
+                                      : null,
                             );
                           }
                         },
-                        onSubmitted: (value) {
-                          controller.fetchHomeData(
-                            city: cityController.selectedCity.split('-').first,
-                            searchTerm:
-                                searchTermController.text.trim().isNotEmpty
-                                    ? searchTermController.text.trim()
-                                    : null,
-                          );
-                        },
+                        hint:
+                            cityController.isLoading.value
+                                ? const SizedBox(
+                                  height: 18,
+                                  width: 18,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                                : Text(
+                                  cityController.cities.isEmpty
+                                      ? "No locations"
+                                      : "Select location",
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                        items:
+                            cityController.cities.map((city) {
+                              // use a unique identifier for each dropdown value
+                              final uniqueValue =
+                                  "${city.cityName}-${city.postalCode}";
+                              return DropdownMenuItem<String>(
+                                value: uniqueValue,
+                                child: Text(
+                                  "${city.cityName} (${city.postalCode})",
+                                ),
+                              );
+                            }).toList(),
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    const Icon(Icons.search),
+            
+                    // 🔸 Notification Icon
+                    GestureDetector(
+                      onTap: () => navigateToPage(UserNotificationsPage()),
+                      child: Material(
+                        borderRadius: BorderRadius.circular(100),
+                        elevation: 2,
+                        child: const Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Icon(
+                            Icons.notifications_active,
+                            color: Colors.orange,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-              ),
-
-              const SizedBox(height: 24),
-
-              /// Sections dynamically populated
-              buildSection("Nearby Open Restaurants", homeData.restaurants, () {
-                navigateToPage(
-                  ListOfBusinessPage(title: "Nearby Open Restaurants"),
-                );
-              }),
-
-              buildSection("Activities", homeData.activities, () {
-                navigateToPage(ListOfBusinessPage(title: "Activities"));
-              }),
-
-              buildSection("Hot Deals 🔥", homeData.hotDeals, () {
-                navigateToPage(ListOfBusinessPage(title: "Hot Deals 🔥"));
-              }),
-
-              buildSection("Top rated Restaurants", homeData.topRated, () {
-                navigateToPage(
-                  ListOfBusinessPage(title: "Top rated Restaurants"),
-                );
-              }),
-
-              buildSection("New", homeData.newRestaurants, () {
-                navigateToPage(ListOfBusinessPage(title: "New"));
-              }),
-            ],
+            
+                const SizedBox(height: 16),
+            
+                PromotionBanner(banners: controller.homeData.value!.quotesImages),
+            
+                const SizedBox(height: 20),
+            
+                /// Search bar
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: BoxDecoration(
+                    color: AppColors.lightBlue.withOpacity(0.4),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: searchTermController,
+                          decoration: InputDecoration(
+                            hintText: "Search restaurants, foods...".tr,
+                            border: InputBorder.none,
+                          ),
+                          onChanged: (value) {
+                            if (value.trim().isEmpty) {
+                              controller.fetchHomeData(
+                                city:
+                                    cityController.selectedCity.split('-').first,
+                                searchTerm: null,
+                              );
+                            }
+                          },
+                          onSubmitted: (value) {
+                            controller.fetchHomeData(
+                              city: cityController.selectedCity.split('-').first,
+                              searchTerm:
+                                  searchTermController.text.trim().isNotEmpty
+                                      ? searchTermController.text.trim()
+                                      : null,
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      const Icon(Icons.search),
+                    ],
+                  ),
+                ),
+            
+                const SizedBox(height: 24),
+            
+                /// Sections dynamically populated
+                buildSection("Nearby Open Restaurants", homeData.restaurants, () {
+                  navigateToPage(
+                    ListOfBusinessPage(title: "Nearby Open Restaurants"),
+                  );
+                }),
+            
+                buildSection("Activities", homeData.activities, () {
+                  navigateToPage(ListOfBusinessPage(title: "Activities"));
+                }),
+            
+                buildSection("Hot Deals 🔥", homeData.hotDeals, () {
+                  navigateToPage(ListOfBusinessPage(title: "Hot Deals 🔥"));
+                }),
+            
+                buildSection("Top rated Restaurants", homeData.topRated, () {
+                  navigateToPage(
+                    ListOfBusinessPage(title: "Top rated Restaurants"),
+                  );
+                }),
+            
+                buildSection("New", homeData.newRestaurants, () {
+                  navigateToPage(ListOfBusinessPage(title: "New"));
+                }),
+              ],
+            ),
           );
         }),
       ),

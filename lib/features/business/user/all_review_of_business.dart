@@ -1,6 +1,6 @@
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/core/utils/helper.dart';
-import 'package:dine_dash/model/business_model.dart';
+import 'package:dine_dash/core/models/business_model.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 

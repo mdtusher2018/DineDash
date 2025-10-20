@@ -35,237 +35,243 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: [
-                  SizedBox(height: 74),
-                  Obx(() {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            commonText(
-                              controller.isLoading.value
-                                  ? "Loading..."
-                                  : controller.userModel.value != null
-                                  ? controller.userModel.value!.fullName
-                                  : "N/A",
-                              size: 18,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            commonText(
-                              controller.isLoading.value
-                                  ? "Loading..."
-                                  : controller.userModel.value != null
-                                  ? controller.userModel.value!.email
-                                  : "N/A",
-                              size: 16,
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xff555555),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          height: 77,
-                          width: 77,
-                          decoration: BoxDecoration(shape: BoxShape.circle),
-                          child: ClipOval(
-                            child: Image.network(
-                              !controller.isLoading.value ||
-                                      controller.userModel.value != null
-                                  ? getFullImagePath(
-                                    controller.userModel.value!.image!,
-                                  )
-                                  : "https://tse3.mm.bing.net/th/id/OIP.ARKjkmC8CHiN18CdgXJ9ngHaHa?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3",
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  }),
-                  SizedBox(height: 15),
-
-                  Obx(() {
-                    if (controller.currentRole.value == 'user') {
-                      return GestureDetector(
-                        onTap: () {
-                          Get.to(() => JourneyScreen());
-                        },
-                        child: Container(
-                          height: 84,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Colors.grey.shade300),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+      body: RefreshIndicator(
+        onRefresh: () async{
+          controller.fetchProfile();
+        },
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    SizedBox(height: 74),
+                    Obx(() {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               commonText(
-                                "Your Journey".tr,
-                                size: 22,
+                                controller.isLoading.value
+                                    ? "Loading..."
+                                    : controller.userModel.value != null
+                                    ? controller.userModel.value!.fullName
+                                    : "N/A",
+                                size: 18,
                                 fontWeight: FontWeight.w600,
                               ),
-                              SizedBox(width: 50),
-                              Image.asset(
-                                "assets/images/track.png",
-                                height: 66,
-                                width: 66,
+                              commonText(
+                                controller.isLoading.value
+                                    ? "Loading..."
+                                    : controller.userModel.value != null
+                                    ? controller.userModel.value!.email
+                                    : "N/A",
+                                size: 16,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xff555555),
                               ),
                             ],
                           ),
-                        ),
-                      );
-                    } else {
-                      return SizedBox.shrink();
-                    }
-                  }),
-                  SizedBox(height: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buildcontainer(
-                        image: 'assets/images/edit.png',
-                        title: 'Edit Profile',
-                        onTap: () {
-                          if (controller.userModel.value != null) {
-                            navigateToPage(
-                              EditProfileView(
-                                email: controller.userModel.value!.email,
-                                name: controller.userModel.value!.fullName,
-                                postcode:
-                                    controller.userModel.value!.postalCode
-                                        .toString(),
-                                profileImage:
-                                    controller.userModel.value!.image ?? "",
+                          Container(
+                            height: 77,
+                            width: 77,
+                            decoration: BoxDecoration(shape: BoxShape.circle),
+                            child: ClipOval(
+                              child: Image.network(
+                                !controller.isLoading.value ||
+                                        controller.userModel.value != null
+                                    ? getFullImagePath(
+                                      controller.userModel.value!.image!,
+                                    )
+                                    : "https://tse3.mm.bing.net/th/id/OIP.ARKjkmC8CHiN18CdgXJ9ngHaHa?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3",
+                                fit: BoxFit.cover,
                               ),
-                            );
-                          }
-                        },
-                      ),
-                      buildcontainer(
-                        image: 'assets/images/setting.png',
-                        title: 'Settings',
-                        onTap: () {
-                          navigateToPage(SettingsScreen());
-                        },
-                      ),
-                      buildcontainer(
-                        image: 'assets/images/contact.png',
-                        title: 'Contact Us',
-                        onTap: () {
-                          navigateToPage(ContactUsPage());
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 10),
-            Divider(thickness: 2, color: Colors.grey.shade300),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  Obx(() {
-                    if (controller.currentRole.value == 'user') {
-                      return buildRowCon(
-                        image: 'assets/images/subscription.png',
-                        title: 'Subscription',
-                        onTap: () {
-                          navigateToPage(SubscriptionView());
-                        },
+                            ),
+                          ),
+                        ],
                       );
-                    } else {
-                      return SizedBox.shrink();
-                    }
-                  }),
-
-                  buildRowCon(
-                    image: 'assets/images/policy.png',
-                    title: 'Privacy Policy',
-                    onTap: () {
-                      navigateToPage(PrivacyPolicyScreen());
-                    },
-                  ),
-                  buildRowCon(
-                    image: 'assets/images/termscon.png',
-                    title: 'Terms and Condition',
-                    onTap: () {
-                      navigateToPage(TermsAndConditionScreen());
-                    },
-                  ),
-                  buildRowCon(
-                    image: 'assets/images/about.png',
-                    title: 'About Us',
-                    onTap: () {
-                      navigateToPage(AboutUsPage());
-                    },
-                  ),
-                  buildRowCon(
-                    image:
-                        'assets/images/language.png', // Add a globe or language icon in your assets
-                    title: 'Language', // This should be localized later
-                    onTap: () {
-                      showLanguageSelector(context);
-                    },
-                  ),
-                  Obx(() {
-                    return buildRowCon(
-                      image: 'assets/images/become.png',
-                      title:
-                          'Become a ${(controller.currentRole.value == 'user' ? "Dealer" : "User")}',
-                      onTap: () {
-                        controller.switchAccount();
-                      },
-                    );
-                  }),
-                ],
-              ),
-            ),
-            SizedBox(height: 62),
-            GestureDetector(
-              onTap: () {
-                showLogoutDialog(context, () {
-                  Get.offAll(DealerUserChooeser());
-                });
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(color: Colors.grey.shade300),
-                    top: BorderSide(color: Colors.grey.shade300),
-                  ),
-                ),
-                child: Row(
-                  spacing: 10,
-                  children: [
-                    Image.asset(
-                      "assets/images/logout.png",
-                      height: 35,
-                      width: 35,
-                      fit: BoxFit.fill,
-                    ),
-                    commonText(
-                      "Log Out".tr,
-                      size: 16,
-                      fontWeight: FontWeight.w600,
+                    }),
+                    SizedBox(height: 15),
+        
+                    Obx(() {
+                      if (controller.currentRole.value == 'user') {
+                        return GestureDetector(
+                          onTap: () {
+                            Get.to(() => JourneyScreen());
+                          },
+                          child: Container(
+                            height: 84,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: Colors.grey.shade300),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                commonText(
+                                  "Your Journey".tr,
+                                  size: 22,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                SizedBox(width: 50),
+                                Image.asset(
+                                  "assets/images/track.png",
+                                  height: 66,
+                                  width: 66,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      } else {
+                        return SizedBox.shrink();
+                      }
+                    }),
+                    SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        buildcontainer(
+                          image: 'assets/images/edit.png',
+                          title: 'Edit Profile',
+                          onTap: () {
+                            if (controller.userModel.value != null) {
+                              navigateToPage(
+                                EditProfileView(
+                                  email: controller.userModel.value!.email,
+                                  name: controller.userModel.value!.fullName,
+                                  postcode:
+                                      controller.userModel.value!.postalCode
+                                          .toString(),
+                                  profileImage:
+                                      controller.userModel.value!.image ?? "",
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                        buildcontainer(
+                          image: 'assets/images/setting.png',
+                          title: 'Settings',
+                          onTap: () {
+                            navigateToPage(SettingsScreen());
+                          },
+                        ),
+                        buildcontainer(
+                          image: 'assets/images/contact.png',
+                          title: 'Contact Us',
+                          onTap: () {
+                            navigateToPage(ContactUsPage());
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
-            ),
-          ],
+              SizedBox(height: 10),
+              Divider(thickness: 2, color: Colors.grey.shade300),
+        
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    Obx(() {
+                      if (controller.currentRole.value == 'user') {
+                        return buildRowCon(
+                          image: 'assets/images/subscription.png',
+                          title: 'Subscription',
+                          onTap: () {
+                            navigateToPage(SubscriptionView());
+                          },
+                        );
+                      } else {
+                        return SizedBox.shrink();
+                      }
+                    }),
+        
+                    buildRowCon(
+                      image: 'assets/images/policy.png',
+                      title: 'Privacy Policy',
+                      onTap: () {
+                        navigateToPage(PrivacyPolicyScreen());
+                      },
+                    ),
+                    buildRowCon(
+                      image: 'assets/images/termscon.png',
+                      title: 'Terms and Condition',
+                      onTap: () {
+                        navigateToPage(TermsAndConditionScreen());
+                      },
+                    ),
+                    buildRowCon(
+                      image: 'assets/images/about.png',
+                      title: 'About Us',
+                      onTap: () {
+                        navigateToPage(AboutUsPage());
+                      },
+                    ),
+                    buildRowCon(
+                      image:
+                          'assets/images/language.png', // Add a globe or language icon in your assets
+                      title: 'Language', // This should be localized later
+                      onTap: () {
+                        showLanguageSelector(context);
+                      },
+                    ),
+                    Obx(() {
+                      return buildRowCon(
+                        image: 'assets/images/become.png',
+                        title:
+                            'Become a ${(controller.currentRole.value == 'user' ? "Dealer" : "User")}',
+                        onTap: () {
+                          controller.switchAccount();
+                        },
+                      );
+                    }),
+                  ],
+                ),
+              ),
+              SizedBox(height: 62),
+              GestureDetector(
+                onTap: () {
+                  showLogoutDialog(context, () {
+                    Get.offAll(DealerUserChooeser());
+                  });
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(color: Colors.grey.shade300),
+                      top: BorderSide(color: Colors.grey.shade300),
+                    ),
+                  ),
+                  child: Row(
+                    spacing: 10,
+                    children: [
+                      Image.asset(
+                        "assets/images/logout.png",
+                        height: 35,
+                        width: 35,
+                        fit: BoxFit.fill,
+                      ),
+                      commonText(
+                        "Log Out".tr,
+                        size: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

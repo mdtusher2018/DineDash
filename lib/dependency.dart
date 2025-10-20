@@ -9,10 +9,11 @@ import 'package:dine_dash/features/auth/common/reset_password/reset_password_con
 import 'package:dine_dash/features/auth/common/sign_in/sign_in_controller.dart';
 import 'package:dine_dash/features/auth/user/user_sign_up_controller.dart';
 import 'package:dine_dash/features/business/dealer/add_business/add_business_controller.dart';
+import 'package:dine_dash/features/business/dealer/add_menu/add_menu_controller.dart';
 import 'package:dine_dash/features/business/dealer/dealer_business_details/dealer_business_details_controller.dart';
 import 'package:dine_dash/features/business/dealer/dealer_business_root_page/dealer_all_business_controller.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/business_details_controller.dart';
-import 'package:dine_dash/features/city_location_helper/city_controller.dart';
+import 'package:dine_dash/core/controller/city_controller.dart';
 import 'package:dine_dash/features/explore/user_explore_controller.dart';
 import 'package:dine_dash/features/favorite/favorite_controller.dart';
 import 'package:dine_dash/features/home/dealer/dealer_homepage_controller.dart';
@@ -21,6 +22,7 @@ import 'package:dine_dash/features/notification/user%20notification/user_notific
 import 'package:dine_dash/features/profile/common/change%20password/change_password_controller.dart';
 import 'package:dine_dash/features/profile/common/static_content/static_content_controller.dart';
 import 'package:dine_dash/features/profile/user/profile/profile_controller.dart';
+import 'package:dine_dash/features/ratting/dealer/review_controller.dart';
 import 'package:get/get.dart';
 
 class DependencyInjection {
@@ -104,5 +106,11 @@ class DependencyInjection {
       DealerAddBusinessController(),
       permanent: true,
     );
+
+    Get.put<DealerAddMenuController>(
+      DealerAddMenuController(),
+      permanent: true,
+    );
+    Get.put<FeedbackController>(FeedbackController(), permanent: true);
   }
 }
