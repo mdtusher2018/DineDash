@@ -11,6 +11,7 @@ class StaticContentController extends BaseController {
   final LocalStorageService _localStorage = Get.find();
 
   var staticContent = Rxn<StaticContentData>();
+  @override
   var isLoading = false.obs;
 
   Future<void> fetchStaticContent(String type) async {

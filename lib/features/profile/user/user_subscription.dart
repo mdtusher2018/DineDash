@@ -125,7 +125,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                   ),
                 ),
 
-              ...features.map(buildFeature).toList(),
+              ...features.map(buildFeature),
 
               const SizedBox(height: 16),
 

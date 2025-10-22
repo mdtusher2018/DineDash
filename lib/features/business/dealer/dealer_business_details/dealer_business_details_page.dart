@@ -1,10 +1,11 @@
+import 'package:dine_dash/core/models/my_business_name_response.dart';
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/features/business/dealer/add_menu/add_menu_page.dart';
 import 'package:dine_dash/features/business/dealer/dealer_business_details/dealer_business_details_controller.dart';
 import 'package:dine_dash/features/business/dealer/dealer_business_details/dealer_business_details_response.dart';
 import 'package:dine_dash/features/business/dealer/edit_menu_page.dart';
 import 'package:dine_dash/features/deals/dealer/edit_deals.dart';
-import 'package:dine_dash/features/deals/dealer/widgets/buildDealCard.dart';
+import 'package:dine_dash/res/buildDealCard.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/features/deals/dealer/create_deal.dart';
 import 'package:flutter/material.dart';
@@ -323,7 +324,14 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
           commonBorderButton(
             "+ Add Deal",
             onTap: () {
-              navigateToPage(AddDealScreen());
+              navigateToPage(
+                AddDealScreen(
+                  selectedBusiness: DealerBusinessItem(
+                    id: controller.businessDetail.value!.id,
+                    businessName: controller.businessDetail.value!.name,
+                  ),
+                ),
+              );
             },
           ),
 
@@ -340,7 +348,7 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
               benefitText: deal.benefitAmount.toString(),
               status: deal.isActive ? "Active" : "Paused",
               onEdit: () {
-                navigateToPage(EditDealScreen());
+                navigateToPage(EditDealScreen(dealId: deal.id, businessId :controller.businessDetail.value!.id, ));
               },
               onDelete: () {
                 showDeleteConfirmationDialog(
@@ -349,13 +357,26 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
                   message:
                       "Are you sure you want to delete this item? This action cannot be undone.",
                   onDelete: () {
-                    // Perform deletion logic here
-                    print("Item deleted");
+                    showReasonDialog(context, (p0) {
+                      controller.deleteDeal(
+                        reason: p0,
+                        dealId: deal.id,
+                        deleteManually: () {
+                          controller.businessDetail.value!.dealsData
+                              .removeWhere((element) {
+                                return element.id == deal.id;
+                              });
+                          setState(() {});
+                        },
+                      );
+                    },
+                    title: "Why do you want to delete this deal?"
+                    );
                   },
                 );
               },
               onToggleStatus: () {
-                showPauseReasonDialog(context, (reason) {
+                showReasonDialog(context, (reason) {
                   print("User wants to pause because: $reason");
                   // Perform pause logic with reason
                 });

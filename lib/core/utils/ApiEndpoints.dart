@@ -1,14 +1,11 @@
 class ApiEndpoints {
-
-
-  static String mapKey="AIzaSyBuSZJklSc1j0D4kqhkJcmyArcZbWujbXQ";
+  static String mapKey = "AIzaSyBuSZJklSc1j0D4kqhkJcmyArcZbWujbXQ";
 
   static const String baseUrl =
       'http://147.93.29.184:8020/api/v1/'; // Replace with actual base URL
   static const String baseImageUrl =
       'http://147.93.29.184:8020'; // Replace with actual base image URL
 
-      
   // static const String baseUrl =
   //     'http://10.10.10.33:8020/api/v1/'; // Replace with actual base URL
   // static const String baseImageUrl =
@@ -29,8 +26,9 @@ class ApiEndpoints {
     final params = <String, String>{};
 
     if (city != null && city.isNotEmpty) params['cityName'] = city;
-    if (searchTerm != null && searchTerm.isNotEmpty)
+    if (searchTerm != null && searchTerm.isNotEmpty) {
       params['name'] = searchTerm;
+    }
 
     if (params.isEmpty) return "home";
 
@@ -44,8 +42,9 @@ class ApiEndpoints {
     final params = <String, String>{};
 
     if (city != null && city.isNotEmpty) params['cityName'] = city;
-    if (searchTerm != null && searchTerm.isNotEmpty)
+    if (searchTerm != null && searchTerm.isNotEmpty) {
       params['name'] = searchTerm;
+    }
 
     if (params.isEmpty) return "favourite/myfavourites";
 
@@ -70,12 +69,15 @@ class ApiEndpoints {
   }) {
     final params = <String, String>{};
 
-    if (city != null && city.isNotEmpty)
+    if (city != null && city.isNotEmpty) {
       params['cityName'] = city.toLowerCase();
-    if (searchTerm != null && searchTerm.isNotEmpty)
+    }
+    if (searchTerm != null && searchTerm.isNotEmpty) {
       params['name'] = searchTerm.toLowerCase();
-    if (sortBy != null && sortBy.isNotEmpty)
+    }
+    if (sortBy != null && sortBy.isNotEmpty) {
       params['priceSort'] = sortBy.toLowerCase();
+    }
     params['page'] = page.toString();
     if (params.isEmpty) return "business/nearest-list";
 
@@ -114,25 +116,53 @@ class ApiEndpoints {
 
   static String switchAccount = "auth/switch-account";
 
-  static String createBusiness="business/add-business";
+  static String createBusiness = "business/add-business";
+  static String editBusiness(String businessId) => "business/edit-business/$businessId";
 
-  static String addMenu="menu/add";
+  static String addMenu = "menu/add";
 
-  static String deleteBusiness(String businessId)=>"business/delete/$businessId";
-
-
+  static String deleteBusiness(String businessId) =>
+      "business/delete/$businessId";
 
   static String dealerBusinessDetail(String businessId) =>
       "business/my-businessDetails/$businessId";
 
-  static String dealerHomepageAllBusiness(int page) => "business/home?page=$page";
+  static String dealerHomepageAllBusiness(int page) =>
+      "business/home?page=$page";
 
-static String dealerAllBusiness(int page) => "business/my-business?page=$page";
+  static String dealerAllBusiness(int page) =>
+      "business/my-business?page=$page";
 
-  static String review="feedback/myall-feedback";
+  static String review({
+    required int page,
+    String? businessId,
+    int? ratting,
+    String? sortBy,
+  }) {
+    String url = "feedback/myall-feedback?page=$page";
+    if (businessId != null) {
+      url += "&businessId=$businessId";
+    }
+    if (ratting != null) {
+      url += "&ratting=$ratting";
+    }
+    if (sortBy != null) {
+      url += "&sortBy=$sortBy";
+    }
 
-  static String dealerMyBusinessNameList="business/my-business-names";
+    return url;
+  }
 
-  // static String deleteDeal(String dealId) =>
-  //     "deal/delete-deal-req/$dealId";
+  static String dealerMyBusinessNameList = "business/my-business-names";
+
+  static String createDeal = "deal/add";
+
+  static String getAllDeals="deal/my-all-deal";
+  static String editDeal(String dealId) => "deal/edit-deal/$dealId";
+
+  static String deleteDeal(String dealId) => "deal/delete-deal-req/$dealId";
+
+  static String dealDetailsById(String dealId) {
+    return "deal/deal-details/$dealId";
+  }
 }

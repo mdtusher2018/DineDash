@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 // Assuming all common widgets are in this file
 
 class EditMenuScreen extends StatefulWidget {
+  const EditMenuScreen({super.key});
+
   @override
   _EditMenuScreenState createState() => _EditMenuScreenState();
 }
@@ -77,7 +79,7 @@ class _EditMenuScreenState extends State<EditMenuScreen> {
                   const SizedBox(height: 20),
                 ],
               );
-            }).toList(),
+            }),
 
             // "Add More Item" Button
             commonBorderButton("+ Add More Item", onTap: addMoreItem),

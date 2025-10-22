@@ -1,10 +1,11 @@
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/features/home/dealer/dealer_homepage_controller.dart';
+import 'package:dine_dash/features/notification/user%20notification/user_notification.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/features/business/dealer/dealer_business_details/dealer_business_details_page.dart';
 import 'package:dine_dash/features/deals/dealer/create_deal.dart';
-import 'package:dine_dash/features/notification/dealer_notifications.dart';
+// import 'package:dine_dash/features/notification/dealer_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -40,7 +41,7 @@ class _DealerHomepageState extends State<DealerHomepage> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: RefreshIndicator(
-          onRefresh: () async{
+          onRefresh: () async {
             controller.fetchDealerHomepageData();
           },
           child: SingleChildScrollView(
@@ -58,7 +59,7 @@ class _DealerHomepageState extends State<DealerHomepage> {
                     ),
                     IconButton(
                       onPressed: () {
-                        navigateToPage(DealerNotificationsPage());
+                        navigateToPage(UserNotificationsPage());
                       },
                       icon: Icon(
                         Icons.notifications_active,
@@ -104,7 +105,8 @@ class _DealerHomepageState extends State<DealerHomepage> {
                         controller.businessSummary.value == null) {
                       return Center(child: CircularProgressIndicator());
                     }
-                    if (controller.businessSummary.value == null && !controller.isLoading.value) {
+                    if (controller.businessSummary.value == null &&
+                        !controller.isLoading.value) {
                       commonText("No data Found");
                     }
                     return Row(
@@ -178,7 +180,8 @@ class _DealerHomepageState extends State<DealerHomepage> {
                       ),
                       commonText("2530", size: 36, fontWeight: FontWeight.w600),
                       commonText(
-                        "Total monthly deals redeems across all restaurants.".tr,
+                        "Total monthly deals redeems across all restaurants."
+                            .tr,
                         size: 14,
                         fontWeight: FontWeight.w600,
                       ),
@@ -207,7 +210,7 @@ class _DealerHomepageState extends State<DealerHomepage> {
                       ),
                     );
                   }
-          
+
                   return ListView.builder(
                     shrinkWrap: true,
                     padding: EdgeInsets.all(0),
@@ -265,6 +268,7 @@ class _DealerHomepageState extends State<DealerHomepage> {
                                   children: [
                                     commonText(
                                       controller.businesses[index].businessName,
+                                      maxline: 1,
                                       size: 20,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -337,9 +341,10 @@ class _DealerHomepageState extends State<DealerHomepage> {
                                                 direction: Axis.horizontal,
                                                 allowHalfRating: true,
                                                 itemCount: 1,
-                                                itemPadding: EdgeInsets.symmetric(
-                                                  horizontal: 4.0,
-                                                ),
+                                                itemPadding:
+                                                    EdgeInsets.symmetric(
+                                                      horizontal: 4.0,
+                                                    ),
                                                 itemBuilder:
                                                     (context, _) => Icon(
                                                       Icons.star,

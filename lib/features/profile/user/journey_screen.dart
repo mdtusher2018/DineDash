@@ -17,7 +17,7 @@ class JourneyScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Center(
-                child: Container(
+                child: SizedBox(
                   height: 266,
                   width: 266,
                   child: Image.asset("assets/images/journey.png",fit: BoxFit.fill,),

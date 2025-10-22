@@ -13,7 +13,7 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   late GoogleMapController mapController;
   bool isMapLoading = true; // Track map loading state
-  Set<Marker> _markers = {}; // Set to store the markers
+  final Set<Marker> _markers = {}; // Set to store the markers
 
   @override
   void initState() {

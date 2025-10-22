@@ -50,6 +50,7 @@ Widget commonTextfieldWithTitle(
   textSize = 14.0,
   suffixIcon,
   borderWidth = 0.0,
+  Color fillColor=AppColors.white,
   optional = false,
   changePasswordVisibility,
   TextInputType keyboardType = TextInputType.text,
@@ -95,7 +96,7 @@ Widget commonTextfieldWithTitle(
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.all(12.0),
                 hintText: hintText.tr,
-                fillColor: AppColors.white,
+                fillColor: fillColor,
                 filled: true,
                 hintStyle: TextStyle(fontSize: 14, color: AppColors.gray),
                 border: InputBorder.none,

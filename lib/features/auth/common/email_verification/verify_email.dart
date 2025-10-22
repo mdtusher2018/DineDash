@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
-  EmailVerificationScreen({super.key});
+  const EmailVerificationScreen({super.key});
 
   @override
   State<EmailVerificationScreen> createState() =>
@@ -40,7 +40,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
       backgroundColor: AppColors.primaryColor,
       bottomSheet: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Container(
+        child: SizedBox(
           height: double.infinity,
           child: SingleChildScrollView(
             child: Column(

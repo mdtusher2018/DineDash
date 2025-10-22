@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UserRootPage extends StatefulWidget {
+  const UserRootPage({super.key});
+
   @override
   _UserRootPageState createState() => _UserRootPageState();
 }

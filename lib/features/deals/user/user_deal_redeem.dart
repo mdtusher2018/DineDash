@@ -7,6 +7,8 @@ import 'package:lottie/lottie.dart'; // Add this import
 
 
 class UserDealRedeemPage extends StatefulWidget {
+  const UserDealRedeemPage({super.key});
+
   @override
   _UserDealRedeemPageState createState() => _UserDealRedeemPageState();
 }

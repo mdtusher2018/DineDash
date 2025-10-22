@@ -93,7 +93,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
               /// Content
               Expanded(
                 child: RefreshIndicator(
-                  onRefresh: () async{
+                  onRefresh: () async {
                     controller.fetchBusinessDetail(widget.businessId);
                   },
                   child: ListView(
@@ -111,7 +111,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                           ),
                         ),
                       ),
-                  
+
                       /// Title, Tags, Rating
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -145,7 +145,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                         ],
                       ),
                       const SizedBox(height: 8),
-                  
+
                       Wrap(
                         spacing: 8,
                         children:
@@ -156,7 +156,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                                       horizontal: 8,
                                       vertical: 4,
                                     ),
-                  
+
                                     decoration: BoxDecoration(
                                       color: AppColors.lightBlue,
                                       borderRadius: BorderRadius.circular(10),
@@ -167,7 +167,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                                 .toList(),
                       ),
                       const SizedBox(height: 8),
-                  
+
                       Row(
                         children: [
                           Icon(
@@ -213,7 +213,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                               }
                             },
                           ),
-                  
+
                           SizedBox(width: 16),
                           commonText(
                             "€€€€",
@@ -224,9 +224,9 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                           SizedBox(width: 20),
                         ],
                       ),
-                  
+
                       const SizedBox(height: 12),
-                  
+
                       /// Action Buttons
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -251,27 +251,27 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                           IconButton(
                             onPressed: () {
                               if (business.isFavourite) {
-                                controller.unlikeBusiness(widget.businessId).then(
+                                controller
+                                    .unlikeBusiness(widget.businessId)
+                                    .then((value) {
+                                      if (value) {
+                                        final updated =
+                                            controller.businessDetail.value!;
+                                        updated.isFavourite = false;
+                                        controller.businessDetail.refresh();
+                                      }
+                                    });
+                              } else {
+                                controller.likeBusiness(widget.businessId).then(
                                   (value) {
                                     if (value) {
                                       final updated =
                                           controller.businessDetail.value!;
-                                      updated.isFavourite = false;
+                                      updated.isFavourite = true;
                                       controller.businessDetail.refresh();
                                     }
                                   },
                                 );
-                              } else {
-                                controller.likeBusiness(widget.businessId).then((
-                                  value,
-                                ) {
-                                  if (value) {
-                                    final updated =
-                                        controller.businessDetail.value!;
-                                    updated.isFavourite = true;
-                                    controller.businessDetail.refresh();
-                                  }
-                                });
                               }
                             },
                             icon: Container(
@@ -312,10 +312,10 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                           ),
                         ],
                       ),
-                  
+
                       Divider(),
                       SizedBox(height: 6),
-                  
+
                       /// Closed banner
                       Container(
                         padding: const EdgeInsets.all(16),
@@ -334,7 +334,11 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                               isBold: true,
                             ),
                             Spacer(),
-                            Icon(Icons.access_time, color: Colors.red, size: 16),
+                            Icon(
+                              Icons.access_time,
+                              color: Colors.red,
+                              size: 16,
+                            ),
                             SizedBox(width: 4),
                             commonText(
                               'Opens at {time}'.trParams({
@@ -347,9 +351,9 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                           ],
                         ),
                       ),
-                  
+
                       const SizedBox(height: 16),
-                  
+
                       /// Tab bar (static for now)
                       Container(
                         padding: EdgeInsets.all(8),
@@ -388,9 +392,9 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                       ),
                       const SizedBox(height: 8),
                       Divider(),
-                  
+
                       const SizedBox(height: 8),
-                  
+
                       /// Deal Cards
                       if (selectedTabIndex == 0)
                         ListView.builder(
@@ -403,12 +407,14 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                               title: deal.dealType,
                               subText: deal.description,
                               duration: "${deal.reuseableAfter} Days",
-                              subscriptionRequired: true,
+                              subscriptionRequired: false,
                               isActive: deal.isActive,
+                              dealId: deal.id,
+                              saving: deal.benefitAmount
                             );
                           },
                         ),
-                  
+
                       if (selectedTabIndex == 1)
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -419,7 +425,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                               isBold: true,
                               color: AppColors.primaryColor,
                             ),
-                  
+
                             Row(
                               children: [
                                 commonText(
@@ -458,7 +464,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                                 ),
                               ],
                             ),
-                  
+
                             commonText(
                               "${business.userRatingsTotal} ratings | ${business.totalReview} reviews",
                               color: Colors.blueGrey,
@@ -470,17 +476,23 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                                 shrinkWrap: true,
                                 itemCount: min(business.feedbacks!.length, 3),
                                 itemBuilder: (context, index) {
-                                  return buildReviews(business.feedbacks![index]);
+                                  return buildReviews(
+                                    business.feedbacks![index],
+                                  );
                                 },
                               ),
-                  
+
                               if (business.feedbacks!.length > 5)
                                 commonButton(
                                   "All reviews {number}".trParams({
                                     'number': business.totalReview.toString(),
                                   }),
                                   onTap: () {
-                                    Get.to(AllReviewOfBusinessPage(feedBacks: business.feedbacks!,));
+                                    Get.to(
+                                      AllReviewOfBusinessPage(
+                                        feedBacks: business.feedbacks!,
+                                      ),
+                                    );
                                   },
                                 ),
                             ],
@@ -530,10 +542,16 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
     required String title,
     required String subText,
     required String duration,
+    required String dealId,
+    required num saving,
     bool subscriptionRequired =
         false, //testing purpose remove while api intregration
     required bool isActive,
   }) {
+
+
+
+
     return Stack(
       children: [
         Container(
@@ -608,11 +626,15 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                     context,
                     title: title,
                     description: subText,
-                    days: ["Today", "Tomorrow", "Monday", "Tuesday"],
+                    days: getDaysList(),
                     selectedDay: "Today",
-                    timeRange: "12:00 - 20:00",
+                    timeRange: "-- - --",
                     dealCount: 15,
                     subscriptionRequired: subscriptionRequired,
+                    businessId: widget.businessId,
+
+saving: saving,
+dealId:dealId,
                     onDealTap: () {
                       Get.back();
 
@@ -647,6 +669,20 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
         ),
       ],
     );
+  }
+
+  List<String> getDaysList() {
+    List<String> days = [];
+    DateTime today = DateTime.now();
+
+    days.add("Today");
+    days.add("Tomorrow");
+    for (int i = 1; i <= 5; i++) {
+      DateTime nextDay = today.add(Duration(days: i + 1));
+      days.add(DateFormat('EEEE').format(nextDay));
+    }
+
+    return days;
   }
 
   Widget buildReviews(FeedbackData feedback) {
@@ -829,7 +865,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                         ],
                       ),
                     );
-                  }).toList(),
+                  }),
                   SizedBox(height: 8),
                   Row(
                     children: [
@@ -855,228 +891,503 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
     );
   }
 
-  void showDealBottomSheet(
-    BuildContext context, {
-    required String title,
-    required String description,
-    required List<String> days,
-    required String selectedDay,
-    required String timeRange,
-    required int dealCount,
-    required VoidCallback onDealTap,
-    bool subscriptionRequired =
-        false, //testing purpose remove while api intregration
-  }) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) {
-        String selectedDayState = selectedDay;
-        String selectedTimeRange = timeRange;
 
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return Padding(
-              padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
-              ),
-              child: SingleChildScrollView(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 24,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 5,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child:
-                      (subscriptionRequired)
-                          ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const SizedBox(height: 16),
-                              Icon(
-                                Icons.lock_outline_rounded,
-                                size: 48,
-                                color: AppColors.primaryColor,
-                              ),
-                              const SizedBox(height: 16),
-                              commonText(
-                                "Subscription Required",
-                                size: 18,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              const SizedBox(height: 8),
-                              commonText(
-                                "You need an active subscription to access this deal.\nPlease subscribe to continue.",
-                                size: 14,
-                                color: Colors.grey.shade700,
-                                textAlign: TextAlign.center,
-                              ),
-                              const SizedBox(height: 24),
-                              commonButton(
-                                "View Subscription Plans",
+
+
+
+
+
+
+
+
+
+
+void showDealBottomSheet(
+  BuildContext context, {
+  required String title,
+  required String description,
+  required List<String> days,
+  required String selectedDay,
+  required String timeRange,
+  required int dealCount,
+  required VoidCallback onDealTap,
+  required String businessId,
+  required String dealId,
+  required num saving,
+  bool subscriptionRequired = false, //testing purpose remove while api integration
+}) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (context) {
+      String selectedDayState = selectedDay;
+      String selectedTimeRange = timeRange;
+
+      // Variables to store the selected start and end time
+      DateTime? selectedBookingStart;
+      DateTime? selectedBookingEnd;
+
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 24,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 5,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: (subscriptionRequired)
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(height: 16),
+                          Icon(
+                            Icons.lock_outline_rounded,
+                            size: 48,
+                            color: AppColors.primaryColor,
+                          ),
+                          const SizedBox(height: 16),
+                          commonText(
+                            "Subscription Required",
+                            size: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          const SizedBox(height: 8),
+                          commonText(
+                            "You need an active subscription to access this deal.\nPlease subscribe to continue.",
+                            size: 14,
+                            color: Colors.grey.shade700,
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 24),
+                          commonButton(
+                            "View Subscription Plans",
+                            onTap: () {
+                              onDealTap(); // Replace with actual navigation to plans
+                            },
+                            color: AppColors.primaryColor,
+                            textColor: Colors.white,
+                          ),
+                        ],
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Title
+                          commonText(title, size: 16, isBold: true),
+                          const SizedBox(height: 8),
+
+                          // Description
+                          commonText(description, size: 13),
+                          const SizedBox(height: 12),
+
+                          const Divider(height: 1),
+                          const SizedBox(height: 12),
+
+                          // Day Section
+                          commonText("Day", isBold: true, size: 14),
+                          const SizedBox(height: 8),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: days.map((day) {
+                              final isSelected = day == selectedDayState;
+                              return GestureDetector(
                                 onTap: () {
-                                  onDealTap(); // Replace with actual navigation to plans
-                                },
-                                color: AppColors.primaryColor,
-                                textColor: Colors.white,
-                              ),
-                            ],
-                          )
-                          : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Title
-                              commonText(title, size: 16, isBold: true),
-                              const SizedBox(height: 8),
-
-                              // Description
-                              commonText(description, size: 13),
-                              const SizedBox(height: 12),
-
-                              const Divider(height: 1),
-                              const SizedBox(height: 12),
-
-                              // Day Section
-                              commonText("Day", isBold: true, size: 14),
-                              const SizedBox(height: 8),
-                              Wrap(
-                                spacing: 8,
-                                children:
-                                    days.map((day) {
-                                      final isSelected =
-                                          day == selectedDayState;
-                                      return GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            selectedDayState = day;
-                                          });
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 12,
-                                            vertical: 8,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color:
-                                                isSelected
-                                                    ? AppColors.primaryColor
-                                                    : Colors.grey.shade100,
-                                            borderRadius: BorderRadius.circular(
-                                              20,
-                                            ),
-                                            border: Border.all(
-                                              color:
-                                                  isSelected
-                                                      ? Colors.transparent
-                                                      : Colors.black,
-                                            ),
-                                          ),
-                                          child: commonText(
-                                            day,
-                                            color:
-                                                isSelected
-                                                    ? Colors.white
-                                                    : Colors.black,
-                                          ),
-                                        ),
-                                      );
-                                    }).toList(),
-                              ),
-
-                              const SizedBox(height: 16),
-
-                              // Time Section
-                              commonText("Time", isBold: true, size: 14),
-                              const SizedBox(height: 8),
-                              GestureDetector(
-                                onTap: () async {
-                                  TimeOfDay? start = await showTimePicker(
-                                    context: context,
-                                    initialTime: TimeOfDay.now(),
-                                  );
-                                  if (start != null) {
-                                    TimeOfDay? end = await showTimePicker(
-                                      context: context,
-                                      initialTime: start,
-                                    );
-                                    if (end != null) {
-                                      setState(() {
-                                        selectedTimeRange =
-                                            "${start.format(context)} - ${end.format(context)}";
-                                      });
-                                    }
-                                  }
+                                  setState(() {
+                                    selectedDayState = day;
+                                  });
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 12,
+                                    horizontal: 12,
+                                    vertical: 8,
                                   ),
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black),
-                                    borderRadius: BorderRadius.circular(12),
+                                    color: isSelected
+                                        ? AppColors.primaryColor
+                                        : Colors.grey.shade100,
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                      color: isSelected
+                                          ? Colors.transparent
+                                          : Colors.black,
+                                    ),
                                   ),
-                                  child: Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.access_time_rounded,
-                                        size: 18,
-                                      ),
-                                      const SizedBox(width: 8),
-                                      commonText(
-                                        selectedTimeRange,
-                                        size: 13,
-                                        isBold: true,
-                                      ),
-                                      const Spacer(),
-                                      commonText(
-                                        "$dealCount Deals",
-                                        size: 13,
-                                        color: Colors.grey.shade600,
-                                      ),
-                                    ],
+                                  child: commonText(
+                                    day,
+                                    color: isSelected ? Colors.white : Colors.black,
                                   ),
                                 ),
-                              ),
-
-                              const SizedBox(height: 16),
-
-                              // CTA Button
-                              commonButton(
-                                "Go to deal",
-                                onTap: () {
-                                  // Use selectedDayState and selectedTimeRange here
-                                  print("Selected Day: $selectedDayState");
-                                  print("Selected Time: $selectedTimeRange");
-
-                                  onDealTap();
-                                },
-                                color: AppColors.primaryColor,
-                                textColor: Colors.white,
-                              ),
-                            ],
+                              );
+                            }).toList(),
                           ),
-                ),
+
+                          const SizedBox(height: 16),
+
+                          // Time Section
+                          commonText("Time", isBold: true, size: 14),
+                          const SizedBox(height: 8),
+                          GestureDetector(
+                            onTap: () async {
+                              TimeOfDay? start = await showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay.now(),
+                              );
+                              if (start != null) {
+                                TimeOfDay? end = await showTimePicker(
+                                  context: context,
+                                  initialTime: start,
+                                );
+                                if (end != null) {
+                                  setState(() {
+                                    selectedTimeRange =
+                                        "${start.format(context)} - ${end.format(context)}";
+
+                                    // Convert TimeOfDay to DateTime
+                                    DateTime now = DateTime.now();
+                                    selectedBookingStart = DateTime(
+                                      now.year,
+                                      now.month,
+                                      now.day,
+                                      start.hour,
+                                      start.minute,
+                                    );
+                                    selectedBookingEnd = DateTime(
+                                      now.year,
+                                      now.month,
+                                      now.day,
+                                      end.hour,
+                                      end.minute,
+                                    );
+
+                                    // Format DateTime to ISO 8601 string
+                                    String bookingStartFormatted =
+                                        selectedBookingStart!.toIso8601String();
+                                    String bookingEndFormatted =
+                                        selectedBookingEnd!.toIso8601String();
+
+                                    print("Booking Start: $bookingStartFormatted");
+                                    print("Booking End: $bookingEndFormatted");
+                                  });
+                                }
+                              }
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Row(
+                                children: [
+                                  const Icon(
+                                    Icons.access_time_rounded,
+                                    size: 18,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  commonText(
+                                    selectedTimeRange,
+                                    size: 13,
+                                    isBold: true,
+                                  ),
+                                  const Spacer(),
+                                  commonText(
+                                    "$dealCount Deals",
+                                    size: 13,
+                                    color: Colors.grey.shade600,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+
+                          const SizedBox(height: 16),
+
+                          // CTA Button
+                          commonButton(
+                            "Go to deal",
+                            onTap: () {
+                              // You can now use the formatted date-time strings
+                              if (selectedBookingStart != null &&
+                                  selectedBookingEnd != null) {
+                                String bookingStart = selectedBookingStart!.toIso8601String();
+                                String bookingEnd = selectedBookingEnd!.toIso8601String();
+                                
+                                // Pass these to your API or use them for booking
+                                print("Booking Info Start: $bookingStart");
+                                print("Booking Info End: $bookingEnd");
+
+                                // Perform further actions with the booking info
+                              } else {
+                                print("Please select valid start and end times.");
+                              }
+                            },
+                            color: AppColors.primaryColor,
+                            textColor: Colors.white,
+                          ),
+                        ],
+                      ),
               ),
-            );
-          },
-        );
-      },
-    );
-  }
+            ),
+          );
+        },
+      );
+    },
+  );
+}
+
+
+
+
+
+  // void showDealBottomSheet(
+  //   BuildContext context, {
+  //   required String title,
+  //   required String description,
+  //   required List<String> days,
+  //   required String selectedDay,
+  //   required String timeRange,
+  //   required int dealCount,
+  //   required VoidCallback onDealTap,
+  //   required String businessId,
+  //   required String dealId,
+  //   required num saving,
+
+  //   bool subscriptionRequired =
+  //       false, //testing purpose remove while api intregration
+  // }) {
+    
+  //   showModalBottomSheet(
+  //     context: context,
+  //     isScrollControlled: true,
+  //     shape: const RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+  //     ),
+  //     builder: (context) {
+  //       String selectedDayState = selectedDay;
+  //       String selectedTimeRange = timeRange;
+
+  //       return StatefulBuilder(
+  //         builder: (context, setState) {
+  //           return Padding(
+  //             padding: EdgeInsets.only(
+  //               bottom: MediaQuery.of(context).viewInsets.bottom,
+  //             ),
+  //             child: SingleChildScrollView(
+  //               child: Container(
+  //                 padding: const EdgeInsets.symmetric(
+  //                   horizontal: 16,
+  //                   vertical: 24,
+  //                 ),
+  //                 decoration: BoxDecoration(
+  //                   color: Colors.white,
+  //                   borderRadius: BorderRadius.circular(16),
+  //                   boxShadow: const [
+  //                     BoxShadow(
+  //                       color: Colors.black12,
+  //                       blurRadius: 5,
+  //                       offset: Offset(0, 2),
+  //                     ),
+  //                   ],
+  //                 ),
+  //                 child:
+  //                     (subscriptionRequired)
+  //                         ? Column(
+  //                           crossAxisAlignment: CrossAxisAlignment.center,
+  //                           children: [
+  //                             const SizedBox(height: 16),
+  //                             Icon(
+  //                               Icons.lock_outline_rounded,
+  //                               size: 48,
+  //                               color: AppColors.primaryColor,
+  //                             ),
+  //                             const SizedBox(height: 16),
+  //                             commonText(
+  //                               "Subscription Required",
+  //                               size: 18,
+  //                               fontWeight: FontWeight.w600,
+  //                             ),
+  //                             const SizedBox(height: 8),
+  //                             commonText(
+  //                               "You need an active subscription to access this deal.\nPlease subscribe to continue.",
+  //                               size: 14,
+  //                               color: Colors.grey.shade700,
+  //                               textAlign: TextAlign.center,
+  //                             ),
+  //                             const SizedBox(height: 24),
+  //                             commonButton(
+  //                               "View Subscription Plans",
+  //                               onTap: () {
+  //                                 onDealTap(); // Replace with actual navigation to plans
+  //                               },
+  //                               color: AppColors.primaryColor,
+  //                               textColor: Colors.white,
+  //                             ),
+  //                           ],
+  //                         )
+  //                         : Column(
+  //                           crossAxisAlignment: CrossAxisAlignment.start,
+  //                           children: [
+  //                             // Title
+  //                             commonText(title, size: 16, isBold: true),
+  //                             const SizedBox(height: 8),
+
+  //                             // Description
+  //                             commonText(description, size: 13),
+  //                             const SizedBox(height: 12),
+
+  //                             const Divider(height: 1),
+  //                             const SizedBox(height: 12),
+
+  //                             // Day Section
+  //                             commonText("Day", isBold: true, size: 14),
+  //                             const SizedBox(height: 8),
+  //                             Wrap(
+  //                               spacing: 8,runSpacing: 8,
+  //                               children:
+  //                                   days.map((day) {
+  //                                     final isSelected =
+  //                                         day == selectedDayState;
+  //                                     return GestureDetector(
+  //                                       onTap: () {
+  //                                         setState(() {
+  //                                           selectedDayState = day;
+  //                                         });
+  //                                       },
+  //                                       child: Container(
+  //                                         padding: const EdgeInsets.symmetric(
+  //                                           horizontal: 12,
+  //                                           vertical: 8,
+  //                                         ),
+  //                                         decoration: BoxDecoration(
+  //                                           color:
+  //                                               isSelected
+  //                                                   ? AppColors.primaryColor
+  //                                                   : Colors.grey.shade100,
+  //                                           borderRadius: BorderRadius.circular(
+  //                                             20,
+  //                                           ),
+  //                                           border: Border.all(
+  //                                             color:
+  //                                                 isSelected
+  //                                                     ? Colors.transparent
+  //                                                     : Colors.black,
+  //                                           ),
+  //                                         ),
+  //                                         child: commonText(
+  //                                           day,
+  //                                           color:
+  //                                               isSelected
+  //                                                   ? Colors.white
+  //                                                   : Colors.black,
+  //                                         ),
+  //                                       ),
+  //                                     );
+  //                                   }).toList(),
+  //                             ),
+
+  //                             const SizedBox(height: 16),
+
+  //                             // Time Section
+  //                             commonText("Time", isBold: true, size: 14),
+  //                             const SizedBox(height: 8),
+  //                             GestureDetector(
+  //                               onTap: () async {
+  //                                 TimeOfDay? start = await showTimePicker(
+  //                                   context: context,
+  //                                   initialTime: TimeOfDay.now(),
+  //                                 );
+  //                                 if (start != null) {
+  //                                   TimeOfDay? end = await showTimePicker(
+  //                                     context: context,
+  //                                     initialTime: start,
+  //                                   );
+  //                                   if (end != null) {
+  //                                     setState(() {
+  //                                       selectedTimeRange =
+  //                                           "${start.format(context)} - ${end.format(context)}";
+  //                                     });
+  //                                   }
+  //                                 }
+  //                               },
+  //                               child: Container(
+  //                                 padding: const EdgeInsets.symmetric(
+  //                                   horizontal: 16,
+  //                                   vertical: 12,
+  //                                 ),
+  //                                 decoration: BoxDecoration(
+  //                                   border: Border.all(color: Colors.black),
+  //                                   borderRadius: BorderRadius.circular(12),
+  //                                 ),
+  //                                 child: Row(
+  //                                   children: [
+  //                                     const Icon(
+  //                                       Icons.access_time_rounded,
+  //                                       size: 18,
+  //                                     ),
+  //                                     const SizedBox(width: 8),
+  //                                     commonText(
+  //                                       selectedTimeRange,
+  //                                       size: 13,
+  //                                       isBold: true,
+  //                                     ),
+  //                                     const Spacer(),
+  //                                     commonText(
+  //                                       "$dealCount Deals",
+  //                                       size: 13,
+  //                                       color: Colors.grey.shade600,
+  //                                     ),
+  //                                   ],
+  //                                 ),
+  //                               ),
+  //                             ),
+
+  //                             const SizedBox(height: 16),
+
+  //                             // CTA Button
+  //                             commonButton(
+  //                               "Go to deal",
+  //                               onTap: () {
+  //                                 // Use selectedDayState and selectedTimeRange here
+  //                                 print("Selected Day: $selectedDayState");
+  //                                 print("Selected Time: $selectedTimeRange");
+
+  //                                 // onDealTap();
+  //                               },
+  //                               color: AppColors.primaryColor,
+  //                               textColor: Colors.white,
+  //                             ),
+  //                           ],
+  //                         ),
+  //               ),
+  //             ),
+  //           );
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
 
   void showMenuBottomSheet(BuildContext context) {
     controller.fetchMenu(businessId: widget.businessId);

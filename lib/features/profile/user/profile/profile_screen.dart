@@ -36,7 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: RefreshIndicator(
-        onRefresh: () async{
+        onRefresh: () async {
           controller.fetchProfile();
         },
         child: SingleChildScrollView(
@@ -82,8 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             decoration: BoxDecoration(shape: BoxShape.circle),
                             child: ClipOval(
                               child: Image.network(
-                                !controller.isLoading.value ||
-                                        controller.userModel.value != null
+                                controller.userModel.value != null
                                     ? getFullImagePath(
                                       controller.userModel.value!.image!,
                                     )
@@ -96,7 +95,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       );
                     }),
                     SizedBox(height: 15),
-        
+
                     Obx(() {
                       if (controller.currentRole.value == 'user') {
                         return GestureDetector(
@@ -176,7 +175,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               SizedBox(height: 10),
               Divider(thickness: 2, color: Colors.grey.shade300),
-        
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
@@ -194,7 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         return SizedBox.shrink();
                       }
                     }),
-        
+
                     buildRowCon(
                       image: 'assets/images/policy.png',
                       title: 'Privacy Policy',

@@ -9,16 +9,25 @@ class FeedbackController extends DealerMyBusinessNameListController {
 
   var feedbackResponse = Rxn<DealerFeedBackResponse>();
 
-  Future<void> fetchFeedback() async {
+  Future<void> fetchFeedback({
+    required int page,
+    String? businessId,
+    int? ratting,
+    String? sortBy,
+  }) async {
     await safeCall(
       task: () async {
-        final response = await _apiService.get(ApiEndpoints.review);
+        
+        final response = await _apiService.get(
+          ApiEndpoints.review(
+            page: page,
+            businessId: businessId,
+            ratting: ratting,
+            sortBy: sortBy?.split(' ').first.toLowerCase(),
+          ),
+        );
         feedbackResponse.value = DealerFeedBackResponse.fromJson(response);
       },
     );
-  }
-
-  Future<void> reloadFeedback() async {
-    await fetchFeedback();
   }
 }

@@ -212,7 +212,7 @@ Widget buildDealCard({
 
 
 
-  void showPauseReasonDialog(BuildContext context, Function(String) onSubmit) {
+  void showReasonDialog(BuildContext context, Function(String) onSubmit,{String title="Why do you want to pause this deal?"}) {
     final TextEditingController reasonController = TextEditingController();
 
     showDialog(
@@ -231,7 +231,7 @@ Widget buildDealCard({
               children: [
                 /// Title
                 commonText(
-                  "Why do you want to pause this deal?".tr,
+                  title.tr,
                   size: 16,
                   textAlign: TextAlign.center,
                   isBold: true,
@@ -240,7 +240,7 @@ Widget buildDealCard({
                 const SizedBox(height: 16),
 
                 /// Reason input field (no title)
-                Row(
+                Row( 
                   children: [
                     Expanded(
                       child: commonTextField(

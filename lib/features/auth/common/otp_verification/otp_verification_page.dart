@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class OTPVerificationScreen extends StatefulWidget {
-  OTPVerificationScreen({super.key});
+  const OTPVerificationScreen({super.key});
 
   @override
   State<OTPVerificationScreen> createState() => _OTPVerificationScreenState();
@@ -39,7 +39,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
       backgroundColor: AppColors.primaryColor,
       bottomSheet: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Container(
+        child: SizedBox(
           height: double.infinity,
           child: SingleChildScrollView(
             child: Column(

@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 // Assuming all common widgets are in this file
 
 class EditBusiness2ndScreen extends StatefulWidget {
+  const EditBusiness2ndScreen({super.key});
+
   @override
   _EditBusiness2ndScreenState createState() => _EditBusiness2ndScreenState();
 }
@@ -77,7 +79,7 @@ class _EditBusiness2ndScreenState extends State<EditBusiness2ndScreen> {
                   const SizedBox(height: 20),
                 ],
               );
-            }).toList(),
+            }),
 
             // "Add More Item" Button
             commonBorderButton("+ Add More Item", onTap: addMoreItem),

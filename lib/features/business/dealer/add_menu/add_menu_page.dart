@@ -81,7 +81,7 @@ class _AddMenuScreenState extends State<AddMenuScreen> {
                   const SizedBox(height: 20),
                 ],
               );
-            }).toList(),
+            }),
 
             // "Add More Item" Button
             commonBorderButton("+ Add More Item", onTap: addMoreItem),

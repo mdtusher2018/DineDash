@@ -4,7 +4,6 @@ import 'package:dine_dash/features/ratting/user/user_after_giving_star_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import 'user_deals_details.dart';
 

@@ -6,6 +6,8 @@ import 'package:lottie/lottie.dart'; // Add this import
 
 
 class UserDealBlockedPage extends StatefulWidget {
+  const UserDealBlockedPage({super.key});
+
   @override
   _UserDealBlockedPageState createState() => _UserDealBlockedPageState();
 }

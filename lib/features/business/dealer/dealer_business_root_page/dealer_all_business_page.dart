@@ -1,7 +1,7 @@
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/features/business/dealer/dealer_business_root_page/dealer_all_business_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
-import 'package:dine_dash/features/business/dealer/edit_bussiness_page.dart';
+import 'package:dine_dash/features/business/dealer/add_business/edit_bussiness_page.dart';
 import 'package:dine_dash/features/business/dealer/dealer_business_details/dealer_business_details_page.dart';
 import 'package:dine_dash/features/business/dealer/add_business/add_business_screen_frist.dart';
 import 'package:dine_dash/core/utils/colors.dart';
@@ -143,6 +143,7 @@ class _DealerBusinessPageState extends State<DealerBusinessPage> {
                                               controller
                                                   .businesses[index]
                                                   .businessName,
+                                                  maxline: 1,
                                               size: 18,
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -154,7 +155,13 @@ class _DealerBusinessPageState extends State<DealerBusinessPage> {
                                               GestureDetector(
                                                 onTap: () {
                                                   navigateToPage(
-                                                    EditBusinessScreenFrist(),
+                                                    EditBusinessScreenFrist(
+                                                      businessId:
+                                                          controller
+                                                              .businesses[index]
+                                                              .id,
+                                                              business: controller.businesses[index],
+                                                    ),
                                                   );
                                                 },
                                                 child: Image.asset(

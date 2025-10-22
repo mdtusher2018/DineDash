@@ -21,13 +21,27 @@ class _DealerReviewState extends State<DealerReview> {
   @override
   void initState() {
     super.initState();
-    controller.fetchFeedback();
+    controller.fetchFeedback(page: 1);
     controller.fetchAllBusinessesName();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent - 200) {
+        page++;
+        controller.fetchFeedback(
+          page: page,
+          businessId: businessBy?.id,
+          ratting: int.tryParse(rattingBy?.split(' ').first ?? ""),
+          sortBy: sortBy,
+        );
+      }
+    });
   }
 
   String? sortBy;
   String? rattingBy;
   DealerBusinessItem? businessBy;
+  int page = 1;
+  ScrollController scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +60,7 @@ class _DealerReviewState extends State<DealerReview> {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SingleChildScrollView(
+            controller: scrollController,
             child: Column(
               children: [
                 SizedBox(height: 64),
@@ -239,7 +254,17 @@ class _DealerReviewState extends State<DealerReview> {
                           hint: "Select your business",
                           onChanged: (value) {
                             businessBy = value;
-                            setState(() {});
+                            setState(() {
+                              page = 1;
+                              controller.fetchFeedback(
+                                page: page,
+                                businessId: businessBy?.id,
+                                ratting: int.tryParse(
+                                  rattingBy?.split(' ').first ?? "",
+                                ),
+                                sortBy: sortBy,
+                              );
+                            });
                           },
                         ),
                         SizedBox(height: 10),
@@ -264,7 +289,17 @@ class _DealerReviewState extends State<DealerReview> {
                           hint: "Select your ratting",
                           onChanged: (value) {
                             rattingBy = value;
-                            setState(() {});
+                            setState(() {
+                              page = 1;
+                              controller.fetchFeedback(
+                                page: page,
+                                businessId: businessBy?.id,
+                                ratting: int.tryParse(
+                                  rattingBy?.split(' ').first ?? "",
+                                ),
+                                sortBy: sortBy,
+                              );
+                            });
                           },
                         ),
                         SizedBox(height: 10),
@@ -288,7 +323,17 @@ class _DealerReviewState extends State<DealerReview> {
                           hint: "Select your sort",
                           onChanged: (value) {
                             sortBy = value;
-                            setState(() {});
+                            setState(() {
+                              page = 1;
+                              controller.fetchFeedback(
+                                page: page,
+                                businessId: businessBy?.id,
+                                ratting: int.tryParse(
+                                  rattingBy?.split(' ').first ?? "",
+                                ),
+                                sortBy: sortBy,
+                              );
+                            });
                           },
                         ),
                       ],

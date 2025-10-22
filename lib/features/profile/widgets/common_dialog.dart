@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void showLanguageSelector(BuildContext context) {
-  final LocalStorageService _localStorage = Get.find();
+  final LocalStorageService localStorage = Get.find();
   showModalBottomSheet(
     context: context,
     shape: const RoundedRectangleBorder(
@@ -33,8 +33,8 @@ void showLanguageSelector(BuildContext context) {
               onTap: () {
                 Get.updateLocale(const Locale('en', 'US'));
 
-                _localStorage.saveString(StorageKey.languageCode, 'en');
-                _localStorage.saveString(StorageKey.countryCode, 'US');
+                localStorage.saveString(StorageKey.languageCode, 'en');
+                localStorage.saveString(StorageKey.countryCode, 'US');
                 Navigator.pop(context);
               },
             ),
@@ -46,8 +46,8 @@ void showLanguageSelector(BuildContext context) {
               title: commonText('Deutsch'),
               onTap: () {
                 Get.updateLocale(const Locale('de', 'DE'));
-                _localStorage.saveString(StorageKey.languageCode, 'de');
-                _localStorage.saveString(StorageKey.countryCode, 'DE');
+                localStorage.saveString(StorageKey.languageCode, 'de');
+                localStorage.saveString(StorageKey.countryCode, 'DE');
                 Navigator.pop(context);
               },
             ),

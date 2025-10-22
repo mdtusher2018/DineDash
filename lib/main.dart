@@ -12,11 +12,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DependencyInjection.init();
 
-  final LocalStorageService _localStorage = Get.find();
+  final LocalStorageService localStorage = Get.find();
   String? langCode =
-      await _localStorage.getString(StorageKey.languageCode) ?? 'de';
+      await localStorage.getString(StorageKey.languageCode) ?? 'de';
   String? countryCode =
-      await _localStorage.getString(StorageKey.countryCode) ?? 'DE';
+      await localStorage.getString(StorageKey.countryCode) ?? 'DE';
 
   runApp(MyApp(initialLocale: Locale(langCode, countryCode)));
 }

@@ -345,7 +345,7 @@
 
 import 'dart:io';
 import 'package:dine_dash/core/utils/colors.dart';
-import 'package:dine_dash/features/business/dealer/add_business/add_business_controller.dart';
+import 'package:dine_dash/features/business/dealer/add_business/dealer_business_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/res/google_location_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -354,6 +354,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddBusinessScreenFrist extends StatefulWidget {
+  const AddBusinessScreenFrist({super.key});
+
   @override
   _AddBusinessScreenFristState createState() => _AddBusinessScreenFristState();
 }
@@ -382,6 +384,10 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
   List<String> selectedCategories = [];
 
   String? selectedBusinessType;
+
+var selectedLng=0.0.obs,selectedLat=0.0.obs;
+
+
 
   Map<String, bool> closedDays = {
     "Sunday": false,
@@ -662,8 +668,8 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
             GoogleLocationPicker(
               controller: addressController,
               onPicked: (lat, lng, address) {
-                controller.selectedLat = lat;
-                controller.selectedLng = lng;
+                selectedLat.value = lat;
+                selectedLng.value = lng;
                 addressController.text = address;
               },
             ),
@@ -722,7 +728,7 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
                   phoneNumber: phoneController.text.trim(),
                   postalCode: zipController.text.trim(),
                   openingHours: openingHoursList,
-                  coordinates: [80.389016, 20.794542],
+                  coordinates: [selectedLng.value, selectedLat.value],
                   imageFile: _selectedImage,
                 );
 
