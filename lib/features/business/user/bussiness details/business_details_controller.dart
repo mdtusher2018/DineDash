@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/business_details_response.dart';
@@ -75,5 +77,33 @@ class BusinessDetailController extends BaseController {
           },
         ) ??
         false;
+  }
+
+  Future<bool?> goToDeal({
+    required String businessId,
+    required String dealId,
+    required String savings,
+    required DateTime? startTime,
+    required DateTime? endTime,
+    required int index,
+  }) async {
+    return await safeCall<bool>(
+      task: () async {
+        if (startTime == null || endTime == null) {
+          throw Exception("please select time");
+        }
+        startTime = startTime!.add(Duration(days: index));
+        endTime = endTime!.add(Duration(days: index));
+        log(startTime.toString());
+        log(endTime.toString());
+        final response = await _apiService.post(ApiEndpoints.bookDeal(dealId), {
+          "business": businessId,
+          "savings": savings,
+          "bookinfor": startTime.toString(),
+          "bookinEnd": endTime.toString(),
+        });
+        return response['statusCode'] == 200;
+      },
+    );
   }
 }

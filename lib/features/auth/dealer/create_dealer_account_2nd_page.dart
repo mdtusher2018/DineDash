@@ -1,21 +1,22 @@
 import 'package:dine_dash/features/dealer_root_page.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
-import 'package:dine_dash/res/google_location_picker.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'create_dealer_account_controller.dart';
 
-class CreateDealerAccount extends StatefulWidget {
-  const CreateDealerAccount({super.key});
+class CreateDealerAccount2ndPage extends StatefulWidget {
+  final dynamic businessDetails;
+  const CreateDealerAccount2ndPage({super.key, required this.businessDetails});
 
   @override
-  State<CreateDealerAccount> createState() => _CreateDealerAccountState();
+  State<CreateDealerAccount2ndPage> createState() =>
+      _CreateDealerAccount2ndPageState();
 }
 
-class _CreateDealerAccountState extends State<CreateDealerAccount> {
+class _CreateDealerAccount2ndPageState
+    extends State<CreateDealerAccount2ndPage> {
   final businessController = TextEditingController();
   final nameController = TextEditingController();
   final addressController = TextEditingController();
@@ -25,86 +26,86 @@ class _CreateDealerAccountState extends State<CreateDealerAccount> {
 
   final controller = Get.find<DealerCreateAccountController>();
 
-  List<String> businessTypes = [
-    "restaurant",
-    "cafe",
-    "bakery",
-    "bar",
-    "meal_takeaway",
-    "meal_delivery",
-    "food",
-  ];
   String? selectedBusinessType;
 
-  String buildSearchQuery() {
-    final parts = <String>[];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
 
-    if (businessController.text.isNotEmpty)
-      parts.add(businessController.text.trim());
-    if (addressController.text.isNotEmpty)
-      parts.add(addressController.text.trim());
-
-    return parts.join(
-      ", ",
-    ); // Example: "KFC, Gulshan Avenue-7, +880123456789, restaurant"
+    businessController.text =
+        widget.businessDetails['displayName']?['text'] ?? 'Unknown';
+    addressController.text =
+        widget.businessDetails['shortFormattedAddress'] ?? '';
+    phoneController.text =
+        widget.businessDetails['internationalPhoneNumber'] ?? '';
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
-      appBar: AppBar(
-        backgroundColor: AppColors.primaryColor,
-        title: commonText(
-          "Register",
-          size: 21,
-          isBold: true,
-          color: AppColors.white,
-        ),
-        centerTitle: true,
+      appBar: commonAppBar(
+        title: "Register",
+        backGroundColor: AppColors.primaryColor,
+        textColor: AppColors.white,
       ),
       bottomSheet: Column(
         children: [
           SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: commonText(
-              "Fill the information accourding to\nyour google business",
-              size: 18,
-              textAlign: TextAlign.center,
-            ),
-          ),
+
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Business Name
                   commonTextfieldWithTitle(
-                    "Business Name",
+                    "Business",
                     businessController,
-                    hintText: "Search your business",
+                    enable: false,
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
+                  commonTextfieldWithTitle(
+                    "Business Address",
+                    addressController,
+                    enable: false,
+                  ),
+                  SizedBox(height: 16),
 
-                  // Address Picker
-                  GoogleLocationPicker(
-                    label: "Business Detailed Address",
-                    controller: addressController,
-                    onPicked: (lat, lng, address) {
-                      addressController.text = address;
-                    },
+                  commonTextfieldWithTitle(
+                    "Your Phone Number",
+                    phoneController,
+                    hintText: "Phone number with country code",
+                  ),
+
+                  SizedBox(height: 16),
+
+                  commonTextfieldWithTitle(
+                    "Your Name",
+                    nameController,
+                    hintText: "Enter your full name",
                   ),
                   const SizedBox(height: 16),
+                  commonTextfieldWithTitle(
+                    "Your Email",
+                    emailController,
+                    hintText: "Enter your email",
+                  ),
+
+                  const SizedBox(height: 16),
+                  commonTextfieldWithTitle(
+                    "How did you hear about us?",
+                    referralController,
+                    hintText: "Referral source",
+                  ),
+                  const SizedBox(height: 24),
 
                   Obx(() {
                     return commonButton(
-                      "Next",
+                      "Submit",
                       isLoading: controller.isLoading.value,
-                      onTap: () async {
-                        controller.fetchBusinessFromGoogle(buildSearchQuery());
-                      },
+                      onTap: () async {},
                     );
                   }),
                 ],

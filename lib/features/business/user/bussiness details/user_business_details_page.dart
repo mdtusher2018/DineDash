@@ -42,11 +42,10 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(() {
-        if (controller.isLoading.value) {
+        final business = controller.businessDetail.value;
+        if (controller.isLoading.value && business == null) {
           return const Center(child: CircularProgressIndicator());
         }
-
-        final business = controller.businessDetail.value;
         if (business == null) {
           return const Center(child: Text("No details available"));
         }
@@ -79,11 +78,12 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
       bottomSheet: SizedBox(
         height: MediaQuery.sizeOf(context).height * 0.7,
         child: Obx(() {
-          if (controller.isLoading.value) {
+          final business = controller.businessDetail.value;
+
+          if (controller.isLoading.value && business == null) {
             return const Center(child: CircularProgressIndicator());
           }
 
-          final business = controller.businessDetail.value;
           if (business == null) {
             return const Center(child: Text("No details available"));
           }
@@ -410,7 +410,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                               subscriptionRequired: false,
                               isActive: deal.isActive,
                               dealId: deal.id,
-                              saving: deal.benefitAmount
+                              saving: deal.benefitAmount,
                             );
                           },
                         ),
@@ -548,10 +548,6 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
         false, //testing purpose remove while api intregration
     required bool isActive,
   }) {
-
-
-
-
     return Stack(
       children: [
         Container(
@@ -626,22 +622,23 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                     context,
                     title: title,
                     description: subText,
-                    days: getDaysList(),
-                    selectedDay: "Today",
-                    timeRange: "-- - --",
-                    dealCount: 15,
                     subscriptionRequired: subscriptionRequired,
                     businessId: widget.businessId,
-
-saving: saving,
-dealId:dealId,
-                    onDealTap: () {
+                    businessName: controller.businessDetail.value!.name,
+                    dealCount: controller.businessDetail.value!.deals.length,
+                    saving: saving,
+                    dealId: dealId,
+                    onDealTap: (timeRange) {
                       Get.back();
 
                       navigateToPage(
                         (subscriptionRequired)
                             ? SubscriptionView()
-                            : UserDealBlockedPage(),
+                            : UserDealBlockedPage(
+                              resturentName:
+                                  controller.businessDetail.value!.name,
+                              timeRange: timeRange,
+                            ),
                       );
                     },
                   );
@@ -669,20 +666,6 @@ dealId:dealId,
         ),
       ],
     );
-  }
-
-  List<String> getDaysList() {
-    List<String> days = [];
-    DateTime today = DateTime.now();
-
-    days.add("Today");
-    days.add("Tomorrow");
-    for (int i = 1; i <= 5; i++) {
-      DateTime nextDay = today.add(Duration(days: i + 1));
-      days.add(DateFormat('EEEE').format(nextDay));
-    }
-
-    return days;
   }
 
   Widget buildReviews(FeedbackData feedback) {
@@ -891,503 +874,301 @@ dealId:dealId,
     );
   }
 
+  void showDealBottomSheet(
+    BuildContext context, {
+    required String title,
+    required String description,
 
+    required int dealCount,
+    required Function(String) onDealTap,
+    required String businessId,
+    required String businessName,
+    required String dealId,
+    required num saving,
+    bool subscriptionRequired =
+        false, //testing purpose remove while api integration
+  }) {
+    List<Map<String, int>> days = [];
 
+    days.add({"Today": 1});
+    days.add({"Tomorrow": 2});
 
+    for (int i = 1; i <= 5; i++) {
+      DateTime nextDay = DateTime.now().add(Duration(days: i + 1));
+      String dayName = DateFormat('EEEE').format(nextDay);
+      days.add({dayName: i + 2});
+    }
 
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        String selectedDayState = "Today";
+        String selectedTimeRange = '-- - --';
 
+        DateTime? selectedBookingStart;
+        DateTime? selectedBookingEnd;
 
-
-
-
-
-
-void showDealBottomSheet(
-  BuildContext context, {
-  required String title,
-  required String description,
-  required List<String> days,
-  required String selectedDay,
-  required String timeRange,
-  required int dealCount,
-  required VoidCallback onDealTap,
-  required String businessId,
-  required String dealId,
-  required num saving,
-  bool subscriptionRequired = false, //testing purpose remove while api integration
-}) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-    ),
-    builder: (context) {
-      String selectedDayState = selectedDay;
-      String selectedTimeRange = timeRange;
-
-      // Variables to store the selected start and end time
-      DateTime? selectedBookingStart;
-      DateTime? selectedBookingEnd;
-
-      return StatefulBuilder(
-        builder: (context, setState) {
-          return Padding(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom,
-            ),
-            child: SingleChildScrollView(
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 24,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 5,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: (subscriptionRequired)
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const SizedBox(height: 16),
-                          Icon(
-                            Icons.lock_outline_rounded,
-                            size: 48,
-                            color: AppColors.primaryColor,
-                          ),
-                          const SizedBox(height: 16),
-                          commonText(
-                            "Subscription Required",
-                            size: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          const SizedBox(height: 8),
-                          commonText(
-                            "You need an active subscription to access this deal.\nPlease subscribe to continue.",
-                            size: 14,
-                            color: Colors.grey.shade700,
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 24),
-                          commonButton(
-                            "View Subscription Plans",
-                            onTap: () {
-                              onDealTap(); // Replace with actual navigation to plans
-                            },
-                            color: AppColors.primaryColor,
-                            textColor: Colors.white,
-                          ),
-                        ],
-                      )
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Title
-                          commonText(title, size: 16, isBold: true),
-                          const SizedBox(height: 8),
-
-                          // Description
-                          commonText(description, size: 13),
-                          const SizedBox(height: 12),
-
-                          const Divider(height: 1),
-                          const SizedBox(height: 12),
-
-                          // Day Section
-                          commonText("Day", isBold: true, size: 14),
-                          const SizedBox(height: 8),
-                          Wrap(
-                            spacing: 8,
-                            runSpacing: 8,
-                            children: days.map((day) {
-                              final isSelected = day == selectedDayState;
-                              return GestureDetector(
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+              child: SingleChildScrollView(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 24,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 5,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child:
+                      (subscriptionRequired)
+                          ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const SizedBox(height: 16),
+                              Icon(
+                                Icons.lock_outline_rounded,
+                                size: 48,
+                                color: AppColors.primaryColor,
+                              ),
+                              const SizedBox(height: 16),
+                              commonText(
+                                "Subscription Required",
+                                size: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              const SizedBox(height: 8),
+                              commonText(
+                                "You need an active subscription to access this deal.\nPlease subscribe to continue.",
+                                size: 14,
+                                color: Colors.grey.shade700,
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 24),
+                              commonButton(
+                                "View Subscription Plans",
                                 onTap: () {
-                                  setState(() {
-                                    selectedDayState = day;
-                                  });
+                                  onDealTap(
+                                    selectedTimeRange,
+                                  ); // Replace with actual navigation to plans
+                                },
+                                color: AppColors.primaryColor,
+                                textColor: Colors.white,
+                              ),
+                            ],
+                          )
+                          : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Title
+                              commonText(title, size: 16, isBold: true),
+                              const SizedBox(height: 8),
+
+                              // Description
+                              commonText(description, size: 13),
+                              const SizedBox(height: 12),
+
+                              const Divider(height: 1),
+                              const SizedBox(height: 12),
+
+                              // Day Section
+                              commonText("Day", isBold: true, size: 14),
+                              const SizedBox(height: 8),
+                              Wrap(
+                                spacing: 8,
+                                runSpacing: 8,
+                                children:
+                                    days.map((day) {
+                                      final isSelected =
+                                          day.keys.first == selectedDayState;
+                                      return GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            selectedDayState = day.keys.first;
+                                          });
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 12,
+                                            vertical: 8,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color:
+                                                isSelected
+                                                    ? AppColors.primaryColor
+                                                    : Colors.grey.shade100,
+                                            borderRadius: BorderRadius.circular(
+                                              20,
+                                            ),
+                                            border: Border.all(
+                                              color:
+                                                  isSelected
+                                                      ? Colors.transparent
+                                                      : Colors.black,
+                                            ),
+                                          ),
+                                          child: commonText(
+                                            day.keys.first,
+                                            color:
+                                                isSelected
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                              ),
+
+                              const SizedBox(height: 16),
+
+                              // Time Section
+                              commonText("Time", isBold: true, size: 14),
+                              const SizedBox(height: 8),
+                              GestureDetector(
+                                onTap: () async {
+                                  TimeOfDay? start = await showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay.now(),
+                                  );
+                                  if (start != null) {
+                                    TimeOfDay? end = await showTimePicker(
+                                      context: context,
+                                      initialTime: start,
+                                    );
+                                    if (end != null) {
+                                      setState(() {
+                                        selectedTimeRange =
+                                            "${start.format(context)} - ${end.format(context)}";
+
+                                        // Convert TimeOfDay to DateTime
+                                        DateTime now = DateTime.now();
+                                        selectedBookingStart = DateTime(
+                                          now.year,
+                                          now.month,
+                                          now.day,
+                                          start.hour,
+                                          start.minute,
+                                        );
+                                        selectedBookingEnd = DateTime(
+                                          now.year,
+                                          now.month,
+                                          now.day,
+                                          end.hour,
+                                          end.minute,
+                                        );
+
+                                        // Format DateTime to ISO 8601 string
+                                        String bookingStartFormatted =
+                                            selectedBookingStart!
+                                                .toIso8601String();
+                                        String bookingEndFormatted =
+                                            selectedBookingEnd!
+                                                .toIso8601String();
+
+                                        print(
+                                          "Booking Start: $bookingStartFormatted",
+                                        );
+                                        print(
+                                          "Booking End: $bookingEndFormatted",
+                                        );
+                                      });
+                                    }
+                                  }
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 8,
+                                    horizontal: 16,
+                                    vertical: 12,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: isSelected
-                                        ? AppColors.primaryColor
-                                        : Colors.grey.shade100,
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                      color: isSelected
-                                          ? Colors.transparent
-                                          : Colors.black,
-                                    ),
+                                    border: Border.all(color: Colors.black),
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
-                                  child: commonText(
-                                    day,
-                                    color: isSelected ? Colors.white : Colors.black,
+                                  child: Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.access_time_rounded,
+                                        size: 18,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      commonText(
+                                        selectedTimeRange,
+                                        size: 13,
+                                        isBold: true,
+                                      ),
+                                      const Spacer(),
+                                      commonText(
+                                        "$dealCount Deals",
+                                        size: 13,
+                                        color: Colors.grey.shade600,
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              );
-                            }).toList(),
-                          ),
+                              ),
 
-                          const SizedBox(height: 16),
+                              const SizedBox(height: 16),
 
-                          // Time Section
-                          commonText("Time", isBold: true, size: 14),
-                          const SizedBox(height: 8),
-                          GestureDetector(
-                            onTap: () async {
-                              TimeOfDay? start = await showTimePicker(
-                                context: context,
-                                initialTime: TimeOfDay.now(),
-                              );
-                              if (start != null) {
-                                TimeOfDay? end = await showTimePicker(
-                                  context: context,
-                                  initialTime: start,
-                                );
-                                if (end != null) {
-                                  setState(() {
-                                    selectedTimeRange =
-                                        "${start.format(context)} - ${end.format(context)}";
+                              // CTA Button
+                              commonButton(
+                                "Go to deal",
+                                onTap: () async {
+                                  late int index;
+                                  for (final dayMap in days) {
+                                    if (dayMap.containsKey(selectedDayState)) {
+                                      index =
+                                          (dayMap[selectedDayState] ?? 1) - 1;
+                                    }
+                                  }
+                                  final result =
+                                      await controller.goToDeal(
+                                        businessId: businessId,
+                                        savings: saving.toStringAsFixed(1),
+                                        dealId: dealId,
+                                        startTime: selectedBookingStart,
+                                        endTime: selectedBookingEnd,
+                                        index: index,
+                                      ) ??
+                                      false;
+                                  if (result) {
+                                    Get.back();
 
-                                    // Convert TimeOfDay to DateTime
-                                    DateTime now = DateTime.now();
-                                    selectedBookingStart = DateTime(
-                                      now.year,
-                                      now.month,
-                                      now.day,
-                                      start.hour,
-                                      start.minute,
+                                    navigateToPage(
+                                      UserDealBlockedPage(
+                                        resturentName: businessName,
+                                        timeRange: selectedTimeRange,
+                                      ),
                                     );
-                                    selectedBookingEnd = DateTime(
-                                      now.year,
-                                      now.month,
-                                      now.day,
-                                      end.hour,
-                                      end.minute,
-                                    );
-
-                                    // Format DateTime to ISO 8601 string
-                                    String bookingStartFormatted =
-                                        selectedBookingStart!.toIso8601String();
-                                    String bookingEndFormatted =
-                                        selectedBookingEnd!.toIso8601String();
-
-                                    print("Booking Start: $bookingStartFormatted");
-                                    print("Booking End: $bookingEndFormatted");
-                                  });
-                                }
-                              }
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 12,
+                                  }
+                                },
+                                color: AppColors.primaryColor,
+                                textColor: Colors.white,
                               ),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Row(
-                                children: [
-                                  const Icon(
-                                    Icons.access_time_rounded,
-                                    size: 18,
-                                  ),
-                                  const SizedBox(width: 8),
-                                  commonText(
-                                    selectedTimeRange,
-                                    size: 13,
-                                    isBold: true,
-                                  ),
-                                  const Spacer(),
-                                  commonText(
-                                    "$dealCount Deals",
-                                    size: 13,
-                                    color: Colors.grey.shade600,
-                                  ),
-                                ],
-                              ),
-                            ),
+                            ],
                           ),
-
-                          const SizedBox(height: 16),
-
-                          // CTA Button
-                          commonButton(
-                            "Go to deal",
-                            onTap: () {
-                              // You can now use the formatted date-time strings
-                              if (selectedBookingStart != null &&
-                                  selectedBookingEnd != null) {
-                                String bookingStart = selectedBookingStart!.toIso8601String();
-                                String bookingEnd = selectedBookingEnd!.toIso8601String();
-                                
-                                // Pass these to your API or use them for booking
-                                print("Booking Info Start: $bookingStart");
-                                print("Booking Info End: $bookingEnd");
-
-                                // Perform further actions with the booking info
-                              } else {
-                                print("Please select valid start and end times.");
-                              }
-                            },
-                            color: AppColors.primaryColor,
-                            textColor: Colors.white,
-                          ),
-                        ],
-                      ),
+                ),
               ),
-            ),
-          );
-        },
-      );
-    },
-  );
-}
-
-
-
-
-
-  // void showDealBottomSheet(
-  //   BuildContext context, {
-  //   required String title,
-  //   required String description,
-  //   required List<String> days,
-  //   required String selectedDay,
-  //   required String timeRange,
-  //   required int dealCount,
-  //   required VoidCallback onDealTap,
-  //   required String businessId,
-  //   required String dealId,
-  //   required num saving,
-
-  //   bool subscriptionRequired =
-  //       false, //testing purpose remove while api intregration
-  // }) {
-    
-  //   showModalBottomSheet(
-  //     context: context,
-  //     isScrollControlled: true,
-  //     shape: const RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-  //     ),
-  //     builder: (context) {
-  //       String selectedDayState = selectedDay;
-  //       String selectedTimeRange = timeRange;
-
-  //       return StatefulBuilder(
-  //         builder: (context, setState) {
-  //           return Padding(
-  //             padding: EdgeInsets.only(
-  //               bottom: MediaQuery.of(context).viewInsets.bottom,
-  //             ),
-  //             child: SingleChildScrollView(
-  //               child: Container(
-  //                 padding: const EdgeInsets.symmetric(
-  //                   horizontal: 16,
-  //                   vertical: 24,
-  //                 ),
-  //                 decoration: BoxDecoration(
-  //                   color: Colors.white,
-  //                   borderRadius: BorderRadius.circular(16),
-  //                   boxShadow: const [
-  //                     BoxShadow(
-  //                       color: Colors.black12,
-  //                       blurRadius: 5,
-  //                       offset: Offset(0, 2),
-  //                     ),
-  //                   ],
-  //                 ),
-  //                 child:
-  //                     (subscriptionRequired)
-  //                         ? Column(
-  //                           crossAxisAlignment: CrossAxisAlignment.center,
-  //                           children: [
-  //                             const SizedBox(height: 16),
-  //                             Icon(
-  //                               Icons.lock_outline_rounded,
-  //                               size: 48,
-  //                               color: AppColors.primaryColor,
-  //                             ),
-  //                             const SizedBox(height: 16),
-  //                             commonText(
-  //                               "Subscription Required",
-  //                               size: 18,
-  //                               fontWeight: FontWeight.w600,
-  //                             ),
-  //                             const SizedBox(height: 8),
-  //                             commonText(
-  //                               "You need an active subscription to access this deal.\nPlease subscribe to continue.",
-  //                               size: 14,
-  //                               color: Colors.grey.shade700,
-  //                               textAlign: TextAlign.center,
-  //                             ),
-  //                             const SizedBox(height: 24),
-  //                             commonButton(
-  //                               "View Subscription Plans",
-  //                               onTap: () {
-  //                                 onDealTap(); // Replace with actual navigation to plans
-  //                               },
-  //                               color: AppColors.primaryColor,
-  //                               textColor: Colors.white,
-  //                             ),
-  //                           ],
-  //                         )
-  //                         : Column(
-  //                           crossAxisAlignment: CrossAxisAlignment.start,
-  //                           children: [
-  //                             // Title
-  //                             commonText(title, size: 16, isBold: true),
-  //                             const SizedBox(height: 8),
-
-  //                             // Description
-  //                             commonText(description, size: 13),
-  //                             const SizedBox(height: 12),
-
-  //                             const Divider(height: 1),
-  //                             const SizedBox(height: 12),
-
-  //                             // Day Section
-  //                             commonText("Day", isBold: true, size: 14),
-  //                             const SizedBox(height: 8),
-  //                             Wrap(
-  //                               spacing: 8,runSpacing: 8,
-  //                               children:
-  //                                   days.map((day) {
-  //                                     final isSelected =
-  //                                         day == selectedDayState;
-  //                                     return GestureDetector(
-  //                                       onTap: () {
-  //                                         setState(() {
-  //                                           selectedDayState = day;
-  //                                         });
-  //                                       },
-  //                                       child: Container(
-  //                                         padding: const EdgeInsets.symmetric(
-  //                                           horizontal: 12,
-  //                                           vertical: 8,
-  //                                         ),
-  //                                         decoration: BoxDecoration(
-  //                                           color:
-  //                                               isSelected
-  //                                                   ? AppColors.primaryColor
-  //                                                   : Colors.grey.shade100,
-  //                                           borderRadius: BorderRadius.circular(
-  //                                             20,
-  //                                           ),
-  //                                           border: Border.all(
-  //                                             color:
-  //                                                 isSelected
-  //                                                     ? Colors.transparent
-  //                                                     : Colors.black,
-  //                                           ),
-  //                                         ),
-  //                                         child: commonText(
-  //                                           day,
-  //                                           color:
-  //                                               isSelected
-  //                                                   ? Colors.white
-  //                                                   : Colors.black,
-  //                                         ),
-  //                                       ),
-  //                                     );
-  //                                   }).toList(),
-  //                             ),
-
-  //                             const SizedBox(height: 16),
-
-  //                             // Time Section
-  //                             commonText("Time", isBold: true, size: 14),
-  //                             const SizedBox(height: 8),
-  //                             GestureDetector(
-  //                               onTap: () async {
-  //                                 TimeOfDay? start = await showTimePicker(
-  //                                   context: context,
-  //                                   initialTime: TimeOfDay.now(),
-  //                                 );
-  //                                 if (start != null) {
-  //                                   TimeOfDay? end = await showTimePicker(
-  //                                     context: context,
-  //                                     initialTime: start,
-  //                                   );
-  //                                   if (end != null) {
-  //                                     setState(() {
-  //                                       selectedTimeRange =
-  //                                           "${start.format(context)} - ${end.format(context)}";
-  //                                     });
-  //                                   }
-  //                                 }
-  //                               },
-  //                               child: Container(
-  //                                 padding: const EdgeInsets.symmetric(
-  //                                   horizontal: 16,
-  //                                   vertical: 12,
-  //                                 ),
-  //                                 decoration: BoxDecoration(
-  //                                   border: Border.all(color: Colors.black),
-  //                                   borderRadius: BorderRadius.circular(12),
-  //                                 ),
-  //                                 child: Row(
-  //                                   children: [
-  //                                     const Icon(
-  //                                       Icons.access_time_rounded,
-  //                                       size: 18,
-  //                                     ),
-  //                                     const SizedBox(width: 8),
-  //                                     commonText(
-  //                                       selectedTimeRange,
-  //                                       size: 13,
-  //                                       isBold: true,
-  //                                     ),
-  //                                     const Spacer(),
-  //                                     commonText(
-  //                                       "$dealCount Deals",
-  //                                       size: 13,
-  //                                       color: Colors.grey.shade600,
-  //                                     ),
-  //                                   ],
-  //                                 ),
-  //                               ),
-  //                             ),
-
-  //                             const SizedBox(height: 16),
-
-  //                             // CTA Button
-  //                             commonButton(
-  //                               "Go to deal",
-  //                               onTap: () {
-  //                                 // Use selectedDayState and selectedTimeRange here
-  //                                 print("Selected Day: $selectedDayState");
-  //                                 print("Selected Time: $selectedTimeRange");
-
-  //                                 // onDealTap();
-  //                               },
-  //                               color: AppColors.primaryColor,
-  //                               textColor: Colors.white,
-  //                             ),
-  //                           ],
-  //                         ),
-  //               ),
-  //             ),
-  //           );
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
+            );
+          },
+        );
+      },
+    );
+  }
 
   void showMenuBottomSheet(BuildContext context) {
     controller.fetchMenu(businessId: widget.businessId);

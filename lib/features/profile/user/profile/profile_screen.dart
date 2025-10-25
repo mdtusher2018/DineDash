@@ -100,7 +100,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       if (controller.currentRole.value == 'user') {
                         return GestureDetector(
                           onTap: () {
-                            Get.to(() => JourneyScreen());
+                            final profile = controller.userModel.value!;
+                            Get.to(
+                              () => JourneyScreen(
+                                deal: profile.totalDeal.toString(),
+                                cities: profile.visitedCityCount.toString(),
+                                ratting: profile.totalRatings.toString(),
+                                review: profile.givenReviewCount.toString(),
+                                visitedPlace:
+                                    profile.visitedPlaceCount.toString(),
+                              ),
+                            );
                           },
                           child: Container(
                             height: 84,

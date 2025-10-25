@@ -190,26 +190,26 @@ class _UserHomeViewState extends State<UserHomeView> {
                 /// Sections dynamically populated
                 buildSection("Nearby Open Restaurants", homeData.restaurants, () {
                   navigateToPage(
-                    ListOfBusinessPage(title: "Nearby Open Restaurants"),
+                    ListOfBusinessPage(title: "Nearby Open Restaurants",business: homeData.restaurants,),
                   );
                 }),
             
                 buildSection("Activities", homeData.activities, () {
-                  navigateToPage(ListOfBusinessPage(title: "Activities"));
+                  navigateToPage(ListOfBusinessPage(title: "Activities",business: homeData.activities,));
                 }),
             
                 buildSection("Hot Deals 🔥", homeData.hotDeals, () {
-                  navigateToPage(ListOfBusinessPage(title: "Hot Deals 🔥"));
+                  navigateToPage(ListOfBusinessPage(title: "Hot Deals 🔥",business: homeData.hotDeals,));
                 }),
             
                 buildSection("Top rated Restaurants", homeData.topRated, () {
                   navigateToPage(
-                    ListOfBusinessPage(title: "Top rated Restaurants"),
+                    ListOfBusinessPage(title: "Top rated Restaurants",business: homeData.topRated,),
                   );
                 }),
             
                 buildSection("New", homeData.newRestaurants, () {
-                  navigateToPage(ListOfBusinessPage(title: "New"));
+                  navigateToPage(ListOfBusinessPage(title: "New",business: homeData.newRestaurants,));
                 }),
               ],
             ),

@@ -1,6 +1,13 @@
 class ApiEndpoints {
   static String mapKey = "AIzaSyBuSZJklSc1j0D4kqhkJcmyArcZbWujbXQ";
 
+
+// static String mapResturant(String resturantName)=>"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$resturantName&types=establishment&key=$mapKey";
+static String mapResturant(String resturantName)=>"https://places.googleapis.com/v1/places:searchText?query=$resturantName&key=$mapKey";
+
+
+
+
   static const String baseUrl =
       'http://147.93.29.184:8020/api/v1/'; // Replace with actual base URL
   static const String baseImageUrl =
@@ -158,11 +165,17 @@ class ApiEndpoints {
   static String createDeal = "deal/add";
 
   static String getAllDeals="deal/my-all-deal";
+
+  
   static String editDeal(String dealId) => "deal/edit-deal/$dealId";
 
   static String deleteDeal(String dealId) => "deal/delete-deal-req/$dealId";
 
   static String dealDetailsById(String dealId) {
     return "deal/deal-details/$dealId";
+  }
+
+  static String bookDeal(String dealId) {
+    return "deal/book/$dealId";
   }
 }

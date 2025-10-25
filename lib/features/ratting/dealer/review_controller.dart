@@ -26,7 +26,12 @@ class FeedbackController extends DealerMyBusinessNameListController {
             sortBy: sortBy?.split(' ').first.toLowerCase(),
           ),
         );
-        feedbackResponse.value = DealerFeedBackResponse.fromJson(response);
+        final model=DealerFeedBackResponse.fromJson(response);
+        if(page==1){
+        feedbackResponse.value = model;}
+        else{
+          feedbackResponse.value!.feedBackAttributes.data.addAll(model.feedBackAttributes.data);
+        }
       },
     );
   }

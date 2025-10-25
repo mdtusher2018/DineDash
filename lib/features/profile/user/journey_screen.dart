@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class JourneyScreen extends StatelessWidget {
-  const JourneyScreen({super.key});
+  const JourneyScreen({super.key,required this.deal,required this.cities,required this.ratting,required this.review,required this.visitedPlace});
+  final String deal,visitedPlace,cities,ratting,review;
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +36,9 @@ class JourneyScreen extends StatelessWidget {
                     spacing: 11,
                     mainAxisAlignment:MainAxisAlignment.center,
                     children: [
-                      journeybox(icon: 'assets/images/deals.png', digit: '3', title: 'Deals',),
+                      journeybox(icon: 'assets/images/deals.png', digit: deal, title: 'Deals',),
                       // journeybox(icon: 'assets/images/savings.png', digit: '11 €', title: 'Savings',),
-               journeybox(icon: 'assets/images/visited.png', digit: '4', title: 'Visited Place',),
+               journeybox(icon: 'assets/images/visited.png', digit: visitedPlace, title: 'Visited Place',),
                     ],
                   ),
                   Row(
@@ -45,8 +46,8 @@ class JourneyScreen extends StatelessWidget {
                     mainAxisAlignment:MainAxisAlignment.center,
                     children: [
                       // journeybox(icon: 'assets/images/visited.png', digit: '4', title: 'Visited Place',),
-                      journeybox(icon: 'assets/images/locations.png', digit: '2', title: 'Cities',),
-                            journeybox(icon: 'assets/images/star.png', digit: '6', title: 'Ratings',),
+                      journeybox(icon: 'assets/images/locations.png', digit: cities, title: 'Cities',),
+                            journeybox(icon: 'assets/images/star.png', digit: ratting, title: 'Ratings',),
                     ],
                   ),
                   Row(
@@ -54,7 +55,7 @@ class JourneyScreen extends StatelessWidget {
                     mainAxisAlignment:MainAxisAlignment.center,
                     children: [
                       // journeybox(icon: 'assets/images/star.png', digit: '6', title: 'Ratings',),
-                      journeybox(icon: 'assets/images/review.png', digit: '1', title: 'Review',),
+                      journeybox(icon: 'assets/images/review.png', digit: review, title: 'Review',),
                       Expanded(child: SizedBox())
                     ],
                   ),

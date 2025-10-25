@@ -33,8 +33,9 @@ class ApiService {
   Future<dynamic> get(
     String endpoint, {
     Map<String, String>? extraHeaders,
+    bool fullUrl=false
   }) async {
-    final url = Uri.parse('${ApiEndpoints.baseUrl}$endpoint');
+    final url =(fullUrl)?Uri.parse(endpoint): Uri.parse('${ApiEndpoints.baseUrl}$endpoint');
     log(url.toString());
     final headers = await _getHeaders(extra: extraHeaders);
     return _client.get(url, headers: headers);
