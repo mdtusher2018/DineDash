@@ -1,6 +1,4 @@
-
 import 'dart:io';
-
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
@@ -8,6 +6,7 @@ import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/services/localstorage/storage_key.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart'; // Add your profile endpoint here
 import 'package:dine_dash/core/utils/helper.dart';
+import 'package:dine_dash/dealer_user_chooser.dart';
 import 'package:dine_dash/features/dealer_root_page.dart';
 import 'package:dine_dash/features/profile/common/edit_profile/edit_profile_response.dart';
 import 'package:dine_dash/features/profile/user/profile/profile_response.dart';
@@ -112,13 +111,15 @@ class ProfileController extends BaseController {
 
           await updateCurrentRoleFromToken();
           if (currentRole.value == 'user') {
-
             navigateToPage(UserRootPage(), clearStack: true);
           } else {
             navigateToPage(DealerRootPage(), clearStack: true);
           }
 
-          showSnackBar('Account switched to ${currentRole.value} successfully!', isError: false);
+          showSnackBar(
+            'Account switched to ${currentRole.value} successfully!',
+            isError: false,
+          );
         } else {
           throw Exception(switchResponse.message);
         }
@@ -134,5 +135,26 @@ class ProfileController extends BaseController {
     final role = payload['currentRole'] as String?;
 
     if (role != null) currentRole.value = role;
+  }
+
+  Future<void> deleteAccount(String password) async {
+    safeCall(
+      task: () async {
+        final response = await _apiService.delete(
+          ApiEndpoints.deleteAccount,
+          body: {"password": password},
+        );
+        if (response['statusCode'] == 200) {
+          navigateToPage(DealerUserChooeser(), clearStack: true);
+        }
+      },
+    );
+  }
+
+  Future<void> logOut() async {
+    await _localStorageService.clearAll();
+    _sessionMemory.clear();
+    
+    navigateToPage(DealerUserChooeser(), clearStack: true);
   }
 }

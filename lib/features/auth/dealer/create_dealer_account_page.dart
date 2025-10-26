@@ -1,3 +1,4 @@
+
 import 'package:dine_dash/features/dealer_root_page.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
@@ -25,6 +26,10 @@ class _CreateDealerAccountState extends State<CreateDealerAccount> {
 
   final controller = Get.find<DealerCreateAccountController>();
 
+final latitude = RxnDouble();
+final longitude = RxnDouble();
+
+
   List<String> businessTypes = [
     "restaurant",
     "cafe",
@@ -35,19 +40,6 @@ class _CreateDealerAccountState extends State<CreateDealerAccount> {
     "food",
   ];
   String? selectedBusinessType;
-
-  String buildSearchQuery() {
-    final parts = <String>[];
-
-    if (businessController.text.isNotEmpty)
-      parts.add(businessController.text.trim());
-    if (addressController.text.isNotEmpty)
-      parts.add(addressController.text.trim());
-
-    return parts.join(
-      ", ",
-    ); // Example: "KFC, Gulshan Avenue-7, +880123456789, restaurant"
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +86,8 @@ class _CreateDealerAccountState extends State<CreateDealerAccount> {
                     controller: addressController,
                     onPicked: (lat, lng, address) {
                       addressController.text = address;
+                      longitude.value=lng;
+                      latitude.value=lat;
                     },
                   ),
                   const SizedBox(height: 16),
@@ -103,7 +97,13 @@ class _CreateDealerAccountState extends State<CreateDealerAccount> {
                       "Next",
                       isLoading: controller.isLoading.value,
                       onTap: () async {
-                        controller.fetchBusinessFromGoogle(buildSearchQuery());
+                        controller.fetchBusinessFromGoogle(
+                          businessController: businessController,
+                          addressController: addressController,
+                latitude: latitude.value,
+                longitude: longitude.value,
+                    fromSignup:true
+                        );
                       },
                     );
                   }),

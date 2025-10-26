@@ -240,6 +240,7 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
               "Business Name*",
               businessNameController,
               hintText: "Enter your restaurant name",
+              enable: false
             ),
             const SizedBox(height: 16),
             commonText("Business Type*", size: 14, fontWeight: FontWeight.w500),
@@ -371,6 +372,7 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
             const SizedBox(height: 16),
             GoogleLocationPicker(
               controller: addressController,
+              enable: false,
               onPicked: (lat, lng, address) {
                 selectedLat.value = lat;
                 selectedLng.value = lng;

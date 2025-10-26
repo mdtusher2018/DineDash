@@ -1,12 +1,9 @@
 class ApiEndpoints {
   static String mapKey = "AIzaSyBuSZJklSc1j0D4kqhkJcmyArcZbWujbXQ";
 
-
-// static String mapResturant(String resturantName)=>"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$resturantName&types=establishment&key=$mapKey";
-static String mapResturant(String resturantName)=>"https://places.googleapis.com/v1/places:searchText?query=$resturantName&key=$mapKey";
-
-
-
+  // static String mapResturant(String resturantName)=>"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$resturantName&types=establishment&key=$mapKey";
+  static String mapResturant(String resturantName) =>
+      "https://places.googleapis.com/v1/places:searchText?query=$resturantName&key=$mapKey";
 
   static const String baseUrl =
       'http://147.93.29.184:8020/api/v1/'; // Replace with actual base URL
@@ -106,7 +103,8 @@ static String mapResturant(String resturantName)=>"https://places.googleapis.com
       "favourite/unfavourite/$businessId";
 
   static String nearbyBusinesses({required double lat, required double lng}) {
-    return "business/nearest-map?lat=$lat&lng=$lng";
+    // return "business/nearest-map?lat=$lat&lng=$lng";
+    return "business/nearest-map?lat=20.794542&lng=80.389016";
   }
 
   static String userNotifications({required int page}) {
@@ -124,7 +122,8 @@ static String mapResturant(String resturantName)=>"https://places.googleapis.com
   static String switchAccount = "auth/switch-account";
 
   static String createBusiness = "business/add-business";
-  static String editBusiness(String businessId) => "business/edit-business/$businessId";
+  static String editBusiness(String businessId) =>
+      "business/edit-business/$businessId";
 
   static String addMenu = "menu/add";
 
@@ -164,9 +163,10 @@ static String mapResturant(String resturantName)=>"https://places.googleapis.com
 
   static String createDeal = "deal/add";
 
-  static String getAllDeals="deal/my-all-deal";
+  static String getAllDeals = "deal/my-all-deal";
 
-  
+  static String deleteAccount = "users/delete-own-account";
+
   static String editDeal(String dealId) => "deal/edit-deal/$dealId";
 
   static String deleteDeal(String dealId) => "deal/delete-deal-req/$dealId";

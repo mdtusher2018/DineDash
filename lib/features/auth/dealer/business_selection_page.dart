@@ -1,13 +1,22 @@
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/auth/dealer/create_dealer_account_2nd_page.dart';
+import 'package:dine_dash/features/business/dealer/add_business/add_business_second_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 
 class BusinessSelectionPage extends StatefulWidget {
   final List<dynamic> results;
+  final bool fromSignup;
+  final double? longitude, latitude;
 
-  const BusinessSelectionPage({super.key, required this.results});
+  const BusinessSelectionPage({
+    super.key,
+    required this.results,
+    required this.fromSignup,
+    required this.longitude,
+    required this.latitude,
+  });
 
   @override
   _BusinessSelectionPageState createState() => _BusinessSelectionPageState();
@@ -150,31 +159,30 @@ class _BusinessSelectionPageState extends State<BusinessSelectionPage> {
           if (selectedBusiness != null)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: commonButton("Submit",onTap: () {
-                navigateToPage(CreateDealerAccount2ndPage(businessDetails: selectedBusiness,));
-              },),
+              child: commonButton(
+                "Next",
+                onTap: () {
+                  if (widget.fromSignup) {
+                    navigateToPage(
+                      CreateDealerAccount2ndPage(
+                        businessDetails: selectedBusiness,
+                      ),
+                    );
+                  } else {
+                    navigateToPage(
+                      DealerAddBusinessSecondScreen(
+                        result: selectedBusiness,
+                        longitude: widget.longitude,
+                        latitude: widget.latitude,
+                      ),
+                      replace: true,
+                    );
+                  }
+                },
+              ),
             ),
           SizedBox(height: 40),
         ],
-      ),
-    );
-  }
-}
-
-class NextPage extends StatelessWidget {
-  final dynamic selectedBusiness;
-
-  const NextPage(this.selectedBusiness, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // Show details or perform further actions based on selected business
-    return Scaffold(
-      appBar: AppBar(title: const Text("Business Details")),
-      body: Center(
-        child: Text(
-          "You selected: ${selectedBusiness['displayName']?['text']}",
-        ),
       ),
     );
   }

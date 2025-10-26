@@ -1,4 +1,5 @@
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/features/profile/common/delete_account_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/features/profile/common/change%20password/change_password.dart';
 import 'package:flutter/material.dart';
@@ -44,9 +45,10 @@ class SettingsScreen extends StatelessWidget {
                 title: "Delete Account".tr,
                 iconColor: Colors.red,
                 onTap: () {
-                  showDeleteAccountDialog(context, () {
-                    Navigator.pop(context);
-                  });
+                  navigateToPage(DeleteAccountScreen());
+                  // showDeleteAccountDialog(context, () {
+                  //   Navigator.pop(context);
+                  // });
                 },
               ),
             ],
@@ -77,58 +79,5 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  Future<void> showDeleteAccountDialog(
-    BuildContext context,
-    VoidCallback onDelete,
-  ) async {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: commonText(
-            "Do you want to delete your account?".tr,
-            size: 18,
-            fontWeight: FontWeight.w500,
-            textAlign: TextAlign.center,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          actions: [
-            Row(
-              children: [
-                Expanded(
-                  child: commonButton(
-                    "Cancel".tr,
-                    color: Color(0xFFDDDDDD),
-                    textColor: Colors.black,
-                    height: 40,
-                    width: 100,boarderRadious: 10,
-                    onTap: () {
-                      Navigator.of(context).pop(); // Close the dialog
-                    },
-                  ),
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: commonButton(
-                    "Delete".tr,
-                    color: AppColors.red,
-                    textColor: Colors.white,
-                    height: 40,
-                    boarderRadious: 10,
-                    width: 100,
-                    onTap: () {
-                      Navigator.of(context).pop(); // Close the dialog
-                      // onDelete(); // Perform the delete action
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ],
-        );
-      },
-    );
-  }
+
 }

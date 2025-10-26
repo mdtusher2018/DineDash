@@ -1,15 +1,25 @@
 // ignore_for_file: must_be_immutable
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
 import 'package:dine_dash/core/services/localstorage/storage_key.dart';
+import 'package:dine_dash/dealer_user_chooser.dart';
 import 'package:dine_dash/dependency.dart';
 import 'package:dine_dash/core/translations/app_translations.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/auth/common/sign_in/sign_in_page.dart';
-import 'package:dine_dash/features/auth/dealer/create_dealer_account_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void main() async {
+
+
+
+ FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.dumpErrorToConsole(details);
+    debugPrintStack(label: details.exception.toString());
+  };
+
+
+
   WidgetsFlutterBinding.ensureInitialized();
   await DependencyInjection.init();
 
@@ -47,9 +57,9 @@ class MyApp extends StatelessWidget {
           backgroundColor: AppColors.white,
         ),
       ),
-      // home: RootPage(),
-      debugShowCheckedModeBanner: false,
-      home: CreateDealerAccount(),
+     
+      debugShowCheckedModeBanner: false,     
+      home: DealerUserChooeser(),
     );
   }
 }

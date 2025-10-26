@@ -1,9 +1,9 @@
 import 'package:dine_dash/core/utils/helper.dart';
+import 'package:dine_dash/features/business/dealer/add_business/add_business_frist_page.dart';
 import 'package:dine_dash/features/business/dealer/dealer_business_root_page/dealer_all_business_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/features/business/dealer/add_business/edit_bussiness_page.dart';
 import 'package:dine_dash/features/business/dealer/dealer_business_details/dealer_business_details_page.dart';
-import 'package:dine_dash/features/business/dealer/add_business/add_business_screen_frist.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';

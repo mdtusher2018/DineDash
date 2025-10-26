@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 import 'dart:io';
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
@@ -13,11 +12,11 @@ class ApiService {
   final LocalStorageService _localStorage;
   final SessionMemory _sessionMemory;
 
-  ApiService(this._client, this._localStorage,this._sessionMemory);
+  ApiService(this._client, this._localStorage, this._sessionMemory);
 
   Future<Map<String, String>> _getHeaders({Map<String, String>? extra}) async {
     String? token = await _localStorage.getString(StorageKey.token);
-    token??=_sessionMemory.token;
+    token ??= _sessionMemory.token;
     final headers = {
       'Accept-Language': 'en',
       'Content-Type': 'application/json',
@@ -33,9 +32,12 @@ class ApiService {
   Future<dynamic> get(
     String endpoint, {
     Map<String, String>? extraHeaders,
-    bool fullUrl=false
+    bool fullUrl = false,
   }) async {
-    final url =(fullUrl)?Uri.parse(endpoint): Uri.parse('${ApiEndpoints.baseUrl}$endpoint');
+    final url =
+        (fullUrl)
+            ? Uri.parse(endpoint)
+            : Uri.parse('${ApiEndpoints.baseUrl}$endpoint');
     log(url.toString());
     final headers = await _getHeaders(extra: extraHeaders);
     return _client.get(url, headers: headers);
@@ -74,10 +76,11 @@ class ApiService {
   Future<dynamic> delete(
     String endpoint, {
     Map<String, String>? extraHeaders,
+    Map<String, dynamic>? body,
   }) async {
     final url = Uri.parse('${ApiEndpoints.baseUrl}$endpoint');
     final headers = await _getHeaders(extra: extraHeaders);
-    return _client.delete(url, headers: headers);
+    return _client.delete(url, headers: headers, body: body);
   }
 
   Future<dynamic> multipart(

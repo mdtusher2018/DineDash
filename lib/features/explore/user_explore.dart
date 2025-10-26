@@ -25,15 +25,27 @@ class _UserExplorePageState extends State<UserExplorePage> {
   final TextEditingController searchTermController = TextEditingController();
   SessionMemory sessionMemory = Get.find();
   GoogleMapController? _mapController;
-
+  BitmapDescriptor? customMarkerIcon;
   String? selectedExpense;
   String selectedSortBy = 'Low';
 
   @override
   void initState() {
     super.initState();
+
     controller.fetchBusinessesOnMap();
     controller.fetchBusinessesList();
+    _loadCustomMarker();
+  }
+
+  Future<void> _loadCustomMarker() async {
+    final icon = await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(size: Size(40, 40)),
+      'assets/images/map_icon.png',
+    );
+    setState(() {
+      customMarkerIcon = icon;
+    });
   }
 
   @override
@@ -187,19 +199,24 @@ class _UserExplorePageState extends State<UserExplorePage> {
       80.389016,
     ); // Dhaka coordinates
 
-    return GoogleMap(
-      initialCameraPosition: CameraPosition(target: initialPosition, zoom: 10),
-      mapType: MapType.normal,
-      myLocationEnabled: true,
-      myLocationButtonEnabled: true,
-      zoomControlsEnabled: true,
-      zoomGesturesEnabled: true,
+    return Obx(() {
+      return GoogleMap(
+        initialCameraPosition: CameraPosition(
+          target: initialPosition,
+          zoom: 10,
+        ),
+        mapType: MapType.normal,
+        myLocationEnabled: true,
+        myLocationButtonEnabled: true,
+        zoomControlsEnabled: true,
+        zoomGesturesEnabled: true,
 
-      markers: _buildMarkers(),
-      onMapCreated: (GoogleMapController controller) {
-        _mapController = controller; // Save it
-      },
-    );
+        markers: _buildMarkers(),
+        onMapCreated: (GoogleMapController controller) {
+          _mapController = controller; // Save it
+        },
+      );
+    });
   }
 
   Set<Marker> _buildMarkers() {
@@ -208,6 +225,7 @@ class _UserExplorePageState extends State<UserExplorePage> {
         markerId: MarkerId(b.id),
         position: LatLng(b.coordinates[1], b.coordinates[0]),
         infoWindow: InfoWindow(title: b.name),
+        icon: customMarkerIcon ?? BitmapDescriptor.defaultMarker,
       );
     }).toSet();
   }
@@ -233,9 +251,9 @@ class _UserExplorePageState extends State<UserExplorePage> {
         return false;
       },
       child: RefreshIndicator(
-        onRefresh: () async{
+        onRefresh: () async {
           controller.fetchBusinessesList();
-          cityController.selectedCity.value="";
+          cityController.selectedCity.value = "";
           searchTermController.clear();
         },
         child: SingleChildScrollView(
@@ -263,7 +281,7 @@ class _UserExplorePageState extends State<UserExplorePage> {
                       onChanged: (String? newValue) {
                         if (newValue != null) {
                           cityController.selectedCity.value = newValue;
-        
+
                           controller.fetchBusinessesList(
                             city: newValue.split('-').first,
                             searchTerm:
@@ -279,7 +297,9 @@ class _UserExplorePageState extends State<UserExplorePage> {
                               ? const SizedBox(
                                 height: 18,
                                 width: 18,
-                                child: CircularProgressIndicator(strokeWidth: 2),
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
                               )
                               : Text(
                                 cityController.cities.isEmpty
@@ -307,7 +327,7 @@ class _UserExplorePageState extends State<UserExplorePage> {
                   ),
                 );
               }),
-        
+
               const SizedBox(height: 16),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -327,7 +347,8 @@ class _UserExplorePageState extends State<UserExplorePage> {
                         onChanged: (value) {
                           if (value.trim().isEmpty) {
                             controller.fetchBusinessesList(
-                              city: cityController.selectedCity.split('-').first,
+                              city:
+                                  cityController.selectedCity.split('-').first,
                               searchTerm: null,
                               sortBy: selectedSortBy,
                             );
@@ -350,9 +371,9 @@ class _UserExplorePageState extends State<UserExplorePage> {
                   ],
                 ),
               ),
-        
+
               const SizedBox(height: 16),
-        
+
               /// Filter and Sort
               Row(
                 children: [
@@ -379,7 +400,7 @@ class _UserExplorePageState extends State<UserExplorePage> {
                               ['Restaurants', 'Activities'].map((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
-        
+
                                   child: commonText(value),
                                 );
                               }).toList(),
@@ -423,7 +444,9 @@ class _UserExplorePageState extends State<UserExplorePage> {
                               selectedSortBy = newValue!;
                               controller.fetchBusinessesList(
                                 city:
-                                    cityController.selectedCity.split('-').first,
+                                    cityController.selectedCity
+                                        .split('-')
+                                        .first,
                                 searchTerm:
                                     searchTermController.text.trim().isNotEmpty
                                         ? searchTermController.text.trim()
@@ -438,9 +461,9 @@ class _UserExplorePageState extends State<UserExplorePage> {
                   ),
                 ],
               ),
-        
+
               const SizedBox(height: 12),
-        
+
               Obx(() {
                 if (controller.isLoading.value) {
                   return Center(child: CircularProgressIndicator());
@@ -461,7 +484,7 @@ class _UserExplorePageState extends State<UserExplorePage> {
                           imageUrl: getFullImagePath(
                             controller.businessList[index].image ?? "",
                           ),
-        
+
                           title: controller.businessList[index].name,
                           rating:
                               controller.businessList[index].rating.toDouble(),
@@ -477,7 +500,7 @@ class _UserExplorePageState extends State<UserExplorePage> {
                         ),
                       ),
                   separatorBuilder: (context, index) => SizedBox(height: 8),
-        
+
                   physics: NeverScrollableScrollPhysics(),
                 );
               }),

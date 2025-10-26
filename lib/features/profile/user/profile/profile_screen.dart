@@ -1,5 +1,4 @@
 import 'package:dine_dash/core/utils/helper.dart';
-import 'package:dine_dash/dealer_user_chooser.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/profile/user/profile/profile_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
@@ -249,8 +248,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(height: 62),
               GestureDetector(
                 onTap: () {
-                  showLogoutDialog(context, () {
-                    Get.offAll(DealerUserChooeser());
+                  showLogoutDialog(context, () async {
+                    controller.logOut();
                   });
                 },
                 child: Container(

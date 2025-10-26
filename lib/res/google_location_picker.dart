@@ -9,6 +9,7 @@ class GoogleLocationPicker extends StatefulWidget {
   final String label;
   final String hintText;
   final double? initialLat;
+  final bool enable;
   final double? initialLng;
 
   const GoogleLocationPicker({
@@ -19,6 +20,7 @@ class GoogleLocationPicker extends StatefulWidget {
     this.hintText = "Search address...",
     this.initialLat,
     this.initialLng,
+    this.enable=true
   });
 
   @override
@@ -63,9 +65,9 @@ class _GoogleLocationPickerState extends State<GoogleLocationPicker> {
           textEditingController: widget.controller,
           googleAPIKey: ApiEndpoints.mapKey,
           debounceTime: 400,
-          isLatLngRequired: true,
+          isLatLngRequired: true,isCrossBtnShown: widget.enable,
           inputDecoration: InputDecoration(
-            hintText: widget.hintText,
+            hintText: widget.hintText,enabled: widget.enable,
             filled: true,
             fillColor: Colors.white,
             contentPadding: const EdgeInsets.symmetric(

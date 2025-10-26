@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:dine_dash/core/mixin/google_place_api_mixin.dart';
 import 'package:dine_dash/features/business/dealer/add_menu/add_menu_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:get/get.dart';
@@ -7,7 +8,7 @@ import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 
-class DealerAddBusinessController extends BaseController {
+class DealerAddBusinessController extends BaseController with GooglePlaceApiMixin{
   final ApiService _apiService = Get.find();
 
   /// Create a new business (multipart POST)

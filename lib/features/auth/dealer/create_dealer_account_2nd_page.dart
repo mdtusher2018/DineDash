@@ -33,12 +33,12 @@ class _CreateDealerAccount2ndPageState
     // TODO: implement initState
     super.initState();
 
-    businessController.text =
-        widget.businessDetails['displayName']?['text'] ?? 'Unknown';
-    addressController.text =
-        widget.businessDetails['shortFormattedAddress'] ?? '';
-    phoneController.text =
-        widget.businessDetails['internationalPhoneNumber'] ?? '';
+    // businessController.text =
+    //     widget.businessDetails['displayName']?['text'] ?? 'Unknown';
+    // addressController.text =
+    //     widget.businessDetails['shortFormattedAddress'] ?? '';
+    // phoneController.text =
+    //     widget.businessDetails['internationalPhoneNumber'] ?? '';
   }
 
   @override
