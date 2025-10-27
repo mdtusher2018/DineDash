@@ -1,7 +1,8 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, must_be_immutable
 
 import 'dart:developer';
 import 'dart:io';
+import 'package:dine_dash/core/models/user_model.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/business/dealer/add_business/dealer_business_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
@@ -13,8 +14,19 @@ import 'package:image_picker/image_picker.dart';
 
 class DealerAddBusinessSecondScreen extends StatefulWidget {
   final dynamic result;
-  final double? longitude,latitude;
-  const DealerAddBusinessSecondScreen({super.key, required this.result,required this.longitude,required this.latitude});
+  final double? longitude, latitude;
+  final bool fromSignup;
+  UserModel? userData;
+  String? email;
+
+  DealerAddBusinessSecondScreen({
+    super.key,
+    required this.result,
+    required this.longitude,
+    required this.latitude,
+    this.fromSignup = false,
+    this.userData,this.email
+  });
 
   @override
   _DealerAddBusinessSecondScreenState createState() =>
@@ -83,8 +95,8 @@ class _DealerAddBusinessSecondScreenState
 
     // ✅ Location (lat/lng)
     if (data["location"] != null) {
-      selectedLat.value = data["location"]["latitude"] ?? 0.0;
-      selectedLng.value = data["location"]["longitude"] ?? 0.0;
+      selectedLat.value = data["location"]["latitude"] ?? widget.latitude;
+      selectedLng.value = data["location"]["longitude"] ?? widget.longitude;
     }
 
     // ✅ Business Type & Categories
@@ -101,7 +113,8 @@ class _DealerAddBusinessSecondScreenState
   String? _extractBusinessType(List<dynamic> types) {
     if (types.contains("restaurant")) return "Restaurant";
     if (types.contains("food")) return "Restaurant";
-    if (types.contains("point_of_interest") || types.contains("establishment")) {
+    if (types.contains("point_of_interest") ||
+        types.contains("establishment")) {
       return "Activity";
     }
     return null;
@@ -488,18 +501,25 @@ class _DealerAddBusinessSecondScreenState
                       },
                     )
                     .toList();
-            await controller.createBusiness(
-              name: businessNameController.text.trim(),
-              types: selectedCategories,
-              businessType: selectedBusinessType,
+   
+              await controller.createBusiness(
+                name: businessNameController.text.trim(),
+                types: selectedCategories,
+                businessType: selectedBusinessType,
 
-              address: addressController.text.trim(),
-              phoneNumber: phoneController.text.trim(),
-              postalCode: zipController.text.trim(),
-              openingHours: openingHoursList,
-              coordinates: [selectedLng.value, selectedLat.value],
-              imageFile: _selectedImage,
-            );
+                address: addressController.text.trim(),
+                phoneNumber: phoneController.text.trim(),
+                postalCode: zipController.text.trim(),
+                openingHours: openingHoursList,
+                coordinates: [selectedLng.value, selectedLat.value],
+                imageFile: _selectedImage,
+                fromSignup: widget.fromSignup,
+                businessResponseFromGoogle: widget.result,
+                email: widget.email,userData: widget.userData,
+                latitude: widget.latitude,
+                longitude: widget.longitude
+              );
+            
           },
         ),
         const SizedBox(height: 32),

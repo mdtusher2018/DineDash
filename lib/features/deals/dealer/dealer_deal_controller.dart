@@ -167,9 +167,9 @@ var dealDetails = Rx<DealerDealDetailsData?>(null);
         );
         if (response['statusCode'] == 200) {
           deleteManually();
-          showSnackBar(response['message'] ?? "Deal created successfully");
+          showSnackBar(response['message'] ?? "Deal deleted successfully");
         } else {
-          throw Exception(response['message'] ?? "Failed to create deal");
+          throw Exception(response['message'] ?? "Failed to delete deal");
         }
       },
     );

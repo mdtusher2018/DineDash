@@ -16,6 +16,8 @@ class DealerHomepageController extends BaseController {
   var totalPages = 1.obs;
   var loadingMore=false.obs;
 
+  final performance=RxnNum();
+
 
   /// Fetch business list
   Future<void> fetchDealerHomepageData({int page = 1}) async {
@@ -37,6 +39,8 @@ class DealerHomepageController extends BaseController {
             businesses.value=[];
             businessSummary.value = businessResponse.summary;
             businesses.value = businessResponse.results;
+            performance.value=businessResponse.performance;
+            
           } else {
             businesses.addAll(businessResponse.results);
           }

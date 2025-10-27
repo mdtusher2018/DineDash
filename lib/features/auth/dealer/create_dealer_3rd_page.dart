@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dine_dash/core/models/user_model.dart';
 import 'package:dine_dash/features/dealer_root_page.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
@@ -6,18 +9,47 @@ import 'package:get/get.dart';
 
 import 'create_dealer_account_controller.dart';
 
-class CreateDealerAccount2ndPage extends StatefulWidget {
+class CreateDealerAccount3rdPage extends StatefulWidget {
   final dynamic businessDetails;
-    final double? longitude,latitude;
-  const CreateDealerAccount2ndPage({super.key, required this.businessDetails,required this.longitude,required this.latitude});
+  final UserModel? userData;
+  final String email;
+  final double? longitude, latitude;
+
+  final String name;
+  final List<String> types;
+  final String businessType;
+  final String address;
+  final String phoneNumber;
+  final String postalCode;
+  final List<Map<String, dynamic>> openingHours;
+  final List<double> coordinates;
+  final File imageFile;
+
+  const CreateDealerAccount3rdPage({
+    super.key,
+    required this.businessDetails,
+    required this.userData,
+    required this.email,
+    required this.latitude,
+    required this.longitude,
+    required this.name,
+    required this.types,
+    required this.businessType,
+    required this.address,
+    required this.phoneNumber,
+    required this.postalCode,
+    required this.openingHours,
+    required this.coordinates,
+    required this.imageFile,
+  });
 
   @override
-  State<CreateDealerAccount2ndPage> createState() =>
-      _CreateDealerAccount2ndPageState();
+  State<CreateDealerAccount3rdPage> createState() =>
+      _CreateDealerAccount3rdPageState();
 }
 
-class _CreateDealerAccount2ndPageState
-    extends State<CreateDealerAccount2ndPage> {
+class _CreateDealerAccount3rdPageState
+    extends State<CreateDealerAccount3rdPage> {
   final businessController = TextEditingController();
   final nameController = TextEditingController();
   final addressController = TextEditingController();
@@ -40,6 +72,10 @@ class _CreateDealerAccount2ndPageState
         widget.businessDetails['shortFormattedAddress'] ?? '';
     phoneController.text =
         widget.businessDetails['internationalPhoneNumber'] ?? '';
+    emailController.text = widget.email;
+    if (widget.userData != null) {
+      nameController.text = widget.userData!.fullName;
+    }
   }
 
   @override
@@ -78,27 +114,39 @@ class _CreateDealerAccount2ndPageState
                     "Your Email",
                     emailController,
                     hintText: "Enter your email",
+                    enable: false,
                   ),
 
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 16),
+
+                  commonTextfieldWithTitle(
+                    "Your Phone Number",
+                    phoneController,
+                    hintText: "Phone number with country code",
+                  ),
+                  SizedBox(height: 16),
+                  commonTextfieldWithTitle(
+                    "Your Name",
+                    nameController,
+                    hintText: "Enter your full name",
+                  ),
+                  const SizedBox(height: 16),
+
+                  if (widget.userData == null)
+                    commonTextfieldWithTitle(
+                      "How did you hear about us?",
+                      referralController,
+                      hintText: "Referral source",
+                    ),
+                  const SizedBox(height: 24),
 
                   Obx(() {
                     return commonButton(
-                      "Next",
+                      "Submit",
                       isLoading: controller.isLoading.value,
-                      onTap: () async {
-                         await controller.checkEmail(
-                          emailController.text,widget.businessDetails,
-                          latitude: widget.latitude,
-                          longitude: widget.longitude
-                          
-                        );
-                  
-                      },
+                      onTap: () async {},
                     );
                   }),
-
-      
                 ],
               ),
             ),

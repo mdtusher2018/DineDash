@@ -1,6 +1,8 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:dine_dash/core/mixin/google_place_api_mixin.dart';
+import 'package:dine_dash/core/models/user_model.dart';
+import 'package:dine_dash/features/auth/dealer/create_dealer_3rd_page.dart';
 import 'package:dine_dash/features/business/dealer/add_menu/add_menu_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:get/get.dart';
@@ -8,7 +10,8 @@ import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 
-class DealerAddBusinessController extends BaseController with GooglePlaceApiMixin{
+class DealerAddBusinessController extends BaseController
+    with GooglePlaceApiMixin {
   final ApiService _apiService = Get.find();
 
   /// Create a new business (multipart POST)
@@ -22,6 +25,11 @@ class DealerAddBusinessController extends BaseController with GooglePlaceApiMixi
     required List<Map<String, dynamic>> openingHours,
     required List<double> coordinates,
     File? imageFile,
+    required bool fromSignup,
+    dynamic businessResponseFromGoogle,
+    email,
+    latitude,
+    longitude,UserModel? userData
   }) async {
     log(coordinates.toString());
     safeCall(
@@ -62,6 +70,27 @@ class DealerAddBusinessController extends BaseController with GooglePlaceApiMixi
           throw Exception("Please upload your business image");
         }
 
+        if (fromSignup) {
+          navigateToPage(
+            CreateDealerAccount3rdPage(
+              businessDetails: businessResponseFromGoogle,
+              email: email ?? "",
+              latitude: latitude,
+              longitude: longitude,
+              name: name,
+              types: types,
+              businessType: businessType.toLowerCase(),
+              address: address,
+              phoneNumber: phoneNumber,
+              postalCode: postalCode,
+              openingHours: openingHours,
+              coordinates: coordinates,
+              imageFile: imageFile,userData: userData,
+            ),
+          );
+          return;
+        }
+
         final formData = {
           "name": name,
           "types": types,
@@ -96,11 +125,6 @@ class DealerAddBusinessController extends BaseController with GooglePlaceApiMixi
       },
     );
   }
-
-
-
-
-
 
   Future<void> editBusiness({
     required String businessId,
@@ -187,9 +211,4 @@ class DealerAddBusinessController extends BaseController with GooglePlaceApiMixi
       },
     );
   }
-
-
-
-
-
 }

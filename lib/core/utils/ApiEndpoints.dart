@@ -167,6 +167,8 @@ class ApiEndpoints {
 
   static String deleteAccount = "users/delete-own-account";
 
+  static String checkEmail="auth/email-check";
+
   static String editDeal(String dealId) => "deal/edit-deal/$dealId";
 
   static String deleteDeal(String dealId) => "deal/delete-deal-req/$dealId";
@@ -177,5 +179,13 @@ class ApiEndpoints {
 
   static String bookDeal(String dealId) {
     return "deal/book/$dealId";
+  }
+
+  static String userAvailableDeals({required int page,int limit=5}) {
+    return "deal/my-bookings?page=$page&limit=$limit";
+  }
+
+    static String userUsedDeals({required int page,int limit=5}) {
+    return "deal/redeem?page=$page&limit=$limit";
   }
 }

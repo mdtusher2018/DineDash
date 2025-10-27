@@ -166,6 +166,8 @@ class _BusinessSelectionPageState extends State<BusinessSelectionPage> {
                     navigateToPage(
                       CreateDealerAccount2ndPage(
                         businessDetails: selectedBusiness,
+                        longitude: widget.longitude,
+                        latitude: widget.latitude,
                       ),
                     );
                   } else {

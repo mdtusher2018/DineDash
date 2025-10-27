@@ -1,6 +1,6 @@
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/features/auth/dealer/create_dealer_account_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
-import 'package:dine_dash/features/dealer_root_page.dart';
 import 'package:dine_dash/core/utils/image_paths.dart';
 import 'package:dine_dash/features/onboarding/UserOnboarding.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +60,7 @@ class _DealerUserChooeserState extends State<DealerUserChooeser> {
                   "Dealer".tr,
                   textColor: AppColors.white,
                   onTap: () {
-                    navigateToPage(DealerRootPage());
+                    navigateToPage(CreateDealerAccount());
                   },
                 ),
                 SizedBox(height: 40),

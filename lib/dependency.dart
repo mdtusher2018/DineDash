@@ -17,6 +17,8 @@ import 'package:dine_dash/features/business/user/bussiness%20details/business_de
 import 'package:dine_dash/core/controller/city_controller.dart';
 import 'package:dine_dash/features/deals/dealer/dealer_deal_controller.dart';
 import 'package:dine_dash/features/deals/dealer/dealer_deal_root_page/dealer_all_deals_controller.dart';
+import 'package:dine_dash/features/deals/user/available%20deals/user_allavailable_deals_controller.dart';
+import 'package:dine_dash/features/deals/user/used%20deal/user_used_deals_controller.dart';
 import 'package:dine_dash/features/explore/user_explore_controller.dart';
 import 'package:dine_dash/features/favorite/favorite_controller.dart';
 import 'package:dine_dash/features/home/dealer/dealer_homepage_controller.dart';
@@ -120,5 +122,7 @@ class DependencyInjection {
     
     
     Get.put<DealerCreateAccountController>(DealerCreateAccountController(), permanent: true);
+    Get.put<UserAvailableDealsController>(UserAvailableDealsController(), permanent: true);
+    Get.put<UserAllUseddDealsController>(UserAllUseddDealsController(), permanent: true);
   }
 }

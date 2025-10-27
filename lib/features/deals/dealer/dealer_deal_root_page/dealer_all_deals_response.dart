@@ -46,6 +46,8 @@ class DealData {
 class DealAttribute {
   final String id;
   final String businessName;
+  final String dealId;
+  final String reasonFor;
   final String description;
   final num benefitAmmount;
   final String dealType;
@@ -56,6 +58,8 @@ class DealAttribute {
   DealAttribute({
     required this.id,
     required this.businessName,
+    required this.dealId,
+    required this.reasonFor,
     required this.description,
     required this.benefitAmmount,
     required this.dealType,
@@ -66,8 +70,11 @@ class DealAttribute {
 
   factory DealAttribute.fromJson(Map<String, dynamic> json) => DealAttribute(
     id: json["_id"] ?? "",
+
     businessName: json["businessName"] ?? "N/A",
     description: json["description"] ?? "",
+    dealId: json['dealId']??"",
+  reasonFor: json['reasonFor']??"",
     benefitAmmount: json["benefitAmmount"] ?? 0,
     dealType: json["dealType"] ?? "",
     reuseableAfter: json["reuseableAfter"] ?? 60,

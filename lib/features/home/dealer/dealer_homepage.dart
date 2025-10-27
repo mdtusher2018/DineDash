@@ -178,7 +178,11 @@ class _DealerHomepageState extends State<DealerHomepage> {
                           ),
                         ],
                       ),
-                      commonText("2530", size: 36, fontWeight: FontWeight.w600),
+                      Obx(
+                        () {
+                          return commonText(controller.performance.value.toString(), size: 36, fontWeight: FontWeight.w600);
+                        }
+                      ),
                       commonText(
                         "Total monthly deals redeems across all restaurants."
                             .tr,

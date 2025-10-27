@@ -8,6 +8,7 @@ class DealerHomepageAllBusinessResponse {
   final BusinessSummary summary;
   final List<DealerBusinessModel> results;
   final Pagination pagination;
+  final num performance;
 
   DealerHomepageAllBusinessResponse({
     required this.status,
@@ -16,19 +17,24 @@ class DealerHomepageAllBusinessResponse {
     required this.summary,
     required this.results,
     required this.pagination,
+    required this.performance
   });
 
-  factory DealerHomepageAllBusinessResponse.fromJson(Map<String, dynamic> json) {
-    final attributes = json['data']?['attributes'] ?? {};
+  factory DealerHomepageAllBusinessResponse.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    final attributes = json['data']?['attributes']?['business'] ?? {};
 
     return DealerHomepageAllBusinessResponse(
       status: json['status'] ?? 0,
+      performance: json['data']?['attributes']?['totalRedeems']??0,
       statusCode: json['statusCode'] ?? 0,
       message: json['message'] ?? '',
       summary: BusinessSummary.fromJson(attributes['summary'] ?? {}),
-      results: (attributes['results'] as List<dynamic>? ?? [])
-          .map((item) => DealerBusinessModel.fromJson(item))
-          .toList(),
+      results:
+          (attributes['results'] as List<dynamic>? ?? [])
+              .map((item) => DealerBusinessModel.fromJson(item))
+              .toList(),
       pagination: Pagination.fromJson(attributes['pagination'] ?? {}),
     );
   }
@@ -56,4 +62,3 @@ class BusinessSummary {
     );
   }
 }
-
