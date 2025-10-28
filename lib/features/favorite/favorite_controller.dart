@@ -30,8 +30,7 @@ class FavoriteController extends BaseController {
         final response = await _apiService.get(ApiEndpoints.favoriteList());
         final favoriteResponse = FavoriteResponse.fromJson(response);
 
-        if (favoriteResponse.statusCode == 200 &&
-            favoriteResponse.data.attributes.isNotEmpty) {
+        if (favoriteResponse.statusCode == 200) {
           favoriteData.value = favoriteResponse.data;
 
           /// Initialize filtered list
@@ -53,9 +52,8 @@ class FavoriteController extends BaseController {
       filteredFavorites.assignAll(favoriteData.value?.attributes ?? []);
     } else {
       final all = favoriteData.value?.attributes ?? [];
-      final filtered = all
-          .where((biz) => biz.name.toLowerCase().contains(query))
-          .toList();
+      final filtered =
+          all.where((biz) => biz.name.toLowerCase().contains(query)).toList();
       filteredFavorites.assignAll(filtered);
     }
   }

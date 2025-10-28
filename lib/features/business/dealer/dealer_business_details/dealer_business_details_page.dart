@@ -338,8 +338,11 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
           const SizedBox(height: 20),
 
           /// Deal Cards
-          ...controller.businessDetail.value!.dealsData.map(
-            (deal) => buildDealCard(
+          ...controller.businessDetail.value!.dealsData.map((deal) {
+            if (deal.reasonFor == "deleted") {
+              return SizedBox.shrink();
+            }
+            return buildDealCard(
               title: deal.dealType,
               subText: deal.description,
               duration: deal.reuseableAfter.toString(),
@@ -348,7 +351,12 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
               benefitText: deal.benefitAmount.toString(),
               status: deal.isActive ? "Active" : "Paused",
               onEdit: () {
-                navigateToPage(EditDealScreen(dealId: deal.id, businessId :controller.businessDetail.value!.id, ));
+                navigateToPage(
+                  EditDealScreen(
+                    dealId: deal.id,
+                    businessId: controller.businessDetail.value!.id,
+                  ),
+                );
               },
               onDelete: () {
                 showDeleteConfirmationDialog(
@@ -369,9 +377,7 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
                           setState(() {});
                         },
                       );
-                    },
-                    title: "Why do you want to delete this deal?"
-                    );
+                    }, title: "Why do you want to delete this deal?");
                   },
                 );
               },
@@ -381,8 +387,8 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
                   // Perform pause logic with reason
                 });
               },
-            ),
-          ),
+            );
+          }),
         ],
       ),
     );

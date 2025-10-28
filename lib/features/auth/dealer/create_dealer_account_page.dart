@@ -1,13 +1,14 @@
+// ignore_for_file: use_build_context_synchronously
 
-import 'package:dine_dash/features/dealer_root_page.dart';
+import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/core/utils/default_value.dart';
+import 'package:dine_dash/features/auth/dealer/create_dealer_account_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/res/google_location_picker.dart';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';
 import 'package:get/get.dart';
-
-import 'create_dealer_account_controller.dart';
 
 class CreateDealerAccount extends StatefulWidget {
   const CreateDealerAccount({super.key});
@@ -18,28 +19,157 @@ class CreateDealerAccount extends StatefulWidget {
 
 class _CreateDealerAccountState extends State<CreateDealerAccount> {
   final businessController = TextEditingController();
-  final nameController = TextEditingController();
   final addressController = TextEditingController();
   final emailController = TextEditingController();
-  final phoneController = TextEditingController();
-  final referralController = TextEditingController();
+
+  final latitude = RxnDouble();
+  final longitude = RxnDouble();
 
   final controller = Get.find<DealerCreateAccountController>();
 
-final latitude = RxnDouble();
-final longitude = RxnDouble();
+  final FlutterGooglePlacesSdk _places = FlutterGooglePlacesSdk(
+    ApiEndpoints.mapKey,
+  );
 
+  List<AutocompletePrediction> _businessPredictions = [];
+  bool _isPredicting = false;
 
-  List<String> businessTypes = [
-    "restaurant",
-    "cafe",
-    "bakery",
-    "bar",
-    "meal_takeaway",
-    "meal_delivery",
-    "food",
+  // Overlay variables
+  OverlayEntry? _overlayEntry;
+  final LayerLink _layerLink = LayerLink();
+  final FocusNode _businessFocus = FocusNode();
+
+  final List<PlaceField> _placeFields = [
+    PlaceField.Name,
+    PlaceField.Address,
+    PlaceField.Location,
+    PlaceField.PhoneNumber,
+    PlaceField.WebsiteUri,
+    PlaceField.OpeningHours,
+    PlaceField.PhotoMetadatas,
+    PlaceField.Rating,
+    PlaceField.PriceLevel,
+    PlaceField.Types,
+    PlaceField.UserRatingsTotal,
+    PlaceField.PlusCode,
   ];
-  String? selectedBusinessType;
+
+  Place? _selectedPlace;
+
+  @override
+  void dispose() {
+    _businessFocus.dispose();
+    businessController.dispose();
+    addressController.dispose();
+    _removeOverlay();
+    super.dispose();
+  }
+
+  void _showOverlay() {
+    _removeOverlay();
+    if (_businessPredictions.isEmpty) return;
+
+    final overlay = Overlay.of(context);
+    _overlayEntry = OverlayEntry(
+      builder:
+          (context) => Positioned(
+            width: MediaQuery.of(context).size.width - 32,
+            child: CompositedTransformFollower(
+              link: _layerLink,
+              showWhenUnlinked: false,
+              offset: const Offset(0, 60), // adjust height for your TextField
+              child: Material(
+                elevation: 6,
+                borderRadius: BorderRadius.circular(12),
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  itemCount: _businessPredictions.length,
+                  itemBuilder: (context, index) {
+                    final p = _businessPredictions[index];
+                    return InkWell(
+                      onTap: () async {
+                        final placeDetails = await _places.fetchPlace(
+                          p.placeId,
+                          fields: _placeFields, // fetch all fields
+                        );
+
+                        _selectedPlace = placeDetails.place;
+
+                        businessController.text =
+                            placeDetails.place?.name ?? "";
+                        addressController.text =
+                            placeDetails.place?.address ?? "";
+                        latitude.value = placeDetails.place?.latLng?.lat ?? 0.0;
+                        longitude.value =
+                            placeDetails.place?.latLng?.lng ?? 0.0;
+
+                        _removeOverlay();
+                        _businessFocus.unfocus();
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 14,
+                        ),
+                        decoration: BoxDecoration(
+                          border:
+                              index == _businessPredictions.length - 1
+                                  ? null
+                                  : Border(
+                                    bottom: BorderSide(
+                                      color: Colors.grey.shade200,
+                                    ),
+                                  ),
+                          color: Colors.white,
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.location_on,
+                              color: Colors.blueAccent,
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    p.primaryText,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  if (p.secondaryText.isNotEmpty)
+                                    Text(
+                                      p.secondaryText,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey.shade600,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+    );
+    overlay.insert(_overlayEntry!);
+  }
+
+  void _removeOverlay() {
+    _overlayEntry?.remove();
+    _overlayEntry = null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,26 +187,70 @@ final longitude = RxnDouble();
       ),
       bottomSheet: Column(
         children: [
-          SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: commonText(
-              "Fill the information accourding to\nyour google business",
-              size: 18,
-              textAlign: TextAlign.center,
-            ),
-          ),
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Business Name
-                  commonTextfieldWithTitle(
-                    "Business Name",
-                    businessController,
-                    hintText: "Search your business",
+                  const SizedBox(height: 8),
+                  CompositedTransformTarget(
+                    link: _layerLink,
+                    child: TextFormField(
+                      focusNode: _businessFocus,
+                      controller: businessController,
+                      decoration: InputDecoration(
+                        labelText: "Business Name",
+                        hintText: "Search your business",
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 14,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        suffixIcon:
+                            _isPredicting
+                                ? Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: SizedBox(
+                                    width: 16,
+                                    height: 16,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
+                                  ),
+                                )
+                                : const Icon(Icons.search),
+                      ),
+                      onChanged: (value) async {
+                        if (value.isEmpty) {
+                          _removeOverlay();
+                          setState(() => _businessPredictions = []);
+                          return;
+                        }
+                        setState(() => _isPredicting = true);
+                        try {
+                          final results = await _places
+                              .findAutocompletePredictions(
+                                value,
+                                placeTypesFilter: [
+                                  PlaceTypeFilter.ESTABLISHMENT,
+                                ],
+                              );
+                          setState(() {
+                            _businessPredictions = results.predictions;
+                            _isPredicting = false;
+                          });
+                          _showOverlay();
+                        } catch (e) {
+                          debugPrint("Place prediction error: $e");
+                          setState(() => _isPredicting = false);
+                        }
+                      },
+                    ),
                   ),
                   const SizedBox(height: 16),
 
@@ -86,72 +260,43 @@ final longitude = RxnDouble();
                     controller: addressController,
                     onPicked: (lat, lng, address) {
                       addressController.text = address;
-                      longitude.value=lng;
-                      latitude.value=lat;
+                      longitude.value = lng;
+                      latitude.value = lat;
                     },
                   ),
+
                   const SizedBox(height: 16),
 
+                  commonTextfieldWithTitle(
+                    "Your Email",
+                    emailController,
+                    hintText: "Enter your email",
+                  ),
+                  const SizedBox(height: 16),
                   Obx(() {
                     return commonButton(
                       "Next",
                       isLoading: controller.isLoading.value,
                       onTap: () async {
-                        controller.fetchBusinessFromGoogle(
-                          businessController: businessController,
-                          addressController: addressController,
-                latitude: latitude.value,
-                longitude: longitude.value,
-                    fromSignup:true
+                        await controller.checkEmail(
+                          emailController.text,
+                          businessDetails: _selectedPlace,
+                          lat: latitude.value ?? DefaultValue.lat,
+                          long: longitude.value ?? DefaultValue.lung,
+                          address: addressController.text.trim(),
+                          businessName: businessController.text.trim(),
                         );
                       },
                     );
                   }),
+
+                  const SizedBox(height: 32),
                 ],
               ),
             ),
           ),
         ],
       ),
-    );
-  }
-
-  void showPendingDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierDismissible: false, // Prevent dismiss on tap outside
-      builder: (context) {
-        return Dialog(
-          backgroundColor: AppColors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min, // Wrap content
-              children: [
-                const SizedBox(height: 16),
-                commonText(
-                  "Your request is under review. You will get a notification after acceptance.",
-                  size: 16,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 16),
-                commonButton(
-                  "Go to Customer",
-                  height: 40,
-                  onTap: () {
-                    Navigator.pop(context); // Close the dialog
-                    navigateToPage(DealerRootPage());
-                  },
-                ),
-                const SizedBox(height: 16),
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 }

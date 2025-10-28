@@ -84,6 +84,7 @@ class _DealerBusinessPageState extends State<DealerBusinessPage> {
                   child: ListView.builder(
                     shrinkWrap: true,
                     controller: scrollController,
+                    physics: AlwaysScrollableScrollPhysics(),
                     padding: EdgeInsets.all(0),
                     itemCount: controller.businesses.length,
                     itemBuilder: (context, index) {

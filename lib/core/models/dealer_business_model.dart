@@ -15,7 +15,7 @@ class DealerBusinessModel {
   openingHours; // Added opening hours field to capture daily opening times.
   final String? phoneNumber;
   final String? postalCode;
-  final DateTime? createdAt;
+  final String? createdAt;
 
   DealerBusinessModel({
     required this.id,
@@ -57,9 +57,8 @@ class DealerBusinessModel {
       phoneNumber: json['formatted_phone_number'],
       postalCode: json['postalCode'],
       createdAt:
-          json['createdAt'] != null
-              ? DateTime.tryParse(json['createdAt'])
-              : null,
+          json['createdAt']??"",
+            
     );
   }
 }

@@ -199,6 +199,7 @@ class DealData {
   final num benefitAmount;
   final String dealType;
   final int reuseableAfter;
+  final String reasonFor;
   final int redeemCount;
   final bool isActive;
 
@@ -209,6 +210,7 @@ class DealData {
     required this.dealType,
     required this.reuseableAfter,
     required this.redeemCount,
+    required this.reasonFor,
     required this.isActive,
   });
 
@@ -218,6 +220,7 @@ class DealData {
       description: json['description'] ?? '',
       benefitAmount: json['benefitAmmount'] ?? 0,
       dealType: json['dealType'] ?? '',
+      reasonFor: json['reasonFor'] ?? "",
       reuseableAfter: json['reuseableAfter'] ?? 0,
       redeemCount: json['redeemCount'] ?? 0,
       isActive: json['isActive'] ?? false,

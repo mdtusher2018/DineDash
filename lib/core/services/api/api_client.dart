@@ -62,7 +62,7 @@ class ApiClient {
     final response = await _httpClient.delete(
       url,
       headers: headers,
-      body: json.encode(body),
+      body: json.encode(body??{}),
     );
     return _processResponse(response);
   }

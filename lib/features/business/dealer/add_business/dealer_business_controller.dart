@@ -1,8 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:dine_dash/core/mixin/google_place_api_mixin.dart';
-import 'package:dine_dash/core/models/user_model.dart';
-import 'package:dine_dash/features/auth/dealer/create_dealer_3rd_page.dart';
 import 'package:dine_dash/features/business/dealer/add_menu/add_menu_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:get/get.dart';
@@ -11,7 +8,7 @@ import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 
 class DealerAddBusinessController extends BaseController
-    with GooglePlaceApiMixin {
+     {
   final ApiService _apiService = Get.find();
 
   /// Create a new business (multipart POST)
@@ -25,11 +22,6 @@ class DealerAddBusinessController extends BaseController
     required List<Map<String, dynamic>> openingHours,
     required List<double> coordinates,
     File? imageFile,
-    required bool fromSignup,
-    dynamic businessResponseFromGoogle,
-    email,
-    latitude,
-    longitude,UserModel? userData
   }) async {
     log(coordinates.toString());
     safeCall(
@@ -68,27 +60,6 @@ class DealerAddBusinessController extends BaseController
 
         if (imageFile == null) {
           throw Exception("Please upload your business image");
-        }
-
-        if (fromSignup) {
-          navigateToPage(
-            CreateDealerAccount3rdPage(
-              businessDetails: businessResponseFromGoogle,
-              email: email ?? "",
-              latitude: latitude,
-              longitude: longitude,
-              name: name,
-              types: types,
-              businessType: businessType.toLowerCase(),
-              address: address,
-              phoneNumber: phoneNumber,
-              postalCode: postalCode,
-              openingHours: openingHours,
-              coordinates: coordinates,
-              imageFile: imageFile,userData: userData,
-            ),
-          );
-          return;
         }
 
         final formData = {
@@ -169,10 +140,7 @@ class DealerAddBusinessController extends BaseController
           throw Exception("Please provide opening hours");
         }
 
-        if (coordinates.length != 2) {
-          throw Exception("Invalid coordinates");
-        }
-
+ 
         if (imageFile == null) {
           throw Exception("Please upload your business image");
         }
@@ -185,7 +153,7 @@ class DealerAddBusinessController extends BaseController
           "formatted_phone_number": phoneNumber,
           "postalCode": postalCode,
           "openingHours": openingHours,
-          "location": {"type": "Point", "coordinates": coordinates},
+         if(coordinates.isNotEmpty) "location": {"type": "Point", "coordinates": coordinates},
         };
 
         // Send the POST request
@@ -196,15 +164,15 @@ class DealerAddBusinessController extends BaseController
           files: {'image': imageFile},
         );
 
-        if (response['statusCode'] == 201 || response['status'] == true) {
-          String id = response['data']?['attributes']?['_id'] ?? "";
-          if (id.isNotEmpty) {
+        if (response['statusCode'] == 200 || response['status'] == true) {
+          // String id = response['data']?['attributes']?['_id'] ?? "";
+          // if (id.isNotEmpty) {
+          //   Get.back();
+          //   navigateToPage(AddMenuScreen(businessId: id));
+          // } else {
             Get.back();
-            navigateToPage(AddMenuScreen(businessId: id));
-          } else {
-            Get.back();
-          }
-          showSnackBar("Business created successfully");
+          // }
+          showSnackBar("Business updated successfully");
         } else {
           throw Exception(response['message'] ?? "Something went wrong");
         }
