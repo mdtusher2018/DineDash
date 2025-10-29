@@ -2,7 +2,6 @@ import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/profile/common/change%20password/change_password_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/core/utils/image_paths.dart';
-import 'package:dine_dash/features/auth/common/forget_password/forget_password_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,9 +19,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final TextEditingController confirmPasswordController =
       TextEditingController();
 
-  bool isCurrentPasswordVisible = false;
-  bool isNewPasswordVisible = false;
-  bool isConfirmPasswordVisible = false;
+  bool isCurrentPasswordVisible = true;
+  bool isNewPasswordVisible = true;
+  bool isConfirmPasswordVisible = true;
 
   final ChangePasswordController controller =
       Get.find<ChangePasswordController>();
@@ -112,23 +111,23 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               },
             ),
             SizedBox(height: 5),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.end,
 
-              children: [
-                InkWell(
-                  onTap: () {
-                    Get.to(ForgotPasswordScreen());
-                  },
-                  child: Column(
-                    children: [
-                      commonText("Forgot Password".tr, isBold: true),
-                      Container(width: 95, height: 0.5, color: AppColors.black),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            //   children: [
+            //     InkWell(
+            //       onTap: () {
+            //         Get.to(ForgotPasswordScreen());
+            //       },
+            //       child: Column(
+            //         children: [
+            //           commonText("Forgot Password".tr, isBold: true),
+            //           Container(width: 95, height: 0.5, color: AppColors.black),
+            //         ],
+            //       ),
+            //     ),
+            //   ],
+            // ),
             const SizedBox(height: 30),
 
             // Change Password Button

@@ -357,6 +357,7 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
         const SizedBox(height: 24),
         commonButton(
           "Add Business",
+          isLoading: controller.isLoading.value,
           onTap: () async {
             final openingHoursList =
                 closedDays.entries

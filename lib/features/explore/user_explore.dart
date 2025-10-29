@@ -436,7 +436,7 @@ class _UserExplorePageState extends State<UserExplorePage> {
                               ['Low', 'Hign'].map((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
-                                  child: commonText("Sort By: $value"),
+                                  child: commonText("Price: $value"),
                                 );
                               }).toList(),
                           onChanged: (String? newValue) {

@@ -15,16 +15,24 @@ class ChangePasswordController extends BaseController {
   }) async {
     // Basic validation
     if (oldPassword.isEmpty || newPassword.isEmpty || confirmPassword.isEmpty) {
-      showSnackBar("All fields are required".tr);
+      showSnackBar("All fields are required".tr, isError: true);
       return;
     }
     if (newPassword.length < 6) {
-      showSnackBar("New password must be at least 6 characters long".tr);
+      showSnackBar(
+        "New password must be at least 6 characters long".tr,
+        isError: true,
+      );
       return;
     }
 
     if (newPassword != confirmPassword) {
-      showSnackBar("Passwords do not match".tr);
+      showSnackBar("Passwords do not match".tr, isError: true);
+      return;
+    }
+
+    if (oldPassword == newPassword) {
+      showSnackBar("Old and New password can't be same".tr, isError: true);
       return;
     }
 
@@ -42,16 +50,18 @@ class ChangePasswordController extends BaseController {
         );
 
         if (changePasswordResponse.statusCode == 200) {
-          Get.snackbar(
-            "Success".tr,
-            changePasswordResponse.message.tr,
-            snackPosition: SnackPosition.BOTTOM,
-            duration: const Duration(seconds: 2),
-          );
+          // Get.snackbar(
+          //   "Success".tr,
+          //   changePasswordResponse.message.tr,
+          //   snackPosition: SnackPosition.BOTTOM,
+          //   duration: const Duration(seconds: 2),
+          // );
         } else {
           throw Exception(changePasswordResponse.message);
         }
       },
+      showSuccessSnack: true,
+      successMessage: "Password changed sucessfully!",
       showErrorSnack: true,
     );
   }

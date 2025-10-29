@@ -156,25 +156,30 @@ class _EditProfileViewState extends State<EditProfileView> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: commonButton(
-                "Save".tr,
-                onTap: () async {
-                  // Validate input
-                  final fullName = nameController.text.trim();
-                  final postcode = postcodeController.text.trim();
-
-                  if (fullName.isEmpty) {
-                    Get.snackbar("Error".tr, "Please enter your full name".tr);
-                    return;
-                  }
-
-                  // Call updateProfile
-                  await profileController.updateProfile(
-                    fullName: fullName,
-                    postalCode: postcode.isNotEmpty ? postcode : null,
-                    image: selectedImage,
+              child: Obx(
+                () {
+                  return commonButton(
+                    "Save".tr,
+                    isLoading: profileController.isLoading.value,
+                    onTap: () async {
+                      // Validate input
+                      final fullName = nameController.text.trim();
+                      final postcode = postcodeController.text.trim();
+                  
+                      if (fullName.isEmpty) {
+                        Get.snackbar("Error".tr, "Please enter your full name".tr);
+                        return;
+                      }
+                  
+                      // Call updateProfile
+                      await profileController.updateProfile(
+                        fullName: fullName,
+                        postalCode: postcode.isNotEmpty ? postcode : null,
+                        image: selectedImage,
+                      );
+                    },
                   );
-                },
+                }
               ),
             ),
             const SizedBox(height: 30),

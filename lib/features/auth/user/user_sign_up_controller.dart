@@ -20,6 +20,7 @@ class SignUpController extends BaseController {
     required String postalCode,
     required String password,
     required String confirlPassword,
+    required bool tremsAndCondition
   }) async {
     // ✅ Validate inputs first
     final validationMessage = AuthValidator.validateSignUp(
@@ -28,6 +29,7 @@ class SignUpController extends BaseController {
       postalCode: postalCode,
       password: password,
       confirmPassword: confirlPassword,
+      tremsAndCondition:tremsAndCondition
     );
 
     if (validationMessage != null) {

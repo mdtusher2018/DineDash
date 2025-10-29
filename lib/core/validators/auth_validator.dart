@@ -27,6 +27,7 @@ class AuthValidator {
     required String postalCode,
     required String password,
     required String confirmPassword,
+    required bool tremsAndCondition
   }) {
     if (fullName.isNullOrEmpty || !fullName.isValidName) {
       return "Please enter a valid full name";
@@ -45,6 +46,9 @@ class AuthValidator {
     }
     if (password != confirmPassword) {
       return "Passwords do not match";
+    }
+    if(!tremsAndCondition){
+      return "Accept the Trems and Conditions";
     }
     return null; // All validations passed
   }

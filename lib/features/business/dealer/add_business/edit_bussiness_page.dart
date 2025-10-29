@@ -408,6 +408,7 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
             const SizedBox(height: 24),
             commonButton(
               "Save",
+              isLoading: controller.isLoading.value,
               onTap: () async {
                 final openingHoursList =
                     closedDays.entries

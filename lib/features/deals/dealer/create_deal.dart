@@ -404,6 +404,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
               /// Create Deal Button
               commonButton(
                 "Create Deal".tr,
+                isLoading: controller.isLoading.value,
                 onTap: () {
                   final formattedActiveTimes =
                       timeFrames

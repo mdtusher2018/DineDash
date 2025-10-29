@@ -1111,12 +1111,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                                         size: 13,
                                         isBold: true,
                                       ),
-                                      const Spacer(),
-                                      commonText(
-                                        "$dealCount Deals",
-                                        size: 13,
-                                        color: Colors.grey.shade600,
-                                      ),
+                                
                                     ],
                                   ),
                                 ),

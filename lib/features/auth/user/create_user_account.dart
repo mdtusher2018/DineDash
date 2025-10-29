@@ -61,7 +61,7 @@ final controller = Get.find<SignUpController>();
                   commonTextfieldWithTitle(
                     "Full name".tr,
                     fullNameController,
-                    hintText: "Enter your email".tr,
+                    hintText: "Enter your name".tr,
                     assetIconPath: ImagePaths.userIcon,
                   ),
                   const SizedBox(height: 15),
@@ -162,7 +162,7 @@ final controller = Get.find<SignUpController>();
                         "Sign Up".tr,
                         isLoading: controller.isLoading.value,
                         onTap: () {
-                                controller.signUp(fullName: fullNameController.text, email: emailController.text, postalCode: posterCodeController.text, password: passwordController.text,confirlPassword: confirmPasswordController.text);
+                                controller.signUp(fullName: fullNameController.text, email: emailController.text, postalCode: posterCodeController.text, password: passwordController.text,confirlPassword: confirmPasswordController.text, tremsAndCondition:isAgree);
                         },
                       );
                     }
