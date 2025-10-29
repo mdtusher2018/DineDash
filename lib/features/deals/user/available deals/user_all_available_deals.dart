@@ -52,7 +52,7 @@ class _UserAllAvailableDealsState extends State<UserAllAvailableDeals> {
               if (index < controller.availableDeals.length) {
                 final deal = controller.availableDeals[index];
                 return GestureDetector(
-                  onTap: () => Get.to(() => UserDealsDetails()),
+                  onTap: () => Get.to(() => UserDealsDetails(dealData: deal,)),
                   child: dealCard(deal: deal,isUsed: false),
                 );
               } else {

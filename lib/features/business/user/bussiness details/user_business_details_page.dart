@@ -7,8 +7,8 @@ import 'package:dine_dash/features/business/user/bussiness%20details/business_de
 import 'package:dine_dash/features/business/user/bussiness%20details/menu_response.dart';
 import 'package:dine_dash/features/business/user/map_screen.dart';
 import 'package:dine_dash/features/deals/user/user_deal_blocked.dart';
-import 'package:dine_dash/features/profile/user/user_subscription.dart';
 import 'package:dine_dash/core/models/business_model.dart';
+import 'package:dine_dash/features/subscription/user_subscription.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/core/utils/colors.dart';

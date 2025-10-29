@@ -169,6 +169,8 @@ class ApiEndpoints {
 
   static String checkEmail="auth/email-check";
 
+  static String getAllSubscription="subscription/all";
+
   static String editDeal(String dealId) => "deal/edit-deal/$dealId";
 
   static String deleteDeal(String dealId) => "deal/delete-deal-req/$dealId";

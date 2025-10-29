@@ -28,6 +28,7 @@ import 'package:dine_dash/features/profile/common/change%20password/change_passw
 import 'package:dine_dash/features/profile/common/static_content/static_content_controller.dart';
 import 'package:dine_dash/features/profile/user/profile/profile_controller.dart';
 import 'package:dine_dash/features/ratting/dealer/review_controller.dart';
+import 'package:dine_dash/features/subscription/user_subscription_controller.dart';
 import 'package:get/get.dart';
 
 class DependencyInjection {
@@ -118,11 +119,26 @@ class DependencyInjection {
     );
     Get.put<FeedbackController>(FeedbackController(), permanent: true);
     Get.put<DealerDealController>(DealerDealController(), permanent: true);
-    Get.put<DealerAllDealsController>(DealerAllDealsController(), permanent: true);
-    
-    
-    Get.put<DealerCreateAccountController>(DealerCreateAccountController(), permanent: true);
-    Get.put<UserAvailableDealsController>(UserAvailableDealsController(), permanent: true);
-    Get.put<UserAllUseddDealsController>(UserAllUseddDealsController(), permanent: true);
+    Get.put<DealerAllDealsController>(
+      DealerAllDealsController(),
+      permanent: true,
+    );
+
+    Get.put<DealerCreateAccountController>(
+      DealerCreateAccountController(),
+      permanent: true,
+    );
+    Get.put<UserAvailableDealsController>(
+      UserAvailableDealsController(),
+      permanent: true,
+    );
+    Get.put<UserAllUseddDealsController>(
+      UserAllUseddDealsController(),
+      permanent: true,
+    );
+    Get.put<UserSubscriptionController>(
+      UserSubscriptionController(),
+      permanent: true,
+    );
   }
 }

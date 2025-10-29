@@ -1,9 +1,9 @@
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/profile/user/profile/profile_controller.dart';
+import 'package:dine_dash/features/subscription/user_subscription.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/features/profile/widgets/common_dialog.dart';
-import 'package:dine_dash/features/profile/user/user_subscription.dart';
 import 'package:dine_dash/features/profile/common/static_content/about_us.dart';
 import 'package:dine_dash/features/profile/common/contact_us.dart';
 import 'package:dine_dash/features/profile/common/edit_profile/edit_profile.dart';

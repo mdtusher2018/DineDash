@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/features/subscription/user_subscription_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,16 @@ class SubscriptionView extends StatefulWidget {
 
 class _SubscriptionViewState extends State<SubscriptionView> {
   bool isMonthlySelected = true;
-  final subscriptionController = Get.put(SubscriptionController());
+  final subscriptionController = Get.put(UserSubscriptionController());
+
+final controller=Get.find<UserSubscriptionController>();
+
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+controller.getAllSubscription();
+  }
 
 
   void togglePlan(bool monthly) {
@@ -36,10 +46,10 @@ class _SubscriptionViewState extends State<SubscriptionView> {
         alignment: Alignment.topRight,
         children: [
           Container(
-            margin: EdgeInsets.only(top: 16),
+
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
             decoration: BoxDecoration(
-              color: selected ? Colors.blue.shade100 : Colors.transparent,
+              color: selected ? Colors.blue.shade200 : Colors.transparent,
               borderRadius: BorderRadius.circular(16),
             ),
             child: commonText(
@@ -166,37 +176,30 @@ class _SubscriptionViewState extends State<SubscriptionView> {
             ),
             const SizedBox(height: 12),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                buildToggleButton(
-                  "Monthly",
-                  isMonthlySelected,
-                  () => togglePlan(true),
-                ),
-                const SizedBox(width: 16),
-                buildToggleButton(
-                  "Yearly",
-                  !isMonthlySelected,
-                  () => togglePlan(false),
-                  badge: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 6,
-                      vertical: 2,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.blue.shade300,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: commonText(
-                      "Save 17%",
-                      size: 12,
-                      color: AppColors.white,
-                      isBold: true,
-                    ),
+            Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: AppColors.primaryColor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(50)
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  buildToggleButton(
+                    "Monthly",
+                    isMonthlySelected,
+                    () => togglePlan(true),
                   ),
-                ),
-              ],
+                  const SizedBox(width: 16),
+                  buildToggleButton(
+                    "Yearly",
+                    !isMonthlySelected,
+                    () => togglePlan(false),
+                         
+                  ),
+                ],
+              ),
             ),
 
 
@@ -206,11 +209,11 @@ class _SubscriptionViewState extends State<SubscriptionView> {
       return Center(child: CircularProgressIndicator());
     }
 
-    final filteredPlans = subscriptionController.subscriptions
+    final filteredPlans = subscriptionController.plans
         .where((plan) =>
             isMonthlySelected
-                ? plan.planCategory == 'monthly'
-                : plan.planCategory == 'yearly')
+                ? plan.duration == 30
+                : plan.duration ==365)
         .toList();
 
     return ListView.builder(
@@ -220,9 +223,9 @@ class _SubscriptionViewState extends State<SubscriptionView> {
 
         return buildPlanCard(
           title: plan.planName,
-          subtitle: plan.shortBio,
-          price:  "€${plan.price} / ${plan.timeline} days",
-          features: plan.facilities,
+          subtitle: plan.description,
+          price:  "€${plan.price}",
+          features: plan.feature,
           isMostPopular: plan.planName.toLowerCase() == "premium",
           backgroundColor: plan.planName.toLowerCase() == "premium"
               ? Colors.blue.shade50
@@ -261,87 +264,3 @@ class _SubscriptionViewState extends State<SubscriptionView> {
   }
 }
 
-
-
-
-
-
-
-class SubscriptionPlan {
-  final String id;
-  final String planName;
-  final String shortBio;
-  final double price;
-  final String planCategory; // 'monthly' or 'yearly'
-  final int timeline;
-  final List<String> facilities;
-
-  SubscriptionPlan({
-    required this.id,
-    required this.planName,
-    required this.shortBio,
-    required this.price,
-    required this.planCategory,
-    required this.timeline,
-    required this.facilities,
-  });
-}
-
-
-
-class SubscriptionController extends GetxController {
-  var subscriptions = <SubscriptionPlan>[].obs;
-  var isLoading = false.obs;
-
-  @override
-  void onInit() {
-    super.onInit();
-    loadDemoData(); // For demo purposes
-  }
-
-  void loadDemoData() {
-    isLoading.value = true;
-    subscriptions.value = [
-      SubscriptionPlan(
-        id: '1',
-        planName: 'Free',
-        shortBio: 'Basic access to try things out',
-        price: 0.0,
-        planCategory: 'monthly',
-        timeline: 30,
-        facilities: [
-          'Access to basic recipes',
-          'Limited meal plans',
-        ],
-      ),
-      SubscriptionPlan(
-        id: '2',
-        planName: 'Premium',
-        shortBio: 'Full access to all features',
-        price: 4.99,
-        planCategory: 'monthly',
-        timeline: 30,
-        facilities: [
-          'Unlimited recipes',
-          'Personalized meal plans',
-          'Offline access',
-        ],
-      ),
-      SubscriptionPlan(
-        id: '3',
-        planName: 'Premium',
-        shortBio: 'Full access with yearly savings',
-        price: 49.99,
-        planCategory: 'yearly',
-        timeline: 365,
-        facilities: [
-          'Unlimited recipes',
-          'Personalized meal plans',
-          'Offline access',
-          'Priority support',
-        ],
-      ),
-    ];
-    isLoading.value = false;
-  }
-}

@@ -15,6 +15,7 @@ class UserDealItem {
   final num redeemCount;
   final num benefitAmmount;
   final String description;
+  final List<String> catgory;
 
   UserDealItem({
     required this.id,
@@ -32,7 +33,8 @@ class UserDealItem {
     required this.reuseableAfter,
     required this.redeemCount,
     required this.description,
-    required this.benefitAmmount
+    required this.benefitAmmount,
+    required this.catgory
   });
 
   factory UserDealItem.fromJson(Map<String, dynamic> json) => UserDealItem(
@@ -53,7 +55,8 @@ class UserDealItem {
         reuseableAfter: json['reuseableAfter'] ?? 0,
         redeemCount: json['redeemCount'] ?? 0,
         description: json['description'] ?? '',
-        benefitAmmount:json['benefitAmmount']??0
+        benefitAmmount:json['benefitAmmount']??0,
+        catgory: json['types']??["cafe","Bar"]
       );
 }
 
@@ -79,4 +82,44 @@ class OpeningHour {
         closingTime: json['closingTime'] ?? '',
         id: json['_id'] ?? '',
       );
+}
+
+extension UserDealItemExtension on UserDealItem {
+  /// Returns the next opening day and time as a Map
+  Map<String, String> getNextOpening() {
+    if (openingHours.isEmpty) return {'day': 'Closed', 'time': '-- - --'};
+
+    final today = DateTime.now();
+    final todayNum = today.weekday; // 1=Monday, 7=Sunday
+
+    // Map weekday names to numbers
+    final Map<String, int> dayToNumber = {
+      'monday': 1,
+      'tuesday': 2,
+      'wednesday': 3,
+      'thursday': 4,
+      'friday': 5,
+      'saturday': 6,
+      'sunday': 7,
+    };
+
+    // Filter only open days
+    final openDays = openingHours.where((o) => o.isOpen).toList();
+    if (openDays.isEmpty) return {'day': 'Closed', 'time': '-- - --'};
+
+    // Sort by next occurrence
+    openDays.sort((a, b) {
+      int diffA =
+          ((dayToNumber[a.day.toLowerCase()] ?? 0) - todayNum + 7) % 7;
+      int diffB =
+          ((dayToNumber[b.day.toLowerCase()] ?? 0) - todayNum + 7) % 7;
+      return diffA.compareTo(diffB);
+    });
+
+    final nextDay = openDays.first;
+    return {
+      'day': nextDay.day,
+      'time': '${nextDay.openingTime} - ${nextDay.closingTime}',
+    };
+  }
 }

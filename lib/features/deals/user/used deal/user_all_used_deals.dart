@@ -53,7 +53,7 @@ class _UserAllUsedDealsState extends State<UserAllUsedDeals> {
               if (index < controller.usedDeals.length) {
                 final deal = controller.usedDeals[index];
                 return GestureDetector(
-                  onTap: () => Get.to(() => UserDealsDetails()),
+                  onTap: () => Get.to(() => UserDealsDetails(dealData: controller.usedDeals[index],)),
                   child: dealCard(deal: deal, isUsed: true),
                 );
               } else {

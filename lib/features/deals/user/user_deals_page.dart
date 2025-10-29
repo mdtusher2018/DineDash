@@ -77,7 +77,7 @@ class _UserDealsPageState extends State<UserDealsPage> {
                     final deal = abailableDealsController.availableDeals[index];
                     return GestureDetector(
                       onTap: () {
-                        Get.to(() => UserDealsDetails());
+                        Get.to(() => UserDealsDetails(dealData:abailableDealsController.availableDeals[index]));
                       },
                       child: dealCard(deal: deal, isUsed: false),
                     );

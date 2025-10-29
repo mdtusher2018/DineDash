@@ -1,6 +1,7 @@
 
 
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/features/deals/user/deal_model.dart';
 import 'package:dine_dash/features/deals/user/user_deal_redeem.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dotted_line/dotted_line.dart';
@@ -10,7 +11,8 @@ import 'package:shake/shake.dart';
 
 
 class UserDealsDetails extends StatefulWidget {
-  const UserDealsDetails({super.key});
+  final UserDealItem dealData;
+  const UserDealsDetails({super.key,required this.dealData});
 
   @override
   State<UserDealsDetails> createState() => _UserDealsDetailsState();
@@ -22,7 +24,7 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
 
   var selected = ''.obs;
   var selecteds = ''.obs;
-  final List<String> options = ['Cafe', 'Juice', 'Bar'];
+  
   final List<String> comment = ['Good environment', 'Perfect meal', 'Nice location'];
 
 
@@ -44,6 +46,13 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
   }
   @override
   Widget build(BuildContext context) {
+
+    final deal=widget.dealData;
+
+
+final nextOpening = deal.getNextOpening(); // dealItem is UserDealItem
+
+
     return Scaffold(
       
       appBar: AppBar(backgroundColor: AppColors.white,),
@@ -53,7 +62,7 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 30,),
+            
               Container(
                 padding: EdgeInsets.only(bottom: 20),
                 width: double.infinity,
@@ -79,11 +88,11 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(height: 5,),
-                            commonText("The Rio Lounge",size: 22,fontWeight: FontWeight.w700),
+                            commonText(deal.businessName,size: 22,fontWeight: FontWeight.w700),
                             SizedBox(height: 5,),
                             Obx(() => Wrap(
                               spacing: 12,
-                              children:options.map((option) {
+                              children:deal.catgory.map((option) {
                                 final isSelected = selected.value == option;
                                 return GestureDetector(
                                   onTap: () {
@@ -184,54 +193,29 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             SizedBox(height: 30,),
-                                            commonText("Free cold drinks",size: 20,fontWeight: FontWeight.w600),
-                                            commonText("Lorem ipsum dolor sit amet consectetur. Rhoncus molestie amet non pellentesque.",size: 16,fontWeight: FontWeight.w400,color: Color(0xff0A0A0A)),
+                                            commonText(deal.dealType,size: 20,fontWeight: FontWeight.w600),
+                                            commonText(deal.description,size: 16,fontWeight: FontWeight.w400,color: Color(0xff0A0A0A)),
                                             SizedBox(height: 10,),
                                             Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              spacing: 5,
                                               children: [
-                                                Row(
-                                                  spacing: 5,
-                                                  children: [
-                                                    Container(
-                                                      height: 35,
-                                                      width: 40,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          color: Colors.blueAccent.shade100
-                                                      ),
-                                                      child: Center(child: Image.asset("assets/images/clock.png",height: 25,width: 25,fit: BoxFit.contain,)),
-                                                    ),
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        commonText("Reusable After".tr,size: 12,fontWeight: FontWeight.w400),
-                                                        commonText("60 Days",size: 14,fontWeight: FontWeight.w700),
-                                                      ],
-                                                    )
-                                                  ],
+                                                Container(
+                                                  height: 35,
+                                                  width: 40,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(5),
+                                                      color: Colors.blueAccent.shade100
+                                                  ),
+                                                  child: Center(child: Image.asset("assets/images/clock.png",height: 25,width: 25,fit: BoxFit.contain,)),
                                                 ),
-                                                Row(
-                                                  spacing: 5,
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    Container(
-                                                      height: 35,
-                                                      width: 40,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          color: Colors.blueAccent.shade100
-                                                      ),
-                                                      child: Center(child: Image.asset("assets/images/locate.png",height: 25,width: 25,fit: BoxFit.contain,)),
-                                                    ),
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        commonText("LOCATION".tr,size: 12,fontWeight: FontWeight.w400),
-                                                        commonText("Gulshan 2.",size: 14,fontWeight: FontWeight.w700),
-                                                      ],
-                                                    )
+                                                    commonText("Reusable After".tr,size: 12,fontWeight: FontWeight.w400),
+                                                    commonText("${deal.reuseableAfter} Days",size: 14,fontWeight: FontWeight.w700),
                                                   ],
-                                                ),
+                                                )
                                               ],
                                             )
                                           ],
@@ -251,13 +235,12 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                                       borderRadius: BorderRadius.circular(15),
                                       color: Colors.blueAccent
                                   ),
-                                  child: Center(child: commonText("6 € Benefit",size: 14,fontWeight: FontWeight.w500,color: Colors.white),),
+                                  child: Center(child: commonText("${deal.benefitAmmount} € Benefit",size: 14,fontWeight: FontWeight.w500,color: Colors.white),),
                                 ))
                               ],
                             ),
                             SizedBox(height: 16,),
-                            commonText("Lorem ipsum dolor sit amet consectetur. Amet Rhoncus molestie amet non pellentesque. Amet Rhoncus molestie amet non.",size: 16,fontWeight: FontWeight.w400),
-                           SizedBox(height: 10,),
+       
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               spacing: 50,
@@ -266,7 +249,7 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                                   spacing: 10,
                                   children: [
                                     Image.asset("assets/images/date.png",height: 30,width: 30,),
-                                    commonText("Saturday".tr,size: 16,fontWeight: FontWeight.w500),
+                                    commonText(nextOpening['day']!.tr,size: 16,fontWeight: FontWeight.w500),
                                   ],
                                 ),
                                 SizedBox(
@@ -280,7 +263,7 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                                   spacing: 10,
                                   children: [
                                     Image.asset("assets/images/time.png",height: 30,width: 30,),
-                                    commonText("12:00 - 20:00",size: 16,fontWeight: FontWeight.w500),
+                                    commonText(nextOpening['time']!,size: 16,fontWeight: FontWeight.w500),
                                   ],
                                 ),
                               ],
