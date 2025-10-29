@@ -13,11 +13,9 @@ import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';
 
 import 'package:get/get.dart';
 
-class DealerCreateAccountController extends BaseController
-    {
+class DealerCreateAccountController extends BaseController {
   final ApiService _apiService = Get.find();
   final LocalStorageService _localStorage = Get.find();
-  final SessionMemory _sessionMemory = Get.find();
 
   Future<void> signUp({
     required String fullName,
@@ -29,9 +27,9 @@ class DealerCreateAccountController extends BaseController
     required String? password,
     required String confirlPassword,
     required String phoneNumber,
-    required Function() next
+    required Function() next,
   }) async {
-    final role = (_sessionMemory.roleIsUser ?? false) ? "user" : "business";
+    final role = (SessionMemory.isUser) ? "user" : "business";
 
     await safeCall<void>(
       task: () async {
@@ -60,9 +58,8 @@ class DealerCreateAccountController extends BaseController
               signUpResponse.signUpToken!,
             );
           }
-next();
+          next();
 
-          _sessionMemory.setRole(false);
           showSnackBar(signUpResponse.message, isError: false);
         } else {
           throw Exception(signUpResponse.message);
@@ -71,19 +68,36 @@ next();
     );
   }
 
-  Future<void> checkEmail(String email,{required Place? businessDetails, required double lat,required double long,required String businessName,required String address}) async {
+  Future<void> checkEmail(
+    String email, {
+    required Place? businessDetails,
+    required double lat,
+    required double long,
+    required String businessName,
+    required String address,
+  }) async {
     safeCall(
       task: () async {
         if (email.isEmpty || !email.isValidEmail) {
           throw Exception("Invalide Email");
         }
-       final response=await _apiService.post(ApiEndpoints.checkEmail, {"email": email});
-       final emailResponseModel=EmailCheckResponse.fromJson(response);
-navigateToPage(CreateDealerAccount2ndPage(businessDetails: businessDetails, userData: emailResponseModel.data, email: email, latitude: lat, longitude: long,address: address,businessName: businessName,));
-      //  navigateToPage(DealerAddBusinessSecondScreen(result: businessDetails,userData: emailResponseModel.data,email:email,latitude: latitude,longitude: longitude,fromSignup: true,))
-       
+        final response = await _apiService.post(ApiEndpoints.checkEmail, {
+          "email": email,
+        });
+        final emailResponseModel = EmailCheckResponse.fromJson(response);
+        navigateToPage(
+          CreateDealerAccount2ndPage(
+            businessDetails: businessDetails,
+            userData: emailResponseModel.data,
+            email: email,
+            latitude: lat,
+            longitude: long,
+            address: address,
+            businessName: businessName,
+          ),
+        );
+        //  navigateToPage(DealerAddBusinessSecondScreen(result: businessDetails,userData: emailResponseModel.data,email:email,latitude: latitude,longitude: longitude,fromSignup: true,))
       },
     );
-   
   }
 }

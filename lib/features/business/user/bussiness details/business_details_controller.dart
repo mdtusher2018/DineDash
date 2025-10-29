@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/business_details_response.dart';
@@ -94,8 +92,6 @@ class BusinessDetailController extends BaseController {
         }
         startTime = startTime!.add(Duration(days: index));
         endTime = endTime!.add(Duration(days: index));
-        log(startTime.toString());
-        log(endTime.toString());
         final response = await _apiService.post(ApiEndpoints.bookDeal(dealId), {
           "business": businessId,
           "savings": savings,

@@ -32,8 +32,7 @@ class SignInController extends BaseController {
 
     await safeCall<void>(
       task: () async {
-        final role = (_sessionMemory.roleIsUser ?? true) ? "user" : "business";
-
+        final role = (SessionMemory.isUser) ? "user" : "business";
         final body = {"email": email, "password": password, "role": role};
         final response = await _apiService.post(ApiEndpoints.signin, body);
         final loginResponse = SignInResponse.fromJson(response);
@@ -47,7 +46,7 @@ class SignInController extends BaseController {
             _sessionMemory.setToken(token);
           }
 
-          if (_sessionMemory.roleIsUser ?? true) {
+          if (SessionMemory.isUser) {
             Get.offAll(() => UserRootPage());
           } else {
             Get.offAll(() => DealerRootPage());

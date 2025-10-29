@@ -7,11 +7,8 @@ import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 
-class DealerAddBusinessController extends BaseController
-     {
+class DealerAddBusinessController extends BaseController {
   final ApiService _apiService = Get.find();
-
-  /// Create a new business (multipart POST)
   Future<void> createBusiness({
     required String name,
     required List<String> types,
@@ -23,7 +20,6 @@ class DealerAddBusinessController extends BaseController
     required List<double> coordinates,
     File? imageFile,
   }) async {
-    log(coordinates.toString());
     safeCall(
       task: () async {
         if (name.trim().isEmpty) {
@@ -140,7 +136,6 @@ class DealerAddBusinessController extends BaseController
           throw Exception("Please provide opening hours");
         }
 
- 
         if (imageFile == null) {
           throw Exception("Please upload your business image");
         }
@@ -153,7 +148,8 @@ class DealerAddBusinessController extends BaseController
           "formatted_phone_number": phoneNumber,
           "postalCode": postalCode,
           "openingHours": openingHours,
-         if(coordinates.isNotEmpty) "location": {"type": "Point", "coordinates": coordinates},
+          if (coordinates.isNotEmpty)
+            "location": {"type": "Point", "coordinates": coordinates},
         };
 
         // Send the POST request
@@ -170,7 +166,7 @@ class DealerAddBusinessController extends BaseController
           //   Get.back();
           //   navigateToPage(AddMenuScreen(businessId: id));
           // } else {
-            Get.back();
+          Get.back();
           // }
           showSnackBar("Business updated successfully");
         } else {

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dine_dash/features/deals/dealer/dealer_deal_root_page/dealer_all_deals_controller.dart';
 import 'package:dine_dash/features/deals/dealer/edit_deals.dart';
 import 'package:dine_dash/res/buildDealCard.dart';
@@ -96,7 +94,7 @@ class _DealerDealsRootPageState extends State<DealerDealsRootPage> {
                               showReasonDialog(
                                 context,
                                 (p0) {
-                                  log(p0);
+                 
                                   controller.deleteDeal(
                                     reason: p0,
                                     dealId: deal.dealId,

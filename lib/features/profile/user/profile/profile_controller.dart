@@ -6,7 +6,7 @@ import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/services/localstorage/storage_key.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart'; // Add your profile endpoint here
 import 'package:dine_dash/core/utils/helper.dart';
-import 'package:dine_dash/dealer_user_chooser.dart';
+import 'package:dine_dash/features/auth/common/sign_in/sign_in_page.dart';
 import 'package:dine_dash/features/dealer_root_page.dart';
 import 'package:dine_dash/features/profile/common/edit_profile/edit_profile_response.dart';
 import 'package:dine_dash/features/profile/user/profile/profile_response.dart';
@@ -97,8 +97,6 @@ class ProfileController extends BaseController {
               switchResponse.data!.attributes!.accessToken!,
             );
 
-            _sessionMemory.setRole(false);
-
             String localStorageToken =
                 await _localStorageService.getString(StorageKey.token) ?? "";
             if (localStorageToken.isNotEmpty) {
@@ -145,16 +143,16 @@ class ProfileController extends BaseController {
           body: {"password": password},
         );
         if (response['statusCode'] == 200) {
-          navigateToPage(DealerUserChooeser(), clearStack: true);
+          navigateToPage(SignInScreen(), clearStack: true);
         }
       },
     );
   }
 
   Future<void> logOut() async {
-    await _localStorageService.clearAll();
+    await _localStorageService.clearAllExceptOnboarding();
     _sessionMemory.clear();
-    
-    navigateToPage(DealerUserChooeser(), clearStack: true);
+
+    navigateToPage(SignInScreen(), clearStack: true);
   }
 }

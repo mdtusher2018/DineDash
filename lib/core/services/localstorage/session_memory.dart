@@ -1,3 +1,4 @@
+
 class SessionMemory {
   static final SessionMemory _instance = SessionMemory._internal();
   factory SessionMemory() => _instance;
@@ -7,9 +8,9 @@ class SessionMemory {
   void setToken(String token) => _token = token;
   String? get token => _token;
 
-  bool? _isUser;
-  void setRole(bool isUser) => _isUser = isUser;
-  bool? get roleIsUser => _isUser;
+  static const  bool isUser=false;
+
+
 
   double? _latitude, _longitude;
   void setUserLocation(double latitude, double longitude) {
@@ -18,11 +19,9 @@ class SessionMemory {
   }
 
   (double?, double?) get userLocation => (_latitude, _longitude);
-  
 
   void clear() {
     _token = null;
-    _isUser = null;
     _latitude = null;
     _longitude = null;
   }

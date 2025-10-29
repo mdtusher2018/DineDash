@@ -1,9 +1,11 @@
+
+import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
+import 'package:dine_dash/core/services/localstorage/storage_key.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/auth/common/sign_in_sign_up_chooeser.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:get/get.dart';
-
 
 class UserOnboardingView extends StatefulWidget {
   const UserOnboardingView({super.key});
@@ -35,19 +37,26 @@ class _UserOnboardingViewState extends State<UserOnboardingView> {
       subtitle:
           "Find the best restaurants near you, with personalized recommendations and detailed profiles.",
     ),
-    
   ];
 
-  void nextPage() {
+  void nextPage() async {
     if (currentIndex < pages.length - 1) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     } else {
-      navigateToPage(SignInSignUpChooeser(),clearStack: true);
+      await Get.find<LocalStorageService>().saveBool(
+        StorageKey.isUserOnboardingCompleated,
+        true,
+      );
+
+      navigateToPage(SignInSignUpChooeser(), clearStack: true);
     }
   }
+
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -63,46 +72,45 @@ class _UserOnboardingViewState extends State<UserOnboardingView> {
             fit: StackFit.expand,
             children: [
               /// Background image
-              Image.asset(
-                data.imagePath,
-                fit: BoxFit.cover,
-              ),
+              Image.asset(data.imagePath, fit: BoxFit.cover),
 
               /// Overlay content
               Container(
                 padding: EdgeInsets.all(16),
-             
+
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    SizedBox(height: 30,),
+                    SizedBox(height: 30),
                     Image.asset("assets/images/logo.png", height: 80),
 
                     Spacer(),
 
-                Row(
-    
-    children: List.generate(
-      pages.length,
-      (index) => Container(
-        margin: const EdgeInsets.symmetric(horizontal: 4),
-        width: currentIndex == index ? 32 : 16,
-        height:  6,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: currentIndex == index ? AppColors.primaryColor : AppColors.white,
-        ),
-      ),
-    ),
-  ),
-  SizedBox(height: 16,),
+                    Row(
+                      children: List.generate(
+                        pages.length,
+                        (index) => Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 4),
+                          width: currentIndex == index ? 32 : 16,
+                          height: 6,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color:
+                                currentIndex == index
+                                    ? AppColors.primaryColor
+                                    : AppColors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16),
                     Row(
                       children: [
                         commonText(
                           data.title.tr,
                           size: 24,
                           isBold: true,
-                         color: AppColors.white,
+                          color: AppColors.white,
                           textAlign: TextAlign.center,
                         ),
                       ],
@@ -118,7 +126,6 @@ class _UserOnboardingViewState extends State<UserOnboardingView> {
                             data.subtitle.tr,
                             size: 14,
                             color: AppColors.white,
-                            
                           ),
                         ),
                       ],
@@ -128,7 +135,9 @@ class _UserOnboardingViewState extends State<UserOnboardingView> {
 
                     /// Next or Get Started
                     commonButton(
-                      index == pages.length - 1 ? "Start Managing".tr : "Next".tr,
+                      index == pages.length - 1
+                          ? "Start Managing".tr
+                          : "Next".tr,
                       haveNextIcon: true,
                       onTap: nextPage,
                     ),
@@ -139,8 +148,8 @@ class _UserOnboardingViewState extends State<UserOnboardingView> {
                     if (index < pages.length - 1)
                       GestureDetector(
                         onTap: () {
-                          // Optionally jump to last or main screen
-                          _pageController.jumpToPage(pages.length - 1);
+                          currentIndex = pages.length;
+                          nextPage();
                         },
                         child: commonText(
                           "Skip".tr,

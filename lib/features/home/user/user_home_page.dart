@@ -29,6 +29,7 @@ class _UserHomeViewState extends State<UserHomeView> {
   void initState() {
     super.initState();
     cityController.fetchCities();
+    controller.fetchHomeData();
   }
 
   @override
@@ -47,7 +48,7 @@ class _UserHomeViewState extends State<UserHomeView> {
           }
 
           return RefreshIndicator(
-            onRefresh: () async{
+            onRefresh: () async {
               controller.fetchHomeData();
             },
             child: ListView(
@@ -75,7 +76,7 @@ class _UserHomeViewState extends State<UserHomeView> {
                         onChanged: (String? newValue) {
                           if (newValue != null) {
                             cityController.selectedCity.value = newValue;
-            
+
                             controller.fetchHomeData(
                               city: newValue.split('-').first,
                               searchTerm:
@@ -118,7 +119,7 @@ class _UserHomeViewState extends State<UserHomeView> {
                             }).toList(),
                       ),
                     ),
-            
+
                     // 🔸 Notification Icon
                     GestureDetector(
                       onTap: () => navigateToPage(UserNotificationsPage()),
@@ -136,13 +137,15 @@ class _UserHomeViewState extends State<UserHomeView> {
                     ),
                   ],
                 ),
-            
+
                 const SizedBox(height: 16),
-            
-                PromotionBanner(banners: controller.homeData.value!.quotesImages),
-            
+
+                PromotionBanner(
+                  banners: controller.homeData.value!.quotesImages,
+                ),
+
                 const SizedBox(height: 20),
-            
+
                 /// Search bar
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -163,14 +166,17 @@ class _UserHomeViewState extends State<UserHomeView> {
                             if (value.trim().isEmpty) {
                               controller.fetchHomeData(
                                 city:
-                                    cityController.selectedCity.split('-').first,
+                                    cityController.selectedCity
+                                        .split('-')
+                                        .first,
                                 searchTerm: null,
                               );
                             }
                           },
                           onSubmitted: (value) {
                             controller.fetchHomeData(
-                              city: cityController.selectedCity.split('-').first,
+                              city:
+                                  cityController.selectedCity.split('-').first,
                               searchTerm:
                                   searchTermController.text.trim().isNotEmpty
                                       ? searchTermController.text.trim()
@@ -184,32 +190,57 @@ class _UserHomeViewState extends State<UserHomeView> {
                     ],
                   ),
                 ),
-            
+
                 const SizedBox(height: 24),
-            
+
                 /// Sections dynamically populated
-                buildSection("Nearby Open Restaurants", homeData.restaurants, () {
+                buildSection(
+                  "Nearby Open Restaurants",
+                  homeData.restaurants,
+                  () {
+                    navigateToPage(
+                      ListOfBusinessPage(
+                        title: "Nearby Open Restaurants",
+                        business: homeData.restaurants,
+                      ),
+                    );
+                  },
+                ),
+
+                buildSection("Activities", homeData.activities, () {
                   navigateToPage(
-                    ListOfBusinessPage(title: "Nearby Open Restaurants",business: homeData.restaurants,),
+                    ListOfBusinessPage(
+                      title: "Activities",
+                      business: homeData.activities,
+                    ),
                   );
                 }),
-            
-                buildSection("Activities", homeData.activities, () {
-                  navigateToPage(ListOfBusinessPage(title: "Activities",business: homeData.activities,));
-                }),
-            
+
                 buildSection("Hot Deals 🔥", homeData.hotDeals, () {
-                  navigateToPage(ListOfBusinessPage(title: "Hot Deals 🔥",business: homeData.hotDeals,));
+                  navigateToPage(
+                    ListOfBusinessPage(
+                      title: "Hot Deals 🔥",
+                      business: homeData.hotDeals,
+                    ),
+                  );
                 }),
-            
+
                 buildSection("Top rated Restaurants", homeData.topRated, () {
                   navigateToPage(
-                    ListOfBusinessPage(title: "Top rated Restaurants",business: homeData.topRated,),
+                    ListOfBusinessPage(
+                      title: "Top rated Restaurants",
+                      business: homeData.topRated,
+                    ),
                   );
                 }),
-            
+
                 buildSection("New", homeData.newRestaurants, () {
-                  navigateToPage(ListOfBusinessPage(title: "New",business: homeData.newRestaurants,));
+                  navigateToPage(
+                    ListOfBusinessPage(
+                      title: "New",
+                      business: homeData.newRestaurants,
+                    ),
+                  );
                 }),
               ],
             ),

@@ -6,12 +6,7 @@ import 'package:get/get.dart';
 
 class HomeController extends BaseController {
   final ApiService _apiService = Get.find();
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-    fetchHomeData();
-  }
+
 
   // Observables for UI
   var homeData = Rxn<HomeData>();

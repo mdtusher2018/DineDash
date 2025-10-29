@@ -91,7 +91,6 @@ var dealDetails = Rx<DealerDealDetailsData?>(null);
     required int maxClaimCount,
     required List<Map<String, dynamic>> activeTime,
   }) async {
-    log(reusableAfter.toString());
     await safeCall(
       task: () async {
         if (business == null) {

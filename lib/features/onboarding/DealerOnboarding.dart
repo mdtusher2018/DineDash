@@ -1,7 +1,10 @@
-import 'package:dine_dash/features/auth/dealer/create_dealer_account_page.dart';
+import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
+import 'package:dine_dash/core/services/localstorage/storage_key.dart';
+import 'package:dine_dash/features/auth/common/sign_in_sign_up_chooeser.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
+import 'package:get/get.dart';
 
 class DealerOnboardingView extends StatefulWidget {
   const DealerOnboardingView({super.key});
@@ -15,7 +18,7 @@ class _DealerOnboardingViewState extends State<DealerOnboardingView> {
   int currentIndex = 0;
 
   final List<OnboardingData> pages = [
-        OnboardingData(
+    OnboardingData(
       imagePath: "assets/images/Onboarding 1.png",
       title: "Manage Your Offers",
       subtitle:
@@ -35,14 +38,18 @@ class _DealerOnboardingViewState extends State<DealerOnboardingView> {
     ),
   ];
 
-  void nextPage() {
+  void nextPage() async {
     if (currentIndex < pages.length - 1) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     } else {
-      navigateToPage(CreateDealerAccount(),clearStack: true);
+      await Get.find<LocalStorageService>().saveBool(
+        StorageKey.isDealerOnBoardingCompleated,
+        true,
+      );
+      navigateToPage(SignInSignUpChooeser());
     }
   }
 
@@ -60,39 +67,38 @@ class _DealerOnboardingViewState extends State<DealerOnboardingView> {
             fit: StackFit.expand,
             children: [
               /// Background image
-              Image.asset(
-                data.imagePath,
-                fit: BoxFit.cover,
-              ),
+              Image.asset(data.imagePath, fit: BoxFit.cover),
 
               /// Overlay content
               Container(
                 padding: EdgeInsets.all(16),
-             
+
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    SizedBox(height: 30,),
+                    SizedBox(height: 30),
                     Image.asset("assets/images/logo.png", height: 80),
 
                     Spacer(),
 
-                Row(
-    
-    children: List.generate(
-      pages.length,
-      (index) => Container(
-        margin: const EdgeInsets.symmetric(horizontal: 4),
-        width: currentIndex == index ? 32 : 16,
-        height:  6,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: currentIndex == index ? AppColors.primaryColor : AppColors.white,
-        ),
-      ),
-    ),
-  ),
-  SizedBox(height: 16,),
+                    Row(
+                      children: List.generate(
+                        pages.length,
+                        (index) => Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 4),
+                          width: currentIndex == index ? 32 : 16,
+                          height: 6,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color:
+                                currentIndex == index
+                                    ? AppColors.primaryColor
+                                    : AppColors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16),
                     Row(
                       children: [
                         commonText(
@@ -115,7 +121,6 @@ class _DealerOnboardingViewState extends State<DealerOnboardingView> {
                             data.subtitle,
                             size: 14,
                             color: AppColors.white,
-                            
                           ),
                         ),
                       ],
@@ -136,8 +141,8 @@ class _DealerOnboardingViewState extends State<DealerOnboardingView> {
                     if (index < pages.length - 1)
                       GestureDetector(
                         onTap: () {
-                          // Optionally jump to last or main screen
-                          _pageController.jumpToPage(pages.length - 1);
+                          currentIndex = pages.length;
+                          nextPage();
                         },
                         child: commonText(
                           "Skip",

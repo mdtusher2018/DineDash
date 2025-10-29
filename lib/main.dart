@@ -1,29 +1,25 @@
 // ignore_for_file: must_be_immutable
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
+import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/services/localstorage/storage_key.dart';
-import 'package:dine_dash/dealer_user_chooser.dart';
 import 'package:dine_dash/dependency.dart';
 import 'package:dine_dash/core/translations/app_translations.dart';
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/splash_screen.dart';
 // import 'package:dine_dash/features/auth/common/sign_in/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void main() async {
-
-
-
- FlutterError.onError = (FlutterErrorDetails details) {
+  FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.dumpErrorToConsole(details);
     debugPrintStack(label: details.exception.toString());
   };
 
-
-
   WidgetsFlutterBinding.ensureInitialized();
   await DependencyInjection.init();
 
-  final LocalStorageService localStorage = Get.find();
+  final LocalStorageService localStorage = Get.find<LocalStorageService>();
   String? langCode =
       await localStorage.getString(StorageKey.languageCode) ?? 'de';
   String? countryCode =
@@ -36,7 +32,6 @@ class MyApp extends StatelessWidget {
   Locale? initialLocale;
   MyApp({super.key, this.initialLocale});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -57,9 +52,9 @@ class MyApp extends StatelessWidget {
           backgroundColor: AppColors.white,
         ),
       ),
-     
-      debugShowCheckedModeBanner: false,     
-      home: DealerUserChooeser(),
+
+      debugShowCheckedModeBanner: false,
+      home: SplashScreen(isUser: SessionMemory.isUser),
     );
   }
 }

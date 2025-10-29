@@ -1,7 +1,6 @@
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/core/validators/auth_validator.dart';
-import 'package:dine_dash/dealer_user_chooser.dart';
 import 'package:dine_dash/features/auth/common/email_verification/email_verification_response.dart';
 import 'package:dine_dash/features/dealer_root_page.dart';
 import 'package:dine_dash/features/user_root_page.dart';
@@ -48,10 +47,8 @@ class EmailVerificationController extends BaseController {
 
           if (decodeJwtPayload(token)["currentRole"] == "user") {
             Get.offAll(() => UserRootPage());
-          } else if ((decodeJwtPayload(token)["currentRole"] == "business")) {
-            Get.offAll(() => DealerRootPage());
           } else {
-            Get.offAll(DealerUserChooeser());
+            Get.offAll(() => DealerRootPage());
           }
 
           showSnackBar('Signed Up successfully!', isError: false);

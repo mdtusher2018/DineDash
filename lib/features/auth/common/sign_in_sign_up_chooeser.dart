@@ -1,4 +1,6 @@
+import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/features/auth/dealer/create_dealer_account_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/core/utils/image_paths.dart';
 import 'package:dine_dash/features/auth/user/create_user_account.dart';
@@ -44,7 +46,7 @@ class _SignInSignUpChooeserState extends State<SignInSignUpChooeser> {
                 ),
                 SizedBox(height: 20),
                 commonText(
-                  "Now continue after register in \"USER\".".tr,
+                  "Now continue after register in ${SessionMemory.isUser?"\"USER\"":"\"DEALER\""}.".tr,
                   size: 14,
                   color: AppColors.white,
                 ),
@@ -61,7 +63,11 @@ class _SignInSignUpChooeserState extends State<SignInSignUpChooeser> {
                   "Sign Up".tr,
                   textColor: AppColors.white,
                   onTap: () {
-                    navigateToPage(CreateUserAccount());
+                    if(SessionMemory.isUser){
+                    navigateToPage(CreateUserAccount());}
+                    else{
+                      navigateToPage(CreateDealerAccount());
+                    }
                   },
                 ),
                 SizedBox(height: 40),

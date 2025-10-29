@@ -13,7 +13,6 @@ import 'package:get/get.dart';
 class SignUpController extends BaseController {
   final ApiService _apiService = Get.find();
   final LocalStorageService _localStorage = Get.find();
-  final SessionMemory _sessionMemory = Get.find();
 
   Future<void> signUp({
     required String fullName,
@@ -36,7 +35,7 @@ class SignUpController extends BaseController {
       return;
     }
 
-    final role = (_sessionMemory.roleIsUser ?? true) ? "user" : "business";
+    final role = (SessionMemory.isUser) ? "user" : "business";
 
     // ✅ Proceed safely
     await safeCall<void>(
