@@ -78,7 +78,7 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
                     onRefresh: () async {
                       controller.fetchBusinessDetail(widget.businessId);
                     },
-                    child: menuTab(),
+                    child: MenuTab(),
                   ),
                   RefreshIndicator(
                     onRefresh: () async {
@@ -95,94 +95,94 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
     });
   }
 
-  Widget menuTab() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            commonBorderButton(
-              "+ Add Items",
-              onTap: () {
-                navigateToPage(
-                  AddMenuScreen(
-                    businessId: controller.businessDetail.value!.id,
-                  ),
-                );
-              },
-            ),
-            SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      commonText("Example from the", size: 14),
-                      commonText("Menu", size: 18, isBold: true),
-                    ],
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    navigateToPage(EditMenuScreen());
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 1),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset("assets/images/editb.png", width: 16),
-                        commonText(" Edit", size: 12),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Divider(),
+  // Widget menuTab() {
+  //   return Padding(
+  //     padding: const EdgeInsets.all(16.0),
+  //     child: SingleChildScrollView(
+  //       physics: AlwaysScrollableScrollPhysics(),
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           commonBorderButton(
+  //             "+ Add Items",
+  //             onTap: () {
+  //               navigateToPage(
+  //                 AddMenuScreen(
+  //                   businessId: controller.businessDetail.value!.id,
+  //                 ),
+  //               );
+  //             },
+  //           ),
+  //           SizedBox(height: 16),
+  //           Row(
+  //             children: [
+  //               Expanded(
+  //                 child: Column(
+  //                   crossAxisAlignment: CrossAxisAlignment.start,
+  //                   children: [
+  //                     commonText("Example from the", size: 14),
+  //                     commonText("Menu", size: 18, isBold: true),
+  //                   ],
+  //                 ),
+  //               ),
+  //               GestureDetector(
+  //                 onTap: () {
+  //                   navigateToPage(EditMenuScreen());
+  //                 },
+  //                 child: Container(
+  //                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+  //                   decoration: BoxDecoration(
+  //                     border: Border.all(width: 1),
+  //                     borderRadius: BorderRadius.circular(4),
+  //                   ),
+  //                   child: Row(
+  //                     mainAxisSize: MainAxisSize.min,
+  //                     children: [
+  //                       Image.asset("assets/images/editb.png", width: 16),
+  //                       commonText(" Edit", size: 12),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //           Divider(),
 
-            ListView.builder(
-              itemCount: controller.businessDetail.value!.menuData.length,
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return ListTile(
-                  minVerticalPadding: 8,
-                  minTileHeight: 0,
-
-                  contentPadding: EdgeInsets.all(0),
-                  title: commonText(
-                    controller.businessDetail.value!.menuData[index].itemName,
-                    size: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  subtitle: commonText(
-                    controller
-                        .businessDetail
-                        .value!
-                        .menuData[index]
-                        .description,
-                  ),
-                  trailing: commonText(
-                    controller.businessDetail.value!.menuData[index].price
-                        .toStringAsFixed(2),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  //           ListView.builder(
+  //             itemCount: controller.businessDetail.value!.menuData.length,
+  //             shrinkWrap: true,
+  //             padding: EdgeInsets.zero,
+  //             physics: NeverScrollableScrollPhysics(),
+  //             itemBuilder: (context, index) {
+  //               return ListTile(
+  //                 minVerticalPadding: 8,
+  //                 minTileHeight: 0,
+                
+  //                 contentPadding: EdgeInsets.only(right: 16),
+  //                 title: commonText(
+  //                   controller.businessDetail.value!.menuData[index].itemName,
+  //                   size: 14,
+  //                   fontWeight: FontWeight.w500,
+  //                 ),
+  //                 subtitle: commonText(
+  //                   controller
+  //                       .businessDetail
+  //                       .value!
+  //                       .menuData[index]
+  //                       .description,
+  //                 ),
+  //                 trailing: commonText(
+  //                   controller.businessDetail.value!.menuData[index].price
+  //                       .toStringAsFixed(2),
+  //                 ),
+  //               );
+  //             },
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildHeaderCard() {
     return Material(
@@ -200,8 +200,8 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
               borderRadius: BorderRadius.circular(8),
               child: Image.network(
                 getFullImagePath(controller.businessDetail.value!.image ?? ""),
-                height: 60,
-                width: 60,
+                height: 80,
+                width: 80,
                 fit: BoxFit.cover,
               ),
             ),
@@ -217,6 +217,7 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
                   ),
                   const SizedBox(height: 4),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Icon(
                         Icons.location_on,
@@ -224,11 +225,13 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
                         color: AppColors.primaryColor,
                       ),
                       const SizedBox(width: 4),
-                      commonText(
-                        controller.businessDetail.value!.formattedAddress ??
-                            "N/A",
+                      Flexible(
+                        child: commonText(
+                          controller.businessDetail.value!.formattedAddress ??
+                              "N/A",
 
-                        color: Colors.black87,
+                          color: Colors.black87,
+                        ),
                       ),
                     ],
                   ),
@@ -594,6 +597,133 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
           /// Comment
           commonText(comment, fontWeight: FontWeight.w500, size: 14),
         ],
+      ),
+    );
+  }
+}
+
+
+class MenuTab extends StatefulWidget {
+  @override
+  _MenuTabState createState() => _MenuTabState();
+}
+
+class _MenuTabState extends State<MenuTab> {
+  bool showActions = false; // global toggle
+
+  final controller = Get.find<DealerBusinessDetailController>();
+  @override
+  Widget build(BuildContext context) {
+    final menuData = controller.businessDetail.value!.menuData; // your data list
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            commonBorderButton(
+              "+ Add Items",
+              onTap: () {
+                navigateToPage(
+                  AddMenuScreen(
+                    businessId: controller.businessDetail.value!.id,
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      commonText("Example from the", size: 14),
+                      commonText("Menu", size: 18, isBold: true),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      showActions = !showActions; // toggle slide animation
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset("assets/images/editb.png", width: 16),
+                        commonText(" Edit", size: 12),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Divider(),
+
+            ListView.builder(
+              itemCount: menuData.length,
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final item = menuData[index];
+
+                return Stack(
+                  alignment: Alignment.centerRight,
+                  children: [
+                    AnimatedContainer(
+                      duration: Duration(milliseconds: 400),
+                      curve: Curves.easeInOut,
+                      margin: EdgeInsets.only(right: showActions ? 100 : 0),
+                      child: ListTile(
+                        minVerticalPadding: 8,
+                        contentPadding: EdgeInsets.all(0),
+                        title: commonText(
+                          item.itemName,
+                          size: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        subtitle: commonText(item.description),
+                        trailing: commonText(
+                          item.price.toStringAsFixed(2),
+                        ),
+                      ),
+                    ),
+
+                    // Animated action buttons entering from the right
+                    AnimatedPositioned(
+                      duration: Duration(milliseconds: 400),
+                      right: showActions ? 16 : -120, // slide from off-screen
+                      curve: Curves.easeInOut,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              navigateToPage(EditMenuScreen(menu: item,));
+                            },
+                            child: Image.asset("assets/images/editb.png", width: 21)),
+                   SizedBox(width: 16,),
+                         Image.asset("assets/images/delete.png",width: 20,)
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

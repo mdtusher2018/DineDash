@@ -11,8 +11,7 @@ class DealerDealController extends DealerMyBusinessNameListController {
   final ApiService _apiService = Get.find();
   var isSubmitting = false.obs;
 
-var dealDetails = Rx<DealerDealDetailsData?>(null);
-
+  var dealDetails = Rx<DealerDealDetailsData?>(null);
 
   Future<void> createDeal({
     required DealerBusinessItem? business,
@@ -78,9 +77,6 @@ var dealDetails = Rx<DealerDealDetailsData?>(null);
     isSubmitting.value = false;
   }
 
-
-
-
   Future<void> editDeal({
     required String dealId,
     required DealerBusinessItem? business,
@@ -145,12 +141,24 @@ var dealDetails = Rx<DealerDealDetailsData?>(null);
     isSubmitting.value = false;
   }
 
-
-
-
-
-
-
+  Future<void> pauseDeal({
+    required String reason,
+    required String dealId,
+  }) async {
+    safeCall(
+      task: () async {
+        final response = await _apiService.patch(
+          ApiEndpoints.pauseDeal(dealId),
+          {"reason": reason},
+        );
+        if (response["statusCode"] != 200) {
+          throw Exception(response['message'] ?? "Unknown Error Occoured");
+        }
+      },
+      showSuccessSnack: true,
+      successMessage: "deal pause sucessfully",
+    );
+  }
 
   Future<void> deleteDeal({
     required String reason,
@@ -175,15 +183,17 @@ var dealDetails = Rx<DealerDealDetailsData?>(null);
   }
 
   Future<void> fetchDealById(String dealId) async {
-     await safeCall(
+    await safeCall(
       task: () async {
         final response = await _apiService.get(
           ApiEndpoints.dealDetailsById(dealId),
         );
         if (response['statusCode'] == 200) {
-          final deal = DealerDealDetailsData.fromJson(response['data']['attributes']??{});
+          final deal = DealerDealDetailsData.fromJson(
+            response['data']['attributes'] ?? {},
+          );
           if (deal.id.isNotEmpty) {
-            dealDetails.value= deal;
+            dealDetails.value = deal;
           } else {
             throw Exception("Unknow error occoured");
           }
@@ -191,10 +201,9 @@ var dealDetails = Rx<DealerDealDetailsData?>(null);
           throw Exception(
             response['message'] ?? "Failed to fetch Deal details",
           );
-          
         }
       },
     );
-     return;
+    return;
   }
 }

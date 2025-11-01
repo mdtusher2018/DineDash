@@ -412,6 +412,7 @@ class _EditDealScreenState extends State<EditDealScreen> {
                                   "${t.startTime!.hour.toString().padLeft(2, '0')}:${t.startTime!.minute.toString().padLeft(2, '0')}",
                               "endTime":
                                   "${t.endTime!.hour.toString().padLeft(2, '0')}:${t.endTime!.minute.toString().padLeft(2, '0')}",
+                                  
                             },
                           )
                           .toList();

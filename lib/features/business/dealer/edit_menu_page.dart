@@ -1,11 +1,13 @@
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/features/business/dealer/add_menu/add_menu_controller.dart';
+import 'package:dine_dash/features/business/dealer/dealer_business_details/dealer_business_details_response.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// Assuming all common widgets are in this file
 
 class EditMenuScreen extends StatefulWidget {
-  const EditMenuScreen({super.key});
+  final MenuItem menu;
+  const EditMenuScreen({super.key, required this.menu});
 
   @override
   _EditMenuScreenState createState() => _EditMenuScreenState();
@@ -18,27 +20,15 @@ class _EditMenuScreenState extends State<EditMenuScreen> {
       TextEditingController();
   final TextEditingController priceController = TextEditingController();
 
-  // To hold more items if "Add More Item" is clicked
-  List<Map<String, TextEditingController>> itemList = [];
+  final controller = Get.find<DealerMenuController>();
 
   @override
   void initState() {
     super.initState();
-    itemList.add({
-      'name': itemNameController,
-      'description': itemDescriptionController,
-      'price': priceController,
-    });
-  }
-
-  void addMoreItem() {
-    setState(() {
-      itemList.add({
-        'name': TextEditingController(),
-        'description': TextEditingController(),
-        'price': TextEditingController(),
-      });
-    });
+    itemNameController.text = widget.menu.itemName;
+    itemDescriptionController.text = widget.menu.description;
+    priceController.text =
+        double.parse(widget.menu.price.toStringAsFixed(2)).toString();
   }
 
   @override
@@ -55,34 +45,29 @@ class _EditMenuScreenState extends State<EditMenuScreen> {
             const SizedBox(height: 16),
 
             // Dynamically build input fields for each item
-            ...itemList.map((item) {
-              return Column(
-                children: [
-                  commonTextfieldWithTitle(
-                    "Item Name",
-                    item['name']!,
-                    hintText: "Enter name",
-                  ),
-                  const SizedBox(height: 12),
-                  commonTextfieldWithTitle(
-                    "Item Description",
-                    item['description']!,
-                    hintText: "Enter a short description",
-                  ),
-                  const SizedBox(height: 12),
-                  commonTextfieldWithTitle(
-                    "Price",
-                    item['price']!,
-                    hintText: "Enter price",
-                    keyboardType: TextInputType.number,
-                  ),
-                  const SizedBox(height: 20),
-                ],
-              );
-            }),
-
-            // "Add More Item" Button
-            commonBorderButton("+ Add More Item", onTap: addMoreItem),
+            Column(
+              children: [
+                commonTextfieldWithTitle(
+                  "Item Name",
+                  itemNameController,
+                  hintText: "Enter name",
+                ),
+                const SizedBox(height: 12),
+                commonTextfieldWithTitle(
+                  "Item Description",
+                  itemDescriptionController,
+                  hintText: "Enter a short description",
+                ),
+                const SizedBox(height: 12),
+                commonTextfieldWithTitle(
+                  "Price",
+                  priceController,
+                  hintText: "Enter price",
+                  keyboardType: TextInputType.number,
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
 
             const SizedBox(height: 40),
           ],
@@ -95,7 +80,12 @@ class _EditMenuScreenState extends State<EditMenuScreen> {
         child: commonButton(
           "Save Menu",
           onTap: () {
-            Get.back();
+            controller.editMenu(
+              menuId: widget.menu.id,
+              itemDescription: itemDescriptionController.text,
+              itemName: itemNameController.text,
+              price: priceController.text,
+            );
           },
         ),
       ),

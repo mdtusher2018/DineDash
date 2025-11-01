@@ -80,7 +80,7 @@ class _DealerDealsRootPageState extends State<DealerDealsRootPage> {
                           navigateToPage(
                             EditDealScreen(
                               dealId: deal.dealId,
-                              businessId: "controller.businessDetail.value!.id",
+                              businessId: deal.businessId,
                             ),
                           );
                         },
@@ -94,7 +94,6 @@ class _DealerDealsRootPageState extends State<DealerDealsRootPage> {
                               showReasonDialog(
                                 context,
                                 (p0) {
-                 
                                   controller.deleteDeal(
                                     reason: p0,
                                     dealId: deal.dealId,
@@ -112,10 +111,12 @@ class _DealerDealsRootPageState extends State<DealerDealsRootPage> {
                           );
                         },
                         onToggleStatus: () {
-                          showReasonDialog(context, (reason) {
-                            print("User wants to pause because: $reason");
-                            // Perform pause logic with reason
-                          });
+                          if (deal.isActive) {
+                            showReasonDialog(context, (reason) {
+                              print("User wants to pause because: $reason");
+                              // Perform pause logic with reason
+                            });
+                          }
                         },
                       );
                     },

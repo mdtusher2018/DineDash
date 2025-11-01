@@ -113,8 +113,8 @@ class DependencyInjection {
       permanent: true,
     );
 
-    Get.put<DealerAddMenuController>(
-      DealerAddMenuController(),
+    Get.put<DealerMenuController>(
+      DealerMenuController(),
       permanent: true,
     );
     Get.put<FeedbackController>(FeedbackController(), permanent: true);

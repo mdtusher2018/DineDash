@@ -20,7 +20,6 @@ class AddBusinessScreenFrist extends StatefulWidget {
 }
 
 class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
-
   final TextEditingController addressController = TextEditingController();
   final TextEditingController categoryController = TextEditingController();
   final TextEditingController zipController = TextEditingController();
@@ -369,6 +368,7 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
                           context,
                         ),
                         "closingTime": timings[entry.key]!.end.format(context),
+                        'isOpen': entry.value,
                       },
                     )
                     .toList();

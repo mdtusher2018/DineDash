@@ -171,6 +171,12 @@ class ApiEndpoints {
 
   static String getAllSubscription="subscription/all";
 
+  static String editMenu(String id){
+    return "menu/edit/$id";
+  }
+
+  static String pauseDeal(String dealId)=>"deal/pause/$dealId";
+
   static String editDeal(String dealId) => "deal/edit-deal/$dealId";
 
   static String deleteDeal(String dealId) => "deal/delete-deal-req/$dealId";

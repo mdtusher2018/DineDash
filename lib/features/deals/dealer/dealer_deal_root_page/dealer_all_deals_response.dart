@@ -46,6 +46,7 @@ class DealData {
 class DealAttribute {
   final String id;
   final String businessName;
+  final String businessId;
   final String dealId;
   final String reasonFor;
   final String description;
@@ -58,6 +59,7 @@ class DealAttribute {
   DealAttribute({
     required this.id,
     required this.businessName,
+    required this.businessId,
     required this.dealId,
     required this.reasonFor,
     required this.description,
@@ -72,6 +74,7 @@ class DealAttribute {
     id: json["_id"] ?? "",
 
     businessName: json["businessName"] ?? "N/A",
+    businessId: json["businessId"] ?? "",
     description: json["description"] ?? "",
     dealId: json['dealId']??"",
   reasonFor: json['reasonFor']??"",

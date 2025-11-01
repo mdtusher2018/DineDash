@@ -21,7 +21,7 @@ class _AddMenuScreenState extends State<AddMenuScreen> {
   final TextEditingController priceController = TextEditingController();
 
   List<Map<String, TextEditingController>> itemList = [];
-  final controller = Get.find<DealerAddMenuController>();
+  final controller = Get.find<DealerMenuController>();
 
   @override
   void initState() {
@@ -57,9 +57,28 @@ class _AddMenuScreenState extends State<AddMenuScreen> {
             const SizedBox(height: 16),
 
             // Dynamically build input fields for each item
-            ...itemList.map((item) {
+            ...itemList.asMap().entries.map((entry) {
+              int index = entry.key;
+              var item = entry.value;
               return Column(
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      if (itemList.length > 1)
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              itemList.removeAt(index);
+                            });
+                          },
+                          child: const Icon(
+                            Icons.delete_forever,
+                            color: Colors.red,
+                          ),
+                        ),
+                    ],
+                  ),
                   commonTextfieldWithTitle(
                     "Item Name",
                     item['name']!,
@@ -94,29 +113,53 @@ class _AddMenuScreenState extends State<AddMenuScreen> {
       // Bottom Button
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Obx(
-           () {
-            return commonButton(
-              "Add Menu",
-              isLoading: controller.isLoading.value,
-              onTap: () async {
-                final items =
-                    itemList.map((item) {
-                      return {
-                        "itemName": item['name']!.text.trim(),
-                        "description": item['description']!.text.trim(),
-                        "price": item['price']!.text.trim(),
-                      };
-                    }).toList();
-            
-                await controller.addMenuItems(
-                  businessId: widget.businessId,
-                  items: items,
+        child: Obx(() {
+          return commonButton(
+            "Add Menu",
+            isLoading: controller.isLoading.value,
+            onTap: () async {
+              // final items =
+              //     itemList.map((item) {
+              //       return {
+              //         "itemName": item['name']!.text.trim(),
+              //         "description": item['description']!.text.trim(),
+              //         "price": item['price']!.text.trim(),
+              //       };
+              //     }).toList();
+
+              final validItems =
+                  itemList
+                      .where((item) {
+                        return item['name']!.text.trim().isNotEmpty &&
+                            item['description']!.text.trim().isNotEmpty &&
+                            item['price']!.text.trim().isNotEmpty;
+                      })
+                      .map((item) {
+                        return {
+                          "itemName": item['name']!.text.trim(),
+                          "description": item['description']!.text.trim(),
+                          "price": item['price']!.text.trim(),
+                        };
+                      })
+                      .toList();
+
+              if (validItems.isEmpty) {
+                Get.snackbar(
+                  "Warning",
+                  "Please fill all fields of at least one item.",
+                  backgroundColor: Colors.red,
+                  colorText: Colors.white,
                 );
-              },
-            );
-          }
-        ),
+                return;
+              }
+
+              await controller.addMenuItems(
+                businessId: widget.businessId,
+                items: validItems,
+              );
+            },
+          );
+        }),
       ),
     );
   }
