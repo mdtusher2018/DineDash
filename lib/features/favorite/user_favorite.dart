@@ -15,7 +15,6 @@ class UserFavoritePage extends StatefulWidget {
 }
 
 class _UserFavoritePageState extends State<UserFavoritePage> {
-  List<String> favorite = [""];
   final FavoriteController controller = Get.find<FavoriteController>();
   final TextEditingController searchTermController = TextEditingController();
 
@@ -34,6 +33,7 @@ class _UserFavoritePageState extends State<UserFavoritePage> {
           child: Column(
             children: [
               /// Search bar
+              
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
@@ -116,7 +116,7 @@ class _UserFavoritePageState extends State<UserFavoritePage> {
                         return GestureDetector(
                           onTap: () {
                             navigateToPage(
-                              UserBusinessDetailsPage(businessId: business.id),
+                              UserBusinessDetailsPage(businessId: business.businessId),
                             );
                           },
                           child: RestaurantCard(

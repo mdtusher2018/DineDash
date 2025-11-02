@@ -1,5 +1,6 @@
 import 'package:dine_dash/core/services/api/api_client.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
+import 'package:dine_dash/core/services/deeplink/deeplink_service.dart';
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
 import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/features/auth/common/email_verification/email_verification_controller.dart';
@@ -33,7 +34,15 @@ import 'package:get/get.dart';
 
 class DependencyInjection {
   static Future<void> init() async {
-    // ---------- Services ----------
+
+
+
+
+
+        final deepLinkService = DeepLinkService();
+  await deepLinkService.initDeepLinks();
+
+Get.put<DeepLinkService>(deepLinkService,permanent: true);
     LocalStorageService.init();
     final localStorageService = LocalStorageService();
 

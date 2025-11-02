@@ -1,8 +1,8 @@
 import 'package:dine_dash/core/base/base_controller.dart';
+import 'package:dine_dash/core/models/favorite_business_model.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/features/favorite/favorite_response.dart';
-import 'package:dine_dash/core/models/business_model.dart';
 import 'package:get/get.dart';
 
 class FavoriteController extends BaseController {
@@ -12,7 +12,7 @@ class FavoriteController extends BaseController {
   var favoriteData = Rxn<FavoriteData>();
 
   /// Filtered list (shown in UI)
-  var filteredFavorites = <BusinessModel>[].obs;
+  var filteredFavorites = <FavoriteBusinessModel>[].obs;
 
   /// Search text
   var searchQuery = ''.obs;

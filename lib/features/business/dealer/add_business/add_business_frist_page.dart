@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/core/utils/default_value.dart';
+import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/features/business/dealer/add_business/dealer_business_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/res/google_location_picker.dart';
@@ -284,38 +285,103 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
         /// 📸 Business Image Picker
         commonText("Business Image", size: 14, fontWeight: FontWeight.w500),
         const SizedBox(height: 8),
+
+        // GestureDetector(
+        //   onTap: _pickImage,
+        //   child: DottedBorder(
+        //     options: const RoundedRectDottedBorderOptions(
+        //       radius: Radius.circular(16),
+        //     ),
+        //     child: Container(
+        //       padding: const EdgeInsets.all(16),
+        //       width: double.infinity,
+        //       child: Column(
+        //         mainAxisSize: MainAxisSize.min,
+        //         crossAxisAlignment: CrossAxisAlignment.center,
+        //         children: [
+        //           if (_selectedImage != null)
+        //             ClipRRect(
+        //               borderRadius: BorderRadius.circular(12),
+        //               child: Image.file(
+        //                 _selectedImage!,
+        //                 height: 100,
+        //                 fit: BoxFit.cover,
+        //               ),
+        //             )
+        //           else ...[
+        //             Image.asset("assets/images/Upload.png", width: 30),
+        //             const SizedBox(height: 12),
+        //             commonText("Upload your image", size: 16),
+        //           ],
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // ),
         GestureDetector(
           onTap: _pickImage,
           child: DottedBorder(
             options: const RoundedRectDottedBorderOptions(
               radius: Radius.circular(16),
             ),
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              width: double.infinity,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  if (_selectedImage != null)
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.file(
-                        _selectedImage!,
-                        height: 100,
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                  else ...[
-                    Image.asset("assets/images/Upload.png", width: 30),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                /// Background image (if selected)
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 200,
+                    child:
+                        _selectedImage != null
+                            ? Image.file(_selectedImage!, fit: BoxFit.cover)
+                            : Container(
+                              height: 200,
+                              color: Colors.grey.shade200,
+                            ),
+                  ),
+                ),
+
+                /// ✅ Black Soft Overlay
+                if (_selectedImage != null)
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Container(
+                      width: double.infinity,
+                      height: 200,
+                      color: Colors.black.withOpacity(0.4),
+                    ),
+                  ),
+
+                /// ✅ Upload / Change UI
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      "assets/images/Upload.png",
+                      width: 30,
+                      color:
+                          _selectedImage == null ? Colors.black : Colors.white,
+                    ),
                     const SizedBox(height: 12),
-                    commonText("Upload your image", size: 16),
+                    commonText(
+                      _selectedImage != null
+                          ? "Change Image"
+                          : "Upload your image",
+
+                      color:
+                          _selectedImage == null ? Colors.black : Colors.white,
+                      size: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ],
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
+
         const SizedBox(height: 16),
 
         /// 🗺 Location
@@ -584,6 +650,25 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
                               selectedBusinessType ??= "Activity";
                             }
                           });
+
+                          if (_selectedPlace?.photoMetadatas != null &&
+                              _selectedPlace!.photoMetadatas!.isNotEmpty) {
+                            final photoRef =
+                                _selectedPlace!
+                                    .photoMetadatas!
+                                    .first
+                                    .photoReference;
+
+                            File? imageFile = await fetchImageFile(photoRef);
+
+                            if (imageFile != null) {
+                              setState(() {
+                                _selectedImage =
+                                    imageFile; // ✅ Assign for UI & Backend upload
+                              });
+                            }
+                          }
+
                           if (_selectedPlace!.openingHours?.periods != null) {
                             // Reset closedDays & timings
                             closedDays.updateAll(

@@ -136,10 +136,6 @@ class DealerAddBusinessController extends BaseController {
           throw Exception("Please provide opening hours");
         }
 
-        if (imageFile == null) {
-          throw Exception("Please upload your business image");
-        }
-
         final formData = {
           "name": name,
           "types": types,
@@ -157,7 +153,7 @@ class DealerAddBusinessController extends BaseController {
           ApiEndpoints.editBusiness(businessId),
           body: formData,
           method: 'PUT',
-          files: {'image': imageFile},
+          files: {if (imageFile != null) 'image': imageFile},
         );
 
         if (response['statusCode'] == 200 || response['status'] == true) {

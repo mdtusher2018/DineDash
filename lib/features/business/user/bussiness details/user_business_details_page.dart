@@ -1,6 +1,10 @@
 import 'dart:math';
 
+import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
+import 'package:dine_dash/core/services/localstorage/storage_key.dart';
 import 'package:dine_dash/core/utils/helper.dart';
+import 'package:dine_dash/core/utils/share_links.dart';
+import 'package:dine_dash/features/auth/common/sign_in/sign_in_page.dart';
 import 'package:dine_dash/features/business/user/all_review_of_business.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/business_details_controller.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/business_details_response.dart';
@@ -31,11 +35,19 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
   final BusinessDetailController controller =
       Get.find<BusinessDetailController>();
 
+  final localStorageController = Get.find<LocalStorageService>();
+  RxString token = "".obs;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     controller.fetchBusinessDetail(widget.businessId);
+    getToken();
+  }
+
+  void getToken() async {
+    token.value =
+        await localStorageController.getString(StorageKey.token) ?? "";
   }
 
   @override
@@ -47,7 +59,9 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
           return const Center(child: CircularProgressIndicator());
         }
         if (business == null) {
-          return const Center(child: Text("No details available"));
+          return Center(
+            child: commonText("No details available", size: 16, isBold: true),
+          );
         }
 
         return Stack(
@@ -85,7 +99,24 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
           }
 
           if (business == null) {
-            return const Center(child: Text("No details available"));
+            return  Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  commonText("No details available",size: 21,isBold: true),
+                  if (token.isEmpty)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 8),
+                      child: commonButton(
+                        "Go to Signin",
+                        onTap: () {
+                          navigateToPage(SignInScreen(), clearStack: true);
+                        },
+                      ),
+                    ),
+                ],
+              ),
+            );
           }
 
           return Column(
@@ -293,10 +324,9 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                           ),
                           IconButton(
                             onPressed: () {
-                              final String shareText =
-                                  "Check out this awesome business on DineDesh!";
-                              final String shareLink = "Share this Resturent";
-                              Share.share('$shareText\n$shareLink');
+                              Share.shareUri(
+                                ShareLinks.business(widget.businessId),
+                              );
                             },
                             icon: Container(
                               padding: EdgeInsets.all(8),
@@ -1111,7 +1141,6 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                                         size: 13,
                                         isBold: true,
                                       ),
-                                
                                     ],
                                   ),
                                 ),

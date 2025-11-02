@@ -1,4 +1,5 @@
-import 'package:dine_dash/core/models/business_model.dart';
+
+import 'package:dine_dash/core/models/favorite_business_model.dart';
 
 class FavoriteResponse {
   final String status;
@@ -28,14 +29,14 @@ class FavoriteResponse {
 
 class FavoriteData {
   final String type;
-  final List<BusinessModel> attributes;
+  final List<FavoriteBusinessModel> attributes;
 
   FavoriteData({required this.type, required this.attributes});
 
   factory FavoriteData.fromJson(Map<String, dynamic> json) {
-    List<BusinessModel> parseAttributes(dynamic list) =>
+    List<FavoriteBusinessModel> parseAttributes(dynamic list) =>
         list != null
-            ? (list as List).map((e) => BusinessModel.fromJson(e)).toList()
+            ? (list as List).map((e) => FavoriteBusinessModel.fromJson(e)).toList()
             : [];
 
     return FavoriteData(

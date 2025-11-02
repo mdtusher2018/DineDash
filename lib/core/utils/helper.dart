@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
@@ -5,6 +8,7 @@ import 'package:geolocator/geolocator.dart';
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 String getFullImagePath(String imagePath) {
   if (imagePath.isEmpty) {
@@ -117,7 +121,9 @@ Map<String, dynamic> decodeJwtPayload(String token) {
   }
 }
 
-Future<Position> getCurrentPosition({required BaseController? controller}) async {
+Future<Position> getCurrentPosition({
+  required BaseController? controller,
+}) async {
   Position fallbackPosition = Position(
     latitude: 23.8103,
     longitude: 90.4125,
@@ -158,3 +164,28 @@ Future<Position> getCurrentPosition({required BaseController? controller}) async
       )) ??
       fallbackPosition;
 }
+
+Future<File?> fetchImageFile(String photoRef) async {
+  try {
+    final url =
+        "https://maps.googleapis.com/maps/api/place/photo"
+        "?maxwidth=800"
+        "&photoreference=$photoRef"
+        "&key=${ApiEndpoints.mapKey}";
+        log(url);
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final tempDir = await getTemporaryDirectory();
+      final file = File(
+        "${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.jpg",
+      );
+
+      await file.writeAsBytes(response.bodyBytes);
+
+      return file;
+    }
+  } catch (_) {}
+  return null;
+}
+
+
