@@ -5,15 +5,13 @@ class ApiEndpoints {
   static String mapResturant(String resturantName) =>
       "https://places.googleapis.com/v1/places:searchText?query=$resturantName&key=$mapKey";
 
-  static const String baseUrl =
-      'http://147.93.29.184:8020/api/v1/'; 
-  static const String baseImageUrl =
-      'http://147.93.29.184:8020'; 
+  static const String baseUrl = 'http://147.93.29.184:8020/api/v1/';
+  static const String baseImageUrl = 'http://147.93.29.184:8020';
 
   // static const String baseUrl =
-  //     'http://10.10.10.33:8020/api/v1/'; 
+  //     'http://10.10.10.33:8020/api/v1/';
   // static const String baseImageUrl =
-  //     'http://10.10.10.33:8020'; 
+  //     'http://10.10.10.33:8020';
 
   //authentication
   static String signin = "auth/signin";
@@ -167,15 +165,15 @@ class ApiEndpoints {
 
   static String deleteAccount = "users/delete-own-account";
 
-  static String checkEmail="auth/email-check";
+  static String checkEmail = "auth/email-check";
 
-  static String getAllSubscription="subscription/all";
+  static String getAllSubscription = "subscription/all";
 
-  static String editMenu(String id){
+  static String editMenu(String id) {
     return "menu/edit/$id";
   }
 
-  static String pauseDeal(String dealId)=>"deal/pause/$dealId";
+  static String pauseDeal(String dealId) => "deal/pause/$dealId";
 
   static String editDeal(String dealId) => "deal/edit-deal/$dealId";
 
@@ -189,11 +187,19 @@ class ApiEndpoints {
     return "deal/book/$dealId";
   }
 
-  static String userAvailableDeals({required int page,int limit=5}) {
+  static String userAvailableDeals({required int page, int limit = 5}) {
     return "deal/my-bookings?page=$page&limit=$limit";
   }
 
-    static String userUsedDeals({required int page,int limit=5}) {
+  static String userUsedDeals({required int page, int limit = 5}) {
     return "deal/redeem?page=$page&limit=$limit";
+  }
+
+  static String userRedeemDeal(String id) {
+    return "deal/redeem/$id";
+  }
+
+  static String userAddFeedback(String businessId) {
+    return "feedback/add/$businessId";
   }
 }

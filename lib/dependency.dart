@@ -20,6 +20,7 @@ import 'package:dine_dash/features/deals/dealer/dealer_deal_controller.dart';
 import 'package:dine_dash/features/deals/dealer/dealer_deal_root_page/dealer_all_deals_controller.dart';
 import 'package:dine_dash/features/deals/user/available%20deals/user_allavailable_deals_controller.dart';
 import 'package:dine_dash/features/deals/user/used%20deal/user_used_deals_controller.dart';
+import 'package:dine_dash/features/deals/user/user_deals_details_and_redeem/user_deal_redeem_controller.dart';
 import 'package:dine_dash/features/explore/user_explore_controller.dart';
 import 'package:dine_dash/features/favorite/favorite_controller.dart';
 import 'package:dine_dash/features/home/dealer/dealer_homepage_controller.dart';
@@ -28,21 +29,16 @@ import 'package:dine_dash/features/notification/user%20notification/user_notific
 import 'package:dine_dash/features/profile/common/change%20password/change_password_controller.dart';
 import 'package:dine_dash/features/profile/common/static_content/static_content_controller.dart';
 import 'package:dine_dash/features/profile/user/profile/profile_controller.dart';
-import 'package:dine_dash/features/ratting/dealer/review_controller.dart';
+import 'package:dine_dash/features/ratting_and_feedback/dealer/review_controller.dart';
 import 'package:dine_dash/features/subscription/user_subscription_controller.dart';
 import 'package:get/get.dart';
 
 class DependencyInjection {
   static Future<void> init() async {
+    final deepLinkService = DeepLinkService();
+    await deepLinkService.initDeepLinks();
 
-
-
-
-
-        final deepLinkService = DeepLinkService();
-  await deepLinkService.initDeepLinks();
-
-Get.put<DeepLinkService>(deepLinkService,permanent: true);
+    Get.put<DeepLinkService>(deepLinkService, permanent: true);
     LocalStorageService.init();
     final localStorageService = LocalStorageService();
 
@@ -122,10 +118,7 @@ Get.put<DeepLinkService>(deepLinkService,permanent: true);
       permanent: true,
     );
 
-    Get.put<DealerMenuController>(
-      DealerMenuController(),
-      permanent: true,
-    );
+    Get.put<DealerMenuController>(DealerMenuController(), permanent: true);
     Get.put<FeedbackController>(FeedbackController(), permanent: true);
     Get.put<DealerDealController>(DealerDealController(), permanent: true);
     Get.put<DealerAllDealsController>(
@@ -147,6 +140,10 @@ Get.put<DeepLinkService>(deepLinkService,permanent: true);
     );
     Get.put<UserSubscriptionController>(
       UserSubscriptionController(),
+      permanent: true,
+    );
+    Get.put<UserDealRedeemController>(
+      UserDealRedeemController(),
       permanent: true,
     );
   }

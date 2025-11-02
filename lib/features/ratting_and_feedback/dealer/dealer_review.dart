@@ -1,7 +1,7 @@
 import 'package:dine_dash/core/models/my_business_name_response.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/core/utils/helper.dart';
-import 'package:dine_dash/features/ratting/dealer/review_controller.dart';
+import 'package:dine_dash/features/ratting_and_feedback/dealer/review_controller.dart';
 
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';

@@ -4,7 +4,7 @@ import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../user_deals_details.dart';
+import '../user_deals_details_and_redeem/user_deals_details.dart';
 
 class UserAllAvailableDeals extends StatefulWidget {
   const UserAllAvailableDeals({super.key});

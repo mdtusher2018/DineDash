@@ -1,5 +1,5 @@
 import 'package:dine_dash/core/controller/my_business_name_controller.dart';
-import 'package:dine_dash/features/ratting/dealer/review_response.dart';
+import 'package:dine_dash/features/ratting_and_feedback/dealer/review_response.dart';
 import 'package:get/get.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';

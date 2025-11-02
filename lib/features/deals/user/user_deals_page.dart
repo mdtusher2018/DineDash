@@ -6,11 +6,11 @@ import 'package:dine_dash/features/deals/user/used%20deal/user_used_deals_contro
 import 'package:dine_dash/features/deals/user/widget/deal_card.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/features/deals/user/available%20deals/user_all_available_deals.dart';
-import 'package:dine_dash/features/ratting/user/user_after_giving_star_page.dart';
+import 'package:dine_dash/features/ratting_and_feedback/user/user_after_giving_star_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'user_deals_details.dart';
+import 'user_deals_details_and_redeem/user_deals_details.dart';
 
 class UserDealsPage extends StatefulWidget {
   const UserDealsPage({super.key});

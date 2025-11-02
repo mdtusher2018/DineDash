@@ -1,6 +1,6 @@
 
 import 'package:dine_dash/res/commonWidgets.dart';
-import 'package:dine_dash/features/ratting/user/user_giving_start_screen.dart';
+import 'package:dine_dash/features/ratting_and_feedback/user/user_giving_start_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart'; // Add this import
