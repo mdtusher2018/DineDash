@@ -16,7 +16,7 @@ class DealerReview extends StatefulWidget {
 }
 
 class _DealerReviewState extends State<DealerReview> {
-  final controller = Get.find<FeedbackController>();
+  final controller = Get.find<DealerReviewbackController>();
 
   @override
   void initState() {

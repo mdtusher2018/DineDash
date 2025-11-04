@@ -1,5 +1,5 @@
 import 'package:dine_dash/core/models/pagination_model.dart';
-import 'package:dine_dash/features/deals/user/deal_model.dart';
+import 'package:dine_dash/features/deals/user/model_and_response/deal_model.dart';
 
 class UserAllDealsResponse {
   final bool status;

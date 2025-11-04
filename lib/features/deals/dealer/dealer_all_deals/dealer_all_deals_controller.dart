@@ -1,12 +1,12 @@
 
-import 'package:dine_dash/features/deals/dealer/dealer_deal_controller.dart';
-import 'package:dine_dash/features/deals/dealer/dealer_deal_root_page/dealer_all_deals_response.dart';
+import 'package:dine_dash/features/deals/dealer/dealer_all_deals/dealer_all_deals_response.dart';
+import 'package:dine_dash/features/deals/dealer/delete_deal/delete_deal_controller.dart';
 import 'package:get/get.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 
 
-class DealerAllDealsController extends DealerDealController {
+class DealerAllDealsController extends DealerDeleteDealController {
   final ApiService _apiService = Get.find<ApiService>();
 
   /// Observables

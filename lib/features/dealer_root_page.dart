@@ -1,9 +1,9 @@
-import 'package:dine_dash/features/business/dealer/dealer_business_root_page/dealer_all_business_page.dart';
+import 'package:dine_dash/features/business/dealer/dealer_all_business/dealer_all_business_page.dart';
 import 'package:dine_dash/features/home/dealer/dealer_homepage.dart';
 import 'package:dine_dash/features/profile/common/profile/profile_screen.dart';
 import 'package:dine_dash/features/ratting_and_feedback/dealer/dealer_review.dart';
 import 'package:dine_dash/core/utils/colors.dart';
-import 'package:dine_dash/features/deals/dealer/dealer_deal_root_page/dealer_deals_root_page.dart';
+import 'package:dine_dash/features/deals/dealer/dealer_all_deals/dealer_deals_root_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

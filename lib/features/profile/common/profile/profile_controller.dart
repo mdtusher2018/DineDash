@@ -16,7 +16,7 @@ import 'package:dine_dash/features/profile/common/profile/switch_account_respons
 import 'package:dine_dash/features/user_root_page.dart';
 import 'package:dine_dash/core/models/user_model.dart'; // The model that holds user attributes
 import 'package:dine_dash/res/commonWidgets.dart';
-import 'package:dine_dash/role_selection_page.dart';
+import 'package:dine_dash/features/role_selection_page.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends BaseController {

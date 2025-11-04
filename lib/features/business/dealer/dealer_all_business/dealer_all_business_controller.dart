@@ -1,4 +1,4 @@
-import 'package:dine_dash/features/business/dealer/dealer_business_root_page/dealer_all_business_response.dart';
+import 'package:dine_dash/features/business/dealer/dealer_all_business/dealer_all_business_response.dart';
 import 'package:dine_dash/core/models/dealer_business_model.dart';
 import 'package:get/get.dart';
 import 'package:dine_dash/core/base/base_controller.dart';

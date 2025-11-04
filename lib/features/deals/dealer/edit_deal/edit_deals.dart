@@ -1,38 +1,33 @@
-// ignore_for_file: must_be_immutable
-
+import 'package:dine_dash/core/models/dealer_deal_details.dart';
 import 'package:dine_dash/core/models/my_business_name_response.dart';
-import 'package:dine_dash/features/deals/dealer/dealer_deal_controller.dart';
+import 'package:dine_dash/features/deals/dealer/edit_deal/edit_deals_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:get/get.dart';
-// if needed, import your widget file
 
-class AddDealScreen extends StatefulWidget {
-  DealerBusinessItem? selectedBusiness;
-  AddDealScreen({this.selectedBusiness, super.key});
+class EditDealScreen extends StatefulWidget {
+  final String dealId;
+  final String businessId;
+  const EditDealScreen({
+    required this.dealId,
+    super.key,
+    required this.businessId,
+  });
   @override
-  _AddDealScreenState createState() => _AddDealScreenState();
+  _EditDealScreenState createState() => _EditDealScreenState();
 }
 
-class _AddDealScreenState extends State<AddDealScreen> {
-  final TextEditingController descriptionController = TextEditingController(
-    text: (kDebugMode) ? "Ride boooom boom" : null,
-  );
-  final TextEditingController maxClaimsController = TextEditingController(
-    text: kDebugMode ? "100" : null,
-  );
-  final TextEditingController benefitController = TextEditingController(
-    text: kDebugMode ? "20" : null,
-  );
-    final TextEditingController dealTypeController = TextEditingController(
-    text: kDebugMode ? "2 for 1" : null,
-  );
+class _EditDealScreenState extends State<EditDealScreen> {
+  final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController maxClaimsController = TextEditingController();
+  final TextEditingController benefitController = TextEditingController();
+  final TextEditingController dealTypeController = TextEditingController();
 
   DealerBusinessItem? selectedBusiness;
-  // String? selectedDealType;
+
   String? selectedRefusableDay;
+  List<String> dealTypes = ["1 for 1", "50% Off", "Buy 1 Get 1"];
   List<String> refuesableAfter = ["60 Days", "90 Days"];
   List<String> days = [
     "Monday",
@@ -45,14 +40,37 @@ class _AddDealScreenState extends State<AddDealScreen> {
   ];
   List<TimeFrame> timeFrames = [TimeFrame()];
 
-  final controller = Get.find<DealerDealController>();
+  final controller = Get.find<DealerEditDealController>();
 
   @override
   void initState() {
     super.initState();
-    controller.fetchAllBusinessesName();
-    if(widget.selectedBusiness!=null){
-      selectedBusiness=widget.selectedBusiness;
+
+    initializedData();
+
+    controller.fetchAllBusinessesName().then((_) {
+      selectedBusiness = controller.businessesName.firstWhereOrNull(
+        (business) => business.id == widget.businessId,
+      );
+    });
+  }
+
+  Future<void> initializedData() async {
+    await controller.fetchDealById(widget.dealId);
+    final deal = controller.dealDetails.value;
+
+    if (deal != null) {
+      descriptionController.text = deal.description;
+      maxClaimsController.text = deal.redeemCount.toString();
+      benefitController.text = deal.benefitAmount.toString();
+      dealTypeController.text = deal.dealType;
+      selectedRefusableDay = deal.reuseableAfter == 60 ? "60 Days" : "90 Days";
+      timeFrames =
+          deal.activeTime.map((activeTime) {
+            return TimeFrame.fromActiveTime(
+              activeTime,
+            ); // Create TimeFrame from ActiveTime
+          }).toList();
     }
   }
 
@@ -60,7 +78,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: commonAppBar(title: "Add Deal".tr),
+      appBar: commonAppBar(title: "Edit Deal".tr),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Obx(() {
@@ -95,43 +113,14 @@ class _AddDealScreenState extends State<AddDealScreen> {
                 ],
               ),
               SizedBox(height: 8),
-              if (widget.selectedBusiness != null)
-                Material(
-                  elevation: 2,
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      border: Border.all(color: Colors.transparent),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: TextFormField(
-                        controller: TextEditingController(text: widget.selectedBusiness!.businessName),
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.all(12.0),
-                          fillColor: Colors.white,
-                          filled: true,
-                          enabled: false,
-                          hintStyle: TextStyle(
-                            fontSize: 14,
-                            color: AppColors.gray,
-                          ),
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
 
-              if (widget.selectedBusiness == null)
-                commonDropdown<DealerBusinessItem>(
-                  items: controller.businessesName,
-                  value: selectedBusiness,
-                  hint: "Select your business".tr,
-                  labelBuilder: (p0) => p0.businessName,
-                  onChanged: (val) => setState(() => selectedBusiness = val),
-                ),
+              commonDropdown<DealerBusinessItem>(
+                items: controller.businessesName,
+                value: selectedBusiness,
+                hint: "Select your business".tr,
+                labelBuilder: (p0) => p0.businessName,
+                onChanged: (val) => setState(() => selectedBusiness = val),
+              ),
 
               const SizedBox(height: 30),
 
@@ -349,20 +338,12 @@ class _AddDealScreenState extends State<AddDealScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // commonText(
-                        //   "Deal Type*".tr,
-                        //   size: 14,
-                        //   fontWeight: FontWeight.bold,
-                        // ),
-                        // SizedBox(height: 8),
-                        // commonDropdown<String>(
-                        //   items: dealTypes,
-                        //   value: selectedDealType,
-                        //   hint: "Deal Type".tr,
-                        //   onChanged:
-                        //       (val) => setState(() => selectedDealType = val),
-                        // ),
-                        commonTextfieldWithTitle("Deal Type*", dealTypeController,fillColor: Colors.white,hintText: "Deal Type")
+                        commonTextfieldWithTitle(
+                          "Deal Type*",
+                          dealTypeController,
+                          fillColor: Colors.white,
+                          hintText: "Deal Type",
+                        ),
                       ],
                     ),
                   ),
@@ -403,7 +384,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
 
               /// Create Deal Button
               commonButton(
-                "Create Deal".tr,
+                "Save".tr,
                 isLoading: controller.isLoading.value,
                 onTap: () {
                   final formattedActiveTimes =
@@ -425,7 +406,8 @@ class _AddDealScreenState extends State<AddDealScreen> {
                           )
                           .toList();
 
-                  controller.createDeal(
+                  controller.editDeal(
+                    dealId: widget.dealId,
                     business: selectedBusiness,
                     description: descriptionController.text.trim(),
                     benefitAmount:
@@ -433,8 +415,11 @@ class _AddDealScreenState extends State<AddDealScreen> {
                     dealType: dealTypeController.text,
                     reusableAfter:
                         int.tryParse(
-                          selectedRefusableDay?.split(' ').first??"0"
-                              ,
+                          selectedRefusableDay?.replaceAll(
+                                RegExp(r'[^0-9]'),
+                                '',
+                              ) ??
+                              '0',
                         ) ??
                         0,
                     maxClaimCount:
@@ -476,4 +461,23 @@ class TimeFrame {
   TimeOfDay? endTime;
 
   TimeFrame({this.day, this.startTime, this.endTime});
+  factory TimeFrame.fromActiveTime(ActiveTime activeTime) {
+    return TimeFrame(
+      day: activeTime.day,
+      startTime: _parseTime(activeTime.startTime),
+      endTime: _parseTime(activeTime.endTime),
+    );
+  }
+
+  // Helper function to parse time string (hh:mm) to TimeOfDay
+  static TimeOfDay? _parseTime(String timeString) {
+    try {
+      final parts = timeString.split(':');
+      final hour = int.parse(parts[0]);
+      final minute = int.parse(parts[1]);
+      return TimeOfDay(hour: hour, minute: minute);
+    } catch (e) {
+      return null;
+    }
+  }
 }

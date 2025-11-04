@@ -3,11 +3,11 @@ import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/features/business/dealer/add_menu/add_menu_page.dart';
 import 'package:dine_dash/features/business/dealer/dealer_business_details/dealer_business_details_controller.dart';
 import 'package:dine_dash/features/business/dealer/dealer_business_details/dealer_business_details_response.dart';
-import 'package:dine_dash/features/business/dealer/edit_menu_page.dart';
-import 'package:dine_dash/features/deals/dealer/edit_deals.dart';
+import 'package:dine_dash/features/business/dealer/edit_menu/edit_menu_page.dart';
+import 'package:dine_dash/features/deals/dealer/edit_deal/edit_deals.dart';
 import 'package:dine_dash/res/buildDealCard.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
-import 'package:dine_dash/features/deals/dealer/create_deal.dart';
+import 'package:dine_dash/features/deals/dealer/create_deal/create_deal.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:get/get.dart';
@@ -94,95 +94,6 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
       );
     });
   }
-
-  // Widget menuTab() {
-  //   return Padding(
-  //     padding: const EdgeInsets.all(16.0),
-  //     child: SingleChildScrollView(
-  //       physics: AlwaysScrollableScrollPhysics(),
-  //       child: Column(
-  //         crossAxisAlignment: CrossAxisAlignment.start,
-  //         children: [
-  //           commonBorderButton(
-  //             "+ Add Items",
-  //             onTap: () {
-  //               navigateToPage(
-  //                 AddMenuScreen(
-  //                   businessId: controller.businessDetail.value!.id,
-  //                 ),
-  //               );
-  //             },
-  //           ),
-  //           SizedBox(height: 16),
-  //           Row(
-  //             children: [
-  //               Expanded(
-  //                 child: Column(
-  //                   crossAxisAlignment: CrossAxisAlignment.start,
-  //                   children: [
-  //                     commonText("Example from the", size: 14),
-  //                     commonText("Menu", size: 18, isBold: true),
-  //                   ],
-  //                 ),
-  //               ),
-  //               GestureDetector(
-  //                 onTap: () {
-  //                   navigateToPage(EditMenuScreen());
-  //                 },
-  //                 child: Container(
-  //                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-  //                   decoration: BoxDecoration(
-  //                     border: Border.all(width: 1),
-  //                     borderRadius: BorderRadius.circular(4),
-  //                   ),
-  //                   child: Row(
-  //                     mainAxisSize: MainAxisSize.min,
-  //                     children: [
-  //                       Image.asset("assets/images/editb.png", width: 16),
-  //                       commonText(" Edit", size: 12),
-  //                     ],
-  //                   ),
-  //                 ),
-  //               ),
-  //             ],
-  //           ),
-  //           Divider(),
-
-  //           ListView.builder(
-  //             itemCount: controller.businessDetail.value!.menuData.length,
-  //             shrinkWrap: true,
-  //             padding: EdgeInsets.zero,
-  //             physics: NeverScrollableScrollPhysics(),
-  //             itemBuilder: (context, index) {
-  //               return ListTile(
-  //                 minVerticalPadding: 8,
-  //                 minTileHeight: 0,
-                
-  //                 contentPadding: EdgeInsets.only(right: 16),
-  //                 title: commonText(
-  //                   controller.businessDetail.value!.menuData[index].itemName,
-  //                   size: 14,
-  //                   fontWeight: FontWeight.w500,
-  //                 ),
-  //                 subtitle: commonText(
-  //                   controller
-  //                       .businessDetail
-  //                       .value!
-  //                       .menuData[index]
-  //                       .description,
-  //                 ),
-  //                 trailing: commonText(
-  //                   controller.businessDetail.value!.menuData[index].price
-  //                       .toStringAsFixed(2),
-  //                 ),
-  //               );
-  //             },
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget _buildHeaderCard() {
     return Material(

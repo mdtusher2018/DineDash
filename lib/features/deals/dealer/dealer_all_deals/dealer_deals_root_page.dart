@@ -1,8 +1,8 @@
-import 'package:dine_dash/features/deals/dealer/dealer_deal_root_page/dealer_all_deals_controller.dart';
-import 'package:dine_dash/features/deals/dealer/edit_deals.dart';
+import 'package:dine_dash/features/deals/dealer/dealer_all_deals/dealer_all_deals_controller.dart';
+import 'package:dine_dash/features/deals/dealer/edit_deal/edit_deals.dart';
 import 'package:dine_dash/res/buildDealCard.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
-import 'package:dine_dash/features/deals/dealer/create_deal.dart';
+import 'package:dine_dash/features/deals/dealer/create_deal/create_deal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -4,7 +4,7 @@ import 'package:dine_dash/features/home/dealer/dealer_homepage_controller.dart';
 import 'package:dine_dash/features/notification/user%20notification/user_notification.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/features/business/dealer/dealer_business_details/dealer_business_details_page.dart';
-import 'package:dine_dash/features/deals/dealer/create_deal.dart';
+import 'package:dine_dash/features/deals/dealer/create_deal/create_deal.dart';
 // import 'package:dine_dash/features/notification/dealer_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';

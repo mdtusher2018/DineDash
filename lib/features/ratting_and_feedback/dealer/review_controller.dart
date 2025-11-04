@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 
-class FeedbackController extends DealerMyBusinessNameListController {
+class DealerReviewbackController extends DealerMyBusinessNameListController {
   final ApiService _apiService = Get.find();
 
   var feedbackResponse = Rxn<DealerFeedBackResponse>();

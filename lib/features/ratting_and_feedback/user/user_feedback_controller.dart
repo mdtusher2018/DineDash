@@ -1,7 +1,7 @@
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
-import 'package:dine_dash/features/deals/user/user_deals_details_and_redeem/user_deal_redeem.dart';
+import 'package:dine_dash/features/ratting_and_feedback/user/feedback_of_a_business.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:get/get.dart';
 
@@ -26,9 +26,9 @@ class UserFeedbackController extends BaseController {
             "rating": ratting,
           },
         );
-        if (response['statusCode'] == 200) {
+        if (response['statusCode'] == 201) {
           navigateToPage(
-            UserDealRedeemPage(businessId: businessId, dealId: dealId,rasturentName: rasturentName,),
+            UserAfterGivingStarPage(),
           );
         } else {
           throw Exception(response['message'] ?? "Could not add feedback");

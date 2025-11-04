@@ -1,6 +1,6 @@
 import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/utils/colors.dart';
-import 'package:dine_dash/features/auth/dealer/create_dealer_account_page.dart';
+import 'package:dine_dash/features/auth/dealer/create_dealer_1st_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/core/utils/image_paths.dart';
 import 'package:dine_dash/features/auth/user/create_user_account.dart';
@@ -66,7 +66,7 @@ class _SignInSignUpChooeserState extends State<SignInSignUpChooeser> {
                     if (SessionMemory.isUser) {
                       navigateToPage(CreateUserAccount());
                     } else {
-                      navigateToPage(CreateDealerAccount());
+                      navigateToPage(CreateDealerAccount1stPage());
                     }
                   },
                 ),

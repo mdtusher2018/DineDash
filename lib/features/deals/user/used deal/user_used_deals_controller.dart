@@ -1,8 +1,8 @@
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
-import 'package:dine_dash/features/deals/user/user_all_available_deals_response.dart';
-import 'package:dine_dash/features/deals/user/deal_model.dart';
+import 'package:dine_dash/features/deals/user/model_and_response/user_all_available_deals_response.dart';
+import 'package:dine_dash/features/deals/user/model_and_response/deal_model.dart';
 import 'package:get/get.dart';
 
 class UserAllUseddDealsController extends BaseController {
@@ -73,8 +73,4 @@ class UserAllUseddDealsController extends BaseController {
     }
   }
 
-  void resetPage() {
-    currentPage = 1;
-    totalPages = 1;
-  }
 }

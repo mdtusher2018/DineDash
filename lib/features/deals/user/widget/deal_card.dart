@@ -1,6 +1,6 @@
   // Function to generate the deal card
   import 'package:dine_dash/core/utils/helper.dart';
-import 'package:dine_dash/features/deals/user/deal_model.dart';
+import 'package:dine_dash/features/deals/user/model_and_response/deal_model.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';

@@ -10,14 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';
 import 'package:get/get.dart';
 
-class CreateDealerAccount extends StatefulWidget {
-  const CreateDealerAccount({super.key});
+class CreateDealerAccount1stPage extends StatefulWidget {
+  const CreateDealerAccount1stPage({super.key});
 
   @override
-  State<CreateDealerAccount> createState() => _CreateDealerAccountState();
+  State<CreateDealerAccount1stPage> createState() => _CreateDealerAccount1stPageState();
 }
 
-class _CreateDealerAccountState extends State<CreateDealerAccount> {
+class _CreateDealerAccount1stPageState extends State<CreateDealerAccount1stPage> {
   final businessController = TextEditingController();
   final addressController = TextEditingController();
   final emailController = TextEditingController();

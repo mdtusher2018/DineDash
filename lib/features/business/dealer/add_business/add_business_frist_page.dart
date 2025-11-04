@@ -4,7 +4,7 @@ import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/core/utils/default_value.dart';
 import 'package:dine_dash/core/utils/helper.dart';
-import 'package:dine_dash/features/business/dealer/add_business/dealer_business_controller.dart';
+import 'package:dine_dash/features/business/dealer/add_business/dealer_add_business_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/res/google_location_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -286,38 +286,6 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
         commonText("Business Image", size: 14, fontWeight: FontWeight.w500),
         const SizedBox(height: 8),
 
-        // GestureDetector(
-        //   onTap: _pickImage,
-        //   child: DottedBorder(
-        //     options: const RoundedRectDottedBorderOptions(
-        //       radius: Radius.circular(16),
-        //     ),
-        //     child: Container(
-        //       padding: const EdgeInsets.all(16),
-        //       width: double.infinity,
-        //       child: Column(
-        //         mainAxisSize: MainAxisSize.min,
-        //         crossAxisAlignment: CrossAxisAlignment.center,
-        //         children: [
-        //           if (_selectedImage != null)
-        //             ClipRRect(
-        //               borderRadius: BorderRadius.circular(12),
-        //               child: Image.file(
-        //                 _selectedImage!,
-        //                 height: 100,
-        //                 fit: BoxFit.cover,
-        //               ),
-        //             )
-        //           else ...[
-        //             Image.asset("assets/images/Upload.png", width: 30),
-        //             const SizedBox(height: 12),
-        //             commonText("Upload your image", size: 16),
-        //           ],
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        // ),
         GestureDetector(
           onTap: _pickImage,
           child: DottedBorder(

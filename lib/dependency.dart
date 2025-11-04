@@ -10,14 +10,19 @@ import 'package:dine_dash/features/auth/common/reset_password/reset_password_con
 import 'package:dine_dash/features/auth/common/sign_in/sign_in_controller.dart';
 import 'package:dine_dash/features/auth/dealer/create_dealer_account_controller.dart';
 import 'package:dine_dash/features/auth/user/user_sign_up_controller.dart';
-import 'package:dine_dash/features/business/dealer/add_business/dealer_business_controller.dart';
+import 'package:dine_dash/features/business/dealer/add_business/dealer_add_business_controller.dart';
+import 'package:dine_dash/features/business/dealer/edit_business/dealer_edit_business_controller.dart';
 import 'package:dine_dash/features/business/dealer/add_menu/add_menu_controller.dart';
 import 'package:dine_dash/features/business/dealer/dealer_business_details/dealer_business_details_controller.dart';
-import 'package:dine_dash/features/business/dealer/dealer_business_root_page/dealer_all_business_controller.dart';
+import 'package:dine_dash/features/business/dealer/dealer_all_business/dealer_all_business_controller.dart';
+import 'package:dine_dash/features/business/dealer/edit_menu/edit_menu_controller.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/business_details_controller.dart';
 import 'package:dine_dash/core/controller/city_controller.dart';
+import 'package:dine_dash/features/deals/dealer/create_deal/create_deal_controller.dart';
 import 'package:dine_dash/features/deals/dealer/dealer_deal_controller.dart';
-import 'package:dine_dash/features/deals/dealer/dealer_deal_root_page/dealer_all_deals_controller.dart';
+import 'package:dine_dash/features/deals/dealer/dealer_all_deals/dealer_all_deals_controller.dart';
+import 'package:dine_dash/features/deals/dealer/delete_deal/delete_deal_controller.dart';
+import 'package:dine_dash/features/deals/dealer/edit_deal/edit_deals_controller.dart';
 import 'package:dine_dash/features/deals/user/available%20deals/user_allavailable_deals_controller.dart';
 import 'package:dine_dash/features/deals/user/used%20deal/user_used_deals_controller.dart';
 import 'package:dine_dash/features/deals/user/user_deals_details_and_redeem/user_deal_redeem_controller.dart';
@@ -119,10 +124,36 @@ class DependencyInjection {
       DealerAddBusinessController(),
       permanent: true,
     );
+    Get.put<DealerEditBusinessController>(
+      DealerEditBusinessController(),
+      permanent: true,
+    );
 
-    Get.put<DealerMenuController>(DealerMenuController(), permanent: true);
-    Get.put<FeedbackController>(FeedbackController(), permanent: true);
-    Get.put<DealerDealController>(DealerDealController(), permanent: true);
+    Get.put<DealerAddMenuController>(
+      DealerAddMenuController(),
+      permanent: true,
+    );
+    Get.put<DealerEditMenuController>(
+      DealerEditMenuController(),
+      permanent: true,
+    );
+    Get.put<DealerReviewbackController>(DealerReviewbackController(), permanent: true);
+    Get.put<DealerDealPauseController>(
+      DealerDealPauseController(),
+      permanent: true,
+    );
+    Get.put<DealerCreateDealController>(
+      DealerCreateDealController(),
+      permanent: true,
+    );
+    Get.put<DealerEditDealController>(
+      DealerEditDealController(),
+      permanent: true,
+    );
+    Get.put<DealerDeleteDealController>(
+      DealerDeleteDealController(),
+      permanent: true,
+    );
     Get.put<DealerAllDealsController>(
       DealerAllDealsController(),
       permanent: true,

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dine_dash/core/models/dealer_business_model.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/core/utils/helper.dart';
-import 'package:dine_dash/features/business/dealer/add_business/dealer_business_controller.dart';
+import 'package:dine_dash/features/business/dealer/edit_business/dealer_edit_business_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/res/google_location_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -31,7 +31,7 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
   final TextEditingController addressController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
 
-  final controller = Get.find<DealerAddBusinessController>();
+  final controller = Get.find<DealerEditBusinessController>();
   final ImagePicker _picker = ImagePicker();
   File? _selectedImage;
 
@@ -333,133 +333,75 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
             /// 📸 Business Image Picker
             commonText("Business Image", size: 14, fontWeight: FontWeight.w500),
             const SizedBox(height: 8),
-            // GestureDetector(
-            //   onTap: _pickImage,
-            //   child: DottedBorder(
-            //     options: const RoundedRectDottedBorderOptions(
-            //       radius: Radius.circular(16),
-            //     ),
-            //     child: Stack(
-            //       alignment: Alignment.center,
-            //       children: [
-            //         SizedBox(
-            //           width: double.infinity,
-            //           child: Column(
-            //             mainAxisSize: MainAxisSize.min,
-            //             crossAxisAlignment: CrossAxisAlignment.center,
-            //             children: [
-            //               if (_selectedImage != null)
-            //                 ClipRRect(
-            //                   borderRadius: BorderRadius.circular(16),
-            //                   child: Image.file(
-            //                     _selectedImage!,
-            //                     height: 100,
-            //                     fit: BoxFit.cover,
-            //                   ),
-            //                 )
-            //               else ...[
-            //                 if (widget.business.image != null)
-            //                   ClipRRect(
-            //                     borderRadius: BorderRadius.circular(16),
-            //                     child: Image.network(
-            //                       getFullImagePath(widget.business.image!),
-            //                       height: 250,
-            //                       width: double.infinity,
-            //                       fit: BoxFit.cover,
-            //                       errorBuilder:
-            //                           (context, error, stackTrace) =>
-            //                               Icon(Icons.broken_image_outlined),
-            //                     ),
-            //                   ),
-            //               ],
-            //             ],
-            //           ),
-            //         ),
-            //         Column(
-                      
-            //           children: [
-            //             Image.asset("assets/images/Upload.png", width: 30),
-            //             const SizedBox(height: 12),
-            //             commonText("Upload your image", size: 16),
-            //           ],
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
 
+            GestureDetector(
+              onTap: _pickImage,
+              child: DottedBorder(
+                options: const RoundedRectDottedBorderOptions(
+                  radius: Radius.circular(16),
+                ),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 250,
+                        child:
+                            _selectedImage != null
+                                ? Image.file(_selectedImage!, fit: BoxFit.cover)
+                                : (widget.business.image != null
+                                    ? Image.network(
+                                      getFullImagePath(widget.business.image!),
+                                      fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, error, _) => const Icon(
+                                            Icons.broken_image_outlined,
+                                          ),
+                                    )
+                                    : Container(color: Colors.grey.shade200)),
+                      ),
+                    ),
 
-GestureDetector(
-  onTap: _pickImage,
-  child: DottedBorder(
-    options: const RoundedRectDottedBorderOptions(
-      radius: Radius.circular(16),
-    ),
-    child: Stack(
-      alignment: Alignment.center,
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: SizedBox(
-            width: double.infinity,
-            height: 250,
-            child: _selectedImage != null
-                ? Image.file(
-                    _selectedImage!,
-                    fit: BoxFit.cover,
-                  )
-                : (widget.business.image != null
-                    ? Image.network(
-                        getFullImagePath(widget.business.image!),
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, _) =>
-                            const Icon(Icons.broken_image_outlined),
-                      )
-                    : Container(color: Colors.grey.shade200)),
-          ),
-        ),
+                    /// Black Soft Overlay
+                    Container(
+                      width: double.infinity,
+                      height: 250,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.black.withOpacity(0.35),
+                      ),
+                    ),
 
-        /// Black Soft Overlay
-        Container(
-          width: double.infinity,
-          height: 250,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            color: Colors.black.withOpacity(0.35),
-          ),
-        ),
-
-        /// Upload / Change text + icon
-        Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(
-                "assets/images/Upload.png",
-                width: 30,
-                color: Colors.white,
-              ),
-              const SizedBox(height: 12),
-              Text(
-                _selectedImage != null
-                    ? "Change Image"
-                    : "Upload your image",
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
+                    /// Upload / Change text + icon
+                    Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset(
+                            "assets/images/Upload.png",
+                            width: 30,
+                            color: Colors.white,
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            _selectedImage != null
+                                ? "Change Image"
+                                : "Upload your image",
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
-      ],
-    ),
-  ),
-),
-
-
-
+            ),
 
             const SizedBox(height: 16),
 

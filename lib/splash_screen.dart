@@ -5,7 +5,7 @@ import 'package:dine_dash/features/business/user/bussiness%20details/user_busine
 import 'package:dine_dash/features/dealer_root_page.dart';
 import 'package:dine_dash/features/user_root_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
-import 'package:dine_dash/role_selection_page.dart';
+import 'package:dine_dash/features/role_selection_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

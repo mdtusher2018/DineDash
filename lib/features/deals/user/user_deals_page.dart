@@ -4,9 +4,9 @@ import 'package:dine_dash/features/deals/user/available%20deals/user_allavailabl
 import 'package:dine_dash/features/deals/user/used%20deal/user_all_used_deals.dart';
 import 'package:dine_dash/features/deals/user/used%20deal/user_used_deals_controller.dart';
 import 'package:dine_dash/features/deals/user/widget/deal_card.dart';
+import 'package:dine_dash/features/ratting_and_feedback/user/feedback_of_a_business.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/features/deals/user/available%20deals/user_all_available_deals.dart';
-import 'package:dine_dash/features/ratting_and_feedback/user/user_after_giving_star_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

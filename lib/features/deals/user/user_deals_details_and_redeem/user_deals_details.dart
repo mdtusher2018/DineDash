@@ -1,5 +1,5 @@
 import 'package:dine_dash/core/utils/colors.dart';
-import 'package:dine_dash/features/deals/user/deal_model.dart';
+import 'package:dine_dash/features/deals/user/model_and_response/deal_model.dart';
 import 'package:dine_dash/features/deals/user/user_deals_details_and_redeem/user_deal_redeem.dart';
 import 'package:dine_dash/features/deals/user/user_deals_details_and_redeem/user_deal_redeem_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';

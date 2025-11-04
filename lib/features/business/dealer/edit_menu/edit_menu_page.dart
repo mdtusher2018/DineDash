@@ -1,6 +1,6 @@
 import 'package:dine_dash/core/utils/colors.dart';
-import 'package:dine_dash/features/business/dealer/add_menu/add_menu_controller.dart';
 import 'package:dine_dash/features/business/dealer/dealer_business_details/dealer_business_details_response.dart';
+import 'package:dine_dash/features/business/dealer/edit_menu/edit_menu_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,7 +20,7 @@ class _EditMenuScreenState extends State<EditMenuScreen> {
       TextEditingController();
   final TextEditingController priceController = TextEditingController();
 
-  final controller = Get.find<DealerMenuController>();
+  final controller = Get.find<DealerEditMenuController>();
 
   @override
   void initState() {

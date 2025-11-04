@@ -21,7 +21,7 @@ class _AddMenuScreenState extends State<AddMenuScreen> {
   final TextEditingController priceController = TextEditingController();
 
   List<Map<String, TextEditingController>> itemList = [];
-  final controller = Get.find<DealerMenuController>();
+  final controller = Get.find<DealerAddMenuController>();
 
   @override
   void initState() {
@@ -118,14 +118,6 @@ class _AddMenuScreenState extends State<AddMenuScreen> {
             "Add Menu",
             isLoading: controller.isLoading.value,
             onTap: () async {
-              // final items =
-              //     itemList.map((item) {
-              //       return {
-              //         "itemName": item['name']!.text.trim(),
-              //         "description": item['description']!.text.trim(),
-              //         "price": item['price']!.text.trim(),
-              //       };
-              //     }).toList();
 
               final validItems =
                   itemList
