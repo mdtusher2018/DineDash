@@ -13,6 +13,7 @@ class UserFeedbackController extends BaseController {
     required String dealId,
     required String feedbackText,
     required num ratting,
+    required String rasturentName
   }) async {
     safeCall(
       task: () async {
@@ -26,7 +27,9 @@ class UserFeedbackController extends BaseController {
           },
         );
         if (response['statusCode'] == 200) {
-          navigateToPage(UserDealRedeemPage());
+          navigateToPage(
+            UserDealRedeemPage(businessId: businessId, dealId: dealId,rasturentName: rasturentName,),
+          );
         } else {
           throw Exception(response['message'] ?? "Could not add feedback");
         }

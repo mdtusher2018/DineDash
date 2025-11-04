@@ -22,11 +22,11 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
   var selected = ''.obs;
   var selecteds = ''.obs;
 
-  final List<String> comment = [
-    'Good environment',
-    'Perfect meal',
-    'Nice location',
-  ];
+  // final List<String> comment = [
+  //   'Good environment',
+  //   'Perfect meal',
+  //   'Nice location',
+  // ];
 
   final controller = Get.find<UserDealRedeemController>();
 
@@ -36,7 +36,13 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
 
     detector = ShakeDetector.autoStart(
       onPhoneShake: (event) {
-        navigateToPage(UserDealRedeemPage());
+        navigateToPage(
+          UserDealRedeemPage(
+            businessId: widget.dealData.businessId,
+            dealId: widget.dealData.dealId,
+            rasturentName: widget.dealData.businessName,
+          ),
+        );
       },
     );
   }
@@ -422,7 +428,11 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                             commonButton(
                               "You can redeem from here also".tr,
                               onTap: () async {
-                                await controller.dealRedeem(widget.dealData.id);
+                                await controller.dealRedeem(
+                                  widget.dealData.id,
+                                  businessId: widget.dealData.businessId,
+                                  rasturentName: widget.dealData.businessName
+                                );
                               },
                             ),
                           ],

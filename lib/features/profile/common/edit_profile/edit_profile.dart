@@ -6,7 +6,7 @@ import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/core/utils/image_paths.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:dine_dash/features/profile/user/profile/profile_controller.dart';
+import 'package:dine_dash/features/profile/common/profile/profile_controller.dart';
 
 class EditProfileView extends StatefulWidget {
   const EditProfileView({

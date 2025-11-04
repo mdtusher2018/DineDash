@@ -1,22 +1,18 @@
 import 'package:dine_dash/core/services/deeplink/deeplink_service.dart';
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
 import 'package:dine_dash/core/utils/helper.dart';
-import 'package:dine_dash/features/auth/common/sign_in/sign_in_page.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/user_business_details_page.dart';
 import 'package:dine_dash/features/dealer_root_page.dart';
-import 'package:dine_dash/features/onboarding/DealerOnboarding.dart';
-import 'package:dine_dash/features/onboarding/UserOnboarding.dart';
 import 'package:dine_dash/features/user_root_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
+import 'package:dine_dash/role_selection_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'core/services/localstorage/storage_key.dart';
 
 class SplashScreen extends StatefulWidget {
-  final bool isUser;
-
-  SplashScreen({super.key, required this.isUser});
+  const SplashScreen({super.key});
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -31,8 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-
-RxBool isOpenedWithDeepLink=false.obs;
+  RxBool isOpenedWithDeepLink = false.obs;
 
   @override
   void initState() {
@@ -41,13 +36,9 @@ RxBool isOpenedWithDeepLink=false.obs;
 
     deepLinkService.onBusinessLink = (businessId) {
       debugPrint("Navigate to Business page:==========>>>>>>>> $businessId");
-      navigateToPage(
-        UserBusinessDetailsPage(businessId: businessId),
-   
-      );
+      navigateToPage(UserBusinessDetailsPage(businessId: businessId));
 
-        isOpenedWithDeepLink.value = true;
-
+      isOpenedWithDeepLink.value = true;
     };
 
     deepLinkService.onDealLink = (businessId, dealId) {
@@ -64,20 +55,26 @@ RxBool isOpenedWithDeepLink=false.obs;
         return;
       }
 
-      navigateToPage(
-        widget.isUser
-            ? ((LocalStorageService.isUserOnboardingCompleated)
-                ? (token != null)
-                    ? returnPage(token)
-                    : SignInScreen()
-                : UserOnboardingView())
-            : ((LocalStorageService.isDealerOnBoardingCompleated)
-                ? (token != null)
-                    ? returnPage(token)
-                    : SignInScreen()
-                : DealerOnboardingView()),
-        clearStack: true,
-      );
+      // navigateToPage(
+      //   widget.isUser
+      //       ? ((LocalStorageService.isUserOnboardingCompleated)
+      //           ? (token != null)
+      //               ? returnPage(token)
+      //               : RoleSelectionPage()
+      //           : UserOnboardingView())
+      //       : ((LocalStorageService.isDealerOnBoardingCompleated)
+      //           ? (token != null)
+      //               ? returnPage(token)
+      //               : RoleSelectionPage()
+      //           : DealerOnboardingView()),
+      //   clearStack: true,
+      // );
+
+      if (token == null) {
+        navigateToPage(RoleSelectionPage());
+      } else {
+        navigateToPage(returnPage(token));
+      }
     });
   }
 

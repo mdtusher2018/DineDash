@@ -179,6 +179,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
 
                       Wrap(
                         spacing: 8,
+                        runSpacing: 8,
                         children:
                             business.deals
                                 .map(

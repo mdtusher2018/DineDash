@@ -1,11 +1,11 @@
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/core/utils/colors.dart';
-import 'package:dine_dash/features/profile/user/profile/profile_controller.dart';
+import 'package:dine_dash/features/profile/common/profile/profile_controller.dart';
 import 'package:dine_dash/features/subscription/user_subscription.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/features/profile/widgets/common_dialog.dart';
 import 'package:dine_dash/features/profile/common/static_content/about_us.dart';
-import 'package:dine_dash/features/profile/common/contact_us.dart';
+import 'package:dine_dash/features/profile/common/contact%20us/contact_us.dart';
 import 'package:dine_dash/features/profile/common/edit_profile/edit_profile.dart';
 import 'package:dine_dash/features/profile/common/static_content/privacy_policy.dart';
 import 'package:dine_dash/features/profile/common/settings.dart';
@@ -13,7 +13,7 @@ import 'package:dine_dash/features/profile/common/static_content/tearms_and_cond
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../journey_screen.dart';
+import '../../user/journey_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});

@@ -8,7 +8,7 @@ class SessionMemory {
   void setToken(String token) => _token = token;
   String? get token => _token;
 
-  static const  bool isUser=false;
+  static bool isUser=true;
 
 
 

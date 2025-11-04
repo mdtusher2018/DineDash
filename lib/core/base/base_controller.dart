@@ -1,3 +1,4 @@
+import 'package:dine_dash/core/services/api/api_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,9 +13,10 @@ abstract class BaseController extends GetxController {
     bool showErrorSnack = true,
     bool showSuccessSnack = false,
     bool showLoading = true, // ✅ new flag
+    Future<T> Function(int)? errorHandle,
   }) async {
     try {
-    if (showLoading)  isLoading.value = true;
+      if (showLoading) isLoading.value = true;
       errorMessage.value = '';
 
       final result = await task();
@@ -28,8 +30,11 @@ abstract class BaseController extends GetxController {
       debugPrint('❌ Exception: $e\n$stack');
 
       errorMessage.value = e.toString();
-
-      if (showErrorSnack) showSnackBar(errorMessage.value, isError: true);
+      if (e is ApiException && errorHandle != null) {
+        errorHandle(e.statusCode);
+      } else {
+        if (showErrorSnack) showSnackBar(errorMessage.value, isError: true);
+      }
       return null;
     } finally {
       if (showLoading) isLoading.value = false;

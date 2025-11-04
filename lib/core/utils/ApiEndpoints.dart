@@ -202,4 +202,12 @@ class ApiEndpoints {
   static String userAddFeedback(String businessId) {
     return "feedback/add/$businessId";
   }
+
+
+
+
+
+//contact us need to implement
+static String contactUs="user/contact";
+
 }

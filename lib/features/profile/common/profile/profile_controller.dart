@@ -8,12 +8,15 @@ import 'package:dine_dash/core/utils/ApiEndpoints.dart'; // Add your profile end
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/features/auth/common/sign_in/sign_in_page.dart';
 import 'package:dine_dash/features/dealer_root_page.dart';
+import 'package:dine_dash/features/onboarding/DealerOnboarding.dart';
+import 'package:dine_dash/features/onboarding/UserOnboarding.dart';
 import 'package:dine_dash/features/profile/common/edit_profile/edit_profile_response.dart';
-import 'package:dine_dash/features/profile/user/profile/profile_response.dart';
-import 'package:dine_dash/features/profile/user/profile/switch_account_response.dart';
+import 'package:dine_dash/features/profile/common/profile/profile_response.dart';
+import 'package:dine_dash/features/profile/common/profile/switch_account_response.dart';
 import 'package:dine_dash/features/user_root_page.dart';
 import 'package:dine_dash/core/models/user_model.dart'; // The model that holds user attributes
 import 'package:dine_dash/res/commonWidgets.dart';
+import 'package:dine_dash/role_selection_page.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends BaseController {
@@ -33,7 +36,7 @@ class ProfileController extends BaseController {
 
         if (profileResponse.statusCode == 200 && profileResponse.user != null) {
           userModel.value = profileResponse.user;
-          updateCurrentRoleFromToken();
+          await updateCurrentRoleFromToken();
         } else {
           throw Exception(profileResponse.message);
         }
@@ -108,6 +111,7 @@ class ProfileController extends BaseController {
           }
 
           await updateCurrentRoleFromToken();
+
           if (currentRole.value == 'user') {
             navigateToPage(UserRootPage(), clearStack: true);
           } else {
@@ -122,6 +126,15 @@ class ProfileController extends BaseController {
           throw Exception(switchResponse.message);
         }
       },
+      errorHandle: (statusCode) async {
+        if (statusCode == 401) {
+          if (currentRole.value == 'user') {
+            navigateToPage(DealerOnboardingView(), clearStack: true);
+          } else {
+            navigateToPage(UserOnboardingView(), clearStack: true);
+          }
+        }
+      },
     );
   }
 
@@ -131,6 +144,11 @@ class ProfileController extends BaseController {
 
     final payload = decodeJwtPayload(token ?? '');
     final role = payload['currentRole'] as String?;
+    if (role == 'user') {
+      SessionMemory.isUser = true;
+    } else {
+      SessionMemory.isUser = false;
+    }
 
     if (role != null) currentRole.value = role;
   }
@@ -153,6 +171,6 @@ class ProfileController extends BaseController {
     await _localStorageService.clearAllExceptOnboarding();
     _sessionMemory.clear();
 
-    navigateToPage(SignInScreen(), clearStack: true);
+    navigateToPage(RoleSelectionPage(), clearStack: true);
   }
 }

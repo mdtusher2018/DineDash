@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 class UserDealRedeemController extends BaseController {
   final ApiService _apiservice = Get.find();
 
-  Future<void> dealRedeem(String dealId) async {
+  Future<void> dealRedeem(String dealId, {required String businessId,required String rasturentName}) async {
     safeCall(
       task: () async {
         final response = await _apiservice.put(
@@ -16,7 +16,9 @@ class UserDealRedeemController extends BaseController {
           {},
         );
         if (response['statusCode'] == 200) {
-          navigateToPage(UserDealRedeemPage());
+          navigateToPage(
+            UserDealRedeemPage(dealId: dealId, businessId: businessId,rasturentName: rasturentName,),
+          );
         } else {
           throw Exception(response['message'] ?? "Could not redeem");
         }

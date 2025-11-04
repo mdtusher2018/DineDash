@@ -27,9 +27,11 @@ import 'package:dine_dash/features/home/dealer/dealer_homepage_controller.dart';
 import 'package:dine_dash/features/home/user/home_page_controller.dart';
 import 'package:dine_dash/features/notification/user%20notification/user_notification_controller.dart';
 import 'package:dine_dash/features/profile/common/change%20password/change_password_controller.dart';
+import 'package:dine_dash/features/profile/common/contact%20us/contack_us_controller.dart';
 import 'package:dine_dash/features/profile/common/static_content/static_content_controller.dart';
-import 'package:dine_dash/features/profile/user/profile/profile_controller.dart';
+import 'package:dine_dash/features/profile/common/profile/profile_controller.dart';
 import 'package:dine_dash/features/ratting_and_feedback/dealer/review_controller.dart';
+import 'package:dine_dash/features/ratting_and_feedback/user/user_feedback_controller.dart';
 import 'package:dine_dash/features/subscription/user_subscription_controller.dart';
 import 'package:get/get.dart';
 
@@ -146,5 +148,7 @@ class DependencyInjection {
       UserDealRedeemController(),
       permanent: true,
     );
+    Get.put<UserFeedbackController>(UserFeedbackController(), permanent: true);
+    Get.put<ContackUsController>(ContackUsController(), permanent: true);
   }
 }

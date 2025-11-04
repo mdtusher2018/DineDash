@@ -1,26 +1,32 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:dine_dash/core/utils/colors.dart';
-import 'package:dine_dash/features/ratting_and_feedback/user/user_after_giving_star_page.dart';
+import 'package:dine_dash/features/ratting_and_feedback/user/user_feedback_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
 class UserGivingStarsPage extends StatelessWidget {
-  UserGivingStarsPage({super.key});
+  UserGivingStarsPage({
+    super.key,
+    required this.dealId,
+    required this.businessId,
+    required this.rasturentName
+  });
+  final String dealId, businessId,rasturentName;
 
-  var selected = ''.obs;
-  var selecteds = ''.obs;
-  // final List<String> comment = [
-  //   'Good environment',
-  //   'Perfect meal',
-  //   'Nice location',
-  // ];
 
+
+  final controller = Get.find<UserFeedbackController>();
+RxDouble ratting=0.0.obs;
+
+
+
+    TextEditingController commentController=TextEditingController();
   @override
   Widget build(BuildContext context) {
-    // TextEditingController commentController=TextEditingController();
+
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: AppBar(backgroundColor: AppColors.white),
@@ -33,7 +39,7 @@ class UserGivingStarsPage extends StatelessWidget {
               SizedBox(height: 12),
               commonText(
                 "How was your experience at?".trParams({
-                  'restaurantName': "The Rio Lounge",
+                  'restaurantName': rasturentName,
                 }),
                 size: 22,
                 fontWeight: FontWeight.w700,
@@ -73,6 +79,7 @@ class UserGivingStarsPage extends StatelessWidget {
               SizedBox(height: 10),
               TextFormField(
                 maxLines: 3,
+                controller: commentController,
                 decoration: InputDecoration(
                   hintText: "Let others know about your experience..".tr,
                   focusedBorder: OutlineInputBorder(
@@ -128,7 +135,7 @@ class UserGivingStarsPage extends StatelessWidget {
               commonButton(
                 "Continue".tr,
                 onTap: () {
-                  Get.to(() => UserAfterGivingStarPage());
+                  controller.addFeedback(businessId: businessId,dealId: dealId,feedbackText: commentController.text.trim(),ratting: ratting.value,rasturentName: rasturentName);
                 },
               ),
               SizedBox(height: 10),

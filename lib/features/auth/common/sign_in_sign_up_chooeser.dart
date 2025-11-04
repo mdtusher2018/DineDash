@@ -12,8 +12,7 @@ class SignInSignUpChooeser extends StatefulWidget {
   const SignInSignUpChooeser({super.key});
 
   @override
-  State<SignInSignUpChooeser> createState() =>
-      _SignInSignUpChooeserState();
+  State<SignInSignUpChooeser> createState() => _SignInSignUpChooeserState();
 }
 
 class _SignInSignUpChooeserState extends State<SignInSignUpChooeser> {
@@ -46,7 +45,8 @@ class _SignInSignUpChooeserState extends State<SignInSignUpChooeser> {
                 ),
                 SizedBox(height: 20),
                 commonText(
-                  "Now continue after register in ${SessionMemory.isUser?"\"USER\"":"\"DEALER\""}.".tr,
+                  "Now continue after register in ${SessionMemory.isUser ? "\"USER\"" : "\"DEALER\""}"
+                      .tr,
                   size: 14,
                   color: AppColors.white,
                 ),
@@ -63,9 +63,9 @@ class _SignInSignUpChooeserState extends State<SignInSignUpChooeser> {
                   "Sign Up".tr,
                   textColor: AppColors.white,
                   onTap: () {
-                    if(SessionMemory.isUser){
-                    navigateToPage(CreateUserAccount());}
-                    else{
+                    if (SessionMemory.isUser) {
+                      navigateToPage(CreateUserAccount());
+                    } else {
                       navigateToPage(CreateDealerAccount());
                     }
                   },

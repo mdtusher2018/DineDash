@@ -1,5 +1,5 @@
 import 'package:dine_dash/features/deals/user/user_deals_page.dart';
-import 'package:dine_dash/features/profile/user/profile/profile_screen.dart';
+import 'package:dine_dash/features/profile/common/profile/profile_screen.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/explore/user_explore.dart';
 import 'package:dine_dash/features/favorite/user_favorite.dart';

@@ -1,5 +1,5 @@
 import 'package:dine_dash/core/utils/colors.dart';
-import 'package:dine_dash/features/profile/user/profile/profile_controller.dart';
+import 'package:dine_dash/features/profile/common/profile/profile_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

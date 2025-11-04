@@ -2,7 +2,7 @@ import 'package:dine_dash/core/models/user_model.dart';
 import 'package:dine_dash/core/utils/image_paths.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/auth/common/email_verification/verify_email.dart';
-import 'package:dine_dash/features/profile/user/profile/profile_controller.dart';
+import 'package:dine_dash/features/profile/common/profile/profile_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';

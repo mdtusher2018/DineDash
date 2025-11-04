@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:dine_dash/features/profile/common/profile/profile_controller.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'api_exception.dart';
 
@@ -62,7 +64,7 @@ class ApiClient {
     final response = await _httpClient.delete(
       url,
       headers: headers,
-      body: json.encode(body??{}),
+      body: json.encode(body ?? {}),
     );
     return _processResponse(response);
   }
@@ -105,6 +107,8 @@ class ApiClient {
   }
 
   dynamic _processResponse(http.Response response) {
+    _checkUnauthorized(response);
+
     final statusCode = response.statusCode;
     final body = response.body.isNotEmpty ? jsonDecode(response.body) : null;
     log(response.body);
@@ -115,5 +119,16 @@ class ApiClient {
       body?['message'] ?? 'Unknown error',
       data: body,
     );
+  }
+
+  void _checkUnauthorized(http.Response res) {
+    if (res.statusCode == 401) {
+      Get.find<ProfileController>().logOut();
+      Get.snackbar(
+        'Session expired',
+        'Please login again',
+        snackPosition: SnackPosition.TOP,
+      );
+    }
   }
 }

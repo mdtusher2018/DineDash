@@ -1,4 +1,3 @@
-
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
 import 'package:dine_dash/core/services/localstorage/storage_key.dart';
 import 'package:dine_dash/core/utils/colors.dart';
@@ -51,12 +50,9 @@ class _UserOnboardingViewState extends State<UserOnboardingView> {
         true,
       );
 
-      navigateToPage(SignInSignUpChooeser(), clearStack: true);
+      navigateToPage(SignInSignUpChooeser());
     }
   }
-
-
-  
 
   @override
   Widget build(BuildContext context) {
