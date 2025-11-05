@@ -88,26 +88,63 @@ class BusinessModel {
 
   /// Convenience getters
 
-  String get openTimeText {
-    if (openingHours.isNotEmpty) {
-      final first = openingHours.first;
+  // String get openTimeText {
+  //   if (openingHours.isNotEmpty) {
+  //     final first = openingHours.first;
+  //     String formatTime(String time24) {
+  //       try {
+  //         final dt = DateFormat("HH:mm").parse(time24);
+  //         return DateFormat("h:mm a").format(dt); // converts to AM/PM
+  //       } catch (e) {
+  //         return time24; // fallback
+  //       }
+  //     }
+  //     final opening = formatTime(first.openingTime);
+  //     final closing = formatTime(first.closingTime);
+  //     return "$opening - $closing";
+  //     // return first.isOpen ? "$opening - $closing" : "Closed";
+  //   }
+  //   return "Closed";
+  // }
 
-      String formatTime(String time24) {
-        try {
-          final dt = DateFormat("HH:mm").parse(time24);
-          return DateFormat("h:mm a").format(dt); // converts to AM/PM
-        } catch (e) {
-          return time24; // fallback
+
+String get openTimeText {
+  if (openingHours.isNotEmpty) {
+    final now = DateTime.now();
+    final currentDay = DateFormat('EEEE').format(now);  
+
+    const daysOfWeek = [
+      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+    ];
+
+    for (int i = 0; i < daysOfWeek.length; i++) {
+      final currentIndex = daysOfWeek.indexOf(currentDay);
+
+      for (int j = 0; j < openingHours.length; j++) {
+        final first = openingHours[j];
+
+        if (daysOfWeek.indexOf(first.day) > currentIndex) {
+          String formatTime(String time24) {
+            try {
+              final dt = DateFormat("HH:mm").parse(time24);  
+              return DateFormat("h:mm a").format(dt);     
+            } catch (e) {
+              return time24; 
+            }
+          }
+
+          final opening = formatTime(first.openingTime);
+          final closing = formatTime(first.closingTime);
+          return "$opening - $closing"; 
         }
       }
-
-      final opening = formatTime(first.openingTime);
-      final closing = formatTime(first.closingTime);
-      return "$opening - $closing";
-      // return first.isOpen ? "$opening - $closing" : "Closed";
     }
-    return "Closed";
   }
+  
+  return "Closed"; 
+}
+
+
 
 
 bool get isBusinessOpen {
