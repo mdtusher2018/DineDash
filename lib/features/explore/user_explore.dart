@@ -433,7 +433,7 @@ class _UserExplorePageState extends State<UserExplorePage> {
                             size: 18,
                           ),
                           items:
-                              ['Low', 'Hign'].map((String value) {
+                              ['Low', 'High'].map((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: commonText("Price: $value"),

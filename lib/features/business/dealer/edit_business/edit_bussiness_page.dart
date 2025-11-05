@@ -41,35 +41,34 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
 
   var selectedLng = Rx<double?>(null), selectedLat = Rx<double?>(null);
 
-  Map<String, bool> closedDays = {
-    "Sunday": true,
-    "Monday": true,
-    "Tuesday": true,
-    "Wednesday": true,
-    "Thursday": true,
-    "Friday": true,
-    "Saturday": true,
-  };
+  List<String> days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
 
-  Map<String, TimeOfDayRange> timings = {
-    for (var day in [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ])
-      day: TimeOfDayRange(
-        start: const TimeOfDay(hour: 10, minute: 0),
-        end: const TimeOfDay(hour: 20, minute: 0),
-      ),
-  };
+  Map<String, TimeOfDayRange> timings = {};
+  Map<String, bool> openDays = {};
 
   @override
   void initState() {
     super.initState();
+
+    for (var day in days) {
+      openDays[day] = false;
+    }
+
+    for (var day in days) {
+      timings[day] = TimeOfDayRange(
+        start: const TimeOfDay(hour: 10, minute: 0),
+        end: const TimeOfDay(hour: 20, minute: 0),
+      );
+    }
+
     businessNameController.text = widget.business.businessName;
     selectedCategories = widget.business.category;
     zipController.text = widget.business.postalCode ?? '';
@@ -87,11 +86,12 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
     if (widget.business.openingHours != null) {
       for (final openingModel in widget.business.openingHours!) {
         log(
-          "opening hours:=========>>>>>>>>>${openingModel.day}" +
+          "opening hours:=========>>>>>>>>>${openingModel.day}   " +
               openingModel.isOpen.toString(),
         );
-        if (closedDays.containsKey(openingModel.day)) {
-          closedDays[openingModel.day] = openingModel.isOpen;
+
+        if (openDays.containsKey(openingModel.day)) {
+          openDays[openingModel.day] = openingModel.isOpen;
 
           final openingTimeString = openingModel.openingTime;
           final closingTimeString = openingModel.closingTime;
@@ -106,6 +106,7 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
         }
       }
     }
+
     setState(() {});
   }
 
@@ -182,8 +183,7 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
   }
 
   Widget buildDayRow(String day) {
-    final isClosed = closedDays[day]!;
-    final hasTime = timings.containsKey(day);
+
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -192,7 +192,7 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
           Expanded(
             child: commonText(day, fontWeight: FontWeight.w600, size: 10),
           ),
-          if (hasTime && !isClosed)
+          if (timings.containsKey(day) && openDays[day]!)
             Expanded(
               flex: 3,
               child: Row(
@@ -215,13 +215,17 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
                 ],
               ),
             ),
-          if (hasTime && isClosed) const Expanded(flex: 3, child: SizedBox()),
+          if (timings.containsKey(day) && !openDays[day]!) const Expanded(flex: 3, child: SizedBox()),
           Expanded(
             child: commonCheckbox(
-              value: isClosed,
+              value: !openDays[day]!,
               textSize: 10,
-              onChanged:
-                  (val) => setState(() => closedDays[day] = val ?? false),
+              onChanged: (val) {
+                // openDays[day] = val ?? false;
+                openDays[day] = !openDays[day]!;
+                log(val.toString());
+                setState(() {});
+              },
               label: "Closed",
             ),
           ),
@@ -456,7 +460,7 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
               isLoading: controller.isLoading.value,
               onTap: () async {
                 final openingHoursList =
-                    closedDays.entries
+                    openDays.entries
                         .map(
                           (entry) => {
                             "day": entry.key,

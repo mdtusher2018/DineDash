@@ -68,7 +68,6 @@ class DealerAddBusinessController extends BaseController {
           "location": {"type": "Point", "coordinates": coordinates},
         };
 
-        // Send the POST request
         final response = await _apiService.multipart(
           ApiEndpoints.createBusiness,
           body: formData,

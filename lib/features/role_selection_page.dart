@@ -6,7 +6,19 @@ import 'package:dine_dash/features/onboarding/UserOnboarding.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 
-class RoleSelectionPage extends StatelessWidget {
+class RoleSelectionPage extends StatefulWidget {
+  @override
+  State<RoleSelectionPage> createState() => _RoleSelectionPageState();
+}
+
+class _RoleSelectionPageState extends State<RoleSelectionPage> {
+
+@override
+  void initState() {
+    super.initState();
+    LocalStorageService.init();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

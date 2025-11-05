@@ -47,7 +47,6 @@ class BusinessDetailController extends BaseController {
     );
   }
 
-  /// 🔹 Like a business
   Future<bool> likeBusiness(String businessId) async {
     return await safeCall(
           showLoading: false,
@@ -61,7 +60,6 @@ class BusinessDetailController extends BaseController {
         false;
   }
 
-  /// 🔹 Unlike a business
   Future<bool> unlikeBusiness(String favoriteId) async {
     return await safeCall(
           showLoading: false,
