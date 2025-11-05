@@ -12,8 +12,7 @@ class RoleSelectionPage extends StatefulWidget {
 }
 
 class _RoleSelectionPageState extends State<RoleSelectionPage> {
-
-@override
+  @override
   void initState() {
     super.initState();
     LocalStorageService.init();
@@ -22,39 +21,57 @@ class _RoleSelectionPageState extends State<RoleSelectionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Select Your Role")),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Please select a role', style: const TextStyle(fontSize: 18)),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset("assets/images/Onboarding 1.png", fit: BoxFit.cover),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset("assets/images/logo.png"),
 
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                SessionMemory.isUser = true;
-                if (LocalStorageService.isUserOnboardingCompleated) {
-                  navigateToPage(SignInSignUpChooeser());
-                } else {
-                  navigateToPage(UserOnboardingView());
-                }
-              },
-              child: const Text("User"),
+                  commonText(
+                    'Please select a role',
+                    size: 18,
+                    isBold: true,
+                    color: Colors.white,
+                  ),
+
+                  const SizedBox(height: 40),
+
+                  commonButton(
+                    "USER",
+                    onTap: () {
+                      SessionMemory.isUser = true;
+                      if (LocalStorageService.isUserOnboardingCompleated) {
+                        navigateToPage(SignInSignUpChooeser());
+                      } else {
+                        navigateToPage(UserOnboardingView());
+                      }
+                    },
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  commonButton(
+                    "DEALER",
+                    onTap: () {
+                      SessionMemory.isUser = false;
+                      if (LocalStorageService.isDealerOnBoardingCompleated) {
+                        navigateToPage(SignInSignUpChooeser());
+                      } else {
+                        navigateToPage(DealerOnboardingView());
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                SessionMemory.isUser = false;
-                if (LocalStorageService.isDealerOnBoardingCompleated) {
-                  navigateToPage(SignInSignUpChooeser());
-                } else {
-                  navigateToPage(DealerOnboardingView());
-                }
-              },
-              child: const Text("Dealer"),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

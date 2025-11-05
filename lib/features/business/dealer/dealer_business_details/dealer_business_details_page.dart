@@ -211,7 +211,7 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
       tabs: [
         Tab(
           child: commonText(
-            "Deals (${controller.businessDetail.value!.activeDealCount})",
+            "Deals (${controller.businessDetail.value!.totalDealCount})",
             size: 14,
             isBold: true,
           ),
