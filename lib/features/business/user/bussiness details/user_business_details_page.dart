@@ -99,14 +99,17 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
           }
 
           if (business == null) {
-            return  Center(
+            return Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  commonText("No details available",size: 21,isBold: true),
+                  commonText("No details available", size: 21, isBold: true),
                   if (token.isEmpty)
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0,
+                        vertical: 8,
+                      ),
                       child: commonButton(
                         "Go to Signin",
                         onTap: () {
@@ -360,7 +363,10 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                             Icon(Icons.circle, size: 4, color: Colors.red),
                             const SizedBox(width: 8),
                             commonText(
-                              "Currently Closed".tr,
+                              business.isBusinessOpen
+                                  ? "Currently Open".tr
+                                  : "Currently Closed".tr,
+                              // "Currently Closed".tr,
                               color: Colors.red,
                               isBold: true,
                             ),

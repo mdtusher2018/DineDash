@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -101,10 +103,41 @@ class BusinessModel {
 
       final opening = formatTime(first.openingTime);
       final closing = formatTime(first.closingTime);
-      return first.isOpen ? "$opening - $closing" : "Closed";
+      return "$opening - $closing";
+      // return first.isOpen ? "$opening - $closing" : "Closed";
     }
     return "Closed";
   }
+
+
+bool get isBusinessOpen {
+  if (openingHours.isNotEmpty) {
+    final first = openingHours.first;
+
+    final openingTime = DateFormat("h:mm a").parse(first.openingTime);
+    final closingTime = DateFormat("h:mm a").parse(first.closingTime);
+
+    final now = DateTime.now();
+    final currentTime = DateTime(now.year, now.month, now.day, now.hour, now.minute);
+
+    final openingTimeOnly = DateTime(now.year, now.month, now.day, openingTime.hour, openingTime.minute);
+    final closingTimeOnly = DateTime(now.year, now.month, now.day, closingTime.hour, closingTime.minute);
+
+    log("Opening Time: $openingTimeOnly");
+    log("Closing Time: $closingTimeOnly");
+    log("Current Time: $currentTime");
+
+    return currentTime.isAfter(openingTimeOnly) && currentTime.isBefore(closingTimeOnly);
+  }
+
+  return false;
+}
+
+
+
+
+
+
 
   String get phoneText =>
       (formattedPhoneNumber != null && formattedPhoneNumber!.isNotEmpty)
