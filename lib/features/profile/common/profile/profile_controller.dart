@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
@@ -6,7 +7,6 @@ import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/services/localstorage/storage_key.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart'; // Add your profile endpoint here
 import 'package:dine_dash/core/utils/helper.dart';
-import 'package:dine_dash/features/auth/common/sign_in/sign_in_page.dart';
 import 'package:dine_dash/features/dealer_root_page.dart';
 import 'package:dine_dash/features/onboarding/DealerOnboarding.dart';
 import 'package:dine_dash/features/onboarding/UserOnboarding.dart';
@@ -85,6 +85,7 @@ class ProfileController extends BaseController {
   }
 
   Future<void> switchAccount() async {
+    log(currentRole.value);
     await safeCall(
       task: () async {
         final response = await _apiService.get(ApiEndpoints.switchAccount);
@@ -127,10 +128,16 @@ class ProfileController extends BaseController {
         }
       },
       errorHandle: (statusCode) async {
-        if (statusCode == 401) {
+        if (statusCode == 403) {
           if (currentRole.value == 'user') {
+            _localStorageService.clearAllExceptOnboarding();
+            _sessionMemory.clear();
+            SessionMemory.isUser = false;
             navigateToPage(DealerOnboardingView(), clearStack: true);
           } else {
+            _localStorageService.clearAllExceptOnboarding();
+            _sessionMemory.clear();
+            SessionMemory.isUser = true;
             navigateToPage(UserOnboardingView(), clearStack: true);
           }
         }
@@ -161,7 +168,7 @@ class ProfileController extends BaseController {
           body: {"password": password},
         );
         if (response['statusCode'] == 200) {
-          navigateToPage(SignInScreen(), clearStack: true);
+          navigateToPage(RoleSelectionPage(), clearStack: true);
         }
       },
     );

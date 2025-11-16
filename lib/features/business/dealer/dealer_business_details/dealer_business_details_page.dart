@@ -114,6 +114,8 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
                 height: 80,
                 width: 80,
                 fit: BoxFit.cover,
+                errorBuilder:
+                    (context, error, stackTrace) => commonImageErrorWidget(),
               ),
             ),
             const SizedBox(width: 12),
@@ -252,57 +254,76 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
           const SizedBox(height: 20),
 
           /// Deal Cards
-          ...controller.businessDetail.value!.dealsData.map((deal) {
+          ...controller.businessDetail.value!.dealsData.asMap().map((
+            index,
+            deal,
+          ) {
             if (deal.reasonFor == "deleted") {
-              return SizedBox.shrink();
+              return MapEntry(
+                index,
+                SizedBox.shrink(),
+              ); // Skip the deleted deals
             }
-            return buildDealCard(
-              title: deal.dealType,
-              subText: deal.description,
-              duration: deal.reuseableAfter.toString(),
-              redeemed: deal.redeemCount.toString(),
-              location: controller.businessDetail.value!.name,
-              benefitText: deal.benefitAmount.toString(),
-              status: deal.isActive ? "Active" : "Paused",
-              onEdit: () {
-                navigateToPage(
-                  EditDealScreen(
-                    dealId: deal.id,
-                    businessId: controller.businessDetail.value!.id,
-                  ),
-                );
-              },
-              onDelete: () {
-                showDeleteConfirmationDialog(
-                  context: context,
-                  title: "Delete Item",
-                  message:
-                      "Are you sure you want to delete this item? This action cannot be undone.",
-                  onDelete: () {
-                    showReasonDialog(context, (p0) {
-                      controller.deleteDeal(
-                        reason: p0,
-                        dealId: deal.id,
-                        deleteManually: () {
-                          controller.businessDetail.value!.dealsData
-                              .removeWhere((element) {
-                                return element.id == deal.id;
-                              });
-                          setState(() {});
-                        },
-                      );
-                    }, title: "Why do you want to delete this deal?");
-                  },
-                );
-              },
-              onToggleStatus: () {
-                showReasonDialog(context, (reason) {
-                  print("User wants to pause because: $reason");
-                  // Perform pause logic with reason
-                });
-              },
+            return MapEntry(
+              index,
+              buildDealCard(
+                title: deal.dealType,
+                subText: deal.description,
+                duration: deal.reuseableAfter.toString(),
+                redeemed: deal.redeemCount.toString(),
+                location: controller.businessDetail.value!.name,
+                benefitText: deal.benefitAmount.toString(),
+                status: deal.isActive ? "Active" : "Paused",
+                onEdit: () {
+                  navigateToPage(
+                    EditDealScreen(
+                      dealId: deal.id,
+                      businessId: controller.businessDetail.value!.id,
+                    ),
+                  );
+                },
+                onDelete: () {
+                  showDeleteConfirmationDialog(
+                    context: context,
+                    title: "Delete Item",
+                    message:
+                        "Are you sure you want to delete this item? This action cannot be undone.",
+                    onDelete: () {
+                      showReasonDialog(context, (p0) {
+                        controller.deleteDeal(
+                          reason: p0,
+                          dealId: deal.id,
+                          deleteManually: () {
+                            controller.businessDetail.value!.dealsData
+                                .removeWhere((element) {
+                                  return element.id == deal.id;
+                                });
+                            setState(() {});
+                          },
+                        );
+                      }, title: "Why do you want to delete this deal?");
+                    },
+                  );
+                },
+                onToggleStatus: () {
+                  controller.pauseDeal(dealId: deal.id).then((value) {
+                    if (value ?? false) {
+                      controller
+                          .businessDetail
+                          .value!
+                          .dealsData[index]
+                          .isActive = !controller
+                              .businessDetail
+                              .value!
+                              .dealsData[index]
+                              .isActive;
+                      setState(() {});
+                    }
+                  });
+                },
+              ),
             );
-          }),
+          }).values,
         ],
       ),
     );
@@ -513,7 +534,6 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
   }
 }
 
-
 class MenuTab extends StatefulWidget {
   @override
   _MenuTabState createState() => _MenuTabState();
@@ -525,7 +545,8 @@ class _MenuTabState extends State<MenuTab> {
   final controller = Get.find<DealerBusinessDetailController>();
   @override
   Widget build(BuildContext context) {
-    final menuData = controller.businessDetail.value!.menuData; // your data list
+    final menuData =
+        controller.businessDetail.value!.menuData; // your data list
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -605,9 +626,7 @@ class _MenuTabState extends State<MenuTab> {
                           fontWeight: FontWeight.w500,
                         ),
                         subtitle: commonText(item.description),
-                        trailing: commonText(
-                          item.price.toStringAsFixed(2),
-                        ),
+                        trailing: commonText(item.price.toStringAsFixed(2)),
                       ),
                     ),
 
@@ -621,11 +640,15 @@ class _MenuTabState extends State<MenuTab> {
                         children: [
                           InkWell(
                             onTap: () {
-                              navigateToPage(EditMenuScreen(menu: item,));
+                              navigateToPage(EditMenuScreen(menu: item));
                             },
-                            child: Image.asset("assets/images/editb.png", width: 21)),
-                   SizedBox(width: 16,),
-                         Image.asset("assets/images/delete.png",width: 20,)
+                            child: Image.asset(
+                              "assets/images/editb.png",
+                              width: 21,
+                            ),
+                          ),
+                          SizedBox(width: 16),
+                          Image.asset("assets/images/delete.png", width: 20),
                         ],
                       ),
                     ),

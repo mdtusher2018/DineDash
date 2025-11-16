@@ -178,11 +178,13 @@ class _DealerHomepageState extends State<DealerHomepage> {
                           ),
                         ],
                       ),
-                      Obx(
-                        () {
-                          return commonText(controller.performance.value.toString(), size: 36, fontWeight: FontWeight.w600);
-                        }
-                      ),
+                      Obx(() {
+                        return commonText(
+                          controller.performance.value.toString(),
+                          size: 36,
+                          fontWeight: FontWeight.w600,
+                        );
+                      }),
                       commonText(
                         "Total monthly deals redeems across all restaurants."
                             .tr,
@@ -261,6 +263,9 @@ class _DealerHomepageState extends State<DealerHomepage> {
                                     getFullImagePath(
                                       controller.businesses[index].image ?? "",
                                     ),
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            commonImageErrorWidget(),
                                     fit: BoxFit.cover,
                                   ),
                                 ),

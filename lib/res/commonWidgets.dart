@@ -50,7 +50,7 @@ Widget commonTextfieldWithTitle(
   textSize = 14.0,
   suffixIcon,
   borderWidth = 0.0,
-  Color fillColor=AppColors.white,
+  Color fillColor = AppColors.white,
   optional = false,
   changePasswordVisibility,
   TextInputType keyboardType = TextInputType.text,
@@ -59,7 +59,7 @@ Widget commonTextfieldWithTitle(
   int maxLine = 1,
   String? Function(String?)? onValidate,
   Function(String?)? onFieldSubmit,
-  onchanged
+  onchanged,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,11 +117,11 @@ Widget commonTextfieldWithTitle(
                         ? Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: SizedBox(
-                            height:10,
+                            height: 10,
                             width: 10,
                             child: FittedBox(
                               fit: BoxFit.scaleDown,
-                              child: Image.asset(assetIconPath,),
+                              child: Image.asset(assetIconPath),
                             ),
                           ),
                         )
@@ -198,10 +198,13 @@ Widget commonButton(
                               padding: EdgeInsets.all(2),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: AppColors.white.withOpacity(0.2)
-                                
+                                color: AppColors.white.withOpacity(0.2),
                               ),
-                              child: Icon(Icons.arrow_forward,color: AppColors.white,size: 22,),
+                              child: Icon(
+                                Icons.arrow_forward,
+                                color: AppColors.white,
+                                size: 22,
+                              ),
                             ),
                           ),
                       ],
@@ -389,7 +392,8 @@ Widget commonCheckbox({
         ), // Reduce extra spacing
         side: const BorderSide(color: Colors.black26),
       ),
-      if (label.isNotEmpty) Flexible(child: commonText(label.tr, size: textSize)),
+      if (label.isNotEmpty)
+        Flexible(child: commonText(label.tr, size: textSize)),
     ],
   );
 }
@@ -397,11 +401,11 @@ Widget commonCheckbox({
 Widget commonDropdown<T>({
   required List<T> items,
   required T? value,
-  Color color=Colors.white,
-  double elevation= 1,
+  Color color = Colors.white,
+  double elevation = 1,
   required String hint,
   required void Function(T?) onChanged,
-    String Function(T)? labelBuilder,
+  String Function(T)? labelBuilder,
 }) {
   return Material(
     elevation: elevation,
@@ -417,13 +421,12 @@ Widget commonDropdown<T>({
         isExpanded: true,
         underline: SizedBox(),
         value: value,
-        
+
         hint: commonText(hint.tr, size: 14),
         items:
             items.map<DropdownMenuItem<T>>((T item) {
-                final label = labelBuilder != null
-              ? labelBuilder(item)
-              : item.toString(); 
+              final label =
+                  labelBuilder != null ? labelBuilder(item) : item.toString();
 
               return DropdownMenuItem<T>(
                 value: item,
@@ -444,12 +447,15 @@ AppBar commonAppBar({
   bool hideBackButton = false,
 }) {
   return AppBar(
-    backgroundColor: backGroundColor,surfaceTintColor: Colors.transparent,
+    backgroundColor: backGroundColor,
+    surfaceTintColor: Colors.transparent,
     leading:
         (hideBackButton)
             ? null
             : GestureDetector(
-              onTap: () {Get.back();},
+              onTap: () {
+                Get.back();
+              },
               child: Icon(Icons.arrow_back_ios, color: textColor),
             ),
     title: commonText(title.tr, size: 20, isBold: true, color: textColor),
@@ -467,26 +473,19 @@ void showDeleteConfirmationDialog({
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Text(
           title.tr,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
-        content: Text(
-          message,
-          style: const TextStyle(fontSize: 14),
-        ),
+        content: Text(message, style: const TextStyle(fontSize: 14)),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child:  commonText(
+            child: commonText(
               "Cancel".tr,
-              fontWeight: FontWeight.bold,color: AppColors.black
+              fontWeight: FontWeight.bold,
+              color: AppColors.black,
             ),
           ),
           ElevatedButton(
@@ -500,10 +499,20 @@ void showDeleteConfirmationDialog({
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            child: commonText("Delete".tr,color: AppColors.white),
+            child: commonText("Delete".tr, color: AppColors.white),
           ),
         ],
       );
     },
+  );
+}
+
+Widget commonImageErrorWidget() {
+  return Container(
+    constraints: BoxConstraints(minWidth: 50, maxWidth: 160),
+    child: FittedBox(
+      fit: BoxFit.cover,
+      child: Icon(Icons.broken_image_outlined),
+    ),
   );
 }

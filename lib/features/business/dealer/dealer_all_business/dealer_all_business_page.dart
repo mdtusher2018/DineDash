@@ -126,6 +126,9 @@ class _DealerBusinessPageState extends State<DealerBusinessPage> {
                                             "",
                                       ),
                                       fit: BoxFit.fill,
+                                      errorBuilder:
+                                          (context, error, stackTrace) =>
+                                              commonImageErrorWidget(),
                                     ),
                                   ),
                                 ),
@@ -144,7 +147,7 @@ class _DealerBusinessPageState extends State<DealerBusinessPage> {
                                               controller
                                                   .businesses[index]
                                                   .businessName,
-                                                  maxline: 1,
+                                              maxline: 1,
                                               size: 18,
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -161,7 +164,9 @@ class _DealerBusinessPageState extends State<DealerBusinessPage> {
                                                           controller
                                                               .businesses[index]
                                                               .id,
-                                                              business: controller.businesses[index],
+                                                      business:
+                                                          controller
+                                                              .businesses[index],
                                                     ),
                                                   );
                                                 },

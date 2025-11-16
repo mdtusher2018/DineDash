@@ -27,5 +27,4 @@ class DealerDeleteDealController extends DealerMyBusinessNameListController {
       },
     );
   }
-
 }

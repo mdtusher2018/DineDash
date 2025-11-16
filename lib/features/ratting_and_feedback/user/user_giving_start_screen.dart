@@ -12,21 +12,16 @@ class UserGivingStarsPage extends StatelessWidget {
     super.key,
     required this.dealId,
     required this.businessId,
-    required this.rasturentName
+    required this.rasturentName,
   });
-  final String dealId, businessId,rasturentName;
-
-
+  final String dealId, businessId, rasturentName;
 
   final controller = Get.find<UserFeedbackController>();
-RxDouble ratting=0.0.obs;
+  RxDouble ratting = 0.0.obs;
 
-
-
-    TextEditingController commentController=TextEditingController();
+  TextEditingController commentController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: AppBar(backgroundColor: AppColors.white),
@@ -135,13 +130,21 @@ RxDouble ratting=0.0.obs;
               commonButton(
                 "Continue".tr,
                 onTap: () {
-                  controller.addFeedback(businessId: businessId,dealId: dealId,feedbackText: commentController.text.trim(),ratting: ratting.value,rasturentName: rasturentName);
+                  controller.addFeedback(
+                    businessId: businessId,
+                    dealId: dealId,
+                    feedbackText: commentController.text.trim(),
+                    ratting: ratting.value,
+                    rasturentName: rasturentName,
+                  );
                 },
               ),
               SizedBox(height: 10),
               Center(
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.back();
+                  },
                   child: commonText(
                     "Remind me later".tr,
                     size: 18,

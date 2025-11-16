@@ -10,18 +10,18 @@ class DealerDealPauseController extends DealerMyBusinessNameListController {
 
   var dealDetails = Rx<DealerDealDetailsData?>(null);
 
-  Future<void> pauseDeal({
-    required String reason,
-    required String dealId,
-  }) async {
-    safeCall(
+  Future<bool?> pauseToggleDeal({required String dealId}) async {
+    return await safeCall<bool>(
       task: () async {
         final response = await _apiService.patch(
           ApiEndpoints.pauseDeal(dealId),
-          {"reason": reason},
+          {},
+          // {"reason": reason},
         );
         if (response["statusCode"] != 200) {
           throw Exception(response['message'] ?? "Unknown Error Occoured");
+        } else {
+          return true;
         }
       },
       showSuccessSnack: true,

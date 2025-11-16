@@ -107,74 +107,89 @@ class BusinessModel {
   //   return "Closed";
   // }
 
+  String get openTimeText {
+    if (openingHours.isNotEmpty) {
+      final now = DateTime.now();
+      final currentDay = DateFormat('EEEE').format(now);
 
-String get openTimeText {
-  if (openingHours.isNotEmpty) {
-    final now = DateTime.now();
-    final currentDay = DateFormat('EEEE').format(now);  
+      const daysOfWeek = [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ];
 
-    const daysOfWeek = [
-      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
-    ];
+      for (int i = 0; i < daysOfWeek.length; i++) {
+        final currentIndex = daysOfWeek.indexOf(currentDay);
 
-    for (int i = 0; i < daysOfWeek.length; i++) {
-      final currentIndex = daysOfWeek.indexOf(currentDay);
+        for (int j = 0; j < openingHours.length; j++) {
+          final first = openingHours[j];
 
-      for (int j = 0; j < openingHours.length; j++) {
-        final first = openingHours[j];
-
-        if (daysOfWeek.indexOf(first.day) > currentIndex) {
-          String formatTime(String time24) {
-            try {
-              final dt = DateFormat("HH:mm").parse(time24);  
-              return DateFormat("h:mm a").format(dt);     
-            } catch (e) {
-              return time24; 
+          if (daysOfWeek.indexOf(first.day) > currentIndex) {
+            String formatTime(String time24) {
+              try {
+                final dt = DateFormat("HH:mm").parse(time24);
+                return DateFormat("h:mm a").format(dt);
+              } catch (e) {
+                return time24;
+              }
             }
-          }
 
-          final opening = formatTime(first.openingTime);
-          final closing = formatTime(first.closingTime);
-          return "$opening - $closing"; 
+            final opening = formatTime(first.openingTime);
+            final closing = formatTime(first.closingTime);
+            return "$opening - $closing";
+          }
         }
       }
     }
-  }
-  
-  return "Closed"; 
-}
 
-
-
-
-bool get isBusinessOpen {
-  if (openingHours.isNotEmpty) {
-    final first = openingHours.first;
-
-    final openingTime = DateFormat("h:mm a").parse(first.openingTime);
-    final closingTime = DateFormat("h:mm a").parse(first.closingTime);
-
-    final now = DateTime.now();
-    final currentTime = DateTime(now.year, now.month, now.day, now.hour, now.minute);
-
-    final openingTimeOnly = DateTime(now.year, now.month, now.day, openingTime.hour, openingTime.minute);
-    final closingTimeOnly = DateTime(now.year, now.month, now.day, closingTime.hour, closingTime.minute);
-
-    log("Opening Time: $openingTimeOnly");
-    log("Closing Time: $closingTimeOnly");
-    log("Current Time: $currentTime");
-
-    return currentTime.isAfter(openingTimeOnly) && currentTime.isBefore(closingTimeOnly);
+    return "Closed";
   }
 
-  return false;
-}
+  bool get isBusinessOpen {
+    if (openingHours.isNotEmpty) {
+      final first = openingHours.first;
 
+      final openingTime = DateFormat("h:mm a").parse(first.openingTime);
+      final closingTime = DateFormat("h:mm a").parse(first.closingTime);
 
+      final now = DateTime.now();
+      final currentTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        now.hour,
+        now.minute,
+      );
 
+      final openingTimeOnly = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        openingTime.hour,
+        openingTime.minute,
+      );
+      final closingTimeOnly = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        closingTime.hour,
+        closingTime.minute,
+      );
 
+      log("Opening Time: $openingTimeOnly");
+      log("Closing Time: $closingTimeOnly");
+      log("Current Time: $currentTime");
 
+      return currentTime.isAfter(openingTimeOnly) &&
+          currentTime.isBefore(closingTimeOnly);
+    }
 
+    return false;
+  }
 
   String get phoneText =>
       (formattedPhoneNumber != null && formattedPhoneNumber!.isNotEmpty)
@@ -271,7 +286,7 @@ class DealData {
   final int reuseableAfter;
   final String reasonFor;
   final int redeemCount;
-  final bool isActive;
+  bool isActive;
 
   DealData({
     required this.id,

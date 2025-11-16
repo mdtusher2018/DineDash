@@ -54,7 +54,7 @@ class DealAttribute {
   final String dealType;
   final num reuseableAfter;
   final num redeemCount;
-  final bool isActive;
+  bool isActive;
 
   DealAttribute({
     required this.id,
@@ -76,8 +76,8 @@ class DealAttribute {
     businessName: json["businessName"] ?? "N/A",
     businessId: json["businessId"] ?? "",
     description: json["description"] ?? "",
-    dealId: json['dealId']??"",
-  reasonFor: json['reasonFor']??"",
+    dealId: json['dealId'] ?? "",
+    reasonFor: json['reasonFor'] ?? "",
     benefitAmmount: json["benefitAmmount"] ?? 0,
     dealType: json["dealType"] ?? "",
     reuseableAfter: json["reuseableAfter"] ?? 60,

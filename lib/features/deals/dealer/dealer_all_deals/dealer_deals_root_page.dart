@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dine_dash/features/deals/dealer/dealer_all_deals/dealer_all_deals_controller.dart';
 import 'package:dine_dash/features/deals/dealer/edit_deal/edit_deals.dart';
 import 'package:dine_dash/res/buildDealCard.dart';
@@ -84,6 +86,7 @@ class _DealerDealsRootPageState extends State<DealerDealsRootPage> {
                             ),
                           );
                         },
+
                         onDelete: () {
                           showDeleteConfirmationDialog(
                             context: context,
@@ -111,12 +114,16 @@ class _DealerDealsRootPageState extends State<DealerDealsRootPage> {
                           );
                         },
                         onToggleStatus: () {
-                          if (deal.isActive) {
-                            showReasonDialog(context, (reason) {
-                              print("User wants to pause because: $reason");
-                              // Perform pause logic with reason
-                            });
-                          }
+                          log(deal.dealId);
+                          controller.pauseDeal(dealId: deal.dealId).then((
+                            value,
+                          ) {
+                            if (value ?? false) {
+                              controller.deals[index].isActive =
+                                  !controller.deals[index].isActive;
+                              setState(() {});
+                            }
+                          });
                         },
                       );
                     },

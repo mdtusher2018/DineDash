@@ -14,7 +14,7 @@ class ContactUsResponse {
   });
 
   factory ContactUsResponse.fromJson(Map<String, dynamic> json) {
-    final data = json['data'] ?? {};
+    final data = json['data']?['attributes'] ?? {};
 
     return ContactUsResponse(
       status: json['status']?.toString() ?? '',

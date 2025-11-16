@@ -42,82 +42,124 @@ class _UserDealsPageState extends State<UserDealsPage> {
             return Center(child: CircularProgressIndicator());
           }
 
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                // Available Deals Section
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    commonText(
-                      "Available Deals".tr,
-                      size: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        navigateToPage(UserAllAvailableDeals());
-                      },
+          return RefreshIndicator(
+            onRefresh:
+                () => Future.wait([
+                  abailableDealsController.fetchDealsList(),
+                  usedDealController.fetchUsedDealsList(),
+                ]),
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Column(
+                children: [
+                  // Available Deals Section
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      commonText(
+                        "Available Deals".tr,
+                        size: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+
+                      if (abailableDealsController.availableDeals.isNotEmpty)
+                        GestureDetector(
+                          onTap: () {
+                            navigateToPage(UserAllAvailableDeals());
+                          },
+                          child: commonText(
+                            "See all".tr,
+                            size: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xff555555),
+                          ),
+                        ),
+                    ],
+                  ),
+                  if (abailableDealsController.availableDeals.isEmpty) ...[
+                    SizedBox(height: 8),
+                    Center(
                       child: commonText(
-                        "See all".tr,
-                        size: 14,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xff555555),
+                        "No Available Deals",
+                        size: 21,
+                        isBold: true,
                       ),
                     ),
                   ],
-                ),
-                SizedBox(height: 8),
-                ListView.builder(
-                  padding: EdgeInsets.all(0),
-                  shrinkWrap: true,
-                  physics: ScrollPhysics(),
-                  itemCount: min(abailableDealsController.availableDeals.length, 2),
-                  itemBuilder: (context, index) {
-                    final deal = abailableDealsController.availableDeals[index];
-                    return GestureDetector(
-                      onTap: () {
-                        Get.to(() => UserDealsDetails(dealData:abailableDealsController.availableDeals[index]));
-                      },
-                      child: dealCard(deal: deal, isUsed: false),
-                    );
-                  },
-                ),
-                SizedBox(height: 10),
-                // Used Deals Section
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    commonText(
-                      "Used Deals".tr,
-                      size: 18,
-                      fontWeight: FontWeight.w700,
+                  SizedBox(height: 8),
+                  ListView.builder(
+                    padding: EdgeInsets.all(0),
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                    itemCount: min(
+                      abailableDealsController.availableDeals.length,
+                      2,
                     ),
-                    InkWell(
-                      onTap: () {
-                        navigateToPage(UserAllUsedDeals());
-                      },
-                      child: commonText("See All", size: 14),
+                    itemBuilder: (context, index) {
+                      final deal =
+                          abailableDealsController.availableDeals[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Get.to(
+                            () => UserDealsDetails(
+                              dealData:
+                                  abailableDealsController
+                                      .availableDeals[index],
+                            ),
+                          );
+                        },
+                        child: dealCard(deal: deal, isUsed: false),
+                      );
+                    },
+                  ),
+
+                  SizedBox(height: 10),
+                  // Used Deals Section
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      commonText(
+                        "Used Deals".tr,
+                        size: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      if (usedDealController.usedDeals.isNotEmpty)
+                        InkWell(
+                          onTap: () {
+                            navigateToPage(UserAllUsedDeals());
+                          },
+                          child: commonText("See All", size: 14),
+                        ),
+                    ],
+                  ),
+                  if (usedDealController.usedDeals.isEmpty) ...[
+                    SizedBox(height: 8),
+                    Center(
+                      child: commonText(
+                        "No Used Deals Found",
+                        size: 21,
+                        isBold: true,
+                      ),
                     ),
                   ],
-                ),
-                SizedBox(height: 8),
-                ListView.builder(
-                  padding: EdgeInsets.all(0),
-                  shrinkWrap: true,
-                  physics: ScrollPhysics(),
-                  itemCount: min(usedDealController.usedDeals.length, 2),
-                  itemBuilder: (context, index) {
-                    final deal = usedDealController.usedDeals[index];
-                    return GestureDetector(
-                      onTap: () {
-                        Get.to(() => UserAfterGivingStarPage());
-                      },
-                      child: dealCard(deal: deal, isUsed: true),
-                    );
-                  },
-                ),
-              ],
+                  SizedBox(height: 8),
+                  ListView.builder(
+                    padding: EdgeInsets.all(0),
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                    itemCount: min(usedDealController.usedDeals.length, 2),
+                    itemBuilder: (context, index) {
+                      final deal = usedDealController.usedDeals[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Get.to(() => UserAfterGivingStarPage());
+                        },
+                        child: dealCard(deal: deal, isUsed: true),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           );
         }),
