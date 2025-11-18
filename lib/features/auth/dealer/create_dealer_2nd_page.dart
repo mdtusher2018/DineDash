@@ -2,7 +2,6 @@ import 'package:dine_dash/core/models/user_model.dart';
 import 'package:dine_dash/core/utils/image_paths.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/auth/common/email_verification/verify_email.dart';
-import 'package:dine_dash/features/profile/common/profile/profile_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';
@@ -146,8 +145,11 @@ class _CreateDealerAccount2ndPageState
                       "Submit",
                       isLoading: controller.isLoading.value,
                       onTap: () async {
-                        if(selectedBusinessType==null){
-                          Get.snackbar("Missing", "Please sellect a Business Type");
+                        if (selectedBusinessType == null) {
+                          Get.snackbar(
+                            "Missing",
+                            "Please sellect a Business Type",
+                          );
                           return;
                         }
                         await controller.signUp(
@@ -155,17 +157,22 @@ class _CreateDealerAccount2ndPageState
                           businessName: widget.businessName,
                           businessType: selectedBusinessType!,
                           email: widget.email,
-                          postalCode:(widget.businessDetails?.addressComponents!=null)? widget.businessDetails?.addressComponents!
+                          postalCode:
+                              (widget.businessDetails?.addressComponents !=
+                                      null)
+                                  ? widget.businessDetails?.addressComponents!
                                       .firstWhere(
                                         (c) => c.types.contains("postal_code"),
-                                      ).name: null,
+                                      )
+                                      .name
+                                  : null,
                           address: widget.address,
                           password: passwordController.text,
                           confirlPassword: passwordController.text,
                           phoneNumber: phoneController.text,
-                          next:(){
+                          next: () {
                             navigateToPage(EmailVerificationScreen());
-                          }
+                          },
                         );
                       },
                     );
@@ -178,46 +185,4 @@ class _CreateDealerAccount2ndPageState
       ),
     );
   }
-
-  void showPendingDialog() {
-    showDialog(
-      context: context,
-      barrierDismissible: false, // Prevent dismiss on tap outside
-      builder: (context) {
-        return Dialog(
-          backgroundColor: AppColors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min, // Wrap content
-              children: [
-                const SizedBox(height: 16),
-                commonText(
-                  "Your request is under review. You will get a notification after acceptance.",
-                  size: 16,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 16),
-                commonButton(
-                  "Go to Customer",
-                  height: 40,
-                  onTap: () {
-                    Navigator.pop(context);
-                    Get.find<ProfileController>().logOut();
-                    
-                  },
-                ),
-                const SizedBox(height: 16),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-
 }

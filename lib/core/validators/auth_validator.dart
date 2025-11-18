@@ -27,7 +27,8 @@ class AuthValidator {
     required String postalCode,
     required String password,
     required String confirmPassword,
-    required bool tremsAndCondition
+    required bool tremsAndCondition,
+    required bool passwrodExist,
   }) {
     if (fullName.isNullOrEmpty || !fullName.isValidName) {
       return "Please enter a valid full name";
@@ -38,16 +39,19 @@ class AuthValidator {
     if (postalCode.isNullOrEmpty) {
       return "Postal code can't be empty";
     }
-    if (password.isNullOrEmpty || !password.isValidPassword) {
-      return "Password must be 6–16 characters with letters & numbers";
+    if (!passwrodExist) {
+      if (password.isNullOrEmpty || !password.isValidPassword) {
+        return "Password must be 6–16 characters with letters & numbers";
+      }
+      if (confirmPassword.isNullOrEmpty) {
+        return "Please confirm your password";
+      }
+      if (password != confirmPassword) {
+        return "Passwords do not match";
+      }
     }
-    if (confirmPassword.isNullOrEmpty) {
-      return "Please confirm your password";
-    }
-    if (password != confirmPassword) {
-      return "Passwords do not match";
-    }
-    if(!tremsAndCondition){
+
+    if (!tremsAndCondition) {
       return "Accept the Trems and Conditions";
     }
     return null; // All validations passed
@@ -63,9 +67,6 @@ class AuthValidator {
     return null;
   }
 
-
-
-
   static String? validateForgetPassword({required String email}) {
     if (email.isNullOrEmpty) {
       return "Email can't be Empty";
@@ -76,8 +77,6 @@ class AuthValidator {
     }
     return null; // All validations passed
   }
-
-
 
   static String? validateResetPassword({
     required String password,
@@ -94,7 +93,4 @@ class AuthValidator {
     }
     return null; // All validations passed
   }
-
-
-
 }

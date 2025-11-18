@@ -13,9 +13,6 @@ class DealerBusinessDetailController extends BaseController {
   /// The current business details
   var businessDetail = Rxn<DealerBusinessAttributes>();
 
-  final _deleteDealController = Get.find<DealerDeleteDealController>();
-  final _pauseDealController = Get.find<DealerDealPauseController>();
-
   Future<void> fetchBusinessDetail(String businessId) async {
     await safeCall(
       task: () async {
@@ -43,7 +40,9 @@ class DealerBusinessDetailController extends BaseController {
     required String dealId,
     required Function() deleteManually,
   }) async {
-    await _deleteDealController.deleteDeal(
+    final deleteDealController = Get.find<DealerDeleteDealController>();
+
+    await deleteDealController.deleteDeal(
       dealId: dealId,
       deleteManually: deleteManually,
       reason: reason,
@@ -52,6 +51,7 @@ class DealerBusinessDetailController extends BaseController {
 
   /// Delegate pause deal action to PauseDealController
   Future<bool?> pauseDeal({required String dealId}) async {
-    return await _pauseDealController.pauseToggleDeal(dealId: dealId);
+    final pauseDealController = Get.find<DealerDealPauseController>();
+    return await pauseDealController.pauseToggleDeal(dealId: dealId);
   }
 }

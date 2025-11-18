@@ -1,10 +1,10 @@
-
 import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/validators/auth_validator.dart';
 import 'package:dine_dash/features/auth/common/sign_in/sign_in_response.dart';
 import 'package:dine_dash/features/dealer_root_page.dart';
 import 'package:dine_dash/features/user_root_page.dart';
+import 'package:dine_dash/res/common_pending_dialog.dart';
 import 'package:get/get.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
@@ -49,7 +49,12 @@ class SignInController extends BaseController {
           if (SessionMemory.isUser) {
             Get.offAll(() => UserRootPage());
           } else {
-            Get.offAll(() => DealerRootPage());
+            if (loginResponse.isApproved != null &&
+                loginResponse.isApproved == true) {
+              Get.offAll(() => DealerRootPage());
+            } else {
+              showPendingDialog(Get.context!);
+            }
           }
 
           showSnackBar('Signed in successfully!', isError: false);

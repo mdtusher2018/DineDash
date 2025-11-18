@@ -83,6 +83,7 @@ class DealerCreateAccountController extends BaseController {
         }
         final response = await _apiService.post(ApiEndpoints.checkEmail, {
           "email": email,
+          "role": "business",
         });
         final emailResponseModel = EmailCheckResponse.fromJson(response);
         navigateToPage(

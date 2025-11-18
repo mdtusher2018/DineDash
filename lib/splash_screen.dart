@@ -20,10 +20,15 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   Widget returnPage(String token) {
-    if (decodeJwtPayload(token)['currentRole'] == 'user') {
-      return UserRootPage();
+    if (decodeJwtPayload(token)['isLoginToken'] != null &&
+        decodeJwtPayload(token)['isLoginToken'] == true) {
+      if (decodeJwtPayload(token)['currentRole'] == 'user') {
+        return UserRootPage();
+      } else {
+        return DealerRootPage();
+      }
     } else {
-      return DealerRootPage();
+      return RoleSelectionPage();
     }
   }
 

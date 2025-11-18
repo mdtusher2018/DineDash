@@ -4,6 +4,7 @@ import 'package:dine_dash/core/validators/auth_validator.dart';
 import 'package:dine_dash/features/auth/common/email_verification/email_verification_response.dart';
 import 'package:dine_dash/features/dealer_root_page.dart';
 import 'package:dine_dash/features/user_root_page.dart';
+import 'package:dine_dash/res/common_pending_dialog.dart';
 import 'package:get/get.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
@@ -48,7 +49,12 @@ class EmailVerificationController extends BaseController {
           if (decodeJwtPayload(token)["currentRole"] == "user") {
             Get.offAll(() => UserRootPage());
           } else {
-            Get.offAll(() => DealerRootPage());
+            if (emailVerificationResponse.isApproved != null &&
+                emailVerificationResponse.isApproved == true) {
+              Get.offAll(() => DealerRootPage());
+            } else {
+              showPendingDialog(Get.context!);
+            }
           }
 
           showSnackBar('Signed Up successfully!', isError: false);

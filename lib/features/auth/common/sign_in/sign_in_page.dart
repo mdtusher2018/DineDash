@@ -2,9 +2,9 @@ import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/auth/common/sign_in/sign_in_controller.dart';
 import 'package:dine_dash/features/auth/dealer/create_dealer_1st_page.dart';
+import 'package:dine_dash/features/auth/user/user_create_account_1st_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/core/utils/image_paths.dart';
-import 'package:dine_dash/features/auth/user/create_user_account.dart';
 import 'package:dine_dash/features/auth/common/forget_password/forget_password_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -150,7 +150,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     GestureDetector(
                       onTap: () {
                         if (SessionMemory.isUser) {
-                          navigateToPage(CreateUserAccount());
+                          navigateToPage(CreateUserAccountFristPage());
                         } else {
                           navigateToPage(CreateDealerAccount1stPage());
                         }
