@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:dine_dash/core/services/deeplink/deeplink_service.dart';
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/user_business_details_page.dart';
 import 'package:dine_dash/features/dealer_root_page.dart';
+import 'package:dine_dash/features/deals/user/user_deals_details_and_redeem/user_deals_details.dart';
 import 'package:dine_dash/features/user_root_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/features/role_selection_page.dart';
@@ -20,6 +23,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   Widget returnPage(String token) {
+    log(decodeJwtPayload(token).toString());
     if (decodeJwtPayload(token)['isLoginToken'] != null &&
         decodeJwtPayload(token)['isLoginToken'] == true) {
       if (decodeJwtPayload(token)['currentRole'] == 'user') {
@@ -41,15 +45,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
     deepLinkService.onBusinessLink = (businessId) {
       debugPrint("Navigate to Business page:==========>>>>>>>> $businessId");
-      navigateToPage(UserBusinessDetailsPage(businessId: businessId));
+      navigateToPage(
+        UserBusinessDetailsPage(businessId: businessId, fromDeepLink: true),
+      );
 
       isOpenedWithDeepLink.value = true;
     };
 
-    deepLinkService.onDealLink = (businessId, dealId) {
-      debugPrint(
-        "Navigate to Deal page:==========>>>>>>>> $dealId under Business $businessId",
-      );
+    deepLinkService.onDealLink = (dealId) {
+      debugPrint("Navigate to Deal page:==========>>>>>>>> $dealId");
+      navigateToPage(UserDealsDetails.fromDeepLink(dealId: dealId));
     };
 
     Future.delayed(Duration(seconds: 3), () async {
@@ -59,21 +64,6 @@ class _SplashScreenState extends State<SplashScreen> {
       if (isOpenedWithDeepLink.value) {
         return;
       }
-
-      // navigateToPage(
-      //   widget.isUser
-      //       ? ((LocalStorageService.isUserOnboardingCompleated)
-      //           ? (token != null)
-      //               ? returnPage(token)
-      //               : RoleSelectionPage()
-      //           : UserOnboardingView())
-      //       : ((LocalStorageService.isDealerOnBoardingCompleated)
-      //           ? (token != null)
-      //               ? returnPage(token)
-      //               : RoleSelectionPage()
-      //           : DealerOnboardingView()),
-      //   clearStack: true,
-      // );
 
       if (token == null) {
         navigateToPage(RoleSelectionPage());

@@ -122,7 +122,8 @@ class ApiClient {
   }
 
   void _checkUnauthorized(http.Response res) {
-    if (res.statusCode == 401) {
+    if (res.statusCode == 401 ||
+        (jsonDecode(res.body)?['message'] ?? "").contains('Unauthorized')) {
       Get.find<ProfileController>().logOut();
       Get.snackbar(
         'Session expired',

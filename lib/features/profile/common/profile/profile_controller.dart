@@ -7,6 +7,8 @@ import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/services/localstorage/storage_key.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart'; // Add your profile endpoint here
 import 'package:dine_dash/core/utils/helper.dart';
+import 'package:dine_dash/features/auth/dealer/create_dealer_1st_page.dart';
+import 'package:dine_dash/features/auth/user/user_create_account_1st_page.dart';
 import 'package:dine_dash/features/dealer_root_page.dart';
 import 'package:dine_dash/features/onboarding/DealerOnboarding.dart';
 import 'package:dine_dash/features/onboarding/UserOnboarding.dart';
@@ -133,12 +135,20 @@ class ProfileController extends BaseController {
             _localStorageService.clearAllExceptOnboarding();
             _sessionMemory.clear();
             SessionMemory.isUser = false;
-            navigateToPage(DealerOnboardingView(), clearStack: true);
+            if (LocalStorageService.isDealerOnBoardingCompleated) {
+              navigateToPage(CreateDealerAccount1stPage(), clearStack: true);
+            } else {
+              navigateToPage(DealerOnboardingView(), clearStack: true);
+            }
           } else {
             _localStorageService.clearAllExceptOnboarding();
             _sessionMemory.clear();
             SessionMemory.isUser = true;
-            navigateToPage(UserOnboardingView(), clearStack: true);
+            if (LocalStorageService.isUserOnboardingCompleated) {
+              navigateToPage(CreateUserAccountFristPage(), clearStack: true);
+            } else {
+              navigateToPage(UserOnboardingView(), clearStack: true);
+            }
           }
         }
       },

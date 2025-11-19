@@ -5,7 +5,7 @@ class ShareLinks {
     return Uri.parse("$baseUrl/business/$businessId");
   }
 
-  static Uri deal(String businessId, String dealId) {
-    return Uri.parse("$baseUrl/business/$businessId/deal/$dealId");
+  static Uri deal(String dealId) {
+    return Uri.parse("$baseUrl/deal/$dealId");
   }
 }

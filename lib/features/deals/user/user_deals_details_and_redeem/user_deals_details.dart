@@ -1,4 +1,7 @@
+// ignore_for_file: must_be_immutable
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/core/utils/share_links.dart';
+import 'package:dine_dash/features/business/user/bussiness%20details/user_business_details_page.dart';
 import 'package:dine_dash/features/deals/user/model_and_response/deal_model.dart';
 import 'package:dine_dash/features/deals/user/user_deals_details_and_redeem/user_deal_redeem.dart';
 import 'package:dine_dash/features/deals/user/user_deals_details_and_redeem/user_deal_redeem_controller.dart';
@@ -7,10 +10,21 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shake/shake.dart';
+import 'package:share_plus/share_plus.dart';
 
 class UserDealsDetails extends StatefulWidget {
-  final UserDealItem dealData;
-  const UserDealsDetails({super.key, required this.dealData});
+  UserDealItem? dealData;
+  final bool fromDeepLink;
+  final String? dealId;
+  // Constructor when `fromDeepLink` is true
+  UserDealsDetails.fromDeepLink({super.key, required this.dealId})
+    : fromDeepLink = true,
+      dealData = null;
+
+  // Constructor when `fromDeepLink` is false
+  UserDealsDetails({super.key, required this.dealData})
+    : fromDeepLink = false,
+      dealId = null;
 
   @override
   State<UserDealsDetails> createState() => _UserDealsDetailsState();
@@ -33,18 +47,32 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
   @override
   void initState() {
     super.initState();
+    loadDealData();
+    if (widget.dealData != null) {
+      detector = ShakeDetector.autoStart(
+        onPhoneShake: (event) {
+          navigateToPage(
+            UserDealRedeemPage(
+              businessId: widget.dealData!.businessId,
+              dealId: widget.dealData!.dealId,
+              rasturentName: widget.dealData!.businessName,
+            ),
+          );
+        },
+      );
+    }
+  }
 
-    detector = ShakeDetector.autoStart(
-      onPhoneShake: (event) {
-        navigateToPage(
-          UserDealRedeemPage(
-            businessId: widget.dealData.businessId,
-            dealId: widget.dealData.dealId,
-            rasturentName: widget.dealData.businessName,
-          ),
-        );
-      },
-    );
+  void loadDealData() {
+    if (widget.fromDeepLink) {
+      controller.fetchDeal(widget.dealId!).then((deal) {
+        if (deal != null) {
+          setState(() {
+            widget.dealData = deal.result;
+          });
+        }
+      });
+    }
   }
 
   @override
@@ -55,9 +83,16 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.dealData == null) {
+      return Scaffold(
+        appBar: AppBar(backgroundColor: AppColors.white),
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     final deal = widget.dealData;
 
-    final nextOpening = deal.getNextOpening(); // dealItem is UserDealItem
+    final nextOpening = deal!.getNextOpening(); // dealItem is UserDealItem
 
     return Scaffold(
       appBar: AppBar(backgroundColor: AppColors.white),
@@ -146,77 +181,96 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Expanded(
-                                  child: Container(
-                                    height: 31,
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(color: Colors.black),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 5,
-                                        horizontal: 20,
+                                  child: InkWell(
+                                    onTap: () {
+                                      navigateToPage(
+                                        UserBusinessDetailsPage(
+                                          businessId: deal.businessId,
+                                          fromDeepLink: true,
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      height: 31,
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(color: Colors.black),
                                       ),
-                                      child: Row(
-                                        spacing: 10,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.location_on_rounded,
-                                            color: Colors.black,
-                                            size: 20,
-                                          ),
-                                          Flexible(
-                                            child: FittedBox(
-                                              fit: BoxFit.scaleDown,
-                                              child: commonText(
-                                                "Direction".tr,
-                                                size: 16,
-                                                fontWeight: FontWeight.w600,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 5,
+                                          horizontal: 20,
+                                        ),
+                                        child: Row(
+                                          spacing: 10,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.location_on_rounded,
+                                              color: Colors.black,
+                                              size: 20,
+                                            ),
+                                            Flexible(
+                                              child: FittedBox(
+                                                fit: BoxFit.scaleDown,
+                                                child: commonText(
+                                                  "Direction".tr,
+                                                  size: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                                 SizedBox(width: 12),
                                 Expanded(
-                                  child: Container(
-                                    height: 31,
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(color: Colors.black),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 5,
+                                  child: InkWell(
+                                    onTap: () {
+                                      Share.shareUri(
+                                        ShareLinks.deal(
+                                          widget.dealData!.dealId,
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      height: 31,
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(color: Colors.black),
                                       ),
-                                      child: Row(
-                                        spacing: 10,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.share,
-                                            color: Colors.black,
-                                            size: 20,
-                                          ),
-                                          Flexible(
-                                            child: FittedBox(
-                                              fit: BoxFit.scaleDown,
-                                              child: commonText(
-                                                "Share".tr,
-                                                size: 16,
-                                                fontWeight: FontWeight.w600,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 5,
+                                        ),
+                                        child: Row(
+                                          spacing: 10,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.share,
+                                              color: Colors.black,
+                                              size: 20,
+                                            ),
+                                            Flexible(
+                                              child: FittedBox(
+                                                fit: BoxFit.scaleDown,
+                                                child: commonText(
+                                                  "Share".tr,
+                                                  size: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -386,55 +440,60 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                               ],
                             ),
                             SizedBox(height: 10),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: DottedLine(
-                                    dashLength: 15,
-                                    dashGapLength: 8,
-                                    lineThickness: 3,
-                                    dashColor: Colors.grey.shade400,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 20),
-                            Container(
-                              height: 48,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: Colors.blueAccent),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                spacing: 10,
+
+                            if (!widget.fromDeepLink) ...[
+                              Row(
                                 children: [
-                                  Image.asset(
-                                    "assets/images/shakephone.png",
-                                    height: 30,
-                                    width: 30,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  commonText(
-                                    "Shake your phone to redeem".tr,
-                                    size: 18,
-                                    fontWeight: FontWeight.w500,
+                                  Expanded(
+                                    child: DottedLine(
+                                      dashLength: 15,
+                                      dashGapLength: 8,
+                                      lineThickness: 3,
+                                      dashColor: Colors.grey.shade400,
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
-                            SizedBox(height: 15),
-                            commonButton(
-                              "You can redeem from here also".tr,
-                              onTap: () async {
-                                await controller.dealRedeem(
-                                  widget.dealData.id,
-                                  businessId: widget.dealData.businessId,
-                                  rasturentName: widget.dealData.businessName
-                                );
-                              },
-                            ),
+                              SizedBox(height: 20),
+                              Container(
+                                height: 48,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: Colors.blueAccent),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  spacing: 10,
+                                  children: [
+                                    Image.asset(
+                                      "assets/images/shakephone.png",
+                                      height: 30,
+                                      width: 30,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    commonText(
+                                      "Shake your phone to redeem".tr,
+                                      size: 18,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 15),
+
+                              commonButton(
+                                "You can redeem from here also".tr,
+                                onTap: () async {
+                                  await controller.dealRedeem(
+                                    widget.dealData!.id,
+                                    businessId: widget.dealData!.businessId,
+                                    rasturentName:
+                                        widget.dealData!.businessName,
+                                  );
+                                },
+                              ),
+                            ],
                           ],
                         ),
                       ),

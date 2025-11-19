@@ -12,6 +12,7 @@ import 'package:dine_dash/features/business/user/bussiness%20details/menu_respon
 import 'package:dine_dash/features/business/user/map_screen.dart';
 import 'package:dine_dash/features/deals/user/user_deal_blocked.dart';
 import 'package:dine_dash/core/models/business_model.dart';
+import 'package:dine_dash/features/role_selection_page.dart';
 import 'package:dine_dash/features/subscription/user_subscription.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
@@ -21,8 +22,13 @@ import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 
 class UserBusinessDetailsPage extends StatefulWidget {
-  const UserBusinessDetailsPage({super.key, required this.businessId});
+  const UserBusinessDetailsPage({
+    super.key,
+    required this.businessId,
+    this.fromDeepLink = false,
+  });
   final String businessId;
+  final bool fromDeepLink;
 
   @override
   State<UserBusinessDetailsPage> createState() =>
@@ -77,6 +83,9 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
               left: 16,
               child: GestureDetector(
                 onTap: () {
+                  if (widget.fromDeepLink) {
+                    navigateToPage(RoleSelectionPage(), clearStack: true);
+                  }
                   Get.back();
                 },
                 child: CircleAvatar(

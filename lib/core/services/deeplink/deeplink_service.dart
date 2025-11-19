@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 
-
 class DeepLinkService {
   static final DeepLinkService _instance = DeepLinkService._internal();
   factory DeepLinkService() => _instance;
@@ -13,9 +12,7 @@ class DeepLinkService {
 
   /// Optional callbacks to handle navigation
   void Function(String businessId)? onBusinessLink;
-  void Function(String businessId, String dealId)? onDealLink;
-
-
+  void Function(String dealId)? onDealLink;
 
   Future<void> initDeepLinks() async {
     // Cold start
@@ -32,7 +29,7 @@ class DeepLinkService {
   }
 
   void _handleLink(Uri uri) {
-  debugPrint("DeepLink received: $uri");
+    debugPrint("DeepLink received: $uri");
 
     final segments = uri.pathSegments;
 
@@ -41,17 +38,18 @@ class DeepLinkService {
     if (segments.length >= 2 && segments[0] == 'business') {
       final businessId = segments[1];
 
-      if (segments.length >= 4 && segments[2] == 'deal') {
-        // Deal link
-        final dealId = segments[3];
-        if (onDealLink != null) {
-          onDealLink!(businessId, dealId);
-        }
-      } else {
-        // Business link
-        if (onBusinessLink != null) {
-          onBusinessLink!(businessId);
-        }
+      // Business link
+      if (onBusinessLink != null) {
+        onBusinessLink!(businessId);
+      }
+    }
+
+    if (segments.length >= 2 && segments[0] == 'deal') {
+      final dealId = segments[1];
+
+      // Deal link
+      if (onDealLink != null) {
+        onDealLink!(dealId);
       }
     }
   }
