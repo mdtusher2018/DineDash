@@ -234,7 +234,11 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                               : Colors.grey.shade300,
                       button: commonButton(
                         plan.price == 0 ? "Start Free" : "Subscribe Now",
-                        onTap: () async {},
+                        onTap: () async {
+                          if (plan.price != 0) {
+                            await controller.payment(plan.id);
+                          }
+                        },
                       ),
                       bottomWidget:
                           plan.price == 0

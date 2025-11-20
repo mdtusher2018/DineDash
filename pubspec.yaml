@@ -54,6 +54,7 @@ dependencies:
   flutter_slidable: ^4.0.3
   path_provider: ^2.1.5
   app_links: ^6.4.1
+  webview_flutter: ^4.13.0
 
 
 

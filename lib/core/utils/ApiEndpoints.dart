@@ -203,4 +203,8 @@ class ApiEndpoints {
 
   //contact us need to implement
   static String contactUs = "contact-us";
+
+  static String payment = "transaction/payment";
+
+  static String mySubscription = "mysubscription/my-subs";
 }
