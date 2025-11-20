@@ -16,6 +16,9 @@ class UserDealItem {
   final num benefitAmmount;
   final String description;
   final List<String> catgory;
+  final String bookingStart;
+  final String bookingEnd;
+  final String redeemedRedeemedAt;
 
   UserDealItem({
     required this.id,
@@ -34,30 +37,37 @@ class UserDealItem {
     required this.redeemCount,
     required this.description,
     required this.benefitAmmount,
-    required this.catgory
+    required this.catgory,
+    required this.bookingStart,
+    required this.bookingEnd,
+    required this.redeemedRedeemedAt,
   });
 
   factory UserDealItem.fromJson(Map<String, dynamic> json) => UserDealItem(
-        id: json['_id'] ?? '',
-        minPrice: json['minPrice'] ?? 0,
-        maxPrice: json['maxPrice'] ?? 0,
-        businessImage: json['businessImage'] ?? '',
-        businessId: json['businessId'] ?? '',
-        businessName: json['businessName'] ?? '',
-        openingHours: (json['openingHours'] as List<dynamic>? ?? [])
+    id: json['_id'] ?? '',
+    minPrice: json['minPrice'] ?? 0,
+    maxPrice: json['maxPrice'] ?? 0,
+    businessImage: json['businessImage'] ?? '',
+    businessId: json['businessId'] ?? '',
+    businessName: json['businessName'] ?? '',
+    openingHours:
+        (json['openingHours'] as List<dynamic>? ?? [])
             .map((e) => OpeningHour.fromJson(e as Map<String, dynamic>))
             .toList(),
-        rating: json['rating'] ?? 0,
-        totalRating: json['totalRating'] ?? 0,
-        address: json['address'] ?? '',
-        dealType: json['dealType'] ?? '',
-        dealId: json['dealId'] ?? '',
-        reuseableAfter: json['reuseableAfter'] ?? 0,
-        redeemCount: json['redeemCount'] ?? 0,
-        description: json['description'] ?? '',
-        benefitAmmount:json['benefitAmmount']??0,
-        catgory: json['types']??["cafe","Bar"]
-      );
+    rating: json['rating'] ?? 0,
+    totalRating: json['totalRating'] ?? 0,
+    address: json['address'] ?? '',
+    dealType: json['dealType'] ?? '',
+    dealId: json['dealId'] ?? '',
+    reuseableAfter: json['reuseableAfter'] ?? 0,
+    redeemCount: json['redeemCount'] ?? 0,
+    description: json['description'] ?? '',
+    benefitAmmount: json['benefitAmmount'] ?? 0,
+    catgory: json['types'] ?? json['businessCategories'] ?? ["cafe", "Bar"],
+    bookingStart: json['bookinfor'] ?? '--',
+    bookingEnd: json['bookinEnd'] ?? '--',
+    redeemedRedeemedAt: json['redeemedRedeemedAt'] ?? '',
+  );
 }
 
 class OpeningHour {
@@ -76,12 +86,12 @@ class OpeningHour {
   });
 
   factory OpeningHour.fromJson(Map<String, dynamic> json) => OpeningHour(
-        day: json['day'] ?? '',
-        isOpen: json['isOpen'] ?? false,
-        openingTime: json['openingTime'] ?? '',
-        closingTime: json['closingTime'] ?? '',
-        id: json['_id'] ?? '',
-      );
+    day: json['day'] ?? '',
+    isOpen: json['isOpen'] ?? false,
+    openingTime: json['openingTime'] ?? '',
+    closingTime: json['closingTime'] ?? '',
+    id: json['_id'] ?? '',
+  );
 }
 
 extension UserDealItemExtension on UserDealItem {
@@ -109,10 +119,8 @@ extension UserDealItemExtension on UserDealItem {
 
     // Sort by next occurrence
     openDays.sort((a, b) {
-      int diffA =
-          ((dayToNumber[a.day.toLowerCase()] ?? 0) - todayNum + 7) % 7;
-      int diffB =
-          ((dayToNumber[b.day.toLowerCase()] ?? 0) - todayNum + 7) % 7;
+      int diffA = ((dayToNumber[a.day.toLowerCase()] ?? 0) - todayNum + 7) % 7;
+      int diffB = ((dayToNumber[b.day.toLowerCase()] ?? 0) - todayNum + 7) % 7;
       return diffA.compareTo(diffB);
     });
 

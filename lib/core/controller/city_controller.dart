@@ -9,11 +9,6 @@ class CityController extends BaseController {
 
   final RxList<CityModel> cities = <CityModel>[].obs;
   final RxString selectedCity = ''.obs;
-  @override
-  void onInit() {
-    super.onInit();
-    fetchCities();
-  }
 
   Future<void> fetchCities() async {
     await safeCall(

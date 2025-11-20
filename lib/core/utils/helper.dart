@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/localstorage/session_memory.dart';
@@ -172,7 +173,7 @@ Future<File?> fetchImageFile(String photoRef) async {
         "?maxwidth=800"
         "&photoreference=$photoRef"
         "&key=${ApiEndpoints.mapKey}";
-        log(url);
+    log(url);
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       final tempDir = await getTemporaryDirectory();
@@ -188,4 +189,15 @@ Future<File?> fetchImageFile(String photoRef) async {
   return null;
 }
 
+String formatBookingTime(String bookingStart, String bookingEnd) {
+  // Parse the start and end time using DateTime.parse()
+  DateTime startTime = DateTime.parse(bookingStart);
+  DateTime endTime = DateTime.parse(bookingEnd);
 
+  // Format the DateTime objects to 'HH:mm' (e.g., '12:00', '20:00')
+  String startFormatted = DateFormat('HH:mm').format(startTime);
+  String endFormatted = DateFormat('HH:mm').format(endTime);
+
+  // Return the formatted time range
+  return '$startFormatted - $endFormatted';
+}

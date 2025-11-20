@@ -102,9 +102,10 @@ class _UserDealsPageState extends State<UserDealsPage> {
                         onTap: () {
                           Get.to(
                             () => UserDealsDetails(
-                              dealData:
+                              dealId:
                                   abailableDealsController
-                                      .availableDeals[index],
+                                      .availableDeals[index]
+                                      .dealId,
                             ),
                           );
                         },
@@ -152,7 +153,9 @@ class _UserDealsPageState extends State<UserDealsPage> {
                       final deal = usedDealController.usedDeals[index];
                       return GestureDetector(
                         onTap: () {
-                          Get.to(() => UserAfterGivingStarPage());
+                          Get.to(
+                            () => UserAfterGivingStarPage(dealId: deal.dealId),
+                          );
                         },
                         child: dealCard(deal: deal, isUsed: true),
                       );

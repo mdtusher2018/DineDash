@@ -54,7 +54,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
     deepLinkService.onDealLink = (dealId) {
       debugPrint("Navigate to Deal page:==========>>>>>>>> $dealId");
-      navigateToPage(UserDealsDetails.fromDeepLink(dealId: dealId));
+      navigateToPage(UserDealsDetails(dealId: dealId, fromDeepLink: true));
+      isOpenedWithDeepLink.value = true;
     };
 
     Future.delayed(Duration(seconds: 3), () async {

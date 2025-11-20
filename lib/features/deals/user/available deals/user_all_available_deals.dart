@@ -20,16 +20,17 @@ class _UserAllAvailableDealsState extends State<UserAllAvailableDeals> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.fetchDealsList();
 
-    controller.fetchDealsList();
-
-    scrollController.addListener(() {
-      if (scrollController.position.pixels >=
-              scrollController.position.maxScrollExtent - 300 &&
-          !controller.isLoadingMore.value &&
-          controller.hasMore.value) {
-        controller.loadMoreAvailableDeals();
-      }
+      scrollController.addListener(() {
+        if (scrollController.position.pixels >=
+                scrollController.position.maxScrollExtent - 200 &&
+            !controller.isLoadingMore.value &&
+            controller.hasMore.value) {
+          controller.loadMoreAvailableDeals();
+        }
+      });
     });
   }
 
@@ -52,8 +53,9 @@ class _UserAllAvailableDealsState extends State<UserAllAvailableDeals> {
               if (index < controller.availableDeals.length) {
                 final deal = controller.availableDeals[index];
                 return GestureDetector(
-                  onTap: () => Get.to(() => UserDealsDetails(dealData: deal,)),
-                  child: dealCard(deal: deal,isUsed: false),
+                  onTap:
+                      () => Get.to(() => UserDealsDetails(dealId: deal.dealId)),
+                  child: dealCard(deal: deal, isUsed: false),
                 );
               } else {
                 // Show loader at bottom
@@ -73,5 +75,4 @@ class _UserAllAvailableDealsState extends State<UserAllAvailableDeals> {
       ),
     );
   }
-
 }

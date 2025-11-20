@@ -32,7 +32,7 @@ class _UserExplorePageState extends State<UserExplorePage> {
   @override
   void initState() {
     super.initState();
-
+    cityController.fetchCities();
     controller.fetchBusinessesOnMap();
     controller.fetchBusinessesList();
     _loadCustomMarker();

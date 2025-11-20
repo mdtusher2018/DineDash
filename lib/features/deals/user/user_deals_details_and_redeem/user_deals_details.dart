@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/core/utils/share_links.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/user_business_details_page.dart';
 import 'package:dine_dash/features/deals/user/model_and_response/deal_model.dart';
@@ -13,18 +14,14 @@ import 'package:shake/shake.dart';
 import 'package:share_plus/share_plus.dart';
 
 class UserDealsDetails extends StatefulWidget {
-  UserDealItem? dealData;
   final bool fromDeepLink;
   final String? dealId;
-  // Constructor when `fromDeepLink` is true
-  UserDealsDetails.fromDeepLink({super.key, required this.dealId})
-    : fromDeepLink = true,
-      dealData = null;
 
-  // Constructor when `fromDeepLink` is false
-  UserDealsDetails({super.key, required this.dealData})
-    : fromDeepLink = false,
-      dealId = null;
+  const UserDealsDetails({
+    super.key,
+    required this.dealId,
+    this.fromDeepLink = false,
+  });
 
   @override
   State<UserDealsDetails> createState() => _UserDealsDetailsState();
@@ -36,26 +33,22 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
   var selected = ''.obs;
   var selecteds = ''.obs;
 
-  // final List<String> comment = [
-  //   'Good environment',
-  //   'Perfect meal',
-  //   'Nice location',
-  // ];
-
   final controller = Get.find<UserDealRedeemController>();
+
+  UserDealItem? dealData;
 
   @override
   void initState() {
     super.initState();
     loadDealData();
-    if (widget.dealData != null) {
+    if (dealData != null) {
       detector = ShakeDetector.autoStart(
         onPhoneShake: (event) {
           navigateToPage(
             UserDealRedeemPage(
-              businessId: widget.dealData!.businessId,
-              dealId: widget.dealData!.dealId,
-              rasturentName: widget.dealData!.businessName,
+              businessId: dealData!.businessId,
+              dealId: dealData!.dealId,
+              rasturentName: dealData!.businessName,
             ),
           );
         },
@@ -64,15 +57,13 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
   }
 
   void loadDealData() {
-    if (widget.fromDeepLink) {
-      controller.fetchDeal(widget.dealId!).then((deal) {
-        if (deal != null) {
-          setState(() {
-            widget.dealData = deal.result;
-          });
-        }
-      });
-    }
+    controller.fetchDeal(widget.dealId!).then((deal) {
+      if (deal != null) {
+        setState(() {
+          dealData = deal.result;
+        });
+      }
+    });
   }
 
   @override
@@ -83,14 +74,14 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.dealData == null) {
+    if (dealData == null) {
       return Scaffold(
         appBar: AppBar(backgroundColor: AppColors.white),
         body: Center(child: CircularProgressIndicator()),
       );
     }
 
-    final deal = widget.dealData;
+    final deal = dealData;
 
     final nextOpening = deal!.getNextOpening(); // dealItem is UserDealItem
 
@@ -233,9 +224,7 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                                   child: InkWell(
                                     onTap: () {
                                       Share.shareUri(
-                                        ShareLinks.deal(
-                                          widget.dealData!.dealId,
-                                        ),
+                                        ShareLinks.deal(dealData!.dealId),
                                       );
                                     },
                                     child: Container(
@@ -431,7 +420,10 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                                       width: 30,
                                     ),
                                     commonText(
-                                      nextOpening['time']!,
+                                      formatBookingTime(
+                                        deal.bookingStart,
+                                        deal.bookingEnd,
+                                      ),
                                       size: 16,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -486,10 +478,9 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                                 "You can redeem from here also".tr,
                                 onTap: () async {
                                   await controller.dealRedeem(
-                                    widget.dealData!.id,
-                                    businessId: widget.dealData!.businessId,
-                                    rasturentName:
-                                        widget.dealData!.businessName,
+                                    dealData!.id,
+                                    businessId: dealData!.businessId,
+                                    rasturentName: dealData!.businessName,
                                   );
                                 },
                               ),

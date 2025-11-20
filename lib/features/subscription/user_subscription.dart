@@ -18,15 +18,13 @@ class _SubscriptionViewState extends State<SubscriptionView> {
   bool isMonthlySelected = true;
   final subscriptionController = Get.put(UserSubscriptionController());
 
-final controller=Get.find<UserSubscriptionController>();
+  final controller = Get.find<UserSubscriptionController>();
 
-@override
+  @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-controller.getAllSubscription();
+    controller.getAllSubscription();
   }
-
 
   void togglePlan(bool monthly) {
     setState(() {
@@ -46,7 +44,6 @@ controller.getAllSubscription();
         alignment: Alignment.topRight,
         children: [
           Container(
-
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
             decoration: BoxDecoration(
               color: selected ? Colors.blue.shade200 : Colors.transparent,
@@ -152,7 +149,6 @@ controller.getAllSubscription();
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: AppBar(
@@ -180,7 +176,7 @@ controller.getAllSubscription();
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: AppColors.primaryColor.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(50)
+                borderRadius: BorderRadius.circular(50),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -196,71 +192,69 @@ controller.getAllSubscription();
                     "Yearly",
                     !isMonthlySelected,
                     () => togglePlan(false),
-                         
                   ),
                 ],
               ),
             ),
 
+            Expanded(
+              child: Obx(() {
+                if (subscriptionController.isLoading.value) {
+                  return Center(child: CircularProgressIndicator());
+                }
 
-          Expanded(
-  child: Obx(() {
-    if (subscriptionController.isLoading.value) {
-      return Center(child: CircularProgressIndicator());
-    }
+                final filteredPlans =
+                    subscriptionController.plans
+                        .where(
+                          (plan) =>
+                              isMonthlySelected
+                                  ? plan.duration == 30
+                                  : plan.duration == 365,
+                        )
+                        .toList();
 
-    final filteredPlans = subscriptionController.plans
-        .where((plan) =>
-            isMonthlySelected
-                ? plan.duration == 30
-                : plan.duration ==365)
-        .toList();
+                return ListView.builder(
+                  itemCount: filteredPlans.length,
+                  itemBuilder: (context, index) {
+                    final plan = filteredPlans[index];
 
-    return ListView.builder(
-      itemCount: filteredPlans.length,
-      itemBuilder: (context, index) {
-        final plan = filteredPlans[index];
-
-        return buildPlanCard(
-          title: plan.planName,
-          subtitle: plan.description,
-          price:  "€${plan.price}",
-          features: plan.feature,
-          isMostPopular: plan.planName.toLowerCase() == "premium",
-          backgroundColor: plan.planName.toLowerCase() == "premium"
-              ? Colors.blue.shade50
-              : Colors.white,
-          borderColor: plan.planName.toLowerCase() == "premium"
-              ? AppColors.primaryColor
-              : Colors.grey.shade300,
-          button: commonButton(
-            plan.price == 0 ? "Start Free" : "Subscribe Now",
-            onTap: () async{
-       
-              
-            },
-          ),
-          bottomWidget: plan.price == 0
-              ? null
-              : Center(
-                  child: commonText(
-                    "No commitment. Cancel anytime.",
-                    size: 12,
-                    color: Colors.black54,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-        );
-      },
-    );
-  }),
-),
-
-          
+                    return buildPlanCard(
+                      title: plan.planName,
+                      subtitle: plan.description,
+                      price: "€${plan.price}",
+                      features: plan.feature,
+                      isMostPopular: plan.planName.toLowerCase() == "premium",
+                      backgroundColor:
+                          plan.planName.toLowerCase() == "premium"
+                              ? Colors.blue.shade50
+                              : Colors.white,
+                      borderColor:
+                          plan.planName.toLowerCase() == "premium"
+                              ? AppColors.primaryColor
+                              : Colors.grey.shade300,
+                      button: commonButton(
+                        plan.price == 0 ? "Start Free" : "Subscribe Now",
+                        onTap: () async {},
+                      ),
+                      bottomWidget:
+                          plan.price == 0
+                              ? null
+                              : Center(
+                                child: commonText(
+                                  "No commitment. Cancel anytime.",
+                                  size: 12,
+                                  color: Colors.black54,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                    );
+                  },
+                );
+              }),
+            ),
           ],
         ),
       ),
     );
   }
 }
-
