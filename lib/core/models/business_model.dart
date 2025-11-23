@@ -153,8 +153,13 @@ class BusinessModel {
     if (openingHours.isNotEmpty) {
       final first = openingHours.first;
 
-      final openingTime = DateFormat("h:mm a").parse(first.openingTime);
-      final closingTime = DateFormat("h:mm a").parse(first.closingTime);
+      final openingTime =
+          DateFormat("h:mm a").tryParse(first.openingTime) ??
+          DateFormat("h:mm a").parse("10:00 AM");
+
+      final closingTime =
+          DateFormat("h:mm a").tryParse(first.closingTime) ??
+          DateFormat("h:mm a").parse("8:00 PM");
 
       final now = DateTime.now();
       final currentTime = DateTime(
