@@ -703,7 +703,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
               borderRadius: BorderRadius.circular(10),
             ),
             child: commonText(
-              "6 € Benefit",
+              "$saving € Benefit",
               color: Colors.white,
               size: 12,
               isBold: true,
@@ -765,14 +765,10 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
               SizedBox(width: 4),
               Container(width: 1, height: 16, color: Colors.grey),
               SizedBox(width: 4),
-              Flexible(child: commonText("1 month ago")),
+              Flexible(child: commonText(timeAgo(feedback.createdAt))),
             ],
           ),
-          commonText(
-            "This is a comment",
-            fontWeight: FontWeight.w500,
-            size: 14,
-          ),
+          commonText(feedback.text, fontWeight: FontWeight.w500, size: 14),
         ],
       ),
     );
