@@ -312,10 +312,10 @@ class _EditDealScreenState extends State<EditDealScreen> {
                           ),
 
                           const SizedBox(height: 6),
-                          commonText(
-                            "* Time frames must be at least 4 hours long".tr,
-                            size: 12,
-                          ),
+                          // commonText(
+                          //   "* Time frames must be at least 4 hours long".tr,
+                          //   size: 12,
+                          // ),
                         ],
                       ),
                     ),

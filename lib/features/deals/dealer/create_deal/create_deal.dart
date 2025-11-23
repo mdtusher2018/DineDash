@@ -325,10 +325,10 @@ class _AddDealScreenState extends State<AddDealScreen> {
                           ),
 
                           const SizedBox(height: 6),
-                          commonText(
-                            "* Time frames must be at least 4 hours long".tr,
-                            size: 12,
-                          ),
+                          // commonText(
+                          //   "* Time frames must be at least 4 hours long".tr,
+                          //   size: 12,
+                          // ),
                         ],
                       ),
                     ),
