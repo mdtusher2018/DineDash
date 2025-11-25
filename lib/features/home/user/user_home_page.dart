@@ -108,13 +108,10 @@ class _UserHomeViewState extends State<UserHomeView> {
                         items:
                             cityController.cities.map((city) {
                               // use a unique identifier for each dropdown value
-                              final uniqueValue =
-                                  "${city.cityName}-${city.postalCode}";
+                              final uniqueValue = city.cityName;
                               return DropdownMenuItem<String>(
                                 value: uniqueValue,
-                                child: Text(
-                                  "${city.cityName} (${city.postalCode})",
-                                ),
+                                child: Text(city.cityName),
                               );
                             }).toList(),
                       ),

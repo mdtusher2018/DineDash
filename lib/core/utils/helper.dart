@@ -190,13 +190,27 @@ Future<File?> fetchImageFile(String photoRef) async {
 }
 
 String formatBookingTime(String bookingStart, String bookingEnd) {
-  // Parse the start and end time using DateTime.parse()
-  DateTime startTime = DateTime.parse(bookingStart);
-  DateTime endTime = DateTime.parse(bookingEnd);
+  // Function to parse the time string into DateTime
+  DateTime? parseTime(String time) {
+    DateTime? parsedTime = DateFormat(
+      "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+    ).parseStrict(time, true);
+    return parsedTime;
+  }
 
-  // Format the DateTime objects to 'HH:mm' (e.g., '12:00', '20:00')
-  String startFormatted = DateFormat('HH:mm').format(startTime);
-  String endFormatted = DateFormat('HH:mm').format(endTime);
+  // Parse the start and end times
+  DateTime? startTime = parseTime(bookingStart);
+  DateTime? endTime = parseTime(bookingEnd);
+
+  // Handle invalid time format
+  if (startTime == null || endTime == null) {
+    print("Error formatting booking times: Invalid time format");
+    return "-- - --";
+  }
+
+  // Format the DateTime objects into the desired "hh:mm a" format
+  String startFormatted = DateFormat('hh:mm a').format(startTime);
+  String endFormatted = DateFormat('hh:mm a').format(endTime);
 
   // Return the formatted time range
   return '$startFormatted - $endFormatted';

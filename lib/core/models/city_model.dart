@@ -39,7 +39,7 @@ class CityData {
 
 class CityModel {
   final String id;
-  final String postalCode;
+  final List<dynamic> postalCode;
   final String cityName;
 
   CityModel({
@@ -51,7 +51,7 @@ class CityModel {
   factory CityModel.fromJson(Map<String, dynamic> json) {
     return CityModel(
       id: json['_id'] ?? '',
-      postalCode: json['postalCode'] ?? '',
+      postalCode: json['postalCode'] as List<dynamic>? ?? [],
       cityName: json['cityName'] ?? '',
     );
   }

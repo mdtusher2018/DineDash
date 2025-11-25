@@ -16,11 +16,13 @@ import 'package:share_plus/share_plus.dart';
 class UserDealsDetails extends StatefulWidget {
   final bool fromDeepLink;
   final String? dealId;
+  final String udmIdl;
 
   const UserDealsDetails({
     super.key,
     required this.dealId,
     this.fromDeepLink = false,
+    this.udmIdl = "",
   });
 
   @override
@@ -109,9 +111,15 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Image.asset(
-                        "assets/images/banner.png",
-                        fit: BoxFit.fill,
+                      child: ClipRRect(
+                        borderRadius: BorderRadiusGeometry.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10),
+                        ),
+                        child: Image.network(
+                          getFullImagePath(dealData?.businessImage ?? ""),
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
                     Padding(
@@ -130,6 +138,7 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                             Obx(
                               () => Wrap(
                                 spacing: 12,
+                                runSpacing: 8,
                                 children:
                                     deal.catgory.map((option) {
                                       final isSelected =
@@ -386,22 +395,27 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
 
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              spacing: 50,
+                              spacing: 8,
                               children: [
-                                Column(
-                                  spacing: 10,
-                                  children: [
-                                    Image.asset(
-                                      "assets/images/date.png",
-                                      height: 30,
-                                      width: 30,
-                                    ),
-                                    commonText(
-                                      nextOpening['day']!.tr,
-                                      size: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ],
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    spacing: 10,
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/date.png",
+                                        height: 30,
+                                        width: 30,
+                                      ),
+                                      commonText(
+                                        nextOpening['day']!.tr,
+                                        size: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 SizedBox(
                                   height:
@@ -411,23 +425,30 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                                     color: Colors.grey,
                                   ),
                                 ),
-                                Column(
-                                  spacing: 10,
-                                  children: [
-                                    Image.asset(
-                                      "assets/images/time.png",
-                                      height: 30,
-                                      width: 30,
-                                    ),
-                                    commonText(
-                                      formatBookingTime(
-                                        deal.bookingStart,
-                                        deal.bookingEnd,
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    spacing: 10,
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/time.png",
+                                        height: 30,
+                                        width: 30,
                                       ),
-                                      size: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ],
+                                      FittedBox(
+                                        child: commonText(
+                                          formatBookingTime(
+                                            deal.bookingStart,
+                                            deal.bookingEnd,
+                                          ),
+                                          size: 14,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -478,7 +499,7 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                                 "You can redeem from here also".tr,
                                 onTap: () async {
                                   await controller.dealRedeem(
-                                    dealData!.id,
+                                    widget.udmIdl,
                                     businessId: dealData!.businessId,
                                     rasturentName: dealData!.businessName,
                                   );

@@ -106,6 +106,10 @@ class _UserDealsPageState extends State<UserDealsPage> {
                                   abailableDealsController
                                       .availableDeals[index]
                                       .dealId,
+                              udmIdl:
+                                  abailableDealsController
+                                      .availableDeals[index]
+                                      .id,
                             ),
                           );
                         },

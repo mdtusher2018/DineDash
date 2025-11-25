@@ -54,7 +54,12 @@ class _UserAllAvailableDealsState extends State<UserAllAvailableDeals> {
                 final deal = controller.availableDeals[index];
                 return GestureDetector(
                   onTap:
-                      () => Get.to(() => UserDealsDetails(dealId: deal.dealId)),
+                      () => Get.to(
+                        () => UserDealsDetails(
+                          dealId: deal.dealId,
+                          udmIdl: deal.id,
+                        ),
+                      ),
                   child: dealCard(deal: deal, isUsed: false),
                 );
               } else {

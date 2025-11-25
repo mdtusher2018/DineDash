@@ -1,10 +1,9 @@
 import 'package:dine_dash/features/deals/user/used%20deal/user_used_deals_controller.dart';
 import 'package:dine_dash/features/deals/user/widget/deal_card.dart';
+import 'package:dine_dash/features/ratting_and_feedback/user/feedback_of_a_business.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../user_deals_details_and_redeem/user_deals_details.dart';
 
 class UserAllUsedDeals extends StatefulWidget {
   const UserAllUsedDeals({super.key});
@@ -37,7 +36,7 @@ class _UserAllUsedDealsState extends State<UserAllUsedDeals> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Available Deals"),
+      appBar: commonAppBar(title: "Used Deals"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Obx(() {
@@ -55,9 +54,7 @@ class _UserAllUsedDealsState extends State<UserAllUsedDeals> {
                 return GestureDetector(
                   onTap:
                       () => Get.to(
-                        () => UserDealsDetails(
-                          dealId: controller.usedDeals[index].dealId,
-                        ),
+                        () => UserAfterGivingStarPage(dealId: deal.dealId),
                       ),
                   child: dealCard(deal: deal, isUsed: true),
                 );

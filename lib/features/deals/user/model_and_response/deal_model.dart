@@ -15,7 +15,7 @@ class UserDealItem {
   final num redeemCount;
   final num benefitAmmount;
   final String description;
-  final List<String> catgory;
+  final List<dynamic> catgory;
   final String bookingStart;
   final String bookingEnd;
   final String redeemedRedeemedAt;
@@ -63,9 +63,9 @@ class UserDealItem {
     redeemCount: json['redeemCount'] ?? 0,
     description: json['description'] ?? '',
     benefitAmmount: json['benefitAmmount'] ?? 0,
-    catgory: json['types'] ?? json['businessCategories'] ?? ["cafe", "Bar"],
-    bookingStart: json['bookinfor'] ?? '--',
-    bookingEnd: json['bookinEnd'] ?? '--',
+    catgory: json['businessCategories'] as List<dynamic>? ?? [],
+    bookingStart: json['bookinfor'] ?? '',
+    bookingEnd: json['bookinEnd'] ?? '',
     redeemedRedeemedAt: json['redeemedRedeemedAt'] ?? '',
   );
 }

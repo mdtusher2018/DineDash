@@ -12,7 +12,10 @@ import 'package:get/get.dart';
 void main() async {
   FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.dumpErrorToConsole(details);
-    debugPrintStack(label: details.exception.toString());
+
+    debugPrint('Caught FlutterError: ${details.exception}');
+    debugPrint('Stack trace:');
+    debugPrint(details.stack.toString());
   };
 
   WidgetsFlutterBinding.ensureInitialized();

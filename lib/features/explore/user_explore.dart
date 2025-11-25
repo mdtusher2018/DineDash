@@ -405,12 +405,11 @@ class _UserExplorePageState extends State<UserExplorePage> {
                               items:
                                   cityController.cities.map((city) {
                                     // use a unique identifier for each dropdown value
-                                    final uniqueValue =
-                                        "${city.cityName}-${city.postalCode}";
+                                    final uniqueValue = city.cityName;
                                     return DropdownMenuItem<String>(
                                       value: uniqueValue,
                                       child: commonText(
-                                        "${city.cityName} (${city.postalCode})",
+                                        city.cityName,
                                         size: 14,
                                       ),
                                     );

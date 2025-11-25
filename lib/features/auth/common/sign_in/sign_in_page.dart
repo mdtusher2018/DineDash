@@ -18,7 +18,7 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController emailController = TextEditingController(
-    text: "businessman@gmail.com",
+    text: "xokekek289@bablace.com",
   );
   final TextEditingController passwordController = TextEditingController(
     text: "hello123",
@@ -130,16 +130,13 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(height: 20),
 
                 // Sign In with Google
-                commonBorderButton(
-                  "Sign In With Google".tr,
-
-                  imagePath: ImagePaths.googleIcon,
-
-                  onTap: () {
-                    // Handle Google Sign In
-                  },
-                ),
-
+                // commonBorderButton(
+                //   "Sign In With Google".tr,
+                //   imagePath: ImagePaths.googleIcon,
+                //   onTap: () {
+                //     // Handle Google Sign In
+                //   },
+                // ),
                 const SizedBox(height: 30),
 
                 // Already have an account? Sign In
