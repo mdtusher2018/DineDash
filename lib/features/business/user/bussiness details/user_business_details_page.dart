@@ -1,10 +1,12 @@
 import 'dart:math';
 
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
+import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/services/localstorage/storage_key.dart';
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/core/utils/share_links.dart';
 import 'package:dine_dash/features/auth/common/sign_in/sign_in_page.dart';
+import 'package:dine_dash/features/auth/common/sign_in_sign_up_chooeser.dart';
 import 'package:dine_dash/features/business/user/all_review_of_business.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/business_details_controller.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/business_details_response.dart';
@@ -12,7 +14,7 @@ import 'package:dine_dash/features/business/user/bussiness%20details/menu_respon
 import 'package:dine_dash/features/business/user/map_screen.dart';
 import 'package:dine_dash/features/deals/user/user_deal_blocked.dart';
 import 'package:dine_dash/core/models/business_model.dart';
-import 'package:dine_dash/features/role_selection_page.dart';
+import 'package:dine_dash/features/onboarding/UserOnboarding.dart';
 import 'package:dine_dash/features/subscription/user_subscription.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
@@ -84,7 +86,13 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
               child: GestureDetector(
                 onTap: () {
                   if (widget.fromDeepLink) {
-                    navigateToPage(RoleSelectionPage(), clearStack: true);
+                    // navigateToPage(RoleSelectionPage(), clearStack: true);
+                    SessionMemory.isUser = true;
+                    if (LocalStorageService.isUserOnboardingCompleated) {
+                      navigateToPage(SignInSignUpChooeser());
+                    } else {
+                      navigateToPage(UserOnboardingView());
+                    }
                   }
                   Get.back();
                 },

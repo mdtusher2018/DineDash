@@ -7,6 +7,7 @@ import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/services/localstorage/storage_key.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart'; // Add your profile endpoint here
 import 'package:dine_dash/core/utils/helper.dart';
+import 'package:dine_dash/features/auth/common/sign_in_sign_up_chooeser.dart';
 import 'package:dine_dash/features/auth/dealer/create_dealer_1st_page.dart';
 import 'package:dine_dash/features/auth/user/user_create_account_1st_page.dart';
 import 'package:dine_dash/features/dealer_root_page.dart';
@@ -18,7 +19,6 @@ import 'package:dine_dash/features/profile/common/profile/switch_account_respons
 import 'package:dine_dash/features/user_root_page.dart';
 import 'package:dine_dash/core/models/user_model.dart'; // The model that holds user attributes
 import 'package:dine_dash/res/commonWidgets.dart';
-import 'package:dine_dash/features/role_selection_page.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends BaseController {
@@ -178,7 +178,13 @@ class ProfileController extends BaseController {
           body: {"password": password},
         );
         if (response['statusCode'] == 200) {
-          navigateToPage(RoleSelectionPage(), clearStack: true);
+          // navigateToPage(RoleSelectionPage(), clearStack: true);
+          SessionMemory.isUser = true;
+          if (LocalStorageService.isUserOnboardingCompleated) {
+            navigateToPage(SignInSignUpChooeser());
+          } else {
+            navigateToPage(UserOnboardingView());
+          }
         }
       },
     );
@@ -188,6 +194,12 @@ class ProfileController extends BaseController {
     await _localStorageService.clearAllExceptOnboarding();
     _sessionMemory.clear();
 
-    navigateToPage(RoleSelectionPage(), clearStack: true);
+    // navigateToPage(RoleSelectionPage(), clearStack: true);
+    SessionMemory.isUser = true;
+    if (LocalStorageService.isUserOnboardingCompleated) {
+      navigateToPage(SignInSignUpChooeser());
+    } else {
+      navigateToPage(UserOnboardingView());
+    }
   }
 }

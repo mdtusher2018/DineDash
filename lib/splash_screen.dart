@@ -2,13 +2,16 @@ import 'dart:developer';
 
 import 'package:dine_dash/core/services/deeplink/deeplink_service.dart';
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
+import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/utils/helper.dart';
+import 'package:dine_dash/features/auth/common/sign_in_sign_up_chooeser.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/user_business_details_page.dart';
 import 'package:dine_dash/features/dealer_root_page.dart';
 import 'package:dine_dash/features/deals/user/user_deals_details_and_redeem/user_deals_details.dart';
+import 'package:dine_dash/features/onboarding/UserOnboarding.dart';
 import 'package:dine_dash/features/user_root_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
-import 'package:dine_dash/features/role_selection_page.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -32,7 +35,13 @@ class _SplashScreenState extends State<SplashScreen> {
         return DealerRootPage();
       }
     } else {
-      return RoleSelectionPage();
+      // return RoleSelectionPage();
+      SessionMemory.isUser = true;
+      if (LocalStorageService.isUserOnboardingCompleated) {
+        return SignInSignUpChooeser();
+      } else {
+        return UserOnboardingView();
+      }
     }
   }
 
@@ -41,6 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    LocalStorageService.init();
     final deepLinkService = Get.find<DeepLinkService>();
 
     deepLinkService.onBusinessLink = (businessId) {
@@ -67,7 +77,13 @@ class _SplashScreenState extends State<SplashScreen> {
       }
 
       if (token == null) {
-        navigateToPage(RoleSelectionPage());
+        // navigateToPage(RoleSelectionPage());
+        SessionMemory.isUser = true;
+        if (LocalStorageService.isUserOnboardingCompleated) {
+          navigateToPage(SignInSignUpChooeser());
+        } else {
+          navigateToPage(UserOnboardingView());
+        }
       } else {
         navigateToPage(returnPage(token));
       }

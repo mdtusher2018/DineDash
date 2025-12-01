@@ -258,12 +258,12 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
             index,
             deal,
           ) {
-            if (deal.reasonFor == "deleted") {
-              return MapEntry(
-                index,
-                SizedBox.shrink(),
-              ); // Skip the deleted deals
-            }
+            // if (deal.reasonFor == "deleted") {
+            //   return MapEntry(
+            //     index,
+            //     SizedBox.shrink(),
+            //   ); // Skip the deleted deals
+            // }
             return MapEntry(
               index,
               buildDealCard(
@@ -273,7 +273,14 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
                 redeemed: deal.redeemCount.toString(),
                 location: controller.businessDetail.value!.name,
                 benefitText: deal.benefitAmount.toString(),
-                status: deal.isActive ? "Active" : "Paused",
+                status:
+                    deal.reasonFor == "deleted"
+                        ? "Pending for delete"
+                        : deal.reasonFor == "edited"
+                        ? "Pending for edit"
+                        : deal.isActive
+                        ? "Active"
+                        : "Paused",
                 onEdit: () {
                   navigateToPage(
                     EditDealScreen(
