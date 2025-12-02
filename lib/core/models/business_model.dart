@@ -292,6 +292,8 @@ class DealData {
   final String reasonFor;
   final int redeemCount;
   bool isActive;
+  bool isApproved;
+  bool isDeleted;
 
   DealData({
     required this.id,
@@ -302,6 +304,8 @@ class DealData {
     required this.redeemCount,
     required this.reasonFor,
     required this.isActive,
+    required this.isApproved,
+    required this.isDeleted,
   });
 
   factory DealData.fromJson(Map<String, dynamic> json) {
@@ -314,7 +318,35 @@ class DealData {
       reuseableAfter: json['reuseableAfter'] ?? 0,
       redeemCount: json['redeemCount'] ?? 0,
       isActive: json['isActive'] ?? false,
+      isApproved: json['isApproved'] ?? false,
+      isDeleted: json['isDeleted'] ?? false,
     );
+  }
+
+  String get status {
+    if (!isApproved) {
+      return "Pending for approve";
+    }
+
+    if (isActive) {
+      switch (reasonFor) {
+        case "deleted":
+          return "Pending for delete";
+        case "edited":
+          return "Pending for edit";
+      }
+      return "Active";
+    }
+
+    // isActive == false but approved → check reason
+    switch (reasonFor) {
+      case "deleted":
+        return "Pending for delete";
+      case "edited":
+        return "Pending for edit";
+    }
+
+    return "Paused";
   }
 }
 

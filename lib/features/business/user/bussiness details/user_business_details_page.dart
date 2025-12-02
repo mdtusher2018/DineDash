@@ -465,6 +465,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                               isActive: deal.isActive,
                               dealId: deal.id,
                               saving: deal.benefitAmount,
+                              
                             );
                           },
                         ),

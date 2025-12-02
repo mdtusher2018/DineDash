@@ -77,7 +77,7 @@ class _DealerDealsRootPageState extends State<DealerDealsRootPage> {
                         redeemed: deal.redeemCount.toString(),
                         location: deal.businessName,
                         benefitText: deal.benefitAmmount.toString(),
-                        status: deal.isActive ? "Active" : "Paused",
+                        status: deal.status,
                         onEdit: () {
                           navigateToPage(
                             EditDealScreen(

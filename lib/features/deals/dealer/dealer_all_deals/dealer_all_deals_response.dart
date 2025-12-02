@@ -55,6 +55,8 @@ class DealAttribute {
   final num reuseableAfter;
   final num redeemCount;
   bool isActive;
+  bool isApproved;
+  bool isDeleted;
 
   DealAttribute({
     required this.id,
@@ -68,6 +70,8 @@ class DealAttribute {
     required this.reuseableAfter,
     required this.redeemCount,
     required this.isActive,
+    required this.isApproved,
+    required this.isDeleted,
   });
 
   factory DealAttribute.fromJson(Map<String, dynamic> json) => DealAttribute(
@@ -83,5 +87,33 @@ class DealAttribute {
     reuseableAfter: json["reuseableAfter"] ?? 60,
     redeemCount: json["redeemCount"] ?? 0,
     isActive: json["isActive"] ?? false,
+    isApproved: json['isApproved'] ?? false,
+    isDeleted: json['isDeleted'] ?? false,
   );
+
+  String get status {
+    if (!isApproved) {
+      return "Pending for approve";
+    }
+
+    if (isActive) {
+      switch (reasonFor) {
+        case "deleted":
+          return "Pending for delete";
+        case "edited":
+          return "Pending for edit";
+      }
+      return "Active";
+    }
+
+    // isActive == false but approved → check reason
+    switch (reasonFor) {
+      case "deleted":
+        return "Pending for delete";
+      case "edited":
+        return "Pending for edit";
+    }
+
+    return "Paused";
+  }
 }
