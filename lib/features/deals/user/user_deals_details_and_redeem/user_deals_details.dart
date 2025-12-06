@@ -394,66 +394,63 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                             ),
                             SizedBox(height: 16),
 
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.center,
-                            //   spacing: 8,
-                            //   children: [
-                            //     Expanded(
-                            //       child: Column(
-                            //         mainAxisAlignment: MainAxisAlignment.center,
-                            //         crossAxisAlignment:
-                            //             CrossAxisAlignment.center,
-                            //         spacing: 10,
-                            //         children: [
-                            //           Image.asset(
-                            //             "assets/images/date.png",
-                            //             height: 30,
-                            //             width: 30,
-                            //           ),
-                            //           commonText(
-                            //             nextOpening['day']!.tr,
-                            //             size: 16,
-                            //             fontWeight: FontWeight.w500,
-                            //           ),
-                            //         ],
-                            //       ),
-                            //     ),
-                            //     SizedBox(
-                            //       height:
-                            //           60, // Adjust this to your desired divider height
-                            //       child: VerticalDivider(
-                            //         thickness: 2,
-                            //         color: Colors.grey,
-                            //       ),
-                            //     ),
-                            //     Expanded(
-                            //       child: Column(
-                            //         mainAxisAlignment: MainAxisAlignment.center,
-                            //         crossAxisAlignment:
-                            //             CrossAxisAlignment.center,
-                            //         spacing: 10,
-                            //         children: [
-                            //           Image.asset(
-                            //             "assets/images/time.png",
-                            //             height: 30,
-                            //             width: 30,
-                            //           ),
-                            //           FittedBox(
-                            //             child: commonText(
-                            //               formatBookingTime(
-                            //                 deal.bookingStart,
-                            //                 deal.bookingEnd,
-                            //               ),
-                            //               size: 14,
-                            //               fontWeight: FontWeight.w500,
-                            //             ),
-                            //           ),
-                            //         ],
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
-                            // SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              spacing: 8,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    spacing: 10,
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/date.png",
+                                        height: 30,
+                                        width: 30,
+                                      ),
+                                      commonText(
+                                        deal.day,
+                                        size: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height:
+                                      60, // Adjust this to your desired divider height
+                                  child: VerticalDivider(
+                                    thickness: 2,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    spacing: 10,
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/time.png",
+                                        height: 30,
+                                        width: 30,
+                                      ),
+                                      FittedBox(
+                                        child: commonText(
+                                          "${deal.start} - ${deal.end}",
+                                          size: 14,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10),
                             if (!widget.fromDeepLink) ...[
                               Row(
                                 children: [

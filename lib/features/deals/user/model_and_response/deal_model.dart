@@ -18,6 +18,9 @@ class UserDealItem {
   final List<dynamic> catgory;
   final String bookingStart;
   final String bookingEnd;
+  final String start;
+  final String end;
+  final String day;
   final String redeemedRedeemedAt;
 
   UserDealItem({
@@ -40,6 +43,9 @@ class UserDealItem {
     required this.catgory,
     required this.bookingStart,
     required this.bookingEnd,
+    required this.start,
+    required this.end,
+    required this.day,
     required this.redeemedRedeemedAt,
   });
 
@@ -66,6 +72,9 @@ class UserDealItem {
     catgory: json['businessCategories'] as List<dynamic>? ?? [],
     bookingStart: json['bookinfor'] ?? '',
     bookingEnd: json['bookinEnd'] ?? '',
+    start: json['activeTime']?[0]?['startTime'] ?? '',
+    end: json['activeTime']?[0]['endTime'] ?? '',
+    day: json['activeTime']?[0]?['day'] ?? '',
     redeemedRedeemedAt: json['redeemedRedeemedAt'] ?? '',
   );
 }
