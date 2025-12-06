@@ -36,7 +36,7 @@ class PaymentWebViewScreen extends StatelessWidget {
                   onWebResourceError: (WebResourceError error) {},
                   onNavigationRequest: (NavigationRequest request) {
                     if (request.url.contains('transaction/complete')) {
-                      Get.back();
+                      Get.close(1);
                       Get.snackbar("Sucessfull", "payment sucessfull");
                     }
                     return NavigationDecision.navigate;

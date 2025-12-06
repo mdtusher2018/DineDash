@@ -65,6 +65,7 @@ class SignUpController extends BaseController {
               StorageKey.token,
               signUpResponse.signUpToken!,
             );
+            SessionMemory.isUser = true;
           }
 
           Get.to(EmailVerificationScreen());

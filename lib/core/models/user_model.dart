@@ -2,7 +2,7 @@ class UserModel {
   final String id;
   final String fullName;
   final String email;
-  final List<String> role;
+  final List<dynamic> role;
   final String currentRole;
   final bool isAdmin;
   final String? postalCode;
@@ -56,7 +56,7 @@ class UserModel {
       id: json['_id'] ?? '',
       fullName: json['fullName'] ?? '',
       email: json['email'] ?? '',
-      role: json['role'] != null ? List<String>.from(json['role']) : [],
+      role: json['role'] != null ? List<dynamic>.from(json['role']) : [],
       currentRole: json['currentRole'] ?? '',
       isAdmin: json['isAdmin'] ?? false,
       postalCode: json['postalCode'],

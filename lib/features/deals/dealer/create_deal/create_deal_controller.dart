@@ -66,7 +66,7 @@ class DealerCreateDealController extends DealerMyBusinessNameListController {
         );
 
         if (response['statusCode'] == 201) {
-          Get.back();
+          Get.close(1);
           showSnackBar(response['message'] ?? "Deal created successfully");
         } else {
           throw Exception(response['message'] ?? "Failed to create deal");

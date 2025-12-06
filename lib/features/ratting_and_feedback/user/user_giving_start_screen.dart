@@ -17,7 +17,7 @@ class UserGivingStarsPage extends StatelessWidget {
   final String dealId, businessId, rasturentName;
 
   final controller = Get.find<UserFeedbackController>();
-  RxDouble ratting = 0.0.obs;
+  RxDouble ratting = 3.0.obs;
 
   TextEditingController commentController = TextEditingController();
   @override
@@ -52,7 +52,7 @@ class UserGivingStarsPage extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                     ),
                     RatingBar.builder(
-                      initialRating: 3,
+                      initialRating: ratting.value,
                       itemSize: 25,
                       minRating: 1,
                       direction: Axis.horizontal,
@@ -62,7 +62,7 @@ class UserGivingStarsPage extends StatelessWidget {
                       itemBuilder:
                           (context, _) => Icon(Icons.star, color: Colors.amber),
                       onRatingUpdate: (rating) {
-                        print(rating);
+                        ratting.value = rating;
                       },
                     ),
                   ],
@@ -88,44 +88,7 @@ class UserGivingStarsPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 25),
-              // Obx(
-              //   () => Wrap(
-              //     spacing: 12,
-              //     children:
-              //         comment.map((option) {
-              //           final isSelected = selecteds.value == option;
-              //           return GestureDetector(
-              //             onTap: () {
-              //               selecteds.value = option;
-              //             },
-              //             child: Container(
-              //               padding: EdgeInsets.symmetric(
-              //                 horizontal: 10,
-              //                 vertical: 8,
-              //               ),
-              //               margin: EdgeInsets.symmetric(vertical: 5),
-              //               decoration: BoxDecoration(
-              //                 color:
-              //                     isSelected
-              //                         ? Color(0xffB7CDF6)
-              //                         : Color(0xffB7CDF5),
-              //                 borderRadius: BorderRadius.circular(18),
-              //               ),
-              //               child: Text(
-              //                 option,
-              //                 style: TextStyle(
-              //                   color: Colors.black,
-              //                   fontWeight:
-              //                       isSelected
-              //                           ? FontWeight.w600
-              //                           : FontWeight.normal,
-              //                 ),
-              //               ),
-              //             ),
-              //           );
-              //         }).toList(),
-              //   ),
-              // ),
+
               SizedBox(height: 170),
               commonButton(
                 "Continue".tr,
@@ -143,7 +106,7 @@ class UserGivingStarsPage extends StatelessWidget {
               Center(
                 child: TextButton(
                   onPressed: () {
-                    Get.back();
+                    Get.close(1);
                   },
                   child: commonText(
                     "Remind me later".tr,

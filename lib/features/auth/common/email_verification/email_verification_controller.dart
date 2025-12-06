@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/core/validators/auth_validator.dart';
@@ -14,6 +17,7 @@ import 'package:dine_dash/core/base/base_controller.dart';
 class EmailVerificationController extends BaseController {
   final ApiService _apiService = Get.find();
   final LocalStorageService _localStorage = Get.find();
+  final SessionMemory _sessionalStorage = Get.find();
 
   RxBool isResendOTPTrue = false.obs;
 
@@ -25,7 +29,7 @@ class EmailVerificationController extends BaseController {
       showSnackBar(validationMessage, isError: true);
       return;
     }
-
+    log(otp);
     await safeCall<void>(
       task: () async {
         final body = {
@@ -33,6 +37,7 @@ class EmailVerificationController extends BaseController {
           "purpose":
               (isResendOTPTrue.value) ? "resend-otp" : "email-verification",
         };
+        log(body.toString());
         final response = await _apiService.post(
           ApiEndpoints.emailVerification,
           body,
@@ -44,7 +49,8 @@ class EmailVerificationController extends BaseController {
         if (emailVerificationResponse.statusCode == 201) {
           final token = emailVerificationResponse.accessToken;
 
-          await _localStorage.saveString(StorageKey.token, token);
+          // await _localStorage.saveString(StorageKey.token, token);
+          _sessionalStorage.setToken(token);
 
           if (decodeJwtPayload(token)["currentRole"] == "user") {
             Get.offAll(() => UserRootPage());

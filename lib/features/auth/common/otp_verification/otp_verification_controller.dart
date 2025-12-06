@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/core/validators/auth_validator.dart';
@@ -18,6 +20,7 @@ class OTPVerificationController extends BaseController {
   RxBool isResendOTPTrue = false.obs;
 
   Future<void> verifyOTP({required String otp}) async {
+    log(otp);
     final validationMessage = AuthValidator.validateEmailAndOTPVerification(
       otp: otp,
     );
@@ -32,6 +35,7 @@ class OTPVerificationController extends BaseController {
           "otp": otp,
           "purpose": (isResendOTPTrue.value) ? "resend-otp" : "forget-password",
         };
+        log(body.toString());
         final response = await _apiService.post(
           ApiEndpoints.emailVerification,
           body,

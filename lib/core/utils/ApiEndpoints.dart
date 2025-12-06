@@ -130,7 +130,7 @@ class ApiEndpoints {
       "business/my-businessDetails/$businessId";
 
   static String dealerHomepageAllBusiness(int page) =>
-      "business/home?page=$page";
+      "business/home?page=$page&limit=500";
 
   static String dealerAllBusiness(int page) =>
       "business/my-business?page=$page";
@@ -207,4 +207,8 @@ class ApiEndpoints {
   static String payment = "transaction/payment";
 
   static String mySubscription = "mysubscription/my-subs";
+
+  static String deleteMenu(String menuId) {
+    return "menu/$menuId";
+  }
 }

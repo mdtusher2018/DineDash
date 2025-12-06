@@ -78,10 +78,10 @@ class DealerAddBusinessController extends BaseController {
         if (response['statusCode'] == 201 || response['status'] == true) {
           String id = response['data']?['attributes']?['_id'] ?? "";
           if (id.isNotEmpty) {
-            Get.back();
+            Get.close(1);
             navigateToPage(AddMenuScreen(businessId: id));
           } else {
-            Get.back();
+            Get.close(1);
           }
           showSnackBar("Business created successfully");
         } else {
@@ -90,5 +90,4 @@ class DealerAddBusinessController extends BaseController {
       },
     );
   }
-
 }

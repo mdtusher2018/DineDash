@@ -94,7 +94,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                       navigateToPage(UserOnboardingView());
                     }
                   }
-                  Get.back();
+                  Get.close(1);
                 },
                 child: CircleAvatar(
                   backgroundColor: Colors.white,
@@ -465,7 +465,6 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                               isActive: deal.isActive,
                               dealId: deal.id,
                               saving: deal.benefitAmount,
-                              
                             );
                           },
                         ),
@@ -684,7 +683,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                     saving: saving,
                     dealId: dealId,
                     onDealTap: (timeRange) {
-                      Get.back();
+                      Get.close(1);
 
                       navigateToPage(
                         (subscriptionRequired)
@@ -1191,7 +1190,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                                       ) ??
                                       false;
                                   if (result) {
-                                    Get.back();
+                                    Get.close(1);
 
                                     navigateToPage(
                                       UserDealBlockedPage(

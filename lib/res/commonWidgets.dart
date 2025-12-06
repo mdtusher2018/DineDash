@@ -454,9 +454,21 @@ AppBar commonAppBar({
             ? null
             : GestureDetector(
               onTap: () {
-                Get.back();
+                Get.close(1);
               },
-              child: Icon(Icons.arrow_back_ios, color: textColor),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.arrow_back_ios_new,
+                    color: textColor,
+                    size: 32,
+                  ),
+                ),
+              ),
             ),
     title: commonText(title.tr, size: 20, isBold: true, color: textColor),
     centerTitle: isCenter,

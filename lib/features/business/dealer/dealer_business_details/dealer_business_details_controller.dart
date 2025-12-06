@@ -54,4 +54,13 @@ class DealerBusinessDetailController extends BaseController {
     final pauseDealController = Get.find<DealerDealPauseController>();
     return await pauseDealController.pauseToggleDeal(dealId: dealId);
   }
+
+  Future<void> deleteMenu({required String menuId}) async {
+    final response = await _apiService.delete(ApiEndpoints.deleteMenu(menuId));
+    if (response['statusCode'] == 201) {
+      businessDetail.value!.menuData.removeWhere((element) {
+        return element.id == menuId;
+      });
+    }
+  }
 }

@@ -72,7 +72,7 @@ class DealerEditBusinessController extends BaseController {
         );
 
         if (response['statusCode'] == 200 || response['status'] == true) {
-          Get.back();
+          Get.close(1);
 
           showSnackBar("Business updated successfully");
         } else {

@@ -6,7 +6,6 @@ import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 class DealerEditMenuController extends BaseController {
   final ApiService _apiService = Get.find();
 
-
   Future<void> editMenu({
     required String menuId,
     required String itemName,
@@ -43,7 +42,7 @@ class DealerEditMenuController extends BaseController {
         );
 
         if (response['statusCode'] == 201 || response['status'] == true) {
-          Get.back();
+          Get.close(1);
           showSnackBar("Menu Updated successfully", isError: false);
         } else {
           throw Exception(response['message'] ?? "Something went wrong");

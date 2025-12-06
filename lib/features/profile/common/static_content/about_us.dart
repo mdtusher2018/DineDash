@@ -5,7 +5,6 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 
-
 class AboutUsPage extends StatelessWidget {
   const AboutUsPage({super.key});
 
@@ -23,11 +22,11 @@ class AboutUsPage extends StatelessWidget {
         backgroundColor: AppColors.white,
         title: commonText("About Us".tr, size: 18, isBold: true),
         leading: InkWell(
-          onTap: () => Get.back(),
+          onTap: () => Get.close(1),
           child: const Icon(Icons.arrow_back_ios_new, color: Colors.black87),
         ),
       ),
-      body:  Obx(() {
+      body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }

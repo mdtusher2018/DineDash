@@ -656,7 +656,16 @@ class _MenuTabState extends State<MenuTab> {
                             ),
                           ),
                           SizedBox(width: 16),
-                          Image.asset("assets/images/delete.png", width: 20),
+                          InkWell(
+                            onTap: () async {
+                              await controller.deleteMenu(menuId: item.id);
+                              setState(() {});
+                            },
+                            child: Image.asset(
+                              "assets/images/delete.png",
+                              width: 20,
+                            ),
+                          ),
                         ],
                       ),
                     ),

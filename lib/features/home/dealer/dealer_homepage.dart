@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/features/home/dealer/dealer_homepage_controller.dart';
@@ -25,13 +27,8 @@ class _DealerHomepageState extends State<DealerHomepage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      log("===========>>>>>>> Home page api called");
       controller.fetchDealerHomepageData();
-    });
-    scrollController.addListener(() {
-      if (scrollController.position.pixels >=
-          scrollController.position.maxScrollExtent - 200) {
-        controller.fetchmore();
-      }
     });
   }
 
@@ -42,10 +39,11 @@ class _DealerHomepageState extends State<DealerHomepage> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: RefreshIndicator(
           onRefresh: () async {
-            controller.fetchDealerHomepageData();
+            await controller.fetchDealerHomepageData();
           },
           child: SingleChildScrollView(
             controller: scrollController,
+            physics: AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
                 SizedBox(height: 29),
@@ -98,16 +96,15 @@ class _DealerHomepageState extends State<DealerHomepage> {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Obx(() {
-                    if (controller.businessSummary.value == null) {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                    if (controller.isLoading.value &&
-                        controller.businessSummary.value == null) {
+                    if (controller.isLoading.value) {
                       return Center(child: CircularProgressIndicator());
                     }
                     if (controller.businessSummary.value == null &&
                         !controller.isLoading.value) {
-                      commonText("No data Found");
+                      return commonText("No data Found");
+                    }
+                    if (controller.businessSummary.value == null) {
+                      return Center(child: CircularProgressIndicator());
                     }
                     return Row(
                       children: [

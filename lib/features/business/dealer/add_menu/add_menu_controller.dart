@@ -50,7 +50,7 @@ class DealerAddMenuController extends BaseController {
         final response = await _apiService.post(ApiEndpoints.addMenu, payload);
 
         if (response['statusCode'] == 201 || response['status'] == true) {
-          Get.back();
+          Get.close(1);
           showSnackBar("Menu added successfully", isError: false);
         } else {
           throw Exception(response['message'] ?? "Something went wrong");

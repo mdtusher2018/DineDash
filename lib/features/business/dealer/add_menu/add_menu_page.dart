@@ -48,110 +48,115 @@ class _AddMenuScreenState extends State<AddMenuScreen> {
     return Scaffold(
       appBar: commonAppBar(title: "Add Menu"),
       backgroundColor: AppColors.white,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            commonText("Menu", size: 16, isBold: true),
-            const SizedBox(height: 16),
-
-            // Dynamically build input fields for each item
-            ...itemList.asMap().entries.map((entry) {
-              int index = entry.key;
-              var item = entry.value;
-              return Column(
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      if (itemList.length > 1)
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              itemList.removeAt(index);
-                            });
-                          },
-                          child: const Icon(
-                            Icons.delete_forever,
-                            color: Colors.red,
-                          ),
+                  commonText("Menu", size: 16, isBold: true),
+                  const SizedBox(height: 16),
+
+                  // Dynamically build input fields for each item
+                  ...itemList.asMap().entries.map((entry) {
+                    int index = entry.key;
+                    var item = entry.value;
+                    return Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            if (itemList.length > 1)
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    itemList.removeAt(index);
+                                  });
+                                },
+                                child: const Icon(
+                                  Icons.delete_forever,
+                                  color: Colors.red,
+                                ),
+                              ),
+                          ],
                         ),
-                    ],
-                  ),
-                  commonTextfieldWithTitle(
-                    "Item Name",
-                    item['name']!,
-                    hintText: "Enter name",
-                  ),
-                  const SizedBox(height: 12),
-                  commonTextfieldWithTitle(
-                    "Item Description",
-                    item['description']!,
-                    hintText: "Enter a short description",
-                  ),
-                  const SizedBox(height: 12),
-                  commonTextfieldWithTitle(
-                    "Price",
-                    item['price']!,
-                    hintText: "Enter price",
-                    keyboardType: TextInputType.number,
-                  ),
-                  const SizedBox(height: 20),
+                        commonTextfieldWithTitle(
+                          "Item Name",
+                          item['name']!,
+                          hintText: "Enter name",
+                        ),
+                        const SizedBox(height: 12),
+                        commonTextfieldWithTitle(
+                          "Item Description",
+                          item['description']!,
+                          hintText: "Enter a short description",
+                        ),
+                        const SizedBox(height: 12),
+                        commonTextfieldWithTitle(
+                          "Price",
+                          item['price']!,
+                          hintText: "Enter price",
+                          keyboardType: TextInputType.number,
+                        ),
+                        const SizedBox(height: 20),
+                      ],
+                    );
+                  }),
+
+                  // "Add More Item" Button
+                  commonBorderButton("+ Add More Item", onTap: addMoreItem),
+
+                  const SizedBox(height: 40),
                 ],
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Obx(() {
+              return commonButton(
+                "Add Menu",
+                isLoading: controller.isLoading.value,
+                onTap: () async {
+                  final validItems =
+                      itemList
+                          .where((item) {
+                            return item['name']!.text.trim().isNotEmpty &&
+                                item['description']!.text.trim().isNotEmpty &&
+                                item['price']!.text.trim().isNotEmpty;
+                          })
+                          .map((item) {
+                            return {
+                              "itemName": item['name']!.text.trim(),
+                              "description": item['description']!.text.trim(),
+                              "price": item['price']!.text.trim(),
+                            };
+                          })
+                          .toList();
+
+                  if (validItems.isEmpty) {
+                    Get.snackbar(
+                      "Warning",
+                      "Please fill all fields of at least one item.",
+                      backgroundColor: Colors.red,
+                      colorText: Colors.white,
+                    );
+                    return;
+                  }
+
+                  await controller.addMenuItems(
+                    businessId: widget.businessId,
+                    items: validItems,
+                  );
+                },
               );
             }),
-
-            // "Add More Item" Button
-            commonBorderButton("+ Add More Item", onTap: addMoreItem),
-
-            const SizedBox(height: 40),
-          ],
-        ),
-      ),
-
-      // Bottom Button
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Obx(() {
-          return commonButton(
-            "Add Menu",
-            isLoading: controller.isLoading.value,
-            onTap: () async {
-
-              final validItems =
-                  itemList
-                      .where((item) {
-                        return item['name']!.text.trim().isNotEmpty &&
-                            item['description']!.text.trim().isNotEmpty &&
-                            item['price']!.text.trim().isNotEmpty;
-                      })
-                      .map((item) {
-                        return {
-                          "itemName": item['name']!.text.trim(),
-                          "description": item['description']!.text.trim(),
-                          "price": item['price']!.text.trim(),
-                        };
-                      })
-                      .toList();
-
-              if (validItems.isEmpty) {
-                Get.snackbar(
-                  "Warning",
-                  "Please fill all fields of at least one item.",
-                  backgroundColor: Colors.red,
-                  colorText: Colors.white,
-                );
-                return;
-              }
-
-              await controller.addMenuItems(
-                businessId: widget.businessId,
-                items: validItems,
-              );
-            },
-          );
-        }),
+          ),
+          SizedBox(height: 32),
+        ],
       ),
     );
   }

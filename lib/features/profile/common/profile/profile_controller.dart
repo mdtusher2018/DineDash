@@ -74,7 +74,7 @@ class ProfileController extends BaseController {
 
         if (profileResponse.statusCode == 200 && profileResponse.user != null) {
           userModel.value = profileResponse.user;
-          Get.back();
+          Get.close(1);
           showSnackBar(
             'Your profile has been updated successfully!',
             isError: false,

@@ -10,14 +10,15 @@ class UserDealRedeemController extends BaseController {
   final ApiService _apiservice = Get.find();
 
   Future<void> dealRedeem(
-    String dealId, {
+    String uvmId, {
     required String businessId,
+    required String dealId,
     required String rasturentName,
   }) async {
     safeCall(
       task: () async {
         final response = await _apiservice.put(
-          ApiEndpoints.userRedeemDeal(dealId),
+          ApiEndpoints.userRedeemDeal(uvmId),
           {},
         );
         if (response['statusCode'] == 200) {

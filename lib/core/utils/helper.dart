@@ -192,9 +192,7 @@ Future<File?> fetchImageFile(String photoRef) async {
 String formatBookingTime(String bookingStart, String bookingEnd) {
   // Function to parse the time string into DateTime
   DateTime? parseTime(String time) {
-    DateTime? parsedTime = DateFormat(
-      "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-    ).parseStrict(time, true);
+    DateTime? parsedTime = DateTime.tryParse(time);
     return parsedTime;
   }
 

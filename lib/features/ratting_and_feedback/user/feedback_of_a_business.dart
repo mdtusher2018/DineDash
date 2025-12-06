@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/core/utils/share_links.dart';
 import 'package:dine_dash/features/deals/user/model_and_response/deal_model.dart';
 import 'package:dine_dash/features/deals/user/user_deals_details_and_redeem/user_deal_redeem_controller.dart';
@@ -25,12 +26,6 @@ class _UserAfterGivingStarPageState extends State<UserAfterGivingStarPage> {
   var selected = ''.obs;
 
   var selecteds = ''.obs;
-
-  final List<String> comment = [
-    'Good environment',
-    'Perfect meal',
-    'Nice location',
-  ];
 
   UserDealItem? dealData;
 
@@ -68,7 +63,7 @@ class _UserAfterGivingStarPageState extends State<UserAfterGivingStarPage> {
         if (controller.isLoading.value || dealData == null) {
           return Center(child: CircularProgressIndicator());
         }
-        final options = comment;
+        final options = dealData!.catgory;
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
           child: SingleChildScrollView(
@@ -91,8 +86,8 @@ class _UserAfterGivingStarPageState extends State<UserAfterGivingStarPage> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Image.asset(
-                          "assets/images/banner.png",
+                        child: Image.network(
+                          getFullImagePath(dealData!.businessImage),
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -103,7 +98,7 @@ class _UserAfterGivingStarPageState extends State<UserAfterGivingStarPage> {
                           children: [
                             SizedBox(height: 5),
                             commonText(
-                              "The Rio Lounge",
+                              dealData!.businessName,
                               size: 22,
                               fontWeight: FontWeight.w700,
                             ),
@@ -333,45 +328,6 @@ class _UserAfterGivingStarPageState extends State<UserAfterGivingStarPage> {
                                                   dealData!.reuseableAfter
                                                       as int, // 60 days
                                             ),
-
-                                            // Container(
-                                            //   height: 50,
-                                            //   width: double.infinity,
-                                            //   decoration: BoxDecoration(
-                                            //     color: const Color(
-                                            //       0xFFD0DFFF,
-                                            //     ), // light blue background
-                                            //     borderRadius:
-                                            //         BorderRadius.circular(20),
-                                            //   ),
-                                            //   child: Row(
-                                            //     spacing: 10,
-                                            //     mainAxisSize: MainAxisSize.min,
-                                            //     children: [
-                                            //       // Blue left semi-circle
-                                            //       Container(
-                                            //         width: 20,
-                                            //         height: 50,
-                                            //         decoration: const BoxDecoration(
-                                            //           color: Colors.blue,
-                                            //           borderRadius:
-                                            //               BorderRadius.horizontal(
-                                            //                 left:
-                                            //                     Radius.circular(
-                                            //                       20,
-                                            //                     ),
-                                            //               ),
-                                            //         ),
-                                            //       ),
-                                            //       const SizedBox(width: 10),
-                                            //       commonText(
-                                            //         "In 50 days bookable again",
-                                            //         size: 16,
-                                            //         fontWeight: FontWeight.w600,
-                                            //       ),
-                                            //     ],
-                                            //   ),
-                                            // ),
                                           ],
                                         ),
                                       ),
@@ -414,7 +370,7 @@ class _UserAfterGivingStarPageState extends State<UserAfterGivingStarPage> {
                               child: RatingBar.builder(
                                 initialRating: dealData!.rating.toDouble(),
                                 itemSize: 35,
-                                minRating: 1,
+                                ignoreGestures: true,
                                 direction: Axis.horizontal,
                                 allowHalfRating: true,
                                 itemCount: 5,
@@ -424,9 +380,7 @@ class _UserAfterGivingStarPageState extends State<UserAfterGivingStarPage> {
                                 itemBuilder:
                                     (context, _) =>
                                         Icon(Icons.star, color: Colors.amber),
-                                onRatingUpdate: (rating) {
-                                  print(rating);
-                                },
+                                onRatingUpdate: (rating) {},
                               ),
                             ),
                           ],

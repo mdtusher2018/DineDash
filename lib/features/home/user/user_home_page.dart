@@ -137,11 +137,12 @@ class _UserHomeViewState extends State<UserHomeView> {
 
                 const SizedBox(height: 16),
 
-                PromotionBanner(
-                  banners: controller.homeData.value!.quotesImages,
-                ),
+                if (controller.homeData.value!.quotesImages.isNotEmpty)...[
+                  PromotionBanner(
+                    banners: controller.homeData.value!.quotesImages,
+                  ),
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 20),],
 
                 /// Search bar
                 Container(

@@ -15,7 +15,7 @@ import 'package:share_plus/share_plus.dart';
 
 class UserDealsDetails extends StatefulWidget {
   final bool fromDeepLink;
-  final String? dealId;
+  final String dealId;
   final String udmIdl;
 
   const UserDealsDetails({
@@ -59,7 +59,7 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
   }
 
   void loadDealData() {
-    controller.fetchDeal(widget.dealId!).then((deal) {
+    controller.fetchDeal(widget.dealId).then((deal) {
       if (deal != null) {
         setState(() {
           dealData = deal.result;
@@ -85,6 +85,7 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
 
     final deal = dealData;
 
+    // ignore: unused_local_variable
     final nextOpening = deal!.getNextOpening(); // dealItem is UserDealItem
 
     return Scaffold(
@@ -393,67 +394,66 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                             ),
                             SizedBox(height: 16),
 
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              spacing: 8,
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    spacing: 10,
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/date.png",
-                                        height: 30,
-                                        width: 30,
-                                      ),
-                                      commonText(
-                                        nextOpening['day']!.tr,
-                                        size: 16,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height:
-                                      60, // Adjust this to your desired divider height
-                                  child: VerticalDivider(
-                                    thickness: 2,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    spacing: 10,
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/time.png",
-                                        height: 30,
-                                        width: 30,
-                                      ),
-                                      FittedBox(
-                                        child: commonText(
-                                          formatBookingTime(
-                                            deal.bookingStart,
-                                            deal.bookingEnd,
-                                          ),
-                                          size: 14,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 10),
-
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   spacing: 8,
+                            //   children: [
+                            //     Expanded(
+                            //       child: Column(
+                            //         mainAxisAlignment: MainAxisAlignment.center,
+                            //         crossAxisAlignment:
+                            //             CrossAxisAlignment.center,
+                            //         spacing: 10,
+                            //         children: [
+                            //           Image.asset(
+                            //             "assets/images/date.png",
+                            //             height: 30,
+                            //             width: 30,
+                            //           ),
+                            //           commonText(
+                            //             nextOpening['day']!.tr,
+                            //             size: 16,
+                            //             fontWeight: FontWeight.w500,
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //     SizedBox(
+                            //       height:
+                            //           60, // Adjust this to your desired divider height
+                            //       child: VerticalDivider(
+                            //         thickness: 2,
+                            //         color: Colors.grey,
+                            //       ),
+                            //     ),
+                            //     Expanded(
+                            //       child: Column(
+                            //         mainAxisAlignment: MainAxisAlignment.center,
+                            //         crossAxisAlignment:
+                            //             CrossAxisAlignment.center,
+                            //         spacing: 10,
+                            //         children: [
+                            //           Image.asset(
+                            //             "assets/images/time.png",
+                            //             height: 30,
+                            //             width: 30,
+                            //           ),
+                            //           FittedBox(
+                            //             child: commonText(
+                            //               formatBookingTime(
+                            //                 deal.bookingStart,
+                            //                 deal.bookingEnd,
+                            //               ),
+                            //               size: 14,
+                            //               fontWeight: FontWeight.w500,
+                            //             ),
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
+                            // SizedBox(height: 10),
                             if (!widget.fromDeepLink) ...[
                               Row(
                                 children: [
@@ -500,6 +500,7 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                                 onTap: () async {
                                   await controller.dealRedeem(
                                     widget.udmIdl,
+                                    dealId: widget.dealId,
                                     businessId: dealData!.businessId,
                                     rasturentName: dealData!.businessName,
                                   );

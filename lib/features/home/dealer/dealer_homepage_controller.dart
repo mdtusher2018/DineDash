@@ -14,18 +14,15 @@ class DealerHomepageController extends BaseController {
   // Pagination
   var currentPage = 1.obs;
   var totalPages = 1.obs;
-  var loadingMore=false.obs;
+  var loadingMore = false.obs;
 
-  final performance=RxnNum();
-
+  final performance = RxnNum();
 
   /// Fetch business list
   Future<void> fetchDealerHomepageData({int page = 1}) async {
-    if (loadingMore.value) return;
     safeCall(
-      showLoading: page<2,
+      showLoading: true,
       task: () async {
-        loadingMore.value=true;
         final response = await _apiService.get(
           ApiEndpoints.dealerHomepageAllBusiness(page),
         );
@@ -36,11 +33,10 @@ class DealerHomepageController extends BaseController {
 
         if (businessResponse.statusCode == 200) {
           if (page == 1) {
-            businesses.value=[];
+            businesses.value = [];
             businessSummary.value = businessResponse.summary;
             businesses.value = businessResponse.results;
-            performance.value=businessResponse.performance;
-            
+            performance.value = businessResponse.performance;
           } else {
             businesses.addAll(businessResponse.results);
           }
@@ -49,14 +45,7 @@ class DealerHomepageController extends BaseController {
         } else {
           errorMessage.value = businessResponse.message;
         }
-        loadingMore.value=false;
       },
     );
-  }
-
-  void fetchmore() {
-    if (currentPage.value < totalPages.value) {
-      fetchDealerHomepageData(page: (currentPage.value + 1));
-    }
   }
 }

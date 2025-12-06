@@ -44,6 +44,7 @@ abstract class BaseController extends GetxController {
   /// Universal snackbar method
   void showSnackBar(String message, {bool isError = false}) {
     if (message.isEmpty) return;
+    if (Get.isDialogOpen == true) Get.back();
     Get.snackbar(
       isError ? 'Error' : 'Success',
       message,
