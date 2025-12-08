@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/core/utils/constent.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -472,6 +473,22 @@ AppBar commonAppBar({
             ),
     title: commonText(title.tr, size: 20, isBold: true, color: textColor),
     centerTitle: isCenter,
+  );
+}
+
+// Universal snackbar method using GlobalKey for context
+void showSnackBar(String message, {bool isError = false}) {
+  if (message.isEmpty) return;
+
+  scaffoldMessengerKey.currentState?.showSnackBar(
+    SnackBar(
+      content: Text(message),
+      backgroundColor: isError ? Colors.red : Colors.green,
+      duration: const Duration(seconds: 3),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      margin: const EdgeInsets.all(12),
+      behavior: SnackBarBehavior.floating,
+    ),
   );
 }
 

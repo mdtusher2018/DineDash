@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
 import 'package:dine_dash/core/services/localstorage/storage_key.dart';
+import 'package:dine_dash/core/utils/constent.dart';
 import 'package:dine_dash/dependency.dart';
 import 'package:dine_dash/core/translations/app_translations.dart';
 import 'package:dine_dash/core/utils/colors.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
       // locale: initialLocale??Locale('de', 'DE'),
       // fallbackLocale: Locale('de', 'DE'),
       locale: Locale('en', 'EN'),
+      scaffoldMessengerKey: scaffoldMessengerKey,
       fallbackLocale: Locale('en', 'EN'),
       theme: ThemeData(
         appBarTheme: AppBarTheme(

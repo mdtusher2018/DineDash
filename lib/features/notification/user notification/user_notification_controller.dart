@@ -2,6 +2,7 @@ import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/features/notification/user%20notification/user_notification_response.dart';
+import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:get/get.dart';
 
 class UserNotificationController extends BaseController {
@@ -84,13 +85,7 @@ class UserNotificationController extends BaseController {
           notifications.refresh();
         }
         // ✅ Show toast/snackbar
-        Get.snackbar(
-          "Marked as Read".tr,
-          "This notification has been marked as read.".tr,
-          snackPosition: SnackPosition.BOTTOM,
-          borderRadius: 10,
-          duration: const Duration(seconds: 2),
-        );
+        showSnackBar("This notification has been marked as read.".tr);
       },
     );
   }

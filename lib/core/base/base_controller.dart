@@ -1,4 +1,5 @@
 import 'package:dine_dash/core/services/api/api_exception.dart';
+import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -39,21 +40,5 @@ abstract class BaseController extends GetxController {
     } finally {
       if (showLoading) isLoading.value = false;
     }
-  }
-
-  /// Universal snackbar method
-  void showSnackBar(String message, {bool isError = false}) {
-    if (message.isEmpty) return;
-    if (Get.isDialogOpen == true) Get.back();
-    Get.snackbar(
-      isError ? 'Error' : 'Success',
-      message,
-      snackPosition: SnackPosition.TOP,
-      backgroundColor: isError ? Colors.red : Colors.green,
-      colorText: Colors.white,
-      duration: const Duration(seconds: 3),
-      margin: const EdgeInsets.all(12),
-      borderRadius: 10,
-    );
   }
 }

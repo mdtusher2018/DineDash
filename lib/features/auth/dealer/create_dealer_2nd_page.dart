@@ -146,10 +146,7 @@ class _CreateDealerAccount2ndPageState
                       isLoading: controller.isLoading.value,
                       onTap: () async {
                         if (selectedBusinessType == null) {
-                          Get.snackbar(
-                            "Missing",
-                            "Please sellect a Business Type",
-                          );
+                          showSnackBar("Please sellect a Business Type");
                           return;
                         }
                         await controller.signUp(

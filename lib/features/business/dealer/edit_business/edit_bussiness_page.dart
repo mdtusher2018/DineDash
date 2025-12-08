@@ -183,8 +183,6 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
   }
 
   Widget buildDayRow(String day) {
-
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
@@ -215,7 +213,8 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
                 ],
               ),
             ),
-          if (timings.containsKey(day) && !openDays[day]!) const Expanded(flex: 3, child: SizedBox()),
+          if (timings.containsKey(day) && !openDays[day]!)
+            const Expanded(flex: 3, child: SizedBox()),
           Expanded(
             child: commonCheckbox(
               value: !openDays[day]!,
@@ -303,13 +302,7 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
                         categoryController.clear();
                       });
                     } else {
-                      Get.snackbar(
-                        'Duplicate Category',
-                        "This category is already added.",
-                        snackPosition: SnackPosition.TOP,
-                        backgroundColor: Colors.red,
-                        colorText: Colors.white,
-                      );
+                      showSnackBar("This category is already added.");
                     }
                   },
                   child: Container(

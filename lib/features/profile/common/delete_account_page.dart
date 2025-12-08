@@ -114,12 +114,10 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                                 ? null
                                 : () {
                                   if (_passwordController.text.isEmpty) {
-                                    Get.snackbar(
-                                      "Error",
+                                    showSnackBar(
+                                   
                                       "Please enter your password.",
-                                      snackPosition: SnackPosition.TOP,
-                                      backgroundColor: Colors.red,
-                                      colorText: Colors.white,
+                                  
                                     );
                                     return;
                                   }

@@ -7,6 +7,7 @@ import 'package:dine_dash/features/auth/common/otp_verification/otp_verification
 import 'package:dine_dash/features/auth/common/reset_password/reset_password_page.dart';
 import 'package:dine_dash/features/dealer_root_page.dart';
 import 'package:dine_dash/features/user_root_page.dart';
+import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:get/get.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';

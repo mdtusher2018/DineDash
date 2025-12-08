@@ -262,13 +262,7 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
                     categoryController.clear();
                   });
                 } else {
-                  Get.snackbar(
-                    'Duplicate Category',
-                    "This category is already added.",
-                    snackPosition: SnackPosition.TOP,
-                    backgroundColor: Colors.red,
-                    colorText: Colors.white,
-                  );
+                  showSnackBar("This category is already added.");
                 }
               },
               child: Container(

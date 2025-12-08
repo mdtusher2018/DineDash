@@ -5,6 +5,7 @@ import 'package:dine_dash/core/models/dealer_deal_details.dart';
 import 'package:dine_dash/core/models/my_business_name_response.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
+import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:get/get.dart';
 
 class DealerCreateDealController extends DealerMyBusinessNameListController {

@@ -1,4 +1,5 @@
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/res/commonWidgets.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,7 +38,7 @@ class PaymentWebViewScreen extends StatelessWidget {
                   onNavigationRequest: (NavigationRequest request) {
                     if (request.url.contains('transaction/complete')) {
                       Get.close(1);
-                      Get.snackbar("Sucessfull", "payment sucessfull");
+                      showSnackBar("Payment sucessfull");
                     }
                     return NavigationDecision.navigate;
                   },

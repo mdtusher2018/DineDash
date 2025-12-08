@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:dine_dash/features/profile/common/profile/profile_controller.dart';
+import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'api_exception.dart';
@@ -125,11 +126,7 @@ class ApiClient {
     if (res.statusCode == 401 ||
         (jsonDecode(res.body)?['message'] ?? "").contains('Unauthorized')) {
       Get.find<ProfileController>().logOut();
-      Get.snackbar(
-        'Session expired',
-        'Please login again',
-        snackPosition: SnackPosition.TOP,
-      );
+      showSnackBar('Session expired', isError: true);
     }
   }
 }

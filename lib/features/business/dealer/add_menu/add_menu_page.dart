@@ -138,11 +138,8 @@ class _AddMenuScreenState extends State<AddMenuScreen> {
                           .toList();
 
                   if (validItems.isEmpty) {
-                    Get.snackbar(
-                      "Warning",
+                    showSnackBar(
                       "Please fill all fields of at least one item.",
-                      backgroundColor: Colors.red,
-                      colorText: Colors.white,
                     );
                     return;
                   }

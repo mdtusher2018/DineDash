@@ -1,5 +1,6 @@
 import 'package:dine_dash/features/business/dealer/dealer_all_business/dealer_all_business_response.dart';
 import 'package:dine_dash/core/models/dealer_business_model.dart';
+import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:get/get.dart';
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';

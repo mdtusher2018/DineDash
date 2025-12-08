@@ -1,6 +1,7 @@
 import 'package:dine_dash/core/controller/my_business_name_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
+import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:get/get.dart';
 
 class DealerDeleteDealController extends DealerMyBusinessNameListController {
