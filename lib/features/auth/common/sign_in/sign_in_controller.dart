@@ -52,11 +52,15 @@ class SignInController extends BaseController {
           }
 
           if (SessionMemory.isUser) {
-            navigateToPage(context: context, UserRootPage());
+            navigateToPage(context: context, UserRootPage(), clearStack: true);
           } else {
             if (loginResponse.isApproved != null &&
                 loginResponse.isApproved == true) {
-              navigateToPage(context: context, DealerRootPage());
+              navigateToPage(
+                context: context,
+                DealerRootPage(),
+                clearStack: true,
+              );
             } else {
               showPendingDialog(context);
             }

@@ -20,7 +20,7 @@ class UserNotificationsPage extends StatelessWidget {
     controller.fetchNotifications();
 
     return Scaffold(
-      appBar: commonAppBar(title: "Notification".tr,context: context),
+      appBar: commonAppBar(title: "Notification".tr, context: context),
       body: Obx(() {
         if (controller.isLoading.value && controller.notifications.isEmpty) {
           return const Center(child: CircularProgressIndicator());
@@ -44,7 +44,7 @@ class UserNotificationsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Spacer(flex: 1),
-            Image.asset(
+            CommonImage(
               'assets/images/no_notification.png',
               width: 120,
               height: 120,
@@ -80,8 +80,6 @@ class _NotificationListState extends State<NotificationList> {
   @override
   void initState() {
     super.initState();
-
-    /// Infinite Scroll Pagination
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
               _scrollController.position.maxScrollExtent - 200 &&

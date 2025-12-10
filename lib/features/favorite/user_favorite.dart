@@ -1,6 +1,7 @@
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/features/favorite/favorite_controller.dart';
+import 'package:dine_dash/features/user_root_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/res/user_resturant_card.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/user_business_details_page.dart';
@@ -21,7 +22,9 @@ class _UserFavoritePageState extends State<UserFavoritePage> {
   @override
   void initState() {
     super.initState();
-    controller.fetchFavoriteList();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.fetchFavoriteList();
+    });
   }
 
   @override
@@ -76,7 +79,7 @@ class _UserFavoritePageState extends State<UserFavoritePage> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Image.asset("assets/images/favorite.png"),
+                            CommonImage("assets/images/favorite.png"),
                             commonText(
                               "No favorites yet".tr,
                               size: 16,
@@ -96,6 +99,13 @@ class _UserFavoritePageState extends State<UserFavoritePage> {
                               width: 160,
                               boarderRadious: 50,
                               height: 60,
+                              onTap: () {
+                                navigateToPage(
+                                  UserRootPage(),
+                                  context: context,
+                                  clearStack: true,
+                                );
+                              },
                             ),
                           ],
                         ),

@@ -45,13 +45,14 @@ class _EditDealScreenState extends State<EditDealScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      initializedData();
 
-    initializedData();
-
-    controller.fetchAllBusinessesName().then((_) {
-      selectedBusiness = controller.businessesName.firstWhereOrNull(
-        (business) => business.id == widget.businessId,
-      );
+      controller.fetchAllBusinessesName().then((_) {
+        selectedBusiness = controller.businessesName.firstWhereOrNull(
+          (business) => business.id == widget.businessId,
+        );
+      });
     });
   }
 
@@ -78,7 +79,7 @@ class _EditDealScreenState extends State<EditDealScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: commonAppBar(title: "Edit Deal".tr,context: context),
+      appBar: commonAppBar(title: "Edit Deal".tr, context: context),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Obx(() {

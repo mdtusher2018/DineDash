@@ -3,15 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class JourneyScreen extends StatelessWidget {
-  const JourneyScreen({super.key,required this.deal,required this.cities,required this.ratting,required this.review,required this.visitedPlace});
-  final String deal,visitedPlace,cities,ratting,review;
+  const JourneyScreen({
+    super.key,
+    required this.deal,
+    required this.cities,
+    required this.ratting,
+    required this.review,
+    required this.visitedPlace,
+  });
+  final String deal, visitedPlace, cities, ratting, review;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(),
-      body:Padding(
+      body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SingleChildScrollView(
           child: Column(
@@ -21,50 +27,80 @@ class JourneyScreen extends StatelessWidget {
                 child: SizedBox(
                   height: 266,
                   width: 266,
-                  child: Image.asset("assets/images/journey.png",fit: BoxFit.fill,),
+                  child: CommonImage(
+                    "assets/images/journey.png",
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
-              SizedBox(height: 20,),
-              commonText("Your Journey".tr,size: 26,fontWeight: FontWeight.w700),
-              SizedBox(height: 5,),
-              commonText("Discovering new restaurants, trying delicious dishes while paying less, a review of your culinary journey!".tr,size: 18,fontWeight: FontWeight.w400,textAlign: TextAlign.center),
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
+              commonText(
+                "Your Journey".tr,
+                size: 26,
+                fontWeight: FontWeight.w700,
+              ),
+              SizedBox(height: 5),
+              commonText(
+                "Discovering new restaurants, trying delicious dishes while paying less, a review of your culinary journey!"
+                    .tr,
+                size: 18,
+                fontWeight: FontWeight.w400,
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20),
               Column(
                 spacing: 20,
                 children: [
                   Row(
                     spacing: 11,
-                    mainAxisAlignment:MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      journeybox(icon: 'assets/images/deals.png', digit: deal, title: 'Deals',),
+                      journeybox(
+                        icon: 'assets/images/deals.png',
+                        digit: deal,
+                        title: 'Deals',
+                      ),
                       // journeybox(icon: 'assets/images/savings.png', digit: '11 €', title: 'Savings',),
-               journeybox(icon: 'assets/images/visited.png', digit: visitedPlace, title: 'Visited Place',),
+                      journeybox(
+                        icon: 'assets/images/visited.png',
+                        digit: visitedPlace,
+                        title: 'Visited Place',
+                      ),
                     ],
                   ),
                   Row(
                     spacing: 11,
-                    mainAxisAlignment:MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       // journeybox(icon: 'assets/images/visited.png', digit: '4', title: 'Visited Place',),
-                      journeybox(icon: 'assets/images/locations.png', digit: cities, title: 'Cities',),
-                            journeybox(icon: 'assets/images/star.png', digit: ratting, title: 'Ratings',),
+                      journeybox(
+                        icon: 'assets/images/locations.png',
+                        digit: cities,
+                        title: 'Cities',
+                      ),
+                      journeybox(
+                        icon: 'assets/images/star.png',
+                        digit: ratting,
+                        title: 'Ratings',
+                      ),
                     ],
                   ),
                   Row(
                     spacing: 11,
-                    mainAxisAlignment:MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       // journeybox(icon: 'assets/images/star.png', digit: '6', title: 'Ratings',),
-                      journeybox(icon: 'assets/images/review.png', digit: review, title: 'Review',),
-                      Expanded(child: SizedBox())
+                      journeybox(
+                        icon: 'assets/images/review.png',
+                        digit: review,
+                        title: 'Review',
+                      ),
+                      Expanded(child: SizedBox()),
                     ],
                   ),
-
                 ],
               ),
-              SizedBox(height: 30,),
-
-
+              SizedBox(height: 30),
             ],
           ),
         ),
@@ -75,7 +111,10 @@ class JourneyScreen extends StatelessWidget {
 
 class journeybox extends StatelessWidget {
   const journeybox({
-    super.key, required this.icon, required this.digit, required this.title,
+    super.key,
+    required this.icon,
+    required this.digit,
+    required this.title,
   });
   final String icon;
   final String digit;
@@ -99,18 +138,21 @@ class journeybox extends StatelessWidget {
             CircleAvatar(
               radius: 22,
               backgroundColor: Colors.white,
-              child:ClipRect(
-                child: Image.asset(icon,height: 22,width: 22,),
-              ),
+              child: ClipRect(child: CommonImage(icon, height: 22, width: 22)),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                commonText(digit,size: 26,fontWeight: FontWeight.w700),
-                commonText(title.tr,size: 16,fontWeight: FontWeight.w400,textAlign: TextAlign.start),
+                commonText(digit, size: 26, fontWeight: FontWeight.w700),
+                commonText(
+                  title.tr,
+                  size: 16,
+                  fontWeight: FontWeight.w400,
+                  textAlign: TextAlign.start,
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),

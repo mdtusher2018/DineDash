@@ -17,8 +17,9 @@ class _MySubscriptionsViewState extends State<MySubscriptionsView> {
   @override
   void initState() {
     super.initState();
-    // Fetch the user's active subscription when the page is loaded
-    subscriptionController.getMySubscription();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      subscriptionController.getMySubscription();
+    });
   }
 
   Widget buildFeature(String text) {

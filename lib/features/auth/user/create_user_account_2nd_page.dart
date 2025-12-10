@@ -33,9 +33,11 @@ class _CreateUserAccount2ndPageState extends State<CreateUserAccount2ndPage> {
   @override
   void initState() {
     super.initState();
-    emailController.text = widget.email ?? "";
-    fullNameController.text = widget.name ?? "";
-    posterCodeController.text = widget.postalCode ?? "";
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      emailController.text = widget.email ?? "";
+      fullNameController.text = widget.name ?? "";
+      posterCodeController.text = widget.postalCode ?? "";
+    });
   }
 
   @override

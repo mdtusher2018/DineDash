@@ -163,7 +163,7 @@ class _UserDealBlockedPageState extends State<UserDealBlockedPage>
                   builder: (_, child) {
                     return Transform.scale(scale: _bgScale.value, child: child);
                   },
-                  child: Image.asset('assets/animation image/background.png'),
+                  child: CommonImage('assets/animation image/background.png'),
                 ),
 
                 // Mobile image sliding from top
@@ -177,7 +177,7 @@ class _UserDealBlockedPageState extends State<UserDealBlockedPage>
                         child: child,
                       );
                     },
-                    child: Image.asset('assets/animation image/mobile.png'),
+                    child: CommonImage('assets/animation image/mobile.png'),
                   ),
                 ),
 
@@ -194,7 +194,7 @@ class _UserDealBlockedPageState extends State<UserDealBlockedPage>
                           child: child,
                         );
                       },
-                      child: Image.asset('assets/animation image/user.png'),
+                      child: CommonImage('assets/animation image/user.png'),
                     ),
                   ),
                 ),
@@ -274,7 +274,7 @@ class _UserDealBlockedPageState extends State<UserDealBlockedPage>
                       child: commonButton(
                         "Go to deals".tr,
                         onTap: () {
-                   Navigator.of(context).pop(); // Close dialog first
+                          Navigator.of(context).pop(); // Close dialog first
                         },
                       ),
                     ),

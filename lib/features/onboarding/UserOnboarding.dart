@@ -68,7 +68,7 @@ class _UserOnboardingViewState extends State<UserOnboardingView> {
             fit: StackFit.expand,
             children: [
               /// Background image
-              Image.asset(data.imagePath, fit: BoxFit.cover),
+              CommonImage(data.imagePath, fit: BoxFit.cover),
 
               /// Overlay content
               Container(
@@ -78,7 +78,7 @@ class _UserOnboardingViewState extends State<UserOnboardingView> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     SizedBox(height: 30),
-                    Image.asset("assets/images/logo.png", height: 80),
+                    CommonImage("assets/images/logo.png", height: 80),
 
                     Spacer(),
 

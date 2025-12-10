@@ -29,7 +29,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    controller.fetchProfile();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.fetchProfile();
+    });
   }
 
   @override
@@ -134,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   fontWeight: FontWeight.w600,
                                 ),
                                 SizedBox(width: 50),
-                                Image.asset(
+                                CommonImage(
                                   "assets/images/track.png",
                                   height: 66,
                                   width: 66,
@@ -291,7 +293,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Row(
                     spacing: 10,
                     children: [
-                      Image.asset(
+                      CommonImage(
                         "assets/images/logout.png",
                         height: 35,
                         width: 35,
@@ -393,7 +395,7 @@ class buildRowCon extends StatelessWidget {
             Row(
               spacing: 10,
               children: [
-                Image.asset(image, height: 35, width: 35, fit: BoxFit.fill),
+                CommonImage(image, height: 35, width: 35, fit: BoxFit.fill),
                 commonText(title.tr, size: 16, fontWeight: FontWeight.w600),
               ],
             ),
@@ -436,7 +438,7 @@ class buildcontainer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           spacing: 5,
           children: [
-            Image.asset(image, height: 35, width: 35, fit: BoxFit.cover),
+            CommonImage(image, height: 35, width: 35, fit: BoxFit.cover),
             commonText(title.tr, size: 14, fontWeight: FontWeight.w500),
           ],
         ),

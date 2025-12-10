@@ -32,7 +32,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(context: context,
+      appBar: commonAppBar(
+        context: context,
         title: "Verify Email".tr,
         textColor: AppColors.white,
         backGroundColor: AppColors.primaryColor,
@@ -50,7 +51,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 SizedBox(
                   width: 240,
                   height: 240,
-                  child: Image.asset(ImagePaths.verificationPageImage),
+                  child: CommonImage(ImagePaths.verificationPageImage),
                 ),
                 const SizedBox(height: 10),
                 RichText(
@@ -131,7 +132,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                         otp:
                             otpControllers.map((e) {
                               return e.text;
-                            }).join(),context: context
+                            }).join(),
+                        context: context,
                       );
                     },
                   );

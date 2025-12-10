@@ -30,16 +30,17 @@ class _UserExplorePageState extends State<UserExplorePage> {
   String selectedSortBy = 'Low';
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
     cityController.fetchCities();
     controller.fetchBusinessesOnMap();
     controller.fetchBusinessesList();
+    controller.getCoordinatesFromPostalCode();
     _loadCustomMarker();
   }
 
   Future<void> _loadCustomMarker() async {
-    final icon = await BitmapDescriptor.fromAssetImage(
+    final icon = await BitmapDescriptor.asset(
       const ImageConfiguration(size: Size(40, 40)),
       'assets/images/map_icon.png',
     );
@@ -175,7 +176,7 @@ class _UserExplorePageState extends State<UserExplorePage> {
         ),
         child: Row(
           children: [
-            Image.asset(
+            CommonImage(
               icon,
               color: isSelected ? Colors.white : AppColors.primaryColor,
               width: 24,
@@ -194,15 +195,12 @@ class _UserExplorePageState extends State<UserExplorePage> {
   }
 
   Widget _buildMapView() {
-    final LatLng initialPosition = LatLng(
-      20.794542,
-      80.389016,
-    ); // Dhaka coordinates
+    // Dhaka coordinates
 
     return Obx(() {
       return GoogleMap(
         initialCameraPosition: CameraPosition(
-          target: initialPosition,
+          target: controller.currentPosition.value,
           zoom: 10,
         ),
         mapType: MapType.normal,
@@ -309,41 +307,6 @@ class _UserExplorePageState extends State<UserExplorePage> {
               /// Filter and Sort
               Row(
                 children: [
-                  // Expanded(
-                  //   child: DropdownButtonHideUnderline(
-                  //     child: Container(
-                  //       padding: const EdgeInsets.symmetric(
-                  //         horizontal: 16,
-                  //         vertical: 0,
-                  //       ),
-                  //       decoration: BoxDecoration(
-                  //         border: Border.all(color: AppColors.lightBlue),
-                  //         borderRadius: BorderRadius.circular(12),
-                  //       ),
-                  //       child: DropdownButton<String>(
-                  //         value: selectedExpense,
-                  //         hint: commonText("What do you want to do".tr),
-                  //         isExpanded: true,
-                  //         icon: const Icon(
-                  //           Icons.keyboard_arrow_down_rounded,
-                  //           size: 18,
-                  //         ),
-                  //         items:
-                  //             ['Restaurants', 'Activities'].map((String value) {
-                  //               return DropdownMenuItem<String>(
-                  //                 value: value,
-                  //                 child: commonText(value),
-                  //               );
-                  //             }).toList(),
-                  //         onChanged: (String? newValue) {
-                  //           setState(() {
-                  //             selectedExpense = newValue!;
-                  //           });
-                  //         },
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                   Expanded(
                     child: Obx(() {
                       return Container(

@@ -33,7 +33,9 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
     super.initState();
-    controller.fetchBusinessDetail(widget.businessId);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.fetchBusinessDetail(widget.businessId);
+    });
   }
 
   @override
@@ -611,7 +613,7 @@ class _MenuTabState extends State<MenuTab> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Image.asset("assets/images/editb.png", width: 16),
+                        CommonImage("assets/images/editb.png", width: 16),
                         commonText(" Edit", size: 12),
                       ],
                     ),
@@ -664,7 +666,7 @@ class _MenuTabState extends State<MenuTab> {
                                 context: context,
                               );
                             },
-                            child: Image.asset(
+                            child: CommonImage(
                               "assets/images/editb.png",
                               width: 21,
                             ),
@@ -675,7 +677,7 @@ class _MenuTabState extends State<MenuTab> {
                               await controller.deleteMenu(menuId: item.id);
                               setState(() {});
                             },
-                            child: Image.asset(
+                            child: CommonImage(
                               "assets/images/delete.png",
                               width: 20,
                             ),

@@ -341,15 +341,17 @@ class _PromotionBannerState extends State<PromotionBanner> {
   @override
   void initState() {
     super.initState();
-    _controller = PageController(initialPage: _initialPage);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _controller = PageController(initialPage: _initialPage);
 
-    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
-      if (_controller.hasClients) {
-        _controller.nextPage(
-          duration: const Duration(milliseconds: 400),
-          curve: Curves.easeInOut,
-        );
-      }
+      _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+        if (_controller.hasClients) {
+          _controller.nextPage(
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.easeInOut,
+          );
+        }
+      });
     });
   }
 

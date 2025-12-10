@@ -18,13 +18,15 @@ class _ContactUsPageState extends State<ContactUsPage> {
   @override
   void initState() {
     super.initState();
-    controller.fetchContactUs();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.fetchContactUs();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Contact Us".tr,context: context),
+      appBar: commonAppBar(title: "Contact Us".tr, context: context),
       backgroundColor: AppColors.white,
       body: Center(
         child: Container(
@@ -33,7 +35,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Spacer(),
-              Image.asset(ImagePaths.logo),
+              CommonImage(ImagePaths.logo),
 
               SizedBox(height: 16),
               commonText(

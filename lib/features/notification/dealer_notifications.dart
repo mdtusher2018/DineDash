@@ -69,7 +69,7 @@
 //           crossAxisAlignment: CrossAxisAlignment.center,
 //           children: [
 //             Spacer(flex: 1,),
-//             Image.asset(
+//             CommonImage(
 //               'assets/images/no_notification.png', // Update this with your image path
 //               width: 100, // Adjust the size as needed
 //               height: 100,

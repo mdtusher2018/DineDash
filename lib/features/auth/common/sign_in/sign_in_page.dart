@@ -18,10 +18,10 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController emailController = TextEditingController(
-    text: "xokekek289@bablace.com",
+    text: "semoc87070@alexida.com",
   );
   final TextEditingController passwordController = TextEditingController(
-    text: "hello123",
+    text: "aaaaaa",
   );
   bool rememberMe = false;
   bool isPasswordVisible = false;

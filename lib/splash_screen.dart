@@ -52,46 +52,58 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    LocalStorageService.init();
-    final deepLinkService = Get.find<DeepLinkService>();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      LocalStorageService.init();
+      final deepLinkService = Get.find<DeepLinkService>();
 
-    deepLinkService.onBusinessLink = (businessId) {
-      debugPrint("Navigate to Business page:==========>>>>>>>> $businessId");
-      navigateToPage(
-        UserBusinessDetailsPage(businessId: businessId, fromDeepLink: true),
-        context: context,
-      );
+      deepLinkService.onBusinessLink = (businessId) {
+        debugPrint("Navigate to Business page:==========>>>>>>>> $businessId");
+        navigateToPage(
+          UserBusinessDetailsPage(businessId: businessId, fromDeepLink: true),
+          context: context,
+          clearStack: true,
+        );
 
-      isOpenedWithDeepLink.value = true;
-    };
+        isOpenedWithDeepLink.value = true;
+      };
 
-    deepLinkService.onDealLink = (dealId) {
-      debugPrint("Navigate to Deal page:==========>>>>>>>> $dealId");
-      navigateToPage(
-        UserDealsDetails(dealId: dealId, fromDeepLink: true),
-        context: context,
-      );
-      isOpenedWithDeepLink.value = true;
-    };
+      deepLinkService.onDealLink = (dealId) {
+        debugPrint("Navigate to Deal page:==========>>>>>>>> $dealId");
+        navigateToPage(
+          UserDealsDetails(dealId: dealId, fromDeepLink: true),
+          context: context,
+          clearStack: true,
+        );
+        isOpenedWithDeepLink.value = true;
+      };
 
-    Future.delayed(Duration(seconds: 3), () async {
-      final controller = Get.find<LocalStorageService>();
-      final token = await controller.getString(StorageKey.token);
+      Future.delayed(Duration(seconds: 3), () async {
+        final controller = Get.find<LocalStorageService>();
+        final token = await controller.getString(StorageKey.token);
 
-      if (isOpenedWithDeepLink.value) {
-        return;
-      }
-
-      if (token == null) {
-        SessionMemory.isUser = true;
-        if (LocalStorageService.isUserOnboardingCompleated) {
-          navigateToPage(SignInSignUpChooeser(), context: context);
-        } else {
-          navigateToPage(UserOnboardingView(), context: context);
+        if (isOpenedWithDeepLink.value) {
+          return;
         }
-      } else {
-        navigateToPage(returnPage(token), context: context);
-      }
+
+        if (token == null) {
+          SessionMemory.isUser = true;
+          if (LocalStorageService.isUserOnboardingCompleated) {
+            navigateToPage(
+              SignInSignUpChooeser(),
+              context: context,
+              clearStack: true,
+            );
+          } else {
+            navigateToPage(
+              UserOnboardingView(),
+              context: context,
+              clearStack: true,
+            );
+          }
+        } else {
+          navigateToPage(returnPage(token), context: context, clearStack: true);
+        }
+      });
     });
   }
 
@@ -99,7 +111,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Image.asset('assets/images/logo.png', width: 150, height: 150),
+        child: CommonImage('assets/images/logo.png', width: 150, height: 150),
       ),
     );
   }

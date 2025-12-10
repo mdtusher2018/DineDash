@@ -50,10 +50,12 @@ class _AddDealScreenState extends State<AddDealScreen> {
   @override
   void initState() {
     super.initState();
-    controller.fetchAllBusinessesName();
-    if (widget.selectedBusiness != null) {
-      selectedBusiness = widget.selectedBusiness;
-    }
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.fetchAllBusinessesName();
+      if (widget.selectedBusiness != null) {
+        selectedBusiness = widget.selectedBusiness;
+      }
+    });
   }
 
   @override

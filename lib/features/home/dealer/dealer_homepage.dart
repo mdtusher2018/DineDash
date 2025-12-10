@@ -165,7 +165,7 @@ class _DealerHomepageState extends State<DealerHomepage> {
                       Row(
                         spacing: 10,
                         children: [
-                          Image.asset(
+                          CommonImage(
                             "assets/images/Vector.png",
                             height: 20,
                             width: 30,
@@ -424,7 +424,7 @@ class _BuildStack extends StatelessWidget {
           height: 150,
           width: 155,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-          child: Image.asset(image, fit: BoxFit.cover),
+          child: CommonImage(image, fit: BoxFit.cover),
         ),
         Positioned(
           top: 20,
@@ -433,7 +433,7 @@ class _BuildStack extends StatelessWidget {
           child: Column(
             spacing: 5,
             children: [
-              Image.asset(
+              CommonImage(
                 icon,
                 height: 30,
                 width: 30,

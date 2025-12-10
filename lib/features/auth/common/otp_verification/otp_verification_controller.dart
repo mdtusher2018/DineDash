@@ -55,9 +55,13 @@ class OTPVerificationController extends BaseController {
           await _localStorage.saveString(StorageKey.token, token);
 
           if (decodeJwtPayload(token)["currentRole"] == "user") {
-            navigateToPage(context: context, UserRootPage());
+            navigateToPage(context: context, UserRootPage(), clearStack: true);
           } else if ((decodeJwtPayload(token)["currentRole"] == "business")) {
-            navigateToPage(context: context, DealerRootPage());
+            navigateToPage(
+              context: context,
+              DealerRootPage(),
+              clearStack: true,
+            );
           } else {
             /*
               This is only navigate if their have any missing information with role.

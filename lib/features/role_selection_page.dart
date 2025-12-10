@@ -24,14 +24,14 @@
 //       body: Stack(
 //         fit: StackFit.expand,
 //         children: [
-//           Image.asset("assets/images/Onboarding 1.png", fit: BoxFit.cover),
+//           CommonImage("assets/images/Onboarding 1.png", fit: BoxFit.cover),
 //           Center(
 //             child: Padding(
 //               padding: const EdgeInsets.symmetric(horizontal: 24.0),
 //               child: Column(
 //                 mainAxisAlignment: MainAxisAlignment.center,
 //                 children: [
-//                   Image.asset("assets/images/logo.png"),
+//                   CommonImage("assets/images/logo.png"),
 
 //                   commonText(
 //                     'Please select a role',

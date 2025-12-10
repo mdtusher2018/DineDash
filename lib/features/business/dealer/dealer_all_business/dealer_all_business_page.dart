@@ -23,13 +23,15 @@ class _DealerBusinessPageState extends State<DealerBusinessPage> {
   @override
   void initState() {
     super.initState();
-    controller.fetchAllBusinessData(page: 1);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.fetchAllBusinessData(page: 1);
 
-    scrollController.addListener(() {
-      if (scrollController.position.pixels >=
-          scrollController.position.maxScrollExtent - 200) {
-        controller.fetchmore();
-      }
+      scrollController.addListener(() {
+        if (scrollController.position.pixels >=
+            scrollController.position.maxScrollExtent - 200) {
+          controller.fetchmore();
+        }
+      });
     });
   }
 
@@ -172,7 +174,7 @@ class _DealerBusinessPageState extends State<DealerBusinessPage> {
                                                     context: context,
                                                   );
                                                 },
-                                                child: Image.asset(
+                                                child: CommonImage(
                                                   "assets/images/editb.png",
                                                   height: 20,
                                                 ),
@@ -194,7 +196,7 @@ class _DealerBusinessPageState extends State<DealerBusinessPage> {
                                                     },
                                                   );
                                                 },
-                                                child: Image.asset(
+                                                child: CommonImage(
                                                   "assets/images/delete.png",
                                                   width: 18,
                                                 ),

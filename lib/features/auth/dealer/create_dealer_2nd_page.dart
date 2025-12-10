@@ -49,22 +49,23 @@ class _CreateDealerAccount2ndPageState
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      emailController.text = widget.email;
+      if (widget.userData != null) {
+        nameController.text = widget.userData!.fullName;
+      }
+      if (widget.businessDetails?.phoneNumber != null) {
+        phoneController.text = widget.businessDetails!.phoneNumber!;
+      }
 
-    emailController.text = widget.email;
-    if (widget.userData != null) {
-      nameController.text = widget.userData!.fullName;
-    }
-    if (widget.businessDetails?.phoneNumber != null) {
-      phoneController.text = widget.businessDetails!.phoneNumber!;
-    }
-
-    // Optional: business type mapping
-    if (widget.businessDetails!.types != null &&
-        widget.businessDetails!.types!.contains(PlaceType.RESTAURANT)) {
-      selectedBusinessType = "Restaurant";
-    } else {
-      selectedBusinessType ??= "Activity";
-    }
+      // Optional: business type mapping
+      if (widget.businessDetails!.types != null &&
+          widget.businessDetails!.types!.contains(PlaceType.RESTAURANT)) {
+        selectedBusinessType = "Restaurant";
+      } else {
+        selectedBusinessType ??= "Activity";
+      }
+    });
   }
 
   @override

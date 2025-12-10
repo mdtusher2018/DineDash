@@ -4,6 +4,7 @@ import 'package:dine_dash/features/profile/common/profile/profile_screen.dart';
 import 'package:dine_dash/features/ratting_and_feedback/dealer/dealer_review.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/deals/dealer/dealer_all_deals/dealer_deals_root_page.dart';
+import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -38,7 +39,7 @@ class _DealerRootPageState extends State<DealerRootPage> {
     bool isSelected,
   ) {
     return BottomNavigationBarItem(
-      icon: Image.asset(
+      icon: CommonImage(
         isSelected ? selectedAsset : unselectedAsset,
         width: 24,
         height: 24,

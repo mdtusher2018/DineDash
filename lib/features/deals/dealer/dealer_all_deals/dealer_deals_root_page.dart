@@ -21,7 +21,9 @@ class _DealerDealsRootPageState extends State<DealerDealsRootPage> {
   @override
   void initState() {
     super.initState();
-    controller.fetchAllDeals();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.fetchAllDeals();
+    });
   }
 
   @override

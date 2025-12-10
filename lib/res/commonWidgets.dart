@@ -3,6 +3,7 @@
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/core/utils/constent.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 Widget commonText(
@@ -553,4 +554,56 @@ Widget commonImageErrorWidget() {
       child: Icon(Icons.broken_image_outlined),
     ),
   );
+}
+
+class CommonImage extends StatelessWidget {
+  final String assetPath;
+  final double? width;
+  final double? height;
+  final BoxFit fit;
+  final Color? color;
+  final BlendMode? colorBlendMode;
+
+  const CommonImage(
+    this.assetPath, {
+    super.key,
+    this.width,
+    this.height,
+    this.fit = BoxFit.contain, // Default BoxFit is 'contain'
+    this.color, // Optional color for tinting
+    this.colorBlendMode,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // Check if the file is an SVG by its extension
+    bool isSvg = assetPath.endsWith('.svg');
+
+    if (isSvg) {
+      // Return an SVG image wrapped with FittedBox to apply BoxFit and tint if a color is passed
+      return FittedBox(
+        fit: fit,
+        child: SvgPicture.asset(
+          assetPath,
+          width: width,
+          height: height,
+          color: color, // Apply color for tinting
+        ),
+      );
+    } else {
+      // Return a regular image with BoxFit and tint using color and colorBlendMode
+      return Image.asset(
+        assetPath,
+        width: width,
+        height: height,
+        fit: fit,
+        color: color, // Apply color for tinting
+        colorBlendMode:
+            colorBlendMode ??
+            (color != null
+                ? BlendMode.srcIn
+                : null), // Apply color blending if color is provided
+      );
+    }
+  }
 }

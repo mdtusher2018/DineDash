@@ -291,7 +291,7 @@ class _UserAfterGivingStarPageState extends State<UserAfterGivingStarPage> {
                                                             .shade100,
                                                   ),
                                                   child: Center(
-                                                    child: Image.asset(
+                                                    child: CommonImage(
                                                       "assets/images/clock.png",
                                                       height: 25,
                                                       width: 25,

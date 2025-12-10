@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:dine_dash/core/base/base_controller.dart';
+import 'package:dine_dash/core/fallback_value.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
 import 'package:dine_dash/core/services/localstorage/session_memory.dart';
@@ -40,6 +41,10 @@ class ProfileController extends BaseController {
         if (profileResponse.statusCode == 200 && profileResponse.user != null) {
           userModel.value = profileResponse.user;
           await updateCurrentRoleFromToken();
+          await _localStorageService.saveString(
+            StorageKey.postalCode,
+            profileResponse.user!.postalCode ?? FallbackValue.postalCode,
+          );
         } else {
           throw Exception(profileResponse.message);
         }

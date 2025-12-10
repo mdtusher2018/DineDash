@@ -26,7 +26,7 @@ void main() async {
   String? langCode =
       await localStorage.getString(StorageKey.languageCode) ?? 'de';
   String? countryCode =
-      await localStorage.getString(StorageKey.countryCode) ?? 'DE';
+      await localStorage.getString(StorageKey.postalCode) ?? 'DE';
 
   runApp(MyApp(initialLocale: Locale(langCode, countryCode)));
 }
@@ -43,7 +43,8 @@ class MyApp extends StatelessWidget {
       // locale: initialLocale??Locale('de', 'DE'),
       // fallbackLocale: Locale('de', 'DE'),
       locale: Locale('en', 'EN'),
-      scaffoldMessengerKey: scaffoldMessengerKey,navigatorKey: navigatorKey,
+      scaffoldMessengerKey: scaffoldMessengerKey,
+      navigatorKey: navigatorKey,
       fallbackLocale: Locale('en', 'EN'),
       theme: ThemeData(
         appBarTheme: AppBarTheme(

@@ -42,21 +42,23 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
   @override
   void initState() {
     super.initState();
-    loadDealData();
-    if (dealData != null) {
-      detector = ShakeDetector.autoStart(
-        onPhoneShake: (event) {
-          navigateToPage(
-            UserDealRedeemPage(
-              businessId: dealData!.businessId,
-              dealId: dealData!.dealId,
-              rasturentName: dealData!.businessName,
-            ),
-            context: context,
-          );
-        },
-      );
-    }
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      loadDealData();
+      if (dealData != null) {
+        detector = ShakeDetector.autoStart(
+          onPhoneShake: (event) {
+            navigateToPage(
+              UserDealRedeemPage(
+                businessId: dealData!.businessId,
+                dealId: dealData!.dealId,
+                rasturentName: dealData!.businessName,
+              ),
+              context: context,
+            );
+          },
+        );
+      }
+    });
   }
 
   void loadDealData() {
@@ -337,7 +339,7 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                                                             .shade100,
                                                   ),
                                                   child: Center(
-                                                    child: Image.asset(
+                                                    child: CommonImage(
                                                       "assets/images/clock.png",
                                                       height: 25,
                                                       width: 25,
@@ -407,7 +409,7 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                                         CrossAxisAlignment.center,
                                     spacing: 10,
                                     children: [
-                                      Image.asset(
+                                      CommonImage(
                                         "assets/images/date.png",
                                         height: 30,
                                         width: 30,
@@ -435,7 +437,7 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                                         CrossAxisAlignment.center,
                                     spacing: 10,
                                     children: [
-                                      Image.asset(
+                                      CommonImage(
                                         "assets/images/time.png",
                                         height: 30,
                                         width: 30,
@@ -478,7 +480,7 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   spacing: 10,
                                   children: [
-                                    Image.asset(
+                                    CommonImage(
                                       "assets/images/shakephone.png",
                                       height: 30,
                                       width: 30,

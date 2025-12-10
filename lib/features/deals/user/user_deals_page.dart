@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/deals/user/available%20deals/user_allavailable_deals_controller.dart';
 import 'package:dine_dash/features/deals/user/used%20deal/user_all_used_deals.dart';
 import 'package:dine_dash/features/deals/user/used%20deal/user_used_deals_controller.dart';
@@ -82,10 +83,24 @@ class _UserDealsPageState extends State<UserDealsPage> {
                   if (abailableDealsController.availableDeals.isEmpty) ...[
                     SizedBox(height: 8),
                     Center(
-                      child: commonText(
-                        "No Available Deals",
-                        size: 21,
-                        isBold: true,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.info_outline, // Icon to show there's no data
+                            size: 40,
+                            color:
+                                AppColors
+                                    .primaryColor, // Adjust the color to suit the theme
+                          ),
+                          SizedBox(height: 8),
+                          commonText(
+                            "No Available Deals",
+                            size: 21,
+                            isBold: true,
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -150,10 +165,24 @@ class _UserDealsPageState extends State<UserDealsPage> {
                   if (usedDealController.usedDeals.isEmpty) ...[
                     SizedBox(height: 8),
                     Center(
-                      child: commonText(
-                        "No Used Deals Found",
-                        size: 21,
-                        isBold: true,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.info_outline, // Icon to show there's no data
+                            size: 40,
+                            color:
+                                AppColors
+                                    .primaryColor, // Adjust the color to suit the theme
+                          ),
+                          SizedBox(height: 8),
+                          commonText(
+                            "No Used Deals Found",
+                            size: 21,
+                            isBold: true,
+                          ),
+                        ],
                       ),
                     ),
                   ],

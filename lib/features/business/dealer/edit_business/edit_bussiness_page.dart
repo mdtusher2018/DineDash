@@ -236,7 +236,7 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Edit Business",context: context),
+      appBar: commonAppBar(title: "Edit Business", context: context),
       backgroundColor: AppColors.white,
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -376,7 +376,7 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Image.asset(
+                          CommonImage(
                             "assets/images/Upload.png",
                             width: 30,
                             color: Colors.white,
@@ -467,7 +467,8 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
                           },
                         )
                         .toList();
-                await controller.editBusiness(context: context,
+                await controller.editBusiness(
+                  context: context,
                   businessId: widget.businessId,
                   name: businessNameController.text.trim(),
                   types: selectedCategories,

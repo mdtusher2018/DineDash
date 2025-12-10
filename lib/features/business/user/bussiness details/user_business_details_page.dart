@@ -181,7 +181,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                           ),
                           Row(
                             children: [
-                              Image.asset("assets/images/medel.png", width: 16),
+                              CommonImage("assets/images/medel.png", width: 16),
                               SizedBox(width: 4),
                               commonText(
                                 business.rating.toStringAsFixed(1),
@@ -289,7 +289,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                         children: [
                           Expanded(
                             child: OutlinedButton.icon(
-                              icon: Image.asset(
+                              icon: CommonImage(
                                 "assets/images/menu.png",
                                 width: 24,
                               ),
@@ -650,7 +650,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                               color: AppColors.lightBlue,
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: Image.asset(
+                            child: CommonImage(
                               "assets/images/time222.png",
                               width: 24,
                             ),
@@ -803,7 +803,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(
+            CommonImage(
               "assets/images/location2.png",
               width: 24,
               color: AppColors.primaryColor,
@@ -865,7 +865,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset("assets/images/clock.png", width: 24),
+            CommonImage("assets/images/clock.png", width: 24),
             const SizedBox(width: 8),
             Expanded(
               child: Column(

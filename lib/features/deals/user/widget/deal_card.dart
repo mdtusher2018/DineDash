@@ -1,15 +1,15 @@
-  // Function to generate the deal card
-  import 'package:dine_dash/core/utils/helper.dart';
+// Function to generate the deal card
+import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/features/deals/user/model_and_response/deal_model.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
-Widget dealCard({required UserDealItem deal,required bool isUsed}) {
-    return Opacity(
-      opacity: isUsed ? 0.5 : 1.0, // Adjust opacity for used deals
-      child: Container(
+Widget dealCard({required UserDealItem deal, required bool isUsed}) {
+  return Opacity(
+    opacity: isUsed ? 0.5 : 1.0, // Adjust opacity for used deals
+    child: Container(
       margin: EdgeInsets.only(bottom: 15),
       padding: EdgeInsets.only(bottom: 20),
       width: double.infinity,
@@ -166,7 +166,7 @@ Widget dealCard({required UserDealItem deal,required bool isUsed}) {
                                 color: Colors.blueAccent.shade100,
                               ),
                               child: Center(
-                                child: Image.asset(
+                                child: CommonImage(
                                   "assets/images/clock.png",
                                   height: 25,
                                   width: 25,
@@ -211,7 +211,7 @@ Widget dealCard({required UserDealItem deal,required bool isUsed}) {
               ),
               child: Center(
                 child: commonText(
-                isUsed ? "Used Deal" : "${deal.benefitAmmount} € Benefit",
+                  isUsed ? "Used Deal" : "${deal.benefitAmmount} € Benefit",
                   size: 14,
                   fontWeight: FontWeight.w500,
                   color: Colors.white,
@@ -222,5 +222,5 @@ Widget dealCard({required UserDealItem deal,required bool isUsed}) {
         ],
       ),
     ),
-    );
-  }
+  );
+}

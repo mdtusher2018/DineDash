@@ -59,11 +59,15 @@ class EmailVerificationController extends BaseController {
           _sessionalStorage.setToken(token);
 
           if (decodeJwtPayload(token)["currentRole"] == "user") {
-            navigateToPage(UserRootPage(), context: context);
+            navigateToPage(UserRootPage(), context: context, clearStack: true);
           } else {
             if (emailVerificationResponse.isApproved != null &&
                 emailVerificationResponse.isApproved == true) {
-              navigateToPage(context: context, DealerRootPage());
+              navigateToPage(
+                context: context,
+                DealerRootPage(),
+                clearStack: true,
+              );
             } else {
               showPendingDialog(Get.context!);
             }

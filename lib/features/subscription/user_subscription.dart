@@ -23,7 +23,9 @@ class _SubscriptionViewState extends State<SubscriptionView> {
   @override
   void initState() {
     super.initState();
-    controller.getAllSubscription();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.getAllSubscription();
+    });
   }
 
   void togglePlan(bool monthly) {

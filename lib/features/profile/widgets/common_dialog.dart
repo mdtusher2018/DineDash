@@ -34,7 +34,7 @@ void showLanguageSelector(BuildContext context) {
                 Get.updateLocale(const Locale('en', 'US'));
 
                 localStorage.saveString(StorageKey.languageCode, 'en');
-                localStorage.saveString(StorageKey.countryCode, 'US');
+                localStorage.saveString(StorageKey.postalCode, 'US');
                 Navigator.pop(context);
               },
             ),
@@ -47,7 +47,7 @@ void showLanguageSelector(BuildContext context) {
               onTap: () {
                 Get.updateLocale(const Locale('de', 'DE'));
                 localStorage.saveString(StorageKey.languageCode, 'de');
-                localStorage.saveString(StorageKey.countryCode, 'DE');
+                localStorage.saveString(StorageKey.postalCode, 'DE');
                 Navigator.pop(context);
               },
             ),

@@ -4,6 +4,7 @@ import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/explore/user_explore.dart';
 import 'package:dine_dash/features/favorite/user_favorite.dart';
 import 'package:dine_dash/features/home/user/user_home_page.dart';
+import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -38,11 +39,10 @@ class _UserRootPageState extends State<UserRootPage> {
     bool isSelected,
   ) {
     return BottomNavigationBarItem(
-      icon: Image.asset(
+      icon: CommonImage(
         isSelected ? selectedAsset : unselectedAsset,
         width: 30,
         height: 30,
-        
       ),
       label: label,
     );

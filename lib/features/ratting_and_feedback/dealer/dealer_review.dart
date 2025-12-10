@@ -21,19 +21,22 @@ class _DealerReviewState extends State<DealerReview> {
   @override
   void initState() {
     super.initState();
-    controller.fetchFeedback(page: 1);
-    controller.fetchAllBusinessesName();
-    scrollController.addListener(() {
-      if (scrollController.position.pixels >=
-          scrollController.position.maxScrollExtent - 200) {
-        page++;
-        controller.fetchFeedback(
-          page: page,
-          businessId: businessBy?.id,
-          ratting: int.tryParse(rattingBy?.split(' ').first ?? ""),
-          sortBy: sortBy,
-        );
-      }
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.fetchFeedback(page: 1);
+      controller.fetchAllBusinessesName();
+      scrollController.addListener(() {
+        if (scrollController.position.pixels >=
+            scrollController.position.maxScrollExtent - 200) {
+          page++;
+          controller.fetchFeedback(
+            page: page,
+            businessId: businessBy?.id,
+            ratting: int.tryParse(rattingBy?.split(' ').first ?? ""),
+            sortBy: sortBy,
+          );
+        }
+      });
     });
   }
 
@@ -225,7 +228,7 @@ class _DealerReviewState extends State<DealerReview> {
                         SizedBox(height: 10),
                         Row(
                           children: [
-                            Image.asset(
+                            CommonImage(
                               "assets/images/filter.png",
                               height: 20,
                               width: 20,
@@ -393,7 +396,7 @@ class _DealerReviewState extends State<DealerReview> {
                           Row(
                             spacing: 10,
                             children: [
-                              Image.asset(
+                              CommonImage(
                                 "assets/images/noted.png",
                                 height: 30,
                                 width: 30,

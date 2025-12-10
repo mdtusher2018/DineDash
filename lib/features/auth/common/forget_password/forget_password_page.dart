@@ -44,7 +44,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 SizedBox(
                   width: 240,
                   height: 240,
-                  child: Image.asset(ImagePaths.forgetPageImage),
+                  child: CommonImage(ImagePaths.forgetPageImage),
                 ),
 
                 RichText(

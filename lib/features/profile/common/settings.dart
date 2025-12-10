@@ -70,7 +70,7 @@ class SettingsScreen extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 8),
 
         child: ListTile(
-          leading: Image.asset(
+          leading: CommonImage(
             icon,
             color: iconColor,
             width: 20,

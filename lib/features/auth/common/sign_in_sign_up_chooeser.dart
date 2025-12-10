@@ -22,7 +22,7 @@ class _SignInSignUpChooeserState extends State<SignInSignUpChooeser> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset(
+          CommonImage(
             "assets/images/Register.png",
             colorBlendMode: BlendMode.multiply,
             color: Colors.black45,
@@ -35,7 +35,7 @@ class _SignInSignUpChooeserState extends State<SignInSignUpChooeser> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Spacer(),
-                Center(child: Image.asset(ImagePaths.logo)),
+                Center(child: CommonImage(ImagePaths.logo)),
                 Spacer(flex: 5),
                 commonText(
                   "Welcome!".tr,

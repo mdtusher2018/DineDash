@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key, required this.longitude, required this.latitude});
   final double? latitude, longitude;
@@ -18,20 +17,25 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void initState() {
     super.initState();
-
-    if (widget.latitude != null && widget.longitude != null) {
-      // Add a marker on the map for the target location
-      _markers.add(
-        Marker(
-          markerId: MarkerId('target_location'), // Unique ID for the marker
-          position: LatLng(widget.latitude!, widget.longitude!), // Target position
-          infoWindow: InfoWindow(
-            title: 'Target Location',
-            snippet: 'Latitude: ${widget.latitude}, Longitude: ${widget.longitude}',
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (widget.latitude != null && widget.longitude != null) {
+        // Add a marker on the map for the target location
+        _markers.add(
+          Marker(
+            markerId: MarkerId('target_location'), // Unique ID for the marker
+            position: LatLng(
+              widget.latitude!,
+              widget.longitude!,
+            ), // Target position
+            infoWindow: InfoWindow(
+              title: 'Target Location',
+              snippet:
+                  'Latitude: ${widget.latitude}, Longitude: ${widget.longitude}',
+            ),
           ),
-        ),
-      );
-    }
+        );
+      }
+    });
   }
 
   @override
@@ -71,14 +75,16 @@ class _MapScreenState extends State<MapScreen> {
               onMapCreated: (controller) {
                 mapController = controller;
                 setState(() {
-                  isMapLoading = false; 
+                  isMapLoading = false;
                 });
               },
-              markers: _markers, 
+              markers: _markers,
             ),
             if (isMapLoading)
               Container(
-                color: Colors.black45, // Semi-transparent overlay to show the indicator
+                color:
+                    Colors
+                        .black45, // Semi-transparent overlay to show the indicator
                 child: const Center(
                   child: CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
