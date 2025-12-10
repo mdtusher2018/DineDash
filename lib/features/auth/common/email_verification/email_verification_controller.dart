@@ -92,6 +92,7 @@ class EmailVerificationController extends BaseController {
         final resendOTPResponse = EmailVerificationResponse.fromJson(response);
 
         if (resendOTPResponse.statusCode == 200) {
+          isResendOTPTrue.value = true;
           showSnackBar(resendOTPResponse.message, isError: false);
         } else {
           throw Exception(resendOTPResponse.message);

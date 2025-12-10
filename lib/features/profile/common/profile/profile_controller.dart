@@ -140,7 +140,7 @@ class ProfileController extends BaseController {
           throw Exception(switchResponse.message);
         }
       },
-      errorHandle: (statusCode) async {
+      errorHandle: (statusCode, massage) async {
         if (statusCode == 403) {
           if (currentRole.value == 'user') {
             _localStorageService.clearAllExceptOnboarding();
@@ -177,6 +177,8 @@ class ProfileController extends BaseController {
               );
             }
           }
+        } else {
+          showSnackBar(massage, isError: true);
         }
       },
     );

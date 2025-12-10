@@ -14,7 +14,7 @@ abstract class BaseController extends GetxController {
     bool showErrorSnack = true,
     bool showSuccessSnack = false,
     bool showLoading = true, // ✅ new flag
-    Future<T> Function(int)? errorHandle,
+    Future<T> Function(int, String)? errorHandle,
   }) async {
     try {
       if (showLoading) isLoading.value = true;
@@ -32,7 +32,7 @@ abstract class BaseController extends GetxController {
 
       errorMessage.value = e.toString();
       if (e is ApiException && errorHandle != null) {
-        errorHandle(e.statusCode);
+        errorHandle(e.statusCode, e.message);
       } else {
         if (showErrorSnack) showSnackBar(errorMessage.value, isError: true);
       }
