@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
       // locale: initialLocale??Locale('de', 'DE'),
       // fallbackLocale: Locale('de', 'DE'),
       locale: Locale('en', 'EN'),
-      scaffoldMessengerKey: scaffoldMessengerKey,
+      scaffoldMessengerKey: scaffoldMessengerKey,navigatorKey: navigatorKey,
       fallbackLocale: Locale('en', 'EN'),
       theme: ThemeData(
         appBarTheme: AppBarTheme(

@@ -46,11 +46,12 @@ class EmailVerificationController extends BaseController {
         final emailVerificationResponse = EmailVerificationResponse.fromJson(
           response,
         );
+        log(emailVerificationResponse.accessToken + "===>>>>>>>");
 
         if (emailVerificationResponse.statusCode == 201) {
           final token = emailVerificationResponse.accessToken;
 
-          // await _localStorage.saveString(StorageKey.token, token);
+          await _localStorage.saveString(StorageKey.token, token);
           _sessionalStorage.setToken(token);
 
           if (decodeJwtPayload(token)["currentRole"] == "user") {

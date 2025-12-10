@@ -20,7 +20,7 @@ class TermsAndConditionScreen extends StatelessWidget {
         backgroundColor: AppColors.white,
         title: commonText("Terms and Condition".tr, size: 18, isBold: true),
         leading: InkWell(
-          onTap: () => Get.close(1),
+          onTap: () => Navigator.of(context).pop(),
           child: const Icon(Icons.arrow_back_ios_new, color: Colors.black87),
         ),
       ),

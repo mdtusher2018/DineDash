@@ -33,7 +33,6 @@ class _UserFavoritePageState extends State<UserFavoritePage> {
           child: Column(
             children: [
               /// Search bar
-              
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
@@ -69,7 +68,6 @@ class _UserFavoritePageState extends State<UserFavoritePage> {
                   }
 
                   // final favorites = controller.favoriteData.value!.attributes;
-               
 
                   if (controller.filteredFavorites.isEmpty) {
                     return Center(
@@ -106,7 +104,7 @@ class _UserFavoritePageState extends State<UserFavoritePage> {
                   }
 
                   return RefreshIndicator(
-                    onRefresh: () async{
+                    onRefresh: () async {
                       controller.fetchFavoriteList();
                     },
                     child: ListView.builder(
@@ -116,12 +114,15 @@ class _UserFavoritePageState extends State<UserFavoritePage> {
                         return GestureDetector(
                           onTap: () {
                             navigateToPage(
-                              UserBusinessDetailsPage(businessId: business.businessId),
+                              UserBusinessDetailsPage(
+                                businessId: business.businessId,
+                              ),
+                              context: context,
                             );
                           },
                           child: RestaurantCard(
                             imageUrl: getFullImagePath(business.image ?? ""),
-                    
+
                             title: business.name,
                             rating: business.rating.toDouble(),
                             reviewCount: business.userRatingsTotal,

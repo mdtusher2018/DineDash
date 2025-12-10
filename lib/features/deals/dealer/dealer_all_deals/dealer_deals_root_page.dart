@@ -48,7 +48,7 @@ class _DealerDealsRootPageState extends State<DealerDealsRootPage> {
               child: commonBorderButton(
                 "+ Add Deal",
                 onTap: () {
-                  navigateToPage(AddDealScreen());
+                  navigateToPage(AddDealScreen(), context: context);
                 },
               ),
             ),
@@ -84,6 +84,7 @@ class _DealerDealsRootPageState extends State<DealerDealsRootPage> {
                               dealId: deal.dealId,
                               businessId: deal.businessId,
                             ),
+                            context: context,
                           );
                         },
 

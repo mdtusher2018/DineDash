@@ -12,6 +12,7 @@ import 'package:dine_dash/features/auth/dealer/email_check_response.dart';
 import 'package:dine_dash/features/auth/user/create_user_account_2nd_page.dart';
 import 'package:dine_dash/features/auth/user/user_sign_up_response.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignUpController extends BaseController {
@@ -19,6 +20,7 @@ class SignUpController extends BaseController {
   final LocalStorageService _localStorage = Get.find();
 
   Future<void> signUp({
+    required BuildContext context,
     required String fullName,
     required String email,
     required String postalCode,
@@ -65,10 +67,14 @@ class SignUpController extends BaseController {
               StorageKey.token,
               signUpResponse.signUpToken!,
             );
+            Get.find<SessionMemory>().setToken(signUpResponse.signUpToken!);
             SessionMemory.isUser = true;
           }
 
-          Get.to(EmailVerificationScreen());
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => EmailVerificationScreen()),
+          );
           showSnackBar(signUpResponse.message, isError: false);
         } else {
           throw Exception(signUpResponse.message);
@@ -77,12 +83,13 @@ class SignUpController extends BaseController {
     );
   }
 
-  Future<void> checkEmail(String email) async {
+  Future<void> checkEmail(String email, {required BuildContext context}) async {
     safeCall(
       task: () async {
         if (email.isEmpty || !email.isValidEmail) {
           throw Exception("Invalid Email");
         }
+        await _localStorage.clearAllExceptOnboarding();
 
         final response = await _apiService.post(ApiEndpoints.checkEmail, {
           "email": email,
@@ -98,9 +105,13 @@ class SignUpController extends BaseController {
               name: data.fullName,
               postalCode: data.postalCode,
             ),
+            context: context,
           );
         } else {
-          navigateToPage(CreateUserAccount2ndPage(email: email));
+          navigateToPage(
+            CreateUserAccount2ndPage(email: email),
+            context: context,
+          );
         }
       },
     );

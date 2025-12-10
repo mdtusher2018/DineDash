@@ -89,12 +89,12 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                     // navigateToPage(RoleSelectionPage(), clearStack: true);
                     SessionMemory.isUser = true;
                     if (LocalStorageService.isUserOnboardingCompleated) {
-                      navigateToPage(SignInSignUpChooeser());
+                      navigateToPage(SignInSignUpChooeser(), context: context);
                     } else {
-                      navigateToPage(UserOnboardingView());
+                      navigateToPage(UserOnboardingView(), context: context);
                     }
                   }
-                  Get.close(1);
+                  Navigator.of(context).pop(); // Close dialog first
                 },
                 child: CircleAvatar(
                   backgroundColor: Colors.white,
@@ -130,7 +130,11 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                       child: commonButton(
                         "Go to Signin",
                         onTap: () {
-                          navigateToPage(SignInScreen(), clearStack: true);
+                          navigateToPage(
+                            SignInScreen(),
+                            clearStack: true,
+                            context: context,
+                          );
                         },
                       ),
                     ),
@@ -542,9 +546,15 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                                     'number': business.totalReview.toString(),
                                   }),
                                   onTap: () {
-                                    Get.to(
-                                      AllReviewOfBusinessPage(
-                                        feedBacks: business.feedbacks!,
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) =>
+                                                AllReviewOfBusinessPage(
+                                                  feedBacks:
+                                                      business.feedbacks!,
+                                                ),
                                       ),
                                     );
                                   },
@@ -683,7 +693,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                     saving: saving,
                     dealId: dealId,
                     onDealTap: (timeRange) {
-                      Get.close(1);
+                      Navigator.of(context).pop(); // Close dialog first
 
                       navigateToPage(
                         (subscriptionRequired)
@@ -693,6 +703,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                                   controller.businessDetail.value!.name,
                               timeRange: timeRange,
                             ),
+                        context: context,
                       );
                     },
                   );
@@ -1190,13 +1201,16 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                                       ) ??
                                       false;
                                   if (result) {
-                                    Get.close(1);
+                                    Navigator.of(
+                                      context,
+                                    ).pop(); // Close dialog first
 
                                     navigateToPage(
                                       UserDealBlockedPage(
                                         resturentName: businessName,
                                         timeRange: selectedTimeRange,
                                       ),
+                                      context: context,
                                     );
                                   }
                                 },

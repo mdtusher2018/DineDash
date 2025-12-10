@@ -4,6 +4,7 @@ import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/features/deals/user/model_and_response/deal_details_response.dart';
 import 'package:dine_dash/features/deals/user/user_deals_details_and_redeem/user_deal_redeem.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UserDealRedeemController extends BaseController {
@@ -11,6 +12,7 @@ class UserDealRedeemController extends BaseController {
 
   Future<void> dealRedeem(
     String uvmId, {
+    required BuildContext context,
     required String businessId,
     required String dealId,
     required String rasturentName,
@@ -28,6 +30,7 @@ class UserDealRedeemController extends BaseController {
               businessId: businessId,
               rasturentName: rasturentName,
             ),
+            context: context,
           );
         } else {
           throw Exception(response['message'] ?? "Could not redeem");

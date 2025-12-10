@@ -73,6 +73,7 @@ class _CreateDealerAccount2ndPageState
       backgroundColor: AppColors.primaryColor,
       appBar: commonAppBar(
         title: "Register",
+        context: context,
         backGroundColor: AppColors.primaryColor,
         textColor: AppColors.white,
       ),
@@ -168,7 +169,10 @@ class _CreateDealerAccount2ndPageState
                           confirlPassword: passwordController.text,
                           phoneNumber: phoneController.text,
                           next: () {
-                            navigateToPage(EmailVerificationScreen());
+                            navigateToPage(
+                              EmailVerificationScreen(),
+                              context: context,
+                            );
                           },
                         );
                       },

@@ -19,7 +19,7 @@ class EmailVerificationResponse {
       statusCode: json['statusCode'] ?? 0,
       message: json['message'] ?? '',
       accessToken: json['data']?['accessToken'] ?? '',
-      isApproved: json['data']?['isApproved'],
+      isApproved: json['data']?['attributes']?['isApproved'],
     );
   }
 }

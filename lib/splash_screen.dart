@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 
 import 'package:dine_dash/core/services/deeplink/deeplink_service.dart';
@@ -57,6 +59,7 @@ class _SplashScreenState extends State<SplashScreen> {
       debugPrint("Navigate to Business page:==========>>>>>>>> $businessId");
       navigateToPage(
         UserBusinessDetailsPage(businessId: businessId, fromDeepLink: true),
+        context: context,
       );
 
       isOpenedWithDeepLink.value = true;
@@ -64,7 +67,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
     deepLinkService.onDealLink = (dealId) {
       debugPrint("Navigate to Deal page:==========>>>>>>>> $dealId");
-      navigateToPage(UserDealsDetails(dealId: dealId, fromDeepLink: true));
+      navigateToPage(
+        UserDealsDetails(dealId: dealId, fromDeepLink: true),
+        context: context,
+      );
       isOpenedWithDeepLink.value = true;
     };
 
@@ -77,15 +83,14 @@ class _SplashScreenState extends State<SplashScreen> {
       }
 
       if (token == null) {
-        // navigateToPage(RoleSelectionPage());
         SessionMemory.isUser = true;
         if (LocalStorageService.isUserOnboardingCompleated) {
-          navigateToPage(SignInSignUpChooeser());
+          navigateToPage(SignInSignUpChooeser(), context: context);
         } else {
-          navigateToPage(UserOnboardingView());
+          navigateToPage(UserOnboardingView(), context: context);
         }
       } else {
-        navigateToPage(returnPage(token));
+        navigateToPage(returnPage(token), context: context);
       }
     });
   }

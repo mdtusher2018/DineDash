@@ -6,6 +6,7 @@ import 'package:dine_dash/core/models/my_business_name_response.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DealerCreateDealController extends DealerMyBusinessNameListController {
@@ -15,6 +16,7 @@ class DealerCreateDealController extends DealerMyBusinessNameListController {
   var dealDetails = Rx<DealerDealDetailsData?>(null);
 
   Future<void> createDeal({
+    required BuildContext context,
     required DealerBusinessItem? business,
     required String description,
     required double benefitAmount,
@@ -67,7 +69,7 @@ class DealerCreateDealController extends DealerMyBusinessNameListController {
         );
 
         if (response['statusCode'] == 201) {
-          Get.close(1);
+     Navigator.of(context).pop(); // Close dialog first
           showSnackBar(response['message'] ?? "Deal created successfully");
         } else {
           throw Exception(response['message'] ?? "Failed to create deal");

@@ -65,7 +65,10 @@ class _UserDealsPageState extends State<UserDealsPage> {
                       if (abailableDealsController.availableDeals.isNotEmpty)
                         GestureDetector(
                           onTap: () {
-                            navigateToPage(UserAllAvailableDeals());
+                            navigateToPage(
+                              UserAllAvailableDeals(),
+                              context: context,
+                            );
                           },
                           child: commonText(
                             "See all".tr,
@@ -100,16 +103,20 @@ class _UserDealsPageState extends State<UserDealsPage> {
                           abailableDealsController.availableDeals[index];
                       return GestureDetector(
                         onTap: () {
-                          Get.to(
-                            () => UserDealsDetails(
-                              dealId:
-                                  abailableDealsController
-                                      .availableDeals[index]
-                                      .dealId,
-                              udmIdl:
-                                  abailableDealsController
-                                      .availableDeals[index]
-                                      .id,
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => UserDealsDetails(
+                                    dealId:
+                                        abailableDealsController
+                                            .availableDeals[index]
+                                            .dealId,
+                                    udmIdl:
+                                        abailableDealsController
+                                            .availableDeals[index]
+                                            .id,
+                                  ),
                             ),
                           );
                         },
@@ -131,7 +138,10 @@ class _UserDealsPageState extends State<UserDealsPage> {
                       if (usedDealController.usedDeals.isNotEmpty)
                         InkWell(
                           onTap: () {
-                            navigateToPage(UserAllUsedDeals());
+                            navigateToPage(
+                              UserAllUsedDeals(),
+                              context: context,
+                            );
                           },
                           child: commonText("See All", size: 14),
                         ),
@@ -157,8 +167,14 @@ class _UserDealsPageState extends State<UserDealsPage> {
                       final deal = usedDealController.usedDeals[index];
                       return GestureDetector(
                         onTap: () {
-                          Get.to(
-                            () => UserAfterGivingStarPage(dealId: deal.dealId),
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => UserAfterGivingStarPage(
+                                    dealId: deal.dealId,
+                                  ),
+                            ),
                           );
                         },
                         child: dealCard(deal: deal, isUsed: true),

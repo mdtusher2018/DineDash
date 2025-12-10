@@ -9,9 +9,9 @@ class UserDealRedeemPage extends StatefulWidget {
     super.key,
     required this.dealId,
     required this.businessId,
-    required this.rasturentName
+    required this.rasturentName,
   });
-  final String dealId, businessId,rasturentName;
+  final String dealId, businessId, rasturentName;
 
   @override
   _UserDealRedeemPageState createState() => _UserDealRedeemPageState();
@@ -245,6 +245,7 @@ class _UserDealRedeemPageState extends State<UserDealRedeemPage>
                               rasturentName: widget.rasturentName,
                             ),
                             replace: true,
+                            context: context,
                           );
                         },
                       ),

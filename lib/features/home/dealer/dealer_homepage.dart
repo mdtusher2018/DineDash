@@ -57,7 +57,10 @@ class _DealerHomepageState extends State<DealerHomepage> {
                     ),
                     IconButton(
                       onPressed: () {
-                        navigateToPage(UserNotificationsPage());
+                        navigateToPage(
+                          UserNotificationsPage(),
+                          context: context,
+                        );
                       },
                       icon: Icon(
                         Icons.notifications_active,
@@ -69,7 +72,7 @@ class _DealerHomepageState extends State<DealerHomepage> {
                 SizedBox(height: 15),
                 GestureDetector(
                   onTap: () {
-                    navigateToPage(AddDealScreen());
+                    navigateToPage(AddDealScreen(), context: context);
                   },
                   child: Container(
                     height: 46,
@@ -226,6 +229,7 @@ class _DealerHomepageState extends State<DealerHomepage> {
                             DealerBusinessDetailsPage(
                               businessId: controller.businesses[index].id,
                             ),
+                            context: context,
                           );
                         },
                         child: Container(

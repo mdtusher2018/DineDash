@@ -36,7 +36,7 @@ class _UserAllUsedDealsState extends State<UserAllUsedDeals> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Used Deals"),
+      appBar: commonAppBar(title: "Used Deals", context: context),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Obx(() {
@@ -53,8 +53,13 @@ class _UserAllUsedDealsState extends State<UserAllUsedDeals> {
                 final deal = controller.usedDeals[index];
                 return GestureDetector(
                   onTap:
-                      () => Get.to(
-                        () => UserAfterGivingStarPage(dealId: deal.dealId),
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) =>
+                                  UserAfterGivingStarPage(dealId: deal.dealId),
+                        ),
                       ),
                   child: dealCard(deal: deal, isUsed: true),
                 );

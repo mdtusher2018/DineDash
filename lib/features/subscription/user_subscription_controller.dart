@@ -5,6 +5,7 @@ import 'package:dine_dash/features/subscription/my_subscription_response.dart';
 import 'package:dine_dash/features/subscription/payment_webview.dart';
 import 'package:dine_dash/features/subscription/subscription_model.dart';
 import 'package:dine_dash/features/subscription/user_subscription_model.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UserSubscriptionController extends BaseController {
@@ -28,7 +29,10 @@ class UserSubscriptionController extends BaseController {
     );
   }
 
-  Future<void> payment(String subscriptionId) async {
+  Future<void> payment(
+    String subscriptionId, {
+    required BuildContext context,
+  }) async {
     await safeCall(
       task: () async {
         final response = await _apiService.post(ApiEndpoints.payment, {
@@ -36,7 +40,12 @@ class UserSubscriptionController extends BaseController {
         });
 
         if (response["url"] != null) {
-          Get.to(PaymentWebViewScreen(url: response["url"]));
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PaymentWebViewScreen(url: response["url"]),
+            ),
+          );
         } else {
           throw Exception("An error occurred while processing payment.");
         }

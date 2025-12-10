@@ -20,7 +20,7 @@ class UserNotificationsPage extends StatelessWidget {
     controller.fetchNotifications();
 
     return Scaffold(
-      appBar: commonAppBar(title: "Notification".tr),
+      appBar: commonAppBar(title: "Notification".tr,context: context),
       body: Obx(() {
         if (controller.isLoading.value && controller.notifications.isEmpty) {
           return const Center(child: CircularProgressIndicator());

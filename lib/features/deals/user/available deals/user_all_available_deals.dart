@@ -37,7 +37,7 @@ class _UserAllAvailableDealsState extends State<UserAllAvailableDeals> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Available Deals"),
+      appBar: commonAppBar(title: "Available Deals", context: context),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Obx(() {
@@ -54,10 +54,14 @@ class _UserAllAvailableDealsState extends State<UserAllAvailableDeals> {
                 final deal = controller.availableDeals[index];
                 return GestureDetector(
                   onTap:
-                      () => Get.to(
-                        () => UserDealsDetails(
-                          dealId: deal.dealId,
-                          udmIdl: deal.id,
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) => UserDealsDetails(
+                                dealId: deal.dealId,
+                                udmIdl: deal.id,
+                              ),
                         ),
                       ),
                   child: dealCard(deal: deal, isUsed: false),

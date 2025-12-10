@@ -28,6 +28,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return Scaffold(
       appBar: commonAppBar(
         title: "Get Verification Code".tr,
+        context: context,
         backGroundColor: AppColors.primaryColor,
         textColor: AppColors.white,
       ),
@@ -93,7 +94,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     textColor: Colors.white,
                     isLoading: controller.isLoading.value,
                     onTap: () {
-                      controller.forgetPassword(email: emailController.text);
+                      controller.forgetPassword(
+                        email: emailController.text,
+                        context: context,
+                      );
                     },
                   );
                 }),

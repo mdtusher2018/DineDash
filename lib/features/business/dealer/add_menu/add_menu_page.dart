@@ -46,7 +46,7 @@ class _AddMenuScreenState extends State<AddMenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Add Menu"),
+      appBar: commonAppBar(title: "Add Menu", context: context),
       backgroundColor: AppColors.white,
       body: Column(
         children: [
@@ -147,6 +147,7 @@ class _AddMenuScreenState extends State<AddMenuScreen> {
                   await controller.addMenuItems(
                     businessId: widget.businessId,
                     items: validItems,
+                    context: context,
                   );
                 },
               );

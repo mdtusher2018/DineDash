@@ -31,6 +31,7 @@ class _CreateUserAccountFristPageState
     return Scaffold(
       appBar: commonAppBar(
         title: "Create Account".tr,
+        context: context,
         backGroundColor: AppColors.primaryColor,
         textColor: AppColors.white,
       ),
@@ -63,7 +64,10 @@ class _CreateUserAccountFristPageState
                       "Next".tr,
                       isLoading: controller.isLoading.value,
                       onTap: () {
-                        controller.checkEmail(emailController.text);
+                        controller.checkEmail(
+                          emailController.text,
+                          context: context,
+                        );
                       },
                     );
                   }),
@@ -84,7 +88,7 @@ class _CreateUserAccountFristPageState
                       commonText("Already have an account? ".tr, size: 14.0),
                       GestureDetector(
                         onTap: () {
-                          navigateToPage(SignInScreen());
+                          navigateToPage(SignInScreen(), context: context);
                         },
                         child: commonText(
                           "Sign In".tr,

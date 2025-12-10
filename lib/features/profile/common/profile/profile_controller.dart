@@ -19,6 +19,7 @@ import 'package:dine_dash/features/profile/common/profile/switch_account_respons
 import 'package:dine_dash/features/user_root_page.dart';
 import 'package:dine_dash/core/models/user_model.dart'; // The model that holds user attributes
 import 'package:dine_dash/res/commonWidgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends BaseController {
@@ -47,6 +48,7 @@ class ProfileController extends BaseController {
   }
 
   Future<void> updateProfile({
+    required BuildContext context,
     String? fullName,
     String? postalCode,
     File? image,
@@ -74,7 +76,7 @@ class ProfileController extends BaseController {
 
         if (profileResponse.statusCode == 200 && profileResponse.user != null) {
           userModel.value = profileResponse.user;
-          Get.close(1);
+          Navigator.of(context).pop(); // Close dialog first
           showSnackBar(
             'Your profile has been updated successfully!',
             isError: false,
@@ -86,7 +88,7 @@ class ProfileController extends BaseController {
     );
   }
 
-  Future<void> switchAccount() async {
+  Future<void> switchAccount(BuildContext context) async {
     log(currentRole.value);
     await safeCall(
       task: () async {
@@ -116,9 +118,13 @@ class ProfileController extends BaseController {
           await updateCurrentRoleFromToken();
 
           if (currentRole.value == 'user') {
-            navigateToPage(UserRootPage(), clearStack: true);
+            navigateToPage(UserRootPage(), clearStack: true, context: context);
           } else {
-            navigateToPage(DealerRootPage(), clearStack: true);
+            navigateToPage(
+              DealerRootPage(),
+              clearStack: true,
+              context: context,
+            );
           }
 
           showSnackBar(
@@ -136,18 +142,34 @@ class ProfileController extends BaseController {
             _sessionMemory.clear();
             SessionMemory.isUser = false;
             if (LocalStorageService.isDealerOnBoardingCompleated) {
-              navigateToPage(CreateDealerAccount1stPage(), clearStack: true);
+              navigateToPage(
+                CreateDealerAccount1stPage(),
+                clearStack: true,
+                context: context,
+              );
             } else {
-              navigateToPage(DealerOnboardingView(), clearStack: true);
+              navigateToPage(
+                DealerOnboardingView(),
+                clearStack: true,
+                context: context,
+              );
             }
           } else {
             _localStorageService.clearAllExceptOnboarding();
             _sessionMemory.clear();
             SessionMemory.isUser = true;
             if (LocalStorageService.isUserOnboardingCompleated) {
-              navigateToPage(CreateUserAccountFristPage(), clearStack: true);
+              navigateToPage(
+                CreateUserAccountFristPage(),
+                clearStack: true,
+                context: context,
+              );
             } else {
-              navigateToPage(UserOnboardingView(), clearStack: true);
+              navigateToPage(
+                UserOnboardingView(),
+                clearStack: true,
+                context: context,
+              );
             }
           }
         }
@@ -170,7 +192,10 @@ class ProfileController extends BaseController {
     if (role != null) currentRole.value = role;
   }
 
-  Future<void> deleteAccount(String password) async {
+  Future<void> deleteAccount(
+    String password, {
+    required BuildContext context,
+  }) async {
     safeCall(
       task: () async {
         final response = await _apiService.delete(
@@ -181,25 +206,25 @@ class ProfileController extends BaseController {
           // navigateToPage(RoleSelectionPage(), clearStack: true);
           SessionMemory.isUser = true;
           if (LocalStorageService.isUserOnboardingCompleated) {
-            navigateToPage(SignInSignUpChooeser());
+            navigateToPage(SignInSignUpChooeser(), context: context);
           } else {
-            navigateToPage(UserOnboardingView());
+            navigateToPage(UserOnboardingView(), context: context);
           }
         }
       },
     );
   }
 
-  Future<void> logOut() async {
+  Future<void> logOut(BuildContext context) async {
     await _localStorageService.clearAllExceptOnboarding();
     _sessionMemory.clear();
 
     // navigateToPage(RoleSelectionPage(), clearStack: true);
     SessionMemory.isUser = true;
     if (LocalStorageService.isUserOnboardingCompleated) {
-      navigateToPage(SignInSignUpChooeser());
+      navigateToPage(SignInSignUpChooeser(), context: context);
     } else {
-      navigateToPage(UserOnboardingView());
+      navigateToPage(UserOnboardingView(), context: context);
     }
   }
 }

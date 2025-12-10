@@ -514,6 +514,7 @@ class _UserExplorePageState extends State<UserExplorePage> {
                       (context, index) => InkWell(
                         onTap: () {
                           navigateToPage(
+                            context: context,
                             UserBusinessDetailsPage(
                               businessId: controller.businessList[index].id,
                             ),

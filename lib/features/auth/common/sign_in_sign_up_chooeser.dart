@@ -54,7 +54,7 @@ class _SignInSignUpChooeserState extends State<SignInSignUpChooeser> {
                 commonButton(
                   "Sign In".tr,
                   onTap: () {
-                    navigateToPage(SignInScreen());
+                    navigateToPage(SignInScreen(), context: context);
                   },
                 ),
 
@@ -64,9 +64,15 @@ class _SignInSignUpChooeserState extends State<SignInSignUpChooeser> {
                   textColor: AppColors.white,
                   onTap: () {
                     if (SessionMemory.isUser) {
-                      navigateToPage(CreateUserAccountFristPage());
+                      navigateToPage(
+                        CreateUserAccountFristPage(),
+                        context: context,
+                      );
                     } else {
-                      navigateToPage(CreateDealerAccount1stPage());
+                      navigateToPage(
+                        CreateDealerAccount1stPage(),
+                        context: context,
+                      );
                     }
                   },
                 ),

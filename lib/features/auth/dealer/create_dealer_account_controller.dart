@@ -9,6 +9,7 @@ import 'package:dine_dash/features/auth/dealer/create_dealer_2nd_page.dart';
 import 'package:dine_dash/features/auth/dealer/dealer_sign_up_response.dart';
 import 'package:dine_dash/features/auth/dealer/email_check_response.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';
 
 import 'package:get/get.dart';
@@ -70,6 +71,7 @@ class DealerCreateAccountController extends BaseController {
 
   Future<void> checkEmail(
     String email, {
+    required BuildContext context,
     required Place? businessDetails,
     required double lat,
     required double long,
@@ -96,6 +98,7 @@ class DealerCreateAccountController extends BaseController {
             address: address,
             businessName: businessName,
           ),
+          context: context,
         );
         //  navigateToPage(DealerAddBusinessSecondScreen(result: businessDetails,userData: emailResponseModel.data,email:email,latitude: latitude,longitude: longitude,fromSignup: true,))
       },

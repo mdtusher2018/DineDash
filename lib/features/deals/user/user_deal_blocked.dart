@@ -274,7 +274,7 @@ class _UserDealBlockedPageState extends State<UserDealBlockedPage>
                       child: commonButton(
                         "Go to deals".tr,
                         onTap: () {
-                          Get.close(1);
+                   Navigator.of(context).pop(); // Close dialog first
                         },
                       ),
                     ),

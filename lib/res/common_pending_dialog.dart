@@ -29,7 +29,7 @@ void showPendingDialog(BuildContext context) {
                 height: 40,
                 onTap: () {
                   Navigator.pop(context);
-                  Get.find<ProfileController>().logOut();
+                  Get.find<ProfileController>().logOut(context);
                 },
               ),
               const SizedBox(height: 16),

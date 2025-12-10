@@ -78,7 +78,7 @@ class _EditDealScreenState extends State<EditDealScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: commonAppBar(title: "Edit Deal".tr),
+      appBar: commonAppBar(title: "Edit Deal".tr,context: context),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Obx(() {
@@ -407,6 +407,7 @@ class _EditDealScreenState extends State<EditDealScreen> {
                           .toList();
 
                   controller.editDeal(
+                    context: context,
                     dealId: widget.dealId,
                     business: selectedBusiness,
                     description: descriptionController.text.trim(),

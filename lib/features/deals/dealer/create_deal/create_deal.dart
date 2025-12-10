@@ -60,7 +60,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: commonAppBar(title: "Add Deal".tr),
+      appBar: commonAppBar(title: "Add Deal".tr, context: context),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Obx(() {
@@ -420,6 +420,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                           .toList();
 
                   controller.createDeal(
+                    context: context,
                     business: selectedBusiness,
                     description: descriptionController.text.trim(),
                     benefitAmount:

@@ -16,7 +16,13 @@ class ApiService {
 
   Future<Map<String, String>> _getHeaders({Map<String, String>? extra}) async {
     String? token = await _localStorage.getString(StorageKey.token);
+
+    log("1111111111 ===========>>>>>>>>>>>>> token: $token");
+
     token ??= _sessionMemory.token;
+
+    log("222222222 ===========>>>>>>>>>>>>> token: $token");
+
     final headers = {
       'Accept-Language': 'en',
       'Content-Type': 'application/json',

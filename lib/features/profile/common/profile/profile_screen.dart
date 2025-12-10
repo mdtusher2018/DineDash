@@ -101,14 +101,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         return GestureDetector(
                           onTap: () {
                             final profile = controller.userModel.value!;
-                            Get.to(
-                              () => JourneyScreen(
-                                deal: profile.totalDeal.toString(),
-                                cities: profile.visitedCityCount.toString(),
-                                ratting: profile.totalRatings.toString(),
-                                review: profile.givenReviewCount.toString(),
-                                visitedPlace:
-                                    profile.visitedPlaceCount.toString(),
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => JourneyScreen(
+                                      deal: profile.totalDeal.toString(),
+                                      cities:
+                                          profile.visitedCityCount.toString(),
+                                      ratting: profile.totalRatings.toString(),
+                                      review:
+                                          profile.givenReviewCount.toString(),
+                                      visitedPlace:
+                                          profile.visitedPlaceCount.toString(),
+                                    ),
                               ),
                             );
                           },
@@ -160,6 +166,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   profileImage:
                                       controller.userModel.value!.image ?? "",
                                 ),
+                                context: context,
                               );
                             }
                           },
@@ -168,14 +175,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           image: 'assets/images/setting.png',
                           title: 'Settings',
                           onTap: () {
-                            navigateToPage(SettingsScreen());
+                            navigateToPage(SettingsScreen(), context: context);
                           },
                         ),
                         buildcontainer(
                           image: 'assets/images/contact.png',
                           title: 'Contact Us',
                           onTap: () {
-                            navigateToPage(ContactUsPage());
+                            navigateToPage(ContactUsPage(), context: context);
                           },
                         ),
                       ],
@@ -198,14 +205,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               image: 'assets/images/subscription.png',
                               title: 'Subscription',
                               onTap: () {
-                                navigateToPage(SubscriptionView());
+                                navigateToPage(
+                                  SubscriptionView(),
+                                  context: context,
+                                );
                               },
                             ),
                             buildRowCon(
                               image: 'assets/images/subscription.png',
                               title: 'My Subscription',
                               onTap: () {
-                                navigateToPage(MySubscriptionsView());
+                                navigateToPage(
+                                  MySubscriptionsView(),
+                                  context: context,
+                                );
                               },
                             ),
                           ],
@@ -219,21 +232,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       image: 'assets/images/policy.png',
                       title: 'Privacy Policy',
                       onTap: () {
-                        navigateToPage(PrivacyPolicyScreen());
+                        navigateToPage(PrivacyPolicyScreen(), context: context);
                       },
                     ),
                     buildRowCon(
                       image: 'assets/images/termscon.png',
                       title: 'Terms and Condition',
                       onTap: () {
-                        navigateToPage(TermsAndConditionScreen());
+                        navigateToPage(
+                          TermsAndConditionScreen(),
+                          context: context,
+                        );
                       },
                     ),
                     buildRowCon(
                       image: 'assets/images/about.png',
                       title: 'About Us',
                       onTap: () {
-                        navigateToPage(AboutUsPage());
+                        navigateToPage(AboutUsPage(), context: context);
                       },
                     ),
                     buildRowCon(
@@ -250,7 +266,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         title:
                             'Become a ${(controller.currentRole.value == 'user' ? "Dealer" : "User")}',
                         onTap: () {
-                          controller.switchAccount();
+                          controller.switchAccount(context);
                         },
                       );
                     }),
@@ -261,7 +277,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               GestureDetector(
                 onTap: () {
                   showLogoutDialog(context, () async {
-                    controller.logOut();
+                    controller.logOut(context);
                   });
                 },
                 child: Container(

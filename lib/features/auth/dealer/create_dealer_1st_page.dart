@@ -14,10 +14,12 @@ class CreateDealerAccount1stPage extends StatefulWidget {
   const CreateDealerAccount1stPage({super.key});
 
   @override
-  State<CreateDealerAccount1stPage> createState() => _CreateDealerAccount1stPageState();
+  State<CreateDealerAccount1stPage> createState() =>
+      _CreateDealerAccount1stPageState();
 }
 
-class _CreateDealerAccount1stPageState extends State<CreateDealerAccount1stPage> {
+class _CreateDealerAccount1stPageState
+    extends State<CreateDealerAccount1stPage> {
   final businessController = TextEditingController();
   final addressController = TextEditingController();
   final emailController = TextEditingController();
@@ -280,6 +282,7 @@ class _CreateDealerAccount1stPageState extends State<CreateDealerAccount1stPage>
                       onTap: () async {
                         await controller.checkEmail(
                           emailController.text,
+                          context: context,
                           businessDetails: _selectedPlace,
                           lat: latitude.value ?? DefaultValue.lat,
                           long: longitude.value ?? DefaultValue.lung,

@@ -236,7 +236,7 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Edit Business"),
+      appBar: commonAppBar(title: "Edit Business",context: context),
       backgroundColor: AppColors.white,
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -467,7 +467,7 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
                           },
                         )
                         .toList();
-                await controller.editBusiness(
+                await controller.editBusiness(context: context,
                   businessId: widget.businessId,
                   name: businessNameController.text.trim(),
                   types: selectedCategories,

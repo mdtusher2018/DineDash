@@ -7,6 +7,7 @@ import 'package:dine_dash/core/services/localstorage/storage_key.dart';
 import 'package:dine_dash/features/auth/common/forget_password/forget_password_response.dart';
 import 'package:dine_dash/features/auth/common/otp_verification/otp_verification_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ForgetPasswordController extends BaseController {
@@ -15,8 +16,8 @@ class ForgetPasswordController extends BaseController {
 
   Future<void> forgetPassword({
     required String email,
+    required BuildContext context,
   }) async {
-    
     final validationMessage = AuthValidator.validateForgetPassword(
       email: email,
     );
@@ -28,12 +29,15 @@ class ForgetPasswordController extends BaseController {
 
     await safeCall<void>(
       task: () async {
-        final body = {
-          "email": email,
-        };
+        final body = {"email": email};
 
-        final response = await _apiService.post(ApiEndpoints.forgetPassword, body);
-        final forgetPasswordResponse = ForgetPasswordResponse.fromJson(response);
+        final response = await _apiService.post(
+          ApiEndpoints.forgetPassword,
+          body,
+        );
+        final forgetPasswordResponse = ForgetPasswordResponse.fromJson(
+          response,
+        );
 
         if (forgetPasswordResponse.statusCode == 200) {
           if (forgetPasswordResponse.forgetPasswordToken != null) {
@@ -42,8 +46,11 @@ class ForgetPasswordController extends BaseController {
               forgetPasswordResponse.forgetPasswordToken!,
             );
           }
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => OTPVerificationScreen()),
+          );
 
-          Get.to(OTPVerificationScreen());
           showSnackBar(forgetPasswordResponse.message, isError: false);
         } else {
           throw Exception(forgetPasswordResponse.message);

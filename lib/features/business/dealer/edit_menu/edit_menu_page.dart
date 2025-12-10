@@ -34,7 +34,7 @@ class _EditMenuScreenState extends State<EditMenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Edit Menu"),
+      appBar: commonAppBar(title: "Edit Menu", context: context),
       backgroundColor: AppColors.white,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -81,6 +81,7 @@ class _EditMenuScreenState extends State<EditMenuScreen> {
           "Save Menu",
           onTap: () {
             controller.editMenu(
+              context: context,
               menuId: widget.menu.id,
               itemDescription: itemDescriptionController.text,
               itemName: itemNameController.text,

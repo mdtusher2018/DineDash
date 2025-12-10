@@ -5,7 +5,6 @@ import 'package:dine_dash/features/profile/common/change%20password/change_passw
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
@@ -35,7 +34,7 @@ class SettingsScreen extends StatelessWidget {
                 iconColor: AppColors.primaryColor,
                 haveArrow: true,
                 onTap: () {
-                  navigateToPage(ChangePasswordScreen());
+                  navigateToPage(ChangePasswordScreen(), context: context);
                 },
               ),
 
@@ -45,7 +44,7 @@ class SettingsScreen extends StatelessWidget {
                 title: "Delete Account".tr,
                 iconColor: Colors.red,
                 onTap: () {
-                  navigateToPage(DeleteAccountScreen());
+                  navigateToPage(DeleteAccountScreen(), context: context);
                   // showDeleteAccountDialog(context, () {
                   //   Navigator.pop(context);
                   // });
@@ -71,13 +70,16 @@ class SettingsScreen extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 8),
 
         child: ListTile(
-          leading: Image.asset(icon, color: iconColor, width: 20,fit: BoxFit.fill),
+          leading: Image.asset(
+            icon,
+            color: iconColor,
+            width: 20,
+            fit: BoxFit.fill,
+          ),
           title: commonText(title, size: 16, color: AppColors.black),
           trailing: (haveArrow) ? Icon(Icons.arrow_forward_ios_outlined) : null,
         ),
       ),
     );
   }
-
-
 }

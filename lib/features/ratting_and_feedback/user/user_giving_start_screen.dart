@@ -99,6 +99,7 @@ class UserGivingStarsPage extends StatelessWidget {
                     feedbackText: commentController.text.trim(),
                     ratting: ratting.value,
                     rasturentName: rasturentName,
+                    context: context,
                   );
                 },
               ),
@@ -106,7 +107,7 @@ class UserGivingStarsPage extends StatelessWidget {
               Center(
                 child: TextButton(
                   onPressed: () {
-                    Get.close(1);
+                    Navigator.of(context).pop(); // Close dialog first
                   },
                   child: commonText(
                     "Remind me later".tr,

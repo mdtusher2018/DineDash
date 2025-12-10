@@ -44,7 +44,7 @@ class _DealerBusinessPageState extends State<DealerBusinessPage> {
             SizedBox(height: 64),
             GestureDetector(
               onTap: () {
-                navigateToPage(AddBusinessScreenFrist());
+                navigateToPage(AddBusinessScreenFrist(), context: context);
               },
               child: Container(
                 height: 46,
@@ -94,6 +94,7 @@ class _DealerBusinessPageState extends State<DealerBusinessPage> {
                             DealerBusinessDetailsPage(
                               businessId: controller.businesses[index].id,
                             ),
+                            context: context,
                           );
                         },
                         child: Container(
@@ -168,6 +169,7 @@ class _DealerBusinessPageState extends State<DealerBusinessPage> {
                                                           controller
                                                               .businesses[index],
                                                     ),
+                                                    context: context,
                                                   );
                                                 },
                                                 child: Image.asset(

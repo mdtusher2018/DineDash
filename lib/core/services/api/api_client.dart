@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:dine_dash/core/utils/constent.dart';
 import 'package:dine_dash/features/profile/common/profile/profile_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:get/get.dart';
@@ -125,7 +126,11 @@ class ApiClient {
   void _checkUnauthorized(http.Response res) {
     if (res.statusCode == 401 ||
         (jsonDecode(res.body)?['message'] ?? "").contains('Unauthorized')) {
-      Get.find<ProfileController>().logOut();
+      if (navigatorKey.currentState != null) {
+        Get.find<ProfileController>().logOut(
+          navigatorKey.currentState!.context,
+        );
+      }
       showSnackBar('Session expired', isError: true);
     }
   }

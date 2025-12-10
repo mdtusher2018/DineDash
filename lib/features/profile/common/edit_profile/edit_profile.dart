@@ -173,6 +173,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                     // Call updateProfile
                     await profileController.updateProfile(
                       fullName: fullName,
+                      context: context,
                       postalCode: postcode.isNotEmpty ? postcode : null,
                       image: selectedImage,
                     );

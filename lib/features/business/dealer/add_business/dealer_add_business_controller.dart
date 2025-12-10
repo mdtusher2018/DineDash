@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:dine_dash/features/business/dealer/add_menu/add_menu_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
@@ -9,6 +10,7 @@ import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 class DealerAddBusinessController extends BaseController {
   final ApiService _apiService = Get.find();
   Future<void> createBusiness({
+    required BuildContext context,
     required String name,
     required List<String> types,
     required String? businessType,
@@ -78,10 +80,10 @@ class DealerAddBusinessController extends BaseController {
         if (response['statusCode'] == 201 || response['status'] == true) {
           String id = response['data']?['attributes']?['_id'] ?? "";
           if (id.isNotEmpty) {
-            Get.close(1);
-            navigateToPage(AddMenuScreen(businessId: id));
+            Navigator.of(context).pop();
+            navigateToPage(AddMenuScreen(businessId: id), context: context);
           } else {
-            Get.close(1);
+            Navigator.of(context).pop(); // Close dialog first
           }
           showSnackBar("Business created successfully");
         } else {

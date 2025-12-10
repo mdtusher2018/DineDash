@@ -52,6 +52,7 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
               dealId: dealData!.dealId,
               rasturentName: dealData!.businessName,
             ),
+            context: context,
           );
         },
       );
@@ -189,6 +190,7 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                                           businessId: deal.businessId,
                                           fromDeepLink: true,
                                         ),
+                                        context: context,
                                       );
                                     },
                                     child: Container(
@@ -500,6 +502,7 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                                     dealId: widget.dealId,
                                     businessId: dealData!.businessId,
                                     rasturentName: dealData!.businessName,
+                                    context: context,
                                   );
                                 },
                               ),

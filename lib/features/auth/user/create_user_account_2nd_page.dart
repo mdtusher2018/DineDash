@@ -52,6 +52,7 @@ class _CreateUserAccount2ndPageState extends State<CreateUserAccount2ndPage> {
     return Scaffold(
       appBar: commonAppBar(
         title: "Create Account".tr,
+        context: context,
         backGroundColor: AppColors.primaryColor,
         textColor: AppColors.white,
       ),
@@ -176,6 +177,7 @@ class _CreateUserAccount2ndPageState extends State<CreateUserAccount2ndPage> {
                       onTap: () {
                         controller.signUp(
                           fullName: fullNameController.text,
+                          context: context,
                           email: emailController.text,
                           postalCode: posterCodeController.text,
                           password: passwordController.text,
@@ -207,7 +209,7 @@ class _CreateUserAccount2ndPageState extends State<CreateUserAccount2ndPage> {
                       commonText("Already have an account? ".tr, size: 14.0),
                       GestureDetector(
                         onTap: () {
-                          navigateToPage(SignInScreen());
+                          navigateToPage(SignInScreen(), context: context);
                         },
                         child: commonText(
                           "Sign In".tr,

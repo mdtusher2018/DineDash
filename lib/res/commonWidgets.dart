@@ -138,17 +138,26 @@ Widget commonTextfieldWithTitle(
 
 void navigateToPage(
   Widget page, {
+  required BuildContext context,
   bool replace = false,
   bool clearStack = false,
   Transition transition = Transition.rightToLeft,
   Duration duration = const Duration(milliseconds: 400),
 }) {
   if (clearStack) {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => page),
+      (route) => false,
+    );
     Get.offAll(page, transition: transition, duration: duration);
   } else if (replace) {
-    Get.off(page, transition: transition, duration: duration);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => page),
+    );
   } else {
-    Get.to(page, transition: transition, duration: duration);
+    Navigator.push(context, MaterialPageRoute(builder: (context) => page));
   }
 }
 
@@ -441,6 +450,7 @@ Widget commonDropdown<T>({
 }
 
 AppBar commonAppBar({
+  required BuildContext context,
   required String title,
   bool isCenter = true,
   Color backGroundColor = AppColors.white,
@@ -455,7 +465,7 @@ AppBar commonAppBar({
             ? null
             : GestureDetector(
               onTap: () {
-                Get.close(1);
+                Navigator.of(context).pop(); // Close dialog first
               },
               child: Container(
                 decoration: BoxDecoration(

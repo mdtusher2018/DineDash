@@ -132,7 +132,10 @@ class _MySubscriptionsViewState extends State<MySubscriptionsView> {
                     "Manage Subscription",
                     onTap: () async {
                       if (activePlan.price != 0) {
-                        await subscriptionController.payment(activePlan.id);
+                        await subscriptionController.payment(
+                          activePlan.id,
+                          context: context,
+                        );
                       }
                     },
                   ),

@@ -50,7 +50,7 @@ class _UserOnboardingViewState extends State<UserOnboardingView> {
         true,
       );
 
-      navigateToPage(SignInSignUpChooeser());
+      navigateToPage(SignInSignUpChooeser(), context: context);
     }
   }
 

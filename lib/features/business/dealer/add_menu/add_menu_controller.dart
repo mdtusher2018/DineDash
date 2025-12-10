@@ -1,4 +1,5 @@
 import 'package:dine_dash/res/commonWidgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
@@ -9,6 +10,7 @@ class DealerAddMenuController extends BaseController {
 
   /// Create menu items for a business
   Future<void> addMenuItems({
+    required BuildContext context,
     required String businessId,
     required List<Map<String, dynamic>> items,
   }) async {
@@ -51,7 +53,7 @@ class DealerAddMenuController extends BaseController {
         final response = await _apiService.post(ApiEndpoints.addMenu, payload);
 
         if (response['statusCode'] == 201 || response['status'] == true) {
-          Get.close(1);
+          Navigator.of(context).pop(); // Close dialog first
           showSnackBar("Menu added successfully", isError: false);
         } else {
           throw Exception(response['message'] ?? "Something went wrong");

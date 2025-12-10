@@ -120,7 +120,7 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Add Business"),
+      appBar: commonAppBar(title: "Add Business", context: context),
       backgroundColor: AppColors.white,
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -410,6 +410,7 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
                     .toList();
 
             await controller.createBusiness(
+              context: context,
               name: businessController.text.trim(),
               types: selectedCategories,
               businessType: selectedBusinessType,

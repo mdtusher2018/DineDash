@@ -4,6 +4,7 @@ import 'package:dine_dash/core/models/my_business_name_response.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DealerEditDealController extends DealerMyBusinessNameListController {
@@ -13,6 +14,7 @@ class DealerEditDealController extends DealerMyBusinessNameListController {
   var dealDetails = Rx<DealerDealDetailsData?>(null);
 
   Future<void> editDeal({
+    required BuildContext context,
     required String dealId,
     required DealerBusinessItem? business,
     required String description,
@@ -65,7 +67,7 @@ class DealerEditDealController extends DealerMyBusinessNameListController {
         );
 
         if (response['statusCode'] == 200) {
-          Get.close(1);
+         Navigator.of(context).pop(); // Close dialog first
           showSnackBar(response['message'] ?? "Deal created successfully");
         } else {
           throw Exception(response['message'] ?? "Failed to create deal");

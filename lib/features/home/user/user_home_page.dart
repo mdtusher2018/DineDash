@@ -26,8 +26,8 @@ class _UserHomeViewState extends State<UserHomeView> {
   final TextEditingController searchTermController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
     cityController.fetchCities();
     controller.fetchHomeData();
   }
@@ -119,7 +119,11 @@ class _UserHomeViewState extends State<UserHomeView> {
 
                     // 🔸 Notification Icon
                     GestureDetector(
-                      onTap: () => navigateToPage(UserNotificationsPage()),
+                      onTap:
+                          () => navigateToPage(
+                            UserNotificationsPage(),
+                            context: context,
+                          ),
                       child: Material(
                         borderRadius: BorderRadius.circular(100),
                         elevation: 2,
@@ -137,12 +141,13 @@ class _UserHomeViewState extends State<UserHomeView> {
 
                 const SizedBox(height: 16),
 
-                if (controller.homeData.value!.quotesImages.isNotEmpty)...[
+                if (controller.homeData.value!.quotesImages.isNotEmpty) ...[
                   PromotionBanner(
                     banners: controller.homeData.value!.quotesImages,
                   ),
 
-                const SizedBox(height: 20),],
+                  const SizedBox(height: 20),
+                ],
 
                 /// Search bar
                 Container(
@@ -201,6 +206,7 @@ class _UserHomeViewState extends State<UserHomeView> {
                         title: "Nearby Open Restaurants",
                         business: homeData.restaurants,
                       ),
+                      context: context,
                     );
                   },
                 ),
@@ -211,6 +217,7 @@ class _UserHomeViewState extends State<UserHomeView> {
                       title: "Activities",
                       business: homeData.activities,
                     ),
+                    context: context,
                   );
                 }),
 
@@ -220,6 +227,7 @@ class _UserHomeViewState extends State<UserHomeView> {
                       title: "Hot Deals 🔥",
                       business: homeData.hotDeals,
                     ),
+                    context: context,
                   );
                 }),
 
@@ -229,6 +237,7 @@ class _UserHomeViewState extends State<UserHomeView> {
                       title: "Top rated Restaurants",
                       business: homeData.topRated,
                     ),
+                    context: context,
                   );
                 }),
 
@@ -238,6 +247,7 @@ class _UserHomeViewState extends State<UserHomeView> {
                       title: "New",
                       business: homeData.newRestaurants,
                     ),
+                    context: context,
                   );
                 }),
               ],
@@ -289,9 +299,8 @@ class _UserHomeViewState extends State<UserHomeView> {
                   child: InkWell(
                     onTap:
                         () => navigateToPage(
-                          UserBusinessDetailsPage(
-                            businessId: restaurant.id,
-                          ), //restaurantId: restaurant.id
+                          UserBusinessDetailsPage(businessId: restaurant.id),
+                          context: context,
                         ),
                     child: RestaurantCard(
                       imageUrl: restaurant.image ?? "",

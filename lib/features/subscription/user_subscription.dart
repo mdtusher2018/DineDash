@@ -236,7 +236,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                         plan.price == 0 ? "Start Free" : "Subscribe Now",
                         onTap: () async {
                           if (plan.price != 0) {
-                            await controller.payment(plan.id);
+                            await controller.payment(plan.id, context: context);
                           }
                         },
                       ),

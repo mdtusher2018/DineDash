@@ -41,6 +41,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       appBar: commonAppBar(
         title: "Sign In to Your Account".tr,
+        context: context,
         backGroundColor: AppColors.primaryColor,
         textColor: AppColors.white,
       ),
@@ -100,7 +101,10 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        navigateToPage(ForgotPasswordScreen());
+                        navigateToPage(
+                          ForgotPasswordScreen(),
+                          context: context,
+                        );
                       },
                       child: commonText(
                         "Forgot Password".tr,
@@ -147,9 +151,15 @@ class _SignInScreenState extends State<SignInScreen> {
                     GestureDetector(
                       onTap: () {
                         if (SessionMemory.isUser) {
-                          navigateToPage(CreateUserAccountFristPage());
+                          navigateToPage(
+                            CreateUserAccountFristPage(),
+                            context: context,
+                          );
                         } else {
-                          navigateToPage(CreateDealerAccount1stPage());
+                          navigateToPage(
+                            CreateDealerAccount1stPage(),
+                            context: context,
+                          );
                         }
                       },
                       child: commonText(

@@ -17,17 +17,16 @@ class ListOfBusinessPage extends StatefulWidget {
 }
 
 class _ListOfBusinessPageState extends State<ListOfBusinessPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: widget.title.tr),
+      appBar: commonAppBar(title: widget.title.tr, context: context),
 
       body: ListView.separated(
         itemCount: widget.business.length,
 
         padding: EdgeInsets.all(16),
-   
+
         itemBuilder: (context, index) {
           final restaurant = widget.business[index];
           return Padding(
@@ -37,9 +36,8 @@ class _ListOfBusinessPageState extends State<ListOfBusinessPage> {
               child: InkWell(
                 onTap:
                     () => navigateToPage(
-                      UserBusinessDetailsPage(
-                        businessId: restaurant.id,
-                      ), //restaurantId: restaurant.id
+                      UserBusinessDetailsPage(businessId: restaurant.id),
+                      context: context, //restaurantId: restaurant.id
                     ),
                 child: RestaurantCard(
                   imageUrl: restaurant.image ?? "",
@@ -57,7 +55,6 @@ class _ListOfBusinessPageState extends State<ListOfBusinessPage> {
         },
 
         separatorBuilder: (context, index) => SizedBox(height: 8),
-
       ),
     );
   }

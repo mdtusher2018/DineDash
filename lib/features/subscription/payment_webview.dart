@@ -2,7 +2,6 @@ import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PaymentWebViewScreen extends StatelessWidget {
@@ -37,7 +36,7 @@ class PaymentWebViewScreen extends StatelessWidget {
                   onWebResourceError: (WebResourceError error) {},
                   onNavigationRequest: (NavigationRequest request) {
                     if (request.url.contains('transaction/complete')) {
-                      Get.close(1);
+                      Navigator.of(context).pop(); // Close dialog first
                       showSnackBar("Payment sucessfull");
                     }
                     return NavigationDecision.navigate;

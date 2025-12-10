@@ -42,7 +42,7 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
       if (controller.isLoading.value ||
           controller.businessDetail.value == null) {
         return Scaffold(
-          appBar: commonAppBar(title: "Business Details"),
+          appBar: commonAppBar(title: "Business Details", context: context),
           body:
               (controller.isLoading.value)
                   ? const Center(child: CircularProgressIndicator())
@@ -50,7 +50,10 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
         );
       }
       return Scaffold(
-        appBar: commonAppBar(title: controller.businessDetail.value!.name),
+        appBar: commonAppBar(
+          title: controller.businessDetail.value!.name,
+          context: context,
+        ),
         backgroundColor: AppColors.white,
         body: Column(
           children: [
@@ -247,6 +250,7 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
                     businessName: controller.businessDetail.value!.name,
                   ),
                 ),
+                context: context,
               );
             },
           ),
@@ -288,6 +292,7 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
                       dealId: deal.id,
                       businessId: controller.businessDetail.value!.id,
                     ),
+                    context: context,
                   );
                 },
                 onDelete: () {
@@ -470,9 +475,14 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
               "All reviews (${controller.businessDetail.value!.totalReview})",
               height: 48,
               onTap:
-                  () => Get.to(
-                    AllReviewOfBusinessPage(
-                      feedBacks: controller.businessDetail.value!.feedbacksData,
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => AllReviewOfBusinessPage(
+                            feedBacks:
+                                controller.businessDetail.value!.feedbacksData,
+                          ),
                     ),
                   ),
             ),
@@ -570,6 +580,7 @@ class _MenuTabState extends State<MenuTab> {
                   AddMenuScreen(
                     businessId: controller.businessDetail.value!.id,
                   ),
+                  context: context,
                 );
               },
             ),
@@ -648,7 +659,10 @@ class _MenuTabState extends State<MenuTab> {
                         children: [
                           InkWell(
                             onTap: () {
-                              navigateToPage(EditMenuScreen(menu: item));
+                              navigateToPage(
+                                EditMenuScreen(menu: item),
+                                context: context,
+                              );
                             },
                             child: Image.asset(
                               "assets/images/editb.png",

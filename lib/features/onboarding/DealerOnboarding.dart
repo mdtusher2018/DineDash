@@ -50,7 +50,7 @@ class _DealerOnboardingViewState extends State<DealerOnboardingView> {
         true,
       );
 
-      navigateToPage(SignInSignUpChooeser());
+      navigateToPage(SignInSignUpChooeser(), context: context);
     }
   }
 

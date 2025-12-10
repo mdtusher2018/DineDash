@@ -1,4 +1,5 @@
 import 'package:dine_dash/res/commonWidgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
@@ -8,6 +9,7 @@ class DealerEditMenuController extends BaseController {
   final ApiService _apiService = Get.find();
 
   Future<void> editMenu({
+    required BuildContext context,
     required String menuId,
     required String itemName,
     required String itemDescription,
@@ -43,7 +45,7 @@ class DealerEditMenuController extends BaseController {
         );
 
         if (response['statusCode'] == 201 || response['status'] == true) {
-          Get.close(1);
+          Navigator.of(context).pop(); // Close dialog first
           showSnackBar("Menu Updated successfully", isError: false);
         } else {
           throw Exception(response['message'] ?? "Something went wrong");

@@ -24,7 +24,10 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
   void _performDeletion() async {
     setState(() => _isDeleting = true);
 
-    await controller.deleteAccount(_passwordController.text.trim());
+    await controller.deleteAccount(
+      _passwordController.text.trim(),
+      context: context,
+    );
 
     setState(() => _isDeleting = false);
   }
@@ -114,11 +117,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                                 ? null
                                 : () {
                                   if (_passwordController.text.isEmpty) {
-                                    showSnackBar(
-                                   
-                                      "Please enter your password.",
-                                  
-                                    );
+                                    showSnackBar("Please enter your password.");
                                     return;
                                   }
                                   _showDeleteDialog();

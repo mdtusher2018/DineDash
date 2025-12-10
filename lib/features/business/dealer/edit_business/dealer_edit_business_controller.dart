@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:dine_dash/res/commonWidgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
@@ -10,6 +11,7 @@ class DealerEditBusinessController extends BaseController {
   final ApiService _apiService = Get.find();
 
   Future<void> editBusiness({
+    required BuildContext context,
     required String businessId,
     required String name,
     required List<String> types,
@@ -73,7 +75,7 @@ class DealerEditBusinessController extends BaseController {
         );
 
         if (response['statusCode'] == 200 || response['status'] == true) {
-          Get.close(1);
+          Navigator.of(context).pop(); // Close dialog first
 
           showSnackBar("Business updated successfully");
         } else {
