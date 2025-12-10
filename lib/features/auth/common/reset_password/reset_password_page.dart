@@ -30,7 +30,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: commonAppBar(
-        title: "Reset Password".tr,context: context,
+        title: "Reset Password".tr,
+        context: context,
         backGroundColor: AppColors.primaryColor,
         textColor: AppColors.white,
       ),
@@ -117,6 +118,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       controller.resetPassword(
                         password: newPasswordController.text,
                         confirmPassword: confirmPasswordController.text,
+                        context: context,
                       );
                     },
                   );

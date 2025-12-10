@@ -150,7 +150,6 @@ void navigateToPage(
       MaterialPageRoute(builder: (context) => page),
       (route) => false,
     );
-    Get.offAll(page, transition: transition, duration: duration);
   } else if (replace) {
     Navigator.pushReplacement(
       context,

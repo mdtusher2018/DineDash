@@ -32,7 +32,8 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: commonAppBar(
-        title: "Verify Email".tr,context: context,
+        title: "Verify Email".tr,
+        context: context,
         textColor: AppColors.white,
         backGroundColor: AppColors.primaryColor,
       ),
@@ -131,6 +132,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                             otpControllers.map((e) {
                               return e.text;
                             }).join(),
+                        context: context,
                       );
                     },
                   );

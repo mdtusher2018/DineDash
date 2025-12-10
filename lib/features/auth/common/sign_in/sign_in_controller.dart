@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/validators/auth_validator.dart';
@@ -6,6 +8,7 @@ import 'package:dine_dash/features/dealer_root_page.dart';
 import 'package:dine_dash/features/user_root_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/res/common_pending_dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
@@ -21,6 +24,7 @@ class SignInController extends BaseController {
     required String email,
     required String password,
     required bool rememberMe,
+    required BuildContext context,
   }) async {
     final validationMessage = AuthValidator.validateSignIn(
       email: email,
@@ -48,13 +52,13 @@ class SignInController extends BaseController {
           }
 
           if (SessionMemory.isUser) {
-            Get.offAll(() => UserRootPage());
+            navigateToPage(context: context, UserRootPage());
           } else {
             if (loginResponse.isApproved != null &&
                 loginResponse.isApproved == true) {
-              Get.offAll(() => DealerRootPage());
+              navigateToPage(context: context, DealerRootPage());
             } else {
-              showPendingDialog(Get.context!);
+              showPendingDialog(context);
             }
           }
 

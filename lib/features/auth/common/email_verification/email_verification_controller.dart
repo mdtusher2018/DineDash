@@ -9,6 +9,7 @@ import 'package:dine_dash/features/dealer_root_page.dart';
 import 'package:dine_dash/features/user_root_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/res/common_pending_dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
@@ -22,7 +23,10 @@ class EmailVerificationController extends BaseController {
 
   RxBool isResendOTPTrue = false.obs;
 
-  Future<void> verifyEmail({required String otp}) async {
+  Future<void> verifyEmail({
+    required String otp,
+    required BuildContext context,
+  }) async {
     final validationMessage = AuthValidator.validateEmailAndOTPVerification(
       otp: otp,
     );
@@ -55,11 +59,11 @@ class EmailVerificationController extends BaseController {
           _sessionalStorage.setToken(token);
 
           if (decodeJwtPayload(token)["currentRole"] == "user") {
-            Get.offAll(() => UserRootPage());
+            navigateToPage(UserRootPage(), context: context);
           } else {
             if (emailVerificationResponse.isApproved != null &&
                 emailVerificationResponse.isApproved == true) {
-              Get.offAll(() => DealerRootPage());
+              navigateToPage(context: context, DealerRootPage());
             } else {
               showPendingDialog(Get.context!);
             }

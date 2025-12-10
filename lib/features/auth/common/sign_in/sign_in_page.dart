@@ -126,6 +126,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         email: emailController.text,
                         password: passwordController.text,
                         rememberMe: rememberMe,
+                        context: context,
                       );
                     },
                   );

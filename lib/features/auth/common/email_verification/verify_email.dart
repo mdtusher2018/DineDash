@@ -131,7 +131,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                         otp:
                             otpControllers.map((e) {
                               return e.text;
-                            }).join(),
+                            }).join(),context: context
                       );
                     },
                   );

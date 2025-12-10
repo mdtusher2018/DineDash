@@ -8,6 +8,7 @@ import 'package:dine_dash/features/auth/common/reset_password/reset_password_pag
 import 'package:dine_dash/features/dealer_root_page.dart';
 import 'package:dine_dash/features/user_root_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
@@ -20,7 +21,10 @@ class OTPVerificationController extends BaseController {
 
   RxBool isResendOTPTrue = false.obs;
 
-  Future<void> verifyOTP({required String otp}) async {
+  Future<void> verifyOTP({
+    required String otp,
+    required BuildContext context,
+  }) async {
     log(otp);
     final validationMessage = AuthValidator.validateEmailAndOTPVerification(
       otp: otp,
@@ -51,15 +55,15 @@ class OTPVerificationController extends BaseController {
           await _localStorage.saveString(StorageKey.token, token);
 
           if (decodeJwtPayload(token)["currentRole"] == "user") {
-            Get.offAll(() => UserRootPage());
+            navigateToPage(context: context, UserRootPage());
           } else if ((decodeJwtPayload(token)["currentRole"] == "business")) {
-            Get.offAll(() => DealerRootPage());
+            navigateToPage(context: context, DealerRootPage());
           } else {
             /*
               This is only navigate if their have any missing information with role.
               This is important to have role
             */
-            Get.offAll(ResetPasswordScreen());
+            navigateToPage(context: context, ResetPasswordScreen());
           }
 
           showSnackBar('OTP verified successfully!', isError: false);
