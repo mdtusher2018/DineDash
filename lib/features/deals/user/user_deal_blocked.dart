@@ -163,7 +163,7 @@ class _UserDealBlockedPageState extends State<UserDealBlockedPage>
                   builder: (_, child) {
                     return Transform.scale(scale: _bgScale.value, child: child);
                   },
-                  child: CommonImage('assets/animation image/background.png'),
+                  child: Image.asset('assets/animation image/background.png'),
                 ),
 
                 // Mobile image sliding from top
@@ -177,7 +177,7 @@ class _UserDealBlockedPageState extends State<UserDealBlockedPage>
                         child: child,
                       );
                     },
-                    child: CommonImage('assets/animation image/mobile.png'),
+                    child: Image.asset('assets/animation image/mobile.png'),
                   ),
                 ),
 
@@ -194,7 +194,7 @@ class _UserDealBlockedPageState extends State<UserDealBlockedPage>
                           child: child,
                         );
                       },
-                      child: CommonImage('assets/animation image/user.png'),
+                      child: Image.asset('assets/animation image/user.png'),
                     ),
                   ),
                 ),
