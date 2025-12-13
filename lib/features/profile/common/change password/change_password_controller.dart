@@ -1,6 +1,7 @@
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
+import 'package:dine_dash/core/utils/extentions.dart';
 import 'package:dine_dash/features/profile/common/change%20password/change_password_response.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:get/get.dart';
@@ -19,9 +20,9 @@ class ChangePasswordController extends BaseController {
       showSnackBar("All fields are required".tr, isError: true);
       return;
     }
-    if (newPassword.length < 6) {
+    if (!newPassword.isValidPassword) {
       showSnackBar(
-        "New password must be at least 6 characters long".tr,
+        "Password must be 6–16 characters with letters & numbers".tr,
         isError: true,
       );
       return;

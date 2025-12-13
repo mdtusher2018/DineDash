@@ -176,7 +176,7 @@ Map<String, String> en_US = {
   "Reset Password": "Reset Password",
   "Now Reset Your ": "Now Reset Your ",
   "Password.": "Password.",
-  "Password  must have 6-8 characters.": "Password must have 6-8 characters.",
+  "Password  must have 6-16 characters.": "Password must have 6-16 characters.",
   "Sign In to Your Account": "Sign In to Your Account",
   "Remember me": "Remember me",
   "Sign In With Google": "Sign In With Google",
@@ -233,7 +233,7 @@ Map<String, String> en_US = {
   "Submit": "Submit",
 
   "Add Deal": "Add Deal",
-  "+ Add Deal":"+ Add Deal",
+  "+ Add Deal": "+ Add Deal",
   "Benefit Amount*": "Benefit Amount*",
   "Deal Type": "Deal Type",
   "Create Deal": "Create Deal",

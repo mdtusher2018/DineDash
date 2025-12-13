@@ -71,7 +71,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 ),
                 const SizedBox(height: 5),
                 commonText(
-                  "Password  must have 6-8 characters.".tr,
+                  "Password  must have 6-16 characters.".tr,
                   size: 14.0,
                 ),
                 const SizedBox(height: 30),
@@ -115,6 +115,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     isLoading: controller.isLoading.value,
                     textColor: Colors.white,
                     onTap: () {
+                  
                       controller.resetPassword(
                         password: newPasswordController.text,
                         confirmPassword: confirmPasswordController.text,

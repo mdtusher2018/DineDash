@@ -22,15 +22,14 @@ class _UserAllAvailableDealsState extends State<UserAllAvailableDeals> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.fetchDealsList();
-
-      scrollController.addListener(() {
-        if (scrollController.position.pixels >=
-                scrollController.position.maxScrollExtent - 200 &&
-            !controller.isLoadingMore.value &&
-            controller.hasMore.value) {
-          controller.loadMoreAvailableDeals();
-        }
-      });
+    });
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+              scrollController.position.maxScrollExtent - 200 &&
+          !controller.isLoadingMore.value &&
+          controller.hasMore.value) {
+        controller.loadMoreAvailableDeals();
+      }
     });
   }
 

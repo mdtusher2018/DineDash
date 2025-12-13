@@ -100,22 +100,21 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      for (var day in days) {
-        if (day == "Saturday" || day == "Sunday") {
-          openDays[day] = false;
-        } else {
-          openDays[day] = true;
-        }
-      }
 
-      for (var day in days) {
-        timings[day] = TimeOfDayRange(
-          start: const TimeOfDay(hour: 10, minute: 0),
-          end: const TimeOfDay(hour: 20, minute: 0),
-        );
+    for (var day in days) {
+      if (day == "Saturday" || day == "Sunday") {
+        openDays[day] = false;
+      } else {
+        openDays[day] = true;
       }
-    });
+    }
+
+    for (var day in days) {
+      timings[day] = TimeOfDayRange(
+        start: const TimeOfDay(hour: 10, minute: 0),
+        end: const TimeOfDay(hour: 20, minute: 0),
+      );
+    }
   }
 
   @override

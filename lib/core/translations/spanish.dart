@@ -174,7 +174,8 @@ Map<String, String> de_DE = {
   "Reset Password": "Passwort zurücksetzen",
   "Now Reset Your ": "Setzen Sie jetzt Ihr ",
   "Password.": "Passwort zurück.",
-  "Password  must have 6-8 characters.": "Das Passwort muss 6-8 Zeichen haben.",
+  "Password  must have 6-16 characters.":
+      "Das Passwort muss 6-16 Zeichen haben.",
 
   "Sign In to Your Account": "Melden Sie sich bei Ihrem Konto an",
   "Remember me": "Angemeldet bleiben",
@@ -235,7 +236,7 @@ Map<String, String> de_DE = {
   "Submit": "Absenden",
 
   "Add Deal": "Deal hinzufügen",
-  "+ Add Deal":"+ Deal hinzufügen",
+  "+ Add Deal": "+ Deal hinzufügen",
   "Benefit Amount*": "Vorteilsbetrag*",
   "Deal Type": "Angebotstyp",
   "Create Deal": "Deal erstellen",

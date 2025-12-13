@@ -103,8 +103,7 @@ class _UserAfterGivingStarPageState extends State<UserAfterGivingStarPage> {
                               fontWeight: FontWeight.w700,
                             ),
                             SizedBox(height: 5),
-                            Obx(
-                              () => Wrap(
+                        Wrap(
                                 spacing: 12,
                                 runSpacing: 8,
                                 children:
@@ -143,7 +142,7 @@ class _UserAfterGivingStarPageState extends State<UserAfterGivingStarPage> {
                                       );
                                     }).toList(),
                               ),
-                            ),
+                            
                             SizedBox(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

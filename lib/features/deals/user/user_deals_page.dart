@@ -26,10 +26,9 @@ class _UserDealsPageState extends State<UserDealsPage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      abailableDealsController.fetchDealsList();
-      usedDealController.fetchUsedDealsList();
-    });
+
+    abailableDealsController.fetchDealsList();
+    usedDealController.fetchUsedDealsList();
   }
 
   @override
