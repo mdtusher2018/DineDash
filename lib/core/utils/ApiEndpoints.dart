@@ -148,10 +148,10 @@ class ApiEndpoints {
       url += "&businessId=$businessId";
     }
     if (ratting != null) {
-      url += "&ratting=$ratting";
+      url += "&rating=$ratting";
     }
     if (sortBy != null) {
-      url += "&sortBy=$sortBy";
+      url += "&sort=$sortBy";
     }
 
     return url;
