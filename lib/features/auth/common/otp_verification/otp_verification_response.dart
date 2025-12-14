@@ -1,4 +1,3 @@
-
 class OTPVerificationResponse {
   final String status;
   final int statusCode;
@@ -17,7 +16,7 @@ class OTPVerificationResponse {
       status: json['status'] ?? '',
       statusCode: json['statusCode'] ?? 0,
       message: json['message'] ?? '',
-      accessToken: json['data']?['accessToken'] ?? '',
+      accessToken: json['data']?['forgetPasswordToken'] ?? '',
     );
   }
 }

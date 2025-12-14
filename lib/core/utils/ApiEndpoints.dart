@@ -22,6 +22,8 @@ class ApiEndpoints {
   static String forgetPassword = "auth/forget-password";
   static String verifyOTP = "auth/verify-otp";
 
+  static const String resetPassword = "auth/reset-password";
+
   static String userHomePage({String? city, String? searchTerm}) {
     final params = <String, String>{};
 

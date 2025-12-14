@@ -41,15 +41,12 @@ class OTPVerificationController extends BaseController {
           "purpose": (isResendOTPTrue.value) ? "resend-otp" : "forget-password",
         };
         log(body.toString());
-        final response = await _apiService.post(
-          ApiEndpoints.emailVerification,
-          body,
-        );
+        final response = await _apiService.post(ApiEndpoints.verifyOTP, body);
         final otpVerificationResponse = OTPVerificationResponse.fromJson(
           response,
         );
 
-        if (otpVerificationResponse.statusCode == 201) {
+        if (otpVerificationResponse.statusCode == 200) {
           final token = otpVerificationResponse.accessToken;
 
           await _localStorage.saveString(StorageKey.token, token);

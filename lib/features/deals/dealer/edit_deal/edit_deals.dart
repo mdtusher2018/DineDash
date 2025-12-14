@@ -62,7 +62,7 @@ class _EditDealScreenState extends State<EditDealScreen> {
 
     if (deal != null) {
       descriptionController.text = deal.description;
-      maxClaimsController.text = deal.redeemCount.toString();
+      maxClaimsController.text = deal.maxClaimCount.toString();
       benefitController.text = deal.benefitAmount.toString();
       dealTypeController.text = deal.dealType;
       selectedRefusableDay = deal.reuseableAfter == 60 ? "60 Days" : "90 Days";

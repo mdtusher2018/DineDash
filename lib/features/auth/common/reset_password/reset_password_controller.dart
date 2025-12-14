@@ -29,7 +29,7 @@ class ResetPasswordController extends BaseController {
     await safeCall<void>(
       task: () async {
         final body = {"password": password};
-        final response = await _apiService.post(ApiEndpoints.signin, body);
+        final response = await _apiService.post(ApiEndpoints.resetPassword, body);
         final resetPasswordResponse = ResetPasswordResponse.fromJson(response);
 
         if (resetPasswordResponse.statusCode == 200) {

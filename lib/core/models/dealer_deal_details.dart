@@ -5,6 +5,7 @@ class DealerDealDetailsData {
   final String dealType;
   final int reuseableAfter;
   final int redeemCount;
+  final int maxClaimCount;
   final bool isRedeemedBefore;
   final String? redeemedRedeemedAt;
   final int rating;
@@ -23,6 +24,7 @@ class DealerDealDetailsData {
     required this.dealType,
     required this.reuseableAfter,
     required this.redeemCount,
+    required this.maxClaimCount,
     required this.isRedeemedBefore,
     required this.redeemedRedeemedAt,
     required this.rating,
@@ -44,6 +46,7 @@ class DealerDealDetailsData {
       dealType: json['dealType'] ?? '',
       reuseableAfter: json['reuseableAfter'] ?? 0,
       redeemCount: json['redeemCount'] ?? 0,
+      maxClaimCount: json['maxClaimCount'] ?? 0,
       isRedeemedBefore: json['isRedeemedBefore'] ?? false,
       redeemedRedeemedAt: json['redeemedRedeemedAt'],
       rating: json['rating'] ?? 0,

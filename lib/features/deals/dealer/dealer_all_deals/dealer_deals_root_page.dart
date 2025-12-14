@@ -69,7 +69,7 @@ class _DealerDealsRootPageState extends State<DealerDealsRootPage> {
 
                     itemBuilder: (context, index) {
                       final deal = controller.deals[index];
-                      if (deal.reasonFor == "deleted") {
+                      if (deal.isDeleted) {
                         return SizedBox.shrink();
                       }
                       return buildDealCard(
