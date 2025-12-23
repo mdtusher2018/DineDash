@@ -77,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen> {
         isOpenedWithDeepLink.value = true;
       };
 
-      Future.delayed(Duration(seconds: 3), () async {
+      Future.delayed(Duration(seconds: 1), () async {
         final controller = Get.find<LocalStorageService>();
         final token = await controller.getString(StorageKey.token);
 

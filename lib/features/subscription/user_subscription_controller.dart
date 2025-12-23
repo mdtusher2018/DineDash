@@ -40,12 +40,7 @@ class UserSubscriptionController extends BaseController {
         });
 
         if (response["url"] != null) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PaymentWebViewScreen(url: response["url"]),
-            ),
-          );
+          Get.to(() => PaymentWebViewScreen(url: response["url"]));
         } else {
           throw Exception("An error occurred while processing payment.");
         }
