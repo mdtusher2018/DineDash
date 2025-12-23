@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       translations: AppTranslations(),
       // locale: initialLocale??Locale('de', 'DE'),
       // fallbackLocale: Locale('de', 'DE'),
-      locale: Locale('en', 'EN'),
+      locale: initialLocale ?? Locale('en', 'EN'),
       scaffoldMessengerKey: scaffoldMessengerKey,
       navigatorKey: navigatorKey,
       fallbackLocale: Locale('en', 'EN'),

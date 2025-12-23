@@ -35,7 +35,9 @@ class _SignInSignUpChooeserState extends State<SignInSignUpChooeser> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Spacer(),
-                Center(child: CommonImage(ImagePaths.logo)),
+                Center(
+                  child: CommonImage(ImagePaths.logo, width: 150, height: 150),
+                ),
                 Spacer(flex: 5),
                 commonText(
                   "Welcome!".tr,

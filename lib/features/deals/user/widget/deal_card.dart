@@ -39,24 +39,32 @@ Widget dealCard({required UserDealItem deal, required bool isUsed}) {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    commonText(
-                      deal.businessName,
-                      size: 14,
-                      fontWeight: FontWeight.w600,
+                    Flexible(
+                      child: commonText(
+                        deal.businessName,
+                        size: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                    Row(
-                      children: [
-                        commonText(
-                          "Price Range :".tr,
-                          size: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        commonText(
-                          " €${deal.minPrice}-${deal.maxPrice}",
-                          size: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ],
+                    Flexible(
+                      child: Row(
+                        children: [
+                          Flexible(
+                            child: commonText(
+                              "Price Range :".tr,
+                              size: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Flexible(
+                            child: commonText(
+                              " €${deal.minPrice}-${deal.maxPrice}",
+                              size: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

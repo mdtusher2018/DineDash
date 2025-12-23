@@ -79,7 +79,22 @@ class _UserFavoritePageState extends State<UserFavoritePage> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            CommonImage("assets/images/favorite.png"),
+                            CommonImage(
+                              "assets/images/favorite.png",
+                              width: 120,
+                              height: 120,
+                            ),
+
+                            // Container(
+                            //   decoration: BoxDecoration(
+                            //     shape: BoxShape.circle,
+                            //   ),
+                            //   child: Icon(
+                            //     Icons.favorite_border_rounded,
+                            //     color: AppColors.primaryColor,
+                            //     size: 60,
+                            //   ),
+                            // ),
                             commonText(
                               "No favorites yet".tr,
                               size: 16,

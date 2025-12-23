@@ -18,7 +18,7 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController emailController = TextEditingController(
-    text: "semoc87070@alexida.com",
+    text: "tusher@gmail.com",
   );
   final TextEditingController passwordController = TextEditingController(
     text: "aaaaaa",

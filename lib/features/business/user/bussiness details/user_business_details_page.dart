@@ -1249,7 +1249,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   commonText("Example from the"),
-                  commonText("Menu", size: 18, isBold: true),
+                  commonText("Price", size: 18, isBold: true),
                   Divider(color: AppColors.black),
                   Obx(() {
                     if (controller.menuData.value == null) {

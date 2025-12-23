@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:dine_dash/core/utils/colors.dart';
-import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/core/controller/city_controller.dart';
 import 'package:dine_dash/features/home/user/home_page_controller.dart';
 import 'package:dine_dash/core/models/business_model.dart';
@@ -12,6 +11,8 @@ import 'package:dine_dash/features/business/user/list_of_business.dart';
 import 'package:dine_dash/features/notification/user%20notification/user_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../core/utils/helper.dart';
 
 class UserHomeView extends StatefulWidget {
   const UserHomeView({super.key});
@@ -26,10 +27,12 @@ class _UserHomeViewState extends State<UserHomeView> {
   final TextEditingController searchTermController = TextEditingController();
 
   @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
-    cityController.fetchCities();
-    controller.fetchHomeData();
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      cityController.fetchCities();
+      controller.fetchHomeData();
+    });
   }
 
   @override
@@ -327,6 +330,7 @@ class PromotionBanner extends StatefulWidget {
   const PromotionBanner({super.key, required this.banners});
 
   final List<String> banners;
+
   @override
   _PromotionBannerState createState() => _PromotionBannerState();
 }
@@ -341,22 +345,24 @@ class _PromotionBannerState extends State<PromotionBanner> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _controller = PageController(initialPage: _initialPage);
 
-      _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
-        if (_controller.hasClients) {
-          _controller.nextPage(
-            duration: const Duration(milliseconds: 400),
-            curve: Curves.easeInOut,
-          );
-        }
-      });
+    // Initialize PageController with the starting page
+    _controller = PageController(initialPage: _initialPage);
+
+    // Set up a timer to automatically scroll to the next page
+    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+      if (_controller.hasClients) {
+        _controller.nextPage(
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeInOut,
+        );
+      }
     });
   }
 
   @override
   void dispose() {
+    // Cancel the timer and dispose of the controller when the widget is removed
     _timer?.cancel();
     _controller.dispose();
     super.dispose();
@@ -364,6 +370,11 @@ class _PromotionBannerState extends State<PromotionBanner> {
 
   @override
   Widget build(BuildContext context) {
+    // Check if there are any banners, if not, show a placeholder or message
+    if (widget.banners.isEmpty) {
+      return Center(child: Text('No promotions available.'));
+    }
+
     return Column(
       children: [
         /// PageView with infinite scroll effect
@@ -377,7 +388,9 @@ class _PromotionBannerState extends State<PromotionBanner> {
               });
             },
             itemBuilder: (context, index) {
+              // Calculate real index for infinite scrolling
               final realIndex = index % widget.banners.length;
+
               return Container(
                 margin: const EdgeInsets.symmetric(horizontal: 6),
                 decoration: BoxDecoration(
@@ -396,7 +409,7 @@ class _PromotionBannerState extends State<PromotionBanner> {
 
         const SizedBox(height: 8),
 
-        /// Dot indicator
+        /// Dot indicator to show the current page
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(widget.banners.length, (index) {

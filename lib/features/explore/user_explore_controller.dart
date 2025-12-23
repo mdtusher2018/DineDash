@@ -25,9 +25,7 @@ class UserExploreController extends BaseController {
 
   SessionMemory sessionMemory = Get.find();
 
-  Rx<LatLng> currentPosition = Rx<LatLng>(
-    LatLng(FallbackValue.latitude, FallbackValue.longitude),
-  );
+  Rx<LatLng?> currentPosition = Rx<LatLng?>(null);
 
   int currentPage = 1;
   int totalPages = 1;
@@ -151,16 +149,16 @@ class UserExploreController extends BaseController {
         ); // Update position with postal code coordinates
       } else {
         // Fallback to current location if postal code lookup fails
-        _getCurrentLocation();
+        getCurrentLocation();
       }
     } catch (e) {
       print("Error occurred while getting coordinates from postal code: $e");
       // If an error occurs in postal code lookup, fallback to current location
-      _getCurrentLocation();
+      getCurrentLocation();
     }
   }
 
-  Future<void> _getCurrentLocation() async {
+  Future<void> getCurrentLocation() async {
     try {
       Position currentLocation = await Geolocator.getCurrentPosition();
 

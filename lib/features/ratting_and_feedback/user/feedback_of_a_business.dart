@@ -103,46 +103,45 @@ class _UserAfterGivingStarPageState extends State<UserAfterGivingStarPage> {
                               fontWeight: FontWeight.w700,
                             ),
                             SizedBox(height: 5),
-                        Wrap(
-                                spacing: 12,
-                                runSpacing: 8,
-                                children:
-                                    options.map((option) {
-                                      final isSelected =
-                                          selected.value == option;
-                                      return GestureDetector(
-                                        onTap: () {
-                                          selected.value = option;
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 16,
-                                            vertical: 8,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color:
-                                                isSelected
-                                                    ? Color(0xffB7CDF6)
-                                                    : Color(0xffB7CDF5),
-                                            borderRadius: BorderRadius.circular(
-                                              18,
-                                            ),
-                                          ),
-                                          child: Text(
-                                            option,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight:
-                                                  isSelected
-                                                      ? FontWeight.bold
-                                                      : FontWeight.normal,
-                                            ),
+                            Wrap(
+                              spacing: 12,
+                              runSpacing: 8,
+                              children:
+                                  options.map((option) {
+                                    final isSelected = selected.value == option;
+                                    return GestureDetector(
+                                      onTap: () {
+                                        selected.value = option;
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 16,
+                                          vertical: 8,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color:
+                                              isSelected
+                                                  ? Color(0xffB7CDF6)
+                                                  : Color(0xffB7CDF5),
+                                          borderRadius: BorderRadius.circular(
+                                            18,
                                           ),
                                         ),
-                                      );
-                                    }).toList(),
-                              ),
-                            
+                                        child: Text(
+                                          option,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight:
+                                                isSelected
+                                                    ? FontWeight.bold
+                                                    : FontWeight.normal,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                            ),
+
                             SizedBox(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -359,7 +358,7 @@ class _UserAfterGivingStarPageState extends State<UserAfterGivingStarPage> {
                             SizedBox(height: 16),
                             Center(
                               child: commonText(
-                                "Your Ratting".tr,
+                                "Your Rating".tr,
                                 size: 20,
                                 fontWeight: FontWeight.w600,
                               ),

@@ -1,4 +1,5 @@
 import 'package:dine_dash/core/services/localstorage/session_memory.dart';
+import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/core/controller/city_controller.dart';
@@ -9,6 +10,7 @@ import 'package:dine_dash/features/business/user/bussiness%20details/user_busine
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_places_flutter/google_places_flutter.dart';
 
 class UserExplorePage extends StatefulWidget {
   const UserExplorePage({super.key});
@@ -30,13 +32,15 @@ class _UserExplorePageState extends State<UserExplorePage> {
   String selectedSortBy = 'Low';
 
   @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
-    cityController.fetchCities();
-    controller.fetchBusinessesOnMap();
-    controller.fetchBusinessesList();
-    controller.getCoordinatesFromPostalCode();
-    _loadCustomMarker();
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      cityController.fetchCities();
+      controller.fetchBusinessesOnMap();
+      controller.fetchBusinessesList();
+      controller.getCoordinatesFromPostalCode();
+      _loadCustomMarker();
+    });
   }
 
   Future<void> _loadCustomMarker() async {
@@ -69,23 +73,47 @@ class _UserExplorePageState extends State<UserExplorePage> {
               padding: const EdgeInsets.only(top: 50.0, left: 16, right: 16),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  color: Color(0xFFDCE7FA),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: "Search restaurants, foods...".tr,
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Icon(Icons.search),
-                  ],
+                height: 50,
+
+                child: GooglePlaceAutoCompleteTextField(
+                  textEditingController: searchTermController,
+                  googleAPIKey: ApiEndpoints.mapKey,
+                  containerVerticalPadding: 4,
+                  focusNode: FocusNode(),
+                  inputDecoration: InputDecoration(
+                    border: OutlineInputBorder(borderSide: BorderSide.none),
+                    hintText: "Search Location",
+
+                    fillColor: Color(0xFFDCE7FA),
+                    filled: true,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12),
+                  ),
+                  debounceTime: 800,
+                  boxDecoration: BoxDecoration(
+                    border: Border.all(color: AppColors.primaryColor, width: 2),
+                    borderRadius: BorderRadius.circular(12),
+                    color: Color(0xFFDCE7FA),
+                  ),
+
+                  isLatLngRequired: true,
+                  getPlaceDetailWithLatLng: (prediction) {
+                    if (prediction.lat != null && prediction.lng != null) {
+                      final LatLng target = LatLng(
+                        double.parse(prediction.lat!),
+                        double.parse(prediction.lng!),
+                      );
+
+                      _mapController?.animateCamera(
+                        CameraUpdate.newLatLngZoom(target, 13),
+                      );
+                    }
+                  },
+                  itemClick: (prediction) {
+                    searchTermController.text = prediction.description!;
+                    searchTermController.selection = TextSelection.fromPosition(
+                      TextPosition(offset: prediction.description!.length),
+                    );
+                  },
                 ),
               ),
             ),
@@ -198,9 +226,12 @@ class _UserExplorePageState extends State<UserExplorePage> {
     // Dhaka coordinates
 
     return Obx(() {
+      if (controller.currentPosition.value == null) {
+        return Center(child: CircularProgressIndicator());
+      }
       return GoogleMap(
         initialCameraPosition: CameraPosition(
-          target: controller.currentPosition.value,
+          target: controller.currentPosition.value!,
           zoom: 10,
         ),
         mapType: MapType.normal,

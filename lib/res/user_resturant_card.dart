@@ -133,11 +133,13 @@ class RestaurantCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    commonText(
-                      "${"Open Time :".tr} $openTime",
-                      size: smallTextSize,
-                      maxline: 1,
-                      fontWeight: FontWeight.w600,
+                    Flexible(
+                      child: commonText(
+                        "${"Open Time :".tr} $openTime",
+                        size: smallTextSize,
+                        maxline: 1,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ],
                 ),

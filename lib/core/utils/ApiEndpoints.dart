@@ -101,8 +101,8 @@ class ApiEndpoints {
       "favourite/unfavourite/$businessId";
 
   static String nearbyBusinesses({required double lat, required double lng}) {
-    // return "business/nearest-map?lat=$lat&lng=$lng";
-    return "business/nearest-map?lat=20.794542&lng=80.389016";
+    return "business/nearest-map?lat=$lat&lng=$lng";
+    // return "business/nearest-map?lat=20.794542&lng=80.389016";
   }
 
   static String userNotifications({required int page}) {
