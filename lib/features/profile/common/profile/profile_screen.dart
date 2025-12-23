@@ -439,7 +439,12 @@ class buildcontainer extends StatelessWidget {
           spacing: 5,
           children: [
             CommonImage(image, height: 35, width: 35, fit: BoxFit.cover),
-            commonText(title.tr, size: 14, fontWeight: FontWeight.w500),
+            commonText(
+              title.tr,
+              size: 14,
+              fontWeight: FontWeight.w500,
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),

@@ -19,13 +19,13 @@ class PlanModel {
     required this.updatedAt,
   });
   factory PlanModel.fromJson(Map<String, dynamic> json) {
-    List<dynamic> rawFeatures = json['feature'] ?? ["feature 1", "feature 2"];
+    List<dynamic> rawFeatures = json['feature'] ?? [];
     List<String> featureList = rawFeatures.map((e) => e.toString()).toList();
 
     return PlanModel(
-      id: json['_id'],
-      planName: json['planName'] ?? "Free",
-      description: json['description'] ?? "This is free plan",
+      id: json['_id'] ?? "",
+      planName: json['planName'] ?? "N/A",
+      description: json['description'] ?? "No Subscription Found",
       price: (json['price'] ?? 0 as num).toDouble(),
       duration: json['duration'] ?? 30,
       feature: featureList,

@@ -114,7 +114,7 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                             getFullImagePath(
                               dealData.value?.businessImage ?? "",
                             ),
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),

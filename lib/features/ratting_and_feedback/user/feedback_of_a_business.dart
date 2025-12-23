@@ -88,7 +88,7 @@ class _UserAfterGivingStarPageState extends State<UserAfterGivingStarPage> {
                         ),
                         child: Image.network(
                           getFullImagePath(dealData!.businessImage),
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                         ),
                       ),
                       Padding(
