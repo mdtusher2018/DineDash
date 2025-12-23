@@ -83,12 +83,19 @@ class _UserAfterGivingStarPageState extends State<UserAfterGivingStarPage> {
                     children: [
                       Container(
                         width: double.infinity,
+                        height: 150,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Image.network(
-                          getFullImagePath(dealData!.businessImage),
-                          fit: BoxFit.cover,
+                        child: ClipRRect(
+                          borderRadius: BorderRadiusGeometry.only(
+                            topLeft: Radius.circular(16),
+                            topRight: Radius.circular(16),
+                          ),
+                          child: Image.network(
+                            getFullImagePath(dealData!.businessImage),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       Padding(

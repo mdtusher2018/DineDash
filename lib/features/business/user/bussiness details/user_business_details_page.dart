@@ -294,7 +294,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                                 width: 24,
                               ),
                               label: commonText(
-                                "Menu".tr,
+                                "Price",
                                 isBold: true,
                                 size: 14,
                               ),

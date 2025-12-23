@@ -35,7 +35,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Spacer(),
-              CommonImage(ImagePaths.logo),
+              CommonImage(ImagePaths.logo, width: 130),
 
               SizedBox(height: 16),
               commonText(
