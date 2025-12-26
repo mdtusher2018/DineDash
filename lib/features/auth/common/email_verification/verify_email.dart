@@ -34,7 +34,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     return Scaffold(
       appBar: commonAppBar(
         context: context,
-        title: "Verify Email".tr,
+        title: "Verify Email",
         textColor: AppColors.white,
         backGroundColor: AppColors.primaryColor,
       ),
@@ -79,7 +79,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 ),
                 const SizedBox(height: 8),
                 commonText(
-                  "Enter the code that was sent to your email.".tr,
+                  "Enter the code that was sent to your email.",
                   size: 14.0,
                 ),
                 const SizedBox(height: 20),
@@ -105,13 +105,13 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    commonText("Didn't receive the code? ".tr, size: 14.0),
+                    commonText("Didn't receive the code? ", size: 14.0),
                     GestureDetector(
                       onTap: () {
                         controller.resendOTP();
                       },
                       child: commonText(
-                        "Resend".tr,
+                        "Resend",
                         size: 14.0,
                         color: Colors.black,
                         isBold: true,
@@ -124,7 +124,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 // Verify Button
                 Obx(() {
                   return commonButton(
-                    "Verify".tr,
+                    "Verify",
                     isLoading: controller.isLoading.value,
                     textColor: Colors.white,
                     onTap: () {

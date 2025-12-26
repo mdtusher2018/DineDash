@@ -6,6 +6,7 @@ import 'package:dine_dash/dependency.dart';
 import 'package:dine_dash/core/translations/app_translations.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/splash_screen.dart';
+import 'package:flutter/foundation.dart';
 // import 'package:dine_dash/features/auth/common/sign_in/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -42,10 +43,12 @@ class MyApp extends StatelessWidget {
       translations: AppTranslations(),
       // locale: initialLocale??Locale('de', 'DE'),
       // fallbackLocale: Locale('de', 'DE'),
-      locale: initialLocale ?? Locale('en', 'EN'),
+      locale:
+          initialLocale ??
+          (kDebugMode ? Locale('en', 'EN') : Locale('de', 'DE')),
       scaffoldMessengerKey: scaffoldMessengerKey,
       navigatorKey: navigatorKey,
-      fallbackLocale: Locale('en', 'EN'),
+      fallbackLocale: (kDebugMode ? Locale('en', 'EN') : Locale('de', 'DE')),
       theme: ThemeData(
         appBarTheme: AppBarTheme(
           surfaceTintColor: Colors.transparent,
@@ -60,7 +63,6 @@ class MyApp extends StatelessWidget {
 
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
-      
     );
   }
 }

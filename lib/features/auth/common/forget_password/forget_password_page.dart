@@ -27,7 +27,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: commonAppBar(
-        title: "Get Verification Code".tr,
+        title: "Get Verification Code",
         context: context,
         backGroundColor: AppColors.primaryColor,
         textColor: AppColors.white,
@@ -72,7 +72,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
                 const SizedBox(height: 5),
                 commonText(
-                  "Enter your email address to reset your password.".tr,
+                  "Enter your email address to reset your password.",
                   textAlign: TextAlign.center,
                   size: 14.0,
                 ),
@@ -80,9 +80,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
                 // Email TextField
                 commonTextfieldWithTitle(
-                  "Email".tr,
+                  "Email",
                   emailController,
-                  hintText: "Enter your email".tr,
+                  hintText: "Enter your email",
                   assetIconPath: ImagePaths.emailIcon,
                   keyboardType: TextInputType.emailAddress,
                 ),
@@ -90,7 +90,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 const SizedBox(height: 40),
                 Obx(() {
                   return commonButton(
-                    "Get Verification Code".tr,
+                    "Get Verification Code",
                     textColor: Colors.white,
                     isLoading: controller.isLoading.value,
                     onTap: () {

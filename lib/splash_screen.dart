@@ -77,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen> {
         isOpenedWithDeepLink.value = true;
       };
 
-      Future.delayed(Duration(seconds: 1), () async {
+      Future.delayed(Duration(seconds: 0), () async {
         final controller = Get.find<LocalStorageService>();
         final token = await controller.getString(StorageKey.token);
 
@@ -110,9 +110,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: CommonImage('assets/images/logo.png', width: 150, height: 150),
-      ),
+      body: SizedBox(),
+      //  Center(
+      //   child: CommonImage('assets/images/logo.png', width: 150, height: 150),
+      // ),
     );
   }
 }

@@ -4,11 +4,12 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart'; // Add this import
 
 class UserDealBlockedPage extends StatefulWidget {
-  final String resturentName, timeRange;
+  final String resturentName, timeRange, day;
   const UserDealBlockedPage({
     super.key,
     required this.resturentName,
     required this.timeRange,
+    required this.day,
   });
 
   @override
@@ -243,7 +244,7 @@ class _UserDealBlockedPageState extends State<UserDealBlockedPage>
                           Column(
                             children: [
                               Icon(Icons.calendar_month_outlined),
-                              commonText("Saturday".tr),
+                              commonText(widget.day),
 
                               /*
   'Monday': 'Montag',

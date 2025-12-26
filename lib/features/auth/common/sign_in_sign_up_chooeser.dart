@@ -6,7 +6,6 @@ import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/core/utils/image_paths.dart';
 import 'package:dine_dash/features/auth/common/sign_in/sign_in_page.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class SignInSignUpChooeser extends StatefulWidget {
   const SignInSignUpChooeser({super.key});
@@ -40,21 +39,20 @@ class _SignInSignUpChooeserState extends State<SignInSignUpChooeser> {
                 ),
                 Spacer(flex: 5),
                 commonText(
-                  "Welcome!".tr,
+                  "Welcome!",
                   size: 21,
                   isBold: true,
                   color: AppColors.white,
                 ),
                 SizedBox(height: 20),
                 commonText(
-                  "Now continue after register in ${SessionMemory.isUser ? "\"USER\"" : "\"DEALER\""}"
-                      .tr,
+                  "Now continue after register in ${SessionMemory.isUser ? "\"USER\"" : "\"DEALER\""}",
                   size: 14,
                   color: AppColors.white,
                 ),
                 SizedBox(height: 20),
                 commonButton(
-                  "Sign In".tr,
+                  "Sign In",
                   onTap: () {
                     navigateToPage(SignInScreen(), context: context);
                   },
@@ -62,7 +60,7 @@ class _SignInSignUpChooeserState extends State<SignInSignUpChooeser> {
 
                 SizedBox(height: 20),
                 commonBorderButton(
-                  "Sign Up".tr,
+                  "Sign Up",
                   textColor: AppColors.white,
                   onTap: () {
                     if (SessionMemory.isUser) {

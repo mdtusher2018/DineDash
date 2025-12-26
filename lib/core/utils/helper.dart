@@ -3,12 +3,10 @@ import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:dine_dash/core/base/base_controller.dart';
-import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:geolocator/geolocator.dart';
 import 'dart:convert';
 
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 String getFullImagePath(String imagePath) {
@@ -61,49 +59,6 @@ String formatDuration(Duration d) {
   String m = twoDigits(d.inMinutes.remainder(60));
   String s = twoDigits(d.inSeconds.remainder(60));
   return "$h:$m:$s";
-}
-
-Future<String> calculateDistance({
-  required double targetLatitude,
-  required double targetLongitude,
-}) async {
-  try {
-    final SessionMemory session = Get.find();
-    var (lat, lon) = session.userLocation;
-
-    if (lat == null || lon == null) {
-      LocationPermission permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied ||
-          permission == LocationPermission.deniedForever) {
-        permission = await Geolocator.requestPermission();
-      }
-
-      final currentPosition = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-      );
-
-      lat = currentPosition.latitude;
-      lon = currentPosition.longitude;
-
-      session.setUserLocation(lat, lon);
-    }
-
-    final distanceInMeters = Geolocator.distanceBetween(
-      lat,
-      lon,
-      targetLatitude,
-      targetLongitude,
-    );
-
-    if (distanceInMeters >= 1000) {
-      final distanceInKm = distanceInMeters / 1000;
-      return "${distanceInKm.toStringAsFixed(1)} km";
-    } else {
-      return "${distanceInMeters.toStringAsFixed(0)} m";
-    }
-  } catch (e) {
-    return "N/A";
-  }
 }
 
 Map<String, dynamic> decodeJwtPayload(String token) {

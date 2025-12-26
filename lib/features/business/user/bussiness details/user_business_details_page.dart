@@ -10,6 +10,7 @@ import 'package:dine_dash/features/auth/common/sign_in_sign_up_chooeser.dart';
 import 'package:dine_dash/features/business/user/all_review_of_business.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/business_details_controller.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/business_details_response.dart';
+import 'package:dine_dash/features/business/user/bussiness%20details/helper_functions_for_book_deal.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/menu_response.dart';
 import 'package:dine_dash/features/business/user/map_screen.dart';
 import 'package:dine_dash/features/deals/user/user_deal_blocked.dart';
@@ -692,7 +693,8 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                     dealCount: controller.businessDetail.value!.deals.length,
                     saving: saving,
                     dealId: dealId,
-                    onDealTap: (timeRange) {
+                    openingHours: controller.businessDetail.value!.openingHours,
+                    onDealTap: (timeRange, day) {
                       Navigator.of(context).pop(); // Close dialog first
 
                       navigateToPage(
@@ -702,6 +704,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                               resturentName:
                                   controller.businessDetail.value!.name,
                               timeRange: timeRange,
+                              day: day,
                             ),
                         context: context,
                       );
@@ -935,31 +938,296 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
     );
   }
 
+  // void showDealBottomSheet(
+  //   BuildContext context, {
+  //   required String title,
+  //   required String description,
+  //   required int dealCount,
+  //   required Function(String) onDealTap,
+  //   required String businessId,
+  //   required String businessName,
+  //   required String dealId,
+  //   required num saving,
+  //   bool subscriptionRequired =
+  //       false, //testing purpose remove while api integration
+  // }) {
+  //   List<Map<String, int>> days = [];
+  //   days.add({"Today": 1});
+  //   days.add({"Tomorrow": 2});
+  //   for (int i = 1; i <= 5; i++) {
+  //     DateTime nextDay = DateTime.now().add(Duration(days: i + 1));
+  //     String dayName = DateFormat('EEEE').format(nextDay);
+  //     days.add({dayName: i + 2});
+  //   }
+  //   showModalBottomSheet(
+  //     context: context,
+  //     isScrollControlled: true,
+  //     shape: const RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+  //     ),
+  //     builder: (context) {
+  //       String selectedDayState = "Today";
+  //       String selectedTimeRange = '-- - --';
+  //       DateTime? selectedBookingStart;
+  //       DateTime? selectedBookingEnd;
+  //       return StatefulBuilder(
+  //         builder: (context, setState) {
+  //           return Padding(
+  //             padding: EdgeInsets.only(
+  //               bottom: MediaQuery.of(context).viewInsets.bottom,
+  //             ),
+  //             child: SingleChildScrollView(
+  //               child: Container(
+  //                 padding: const EdgeInsets.symmetric(
+  //                   horizontal: 16,
+  //                   vertical: 24,
+  //                 ),
+  //                 decoration: BoxDecoration(
+  //                   color: Colors.white,
+  //                   borderRadius: BorderRadius.circular(16),
+  //                   boxShadow: const [
+  //                     BoxShadow(
+  //                       color: Colors.black12,
+  //                       blurRadius: 5,
+  //                       offset: Offset(0, 2),
+  //                     ),
+  //                   ],
+  //                 ),
+  //                 child:
+  //                     (subscriptionRequired)
+  //                         ? Column(
+  //                           crossAxisAlignment: CrossAxisAlignment.center,
+  //                           children: [
+  //                             const SizedBox(height: 16),
+  //                             Icon(
+  //                               Icons.lock_outline_rounded,
+  //                               size: 48,
+  //                               color: AppColors.primaryColor,
+  //                             ),
+  //                             const SizedBox(height: 16),
+  //                             commonText(
+  //                               "Subscription Required",
+  //                               size: 18,
+  //                               fontWeight: FontWeight.w600,
+  //                             ),
+  //                             const SizedBox(height: 8),
+  //                             commonText(
+  //                               "You need an active subscription to access this deal.\nPlease subscribe to continue.",
+  //                               size: 14,
+  //                               color: Colors.grey.shade700,
+  //                               textAlign: TextAlign.center,
+  //                             ),
+  //                             const SizedBox(height: 24),
+  //                             commonButton(
+  //                               "View Subscription Plans",
+  //                               onTap: () {
+  //                                 onDealTap(
+  //                                   selectedTimeRange,
+  //                                 ); // Replace with actual navigation to plans
+  //                               },
+  //                               color: AppColors.primaryColor,
+  //                               textColor: Colors.white,
+  //                             ),
+  //                           ],
+  //                         )
+  //                         : Column(
+  //                           crossAxisAlignment: CrossAxisAlignment.start,
+  //                           children: [
+  //                             // Title
+  //                             commonText(title, size: 16, isBold: true),
+  //                             const SizedBox(height: 8),
+  //                             // Description
+  //                             commonText(description, size: 13),
+  //                             const SizedBox(height: 12),
+  //                             const Divider(height: 1),
+  //                             const SizedBox(height: 12),
+  //                             // Day Section
+  //                             commonText("Day", isBold: true, size: 14),
+  //                             const SizedBox(height: 8),
+  //                             Wrap(
+  //                               spacing: 8,
+  //                               runSpacing: 8,
+  //                               children:
+  //                                   days.map((day) {
+  //                                     final isSelected =
+  //                                         day.keys.first == selectedDayState;
+  //                                     return GestureDetector(
+  //                                       onTap: () {
+  //                                         setState(() {
+  //                                           selectedDayState = day.keys.first;
+  //                                         });
+  //                                       },
+  //                                       child: Container(
+  //                                         padding: const EdgeInsets.symmetric(
+  //                                           horizontal: 12,
+  //                                           vertical: 8,
+  //                                         ),
+  //                                         decoration: BoxDecoration(
+  //                                           color:
+  //                                               isSelected
+  //                                                   ? AppColors.primaryColor
+  //                                                   : Colors.grey.shade100,
+  //                                           borderRadius: BorderRadius.circular(
+  //                                             20,
+  //                                           ),
+  //                                           border: Border.all(
+  //                                             color:
+  //                                                 isSelected
+  //                                                     ? Colors.transparent
+  //                                                     : Colors.black,
+  //                                           ),
+  //                                         ),
+  //                                         child: commonText(
+  //                                           day.keys.first,
+  //                                           color:
+  //                                               isSelected
+  //                                                   ? Colors.white
+  //                                                   : Colors.black,
+  //                                         ),
+  //                                       ),
+  //                                     );
+  //                                   }).toList(),
+  //                             ),
+  //                             const SizedBox(height: 16),
+  //                             // Time Section
+  //                             commonText("Time", isBold: true, size: 14),
+  //                             const SizedBox(height: 8),
+  //                             GestureDetector(
+  //                               onTap: () async {
+  //                                 TimeOfDay? start = await showTimePicker(
+  //                                   context: context,
+  //                                   initialTime: TimeOfDay.now(),
+  //                                 );
+  //                                 if (start != null) {
+  //                                   TimeOfDay? end = await showTimePicker(
+  //                                     context: context,
+  //                                     initialTime: start,
+  //                                   );
+  //                                   if (end != null) {
+  //                                     setState(() {
+  //                                       selectedTimeRange =
+  //                                           "${start.format(context)} - ${end.format(context)}";
+  //                                       // Convert TimeOfDay to DateTime
+  //                                       DateTime now = DateTime.now();
+  //                                       selectedBookingStart = DateTime(
+  //                                         now.year,
+  //                                         now.month,
+  //                                         now.day,
+  //                                         start.hour,
+  //                                         start.minute,
+  //                                       );
+  //                                       selectedBookingEnd = DateTime(
+  //                                         now.year,
+  //                                         now.month,
+  //                                         now.day,
+  //                                         end.hour,
+  //                                         end.minute,
+  //                                       );
+  //                                       // Format DateTime to ISO 8601 string
+  //                                       String bookingStartFormatted =
+  //                                           selectedBookingStart!
+  //                                               .toIso8601String();
+  //                                       String bookingEndFormatted =
+  //                                           selectedBookingEnd!
+  //                                               .toIso8601String();
+  //                                       print(
+  //                                         "Booking Start: $bookingStartFormatted",
+  //                                       );
+  //                                       print(
+  //                                         "Booking End: $bookingEndFormatted",
+  //                                       );
+  //                                     });
+  //                                   }
+  //                                 }
+  //                               },
+  //                               child: Container(
+  //                                 padding: const EdgeInsets.symmetric(
+  //                                   horizontal: 16,
+  //                                   vertical: 12,
+  //                                 ),
+  //                                 decoration: BoxDecoration(
+  //                                   border: Border.all(color: Colors.black),
+  //                                   borderRadius: BorderRadius.circular(12),
+  //                                 ),
+  //                                 child: Row(
+  //                                   children: [
+  //                                     const Icon(
+  //                                       Icons.access_time_rounded,
+  //                                       size: 18,
+  //                                     ),
+  //                                     const SizedBox(width: 8),
+  //                                     commonText(
+  //                                       selectedTimeRange,
+  //                                       size: 13,
+  //                                       isBold: true,
+  //                                     ),
+  //                                   ],
+  //                                 ),
+  //                               ),
+  //                             ),
+  //                             const SizedBox(height: 16),
+  //                             // CTA Button
+  //                             commonButton(
+  //                               "Go to deal",
+  //                               onTap: () async {
+  //                                 late int index;
+  //                                 for (final dayMap in days) {
+  //                                   if (dayMap.containsKey(selectedDayState)) {
+  //                                     index =
+  //                                         (dayMap[selectedDayState] ?? 1) - 1;
+  //                                   }
+  //                                 }
+  //                                 final result =
+  //                                     await controller.goToDeal(
+  //                                       businessId: businessId,
+  //                                       savings: saving.toStringAsFixed(1),
+  //                                       dealId: dealId,
+  //                                       startTime: selectedBookingStart,
+  //                                       endTime: selectedBookingEnd,
+  //                                       index: index,
+  //                                     ) ??
+  //                                     false;
+  //                                 if (result) {
+  //                                   Navigator.of(
+  //                                     context,
+  //                                   ).pop(); // Close dialog first
+  //                                   navigateToPage(
+  //                                     UserDealBlockedPage(
+  //                                       resturentName: businessName,
+  //                                       timeRange: selectedTimeRange,
+  //                                     ),
+  //                                     context: context,
+  //                                   );
+  //                                 }
+  //                               },
+  //                               color: AppColors.primaryColor,
+  //                               textColor: Colors.white,
+  //                             ),
+  //                           ],
+  //                         ),
+  //               ),
+  //             ),
+  //           );
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
+
   void showDealBottomSheet(
     BuildContext context, {
     required String title,
     required String description,
-
     required int dealCount,
-    required Function(String) onDealTap,
+    required Function(String, String) onDealTap,
     required String businessId,
     required String businessName,
     required String dealId,
+    required List<OpeningHour> openingHours,
     required num saving,
     bool subscriptionRequired =
         false, //testing purpose remove while api integration
   }) {
-    List<Map<String, int>> days = [];
-
-    days.add({"Today": 1});
-    days.add({"Tomorrow": 2});
-
-    for (int i = 1; i <= 5; i++) {
-      DateTime nextDay = DateTime.now().add(Duration(days: i + 1));
-      String dayName = DateFormat('EEEE').format(nextDay);
-      days.add({dayName: i + 2});
-    }
-
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -967,258 +1235,194 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) {
-        String selectedDayState = "Today";
-        String selectedTimeRange = '-- - --';
+        String? selectedDay;
+        int? selectedSlotIndex;
 
         DateTime? selectedBookingStart;
         DateTime? selectedBookingEnd;
 
+        final groupedHours = groupOpeningHoursByDay(openingHours);
+        final sortedDayEntries =
+            groupedHours.entries.toList()..sort((a, b) {
+              final aDate = nextDateForWeekday(weekdayFromString(a.key));
+              final bDate = nextDateForWeekday(weekdayFromString(b.key));
+              return aDate.compareTo(bDate);
+            });
+
         return StatefulBuilder(
           builder: (context, setState) {
-            return Padding(
-              padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
-              ),
-              child: SingleChildScrollView(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 24,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 5,
-                        offset: Offset(0, 2),
+            return SizedBox(
+              height: MediaQuery.sizeOf(context).height * 0.7,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 24,
+                    ),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(20),
                       ),
-                    ],
-                  ),
-                  child:
-                      (subscriptionRequired)
-                          ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const SizedBox(height: 16),
-                              Icon(
-                                Icons.lock_outline_rounded,
-                                size: 48,
-                                color: AppColors.primaryColor,
-                              ),
-                              const SizedBox(height: 16),
-                              commonText(
-                                "Subscription Required",
-                                size: 18,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              const SizedBox(height: 8),
-                              commonText(
-                                "You need an active subscription to access this deal.\nPlease subscribe to continue.",
-                                size: 14,
-                                color: Colors.grey.shade700,
-                                textAlign: TextAlign.center,
-                              ),
-                              const SizedBox(height: 24),
-                              commonButton(
-                                "View Subscription Plans",
-                                onTap: () {
-                                  onDealTap(
-                                    selectedTimeRange,
-                                  ); // Replace with actual navigation to plans
-                                },
-                                color: AppColors.primaryColor,
-                                textColor: Colors.white,
-                              ),
-                            ],
-                          )
-                          : Column(
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // TITLE
+                        commonText(title, size: 16, isBold: true),
+                        const SizedBox(height: 8),
+                        commonText(description, size: 13),
+                        const SizedBox(height: 16),
+                        const Divider(),
+
+                        /// ===== DAY + TIME SLOTS =====
+                        ...sortedDayEntries.map((dayEntry) {
+                          final day = dayEntry.key;
+                          final slots = dayEntry.value;
+                          final weekday = weekdayFromString(day);
+                          final dateForDay = nextDateForWeekday(weekday);
+                          final dayLabel = getDayLabel(dateForDay);
+
+                          return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Title
-                              commonText(title, size: 16, isBold: true),
                               const SizedBox(height: 8),
 
-                              // Description
-                              commonText(description, size: 13),
-                              const SizedBox(height: 12),
+                              commonText(dayLabel, size: 13, isBold: true),
 
-                              const Divider(height: 1),
-                              const SizedBox(height: 12),
+                              const SizedBox(height: 4),
 
-                              // Day Section
-                              commonText("Day", isBold: true, size: 14),
-                              const SizedBox(height: 8),
-                              Wrap(
-                                spacing: 8,
-                                runSpacing: 8,
-                                children:
-                                    days.map((day) {
-                                      final isSelected =
-                                          day.keys.first == selectedDayState;
-                                      return GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            selectedDayState = day.keys.first;
-                                          });
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 12,
-                                            vertical: 8,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color:
-                                                isSelected
-                                                    ? AppColors.primaryColor
-                                                    : Colors.grey.shade100,
-                                            borderRadius: BorderRadius.circular(
-                                              20,
-                                            ),
-                                            border: Border.all(
-                                              color:
-                                                  isSelected
-                                                      ? Colors.transparent
-                                                      : Colors.black,
-                                            ),
-                                          ),
+                              ...List.generate(slots.length, (index) {
+                                final slot = slots[index];
+                                final isSelected =
+                                    selectedDay == day &&
+                                    selectedSlotIndex == index;
+
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedDay = day;
+                                      selectedSlotIndex = index;
+
+                                      final weekday = weekdayFromString(day);
+                                      final bookingDate = nextDateForWeekday(
+                                        weekday,
+                                      );
+
+                                      final startParts = slot.openingTime.split(
+                                        ':',
+                                      );
+                                      final endParts = slot.closingTime.split(
+                                        ':',
+                                      );
+
+                                      selectedBookingStart = DateTime(
+                                        bookingDate.year,
+                                        bookingDate.month,
+                                        bookingDate.day,
+                                        int.parse(startParts[0]),
+                                        int.parse(startParts[1]),
+                                      );
+
+                                      selectedBookingEnd = DateTime(
+                                        bookingDate.year,
+                                        bookingDate.month,
+                                        bookingDate.day,
+                                        int.parse(endParts[0]),
+                                        int.parse(endParts[1]),
+                                      );
+                                    });
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.only(bottom: 8),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 14,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color:
+                                            isSelected
+                                                ? AppColors.primaryColor
+                                                : Colors.grey.shade300,
+                                      ),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          isSelected
+                                              ? Icons.check_circle
+                                              : Icons.radio_button_unchecked,
+                                          color:
+                                              isSelected
+                                                  ? AppColors.primaryColor
+                                                  : Colors.grey,
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Expanded(
                                           child: commonText(
-                                            day.keys.first,
-                                            color:
-                                                isSelected
-                                                    ? Colors.white
-                                                    : Colors.black,
+                                            "${slot.openingTime} - ${slot.closingTime}",
+                                            size: 14,
+                                            isBold: true,
                                           ),
                                         ),
-                                      );
-                                    }).toList(),
-                              ),
-
-                              const SizedBox(height: 16),
-
-                              // Time Section
-                              commonText("Time", isBold: true, size: 14),
-                              const SizedBox(height: 8),
-                              GestureDetector(
-                                onTap: () async {
-                                  TimeOfDay? start = await showTimePicker(
-                                    context: context,
-                                    initialTime: TimeOfDay.now(),
-                                  );
-                                  if (start != null) {
-                                    TimeOfDay? end = await showTimePicker(
-                                      context: context,
-                                      initialTime: start,
-                                    );
-                                    if (end != null) {
-                                      setState(() {
-                                        selectedTimeRange =
-                                            "${start.format(context)} - ${end.format(context)}";
-
-                                        // Convert TimeOfDay to DateTime
-                                        DateTime now = DateTime.now();
-                                        selectedBookingStart = DateTime(
-                                          now.year,
-                                          now.month,
-                                          now.day,
-                                          start.hour,
-                                          start.minute,
-                                        );
-                                        selectedBookingEnd = DateTime(
-                                          now.year,
-                                          now.month,
-                                          now.day,
-                                          end.hour,
-                                          end.minute,
-                                        );
-
-                                        // Format DateTime to ISO 8601 string
-                                        String bookingStartFormatted =
-                                            selectedBookingStart!
-                                                .toIso8601String();
-                                        String bookingEndFormatted =
-                                            selectedBookingEnd!
-                                                .toIso8601String();
-
-                                        print(
-                                          "Booking Start: $bookingStartFormatted",
-                                        );
-                                        print(
-                                          "Booking End: $bookingEndFormatted",
-                                        );
-                                      });
-                                    }
-                                  }
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 12,
+                                        commonText(
+                                          "Deals",
+                                          size: 12,
+                                          color: Colors.grey,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.access_time_rounded,
-                                        size: 18,
-                                      ),
-                                      const SizedBox(width: 8),
-                                      commonText(
-                                        selectedTimeRange,
-                                        size: 13,
-                                        isBold: true,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-
-                              const SizedBox(height: 16),
-
-                              // CTA Button
-                              commonButton(
-                                "Go to deal",
-                                onTap: () async {
-                                  late int index;
-                                  for (final dayMap in days) {
-                                    if (dayMap.containsKey(selectedDayState)) {
-                                      index =
-                                          (dayMap[selectedDayState] ?? 1) - 1;
-                                    }
-                                  }
-                                  final result =
-                                      await controller.goToDeal(
-                                        businessId: businessId,
-                                        savings: saving.toStringAsFixed(1),
-                                        dealId: dealId,
-                                        startTime: selectedBookingStart,
-                                        endTime: selectedBookingEnd,
-                                        index: index,
-                                      ) ??
-                                      false;
-                                  if (result) {
-                                    Navigator.of(
-                                      context,
-                                    ).pop(); // Close dialog first
-
-                                    navigateToPage(
-                                      UserDealBlockedPage(
-                                        resturentName: businessName,
-                                        timeRange: selectedTimeRange,
-                                      ),
-                                      context: context,
-                                    );
-                                  }
-                                },
-                                color: AppColors.primaryColor,
-                                textColor: Colors.white,
-                              ),
+                                );
+                              }),
                             ],
-                          ),
+                          );
+                        }).toList(),
+
+                        const SizedBox(height: 24),
+
+                        /// ===== CTA =====
+                        commonButton(
+                          "Go to deal",
+                          onTap:
+                              selectedBookingStart == null
+                                  ? null
+                                  : () async {
+                                    final result = await controller.goToDeal(
+                                      businessId: businessId,
+                                      savings: saving.toStringAsFixed(1),
+                                      dealId: dealId,
+                                      startTime: selectedBookingStart,
+                                      endTime: selectedBookingEnd,
+                                      index: selectedSlotIndex ?? 0,
+                                    );
+
+                                    if (result == true) {
+                                      Navigator.pop(context);
+                                      navigateToPage(
+                                        UserDealBlockedPage(
+                                          resturentName: businessName,
+                                          day: selectedDay ?? "N/A",
+                                          timeRange:
+                                              "${selectedBookingStart!.hour}:${selectedBookingStart!.minute} - "
+                                              "${selectedBookingEnd!.hour}:${selectedBookingEnd!.minute}",
+                                        ),
+                                        context: context,
+                                      );
+                                    }
+                                  },
+                          color: AppColors.primaryColor,
+                          textColor: Colors.white,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             );

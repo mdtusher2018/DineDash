@@ -35,10 +35,10 @@ class _UserExplorePageState extends State<UserExplorePage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.getCurrentLocation();
       cityController.fetchCities();
       controller.fetchBusinessesOnMap();
       controller.fetchBusinessesList();
-      controller.getCoordinatesFromPostalCode();
       _loadCustomMarker();
     });
   }
@@ -133,21 +133,15 @@ class _UserExplorePageState extends State<UserExplorePage> {
                       setState(() => showMap = true);
 
                       if (_mapController != null) {
-                        final (latitude, longitude) =
-                            sessionMemory.userLocation;
                         LatLng businessLocation;
 
-                        if (latitude != null && longitude != null) {
-                          businessLocation = LatLng(latitude, longitude);
-                        } else {
-                          final position = await getCurrentPosition(
-                            controller: controller,
-                          );
-                          businessLocation = LatLng(
-                            position.latitude,
-                            position.longitude,
-                          );
-                        }
+                        final position = await getCurrentPosition(
+                          controller: controller,
+                        );
+                        businessLocation = LatLng(
+                          position.latitude,
+                          position.longitude,
+                        );
 
                         _mapController!.animateCamera(
                           CameraUpdate.newLatLngZoom(businessLocation, 15),

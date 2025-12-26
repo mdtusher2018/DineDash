@@ -1,17 +1,12 @@
-// ignore_for_file: prefer_final_fields
-
 import 'package:dine_dash/core/base/base_controller.dart';
-import 'package:dine_dash/core/fallback_value.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
-import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
 import 'package:dine_dash/core/services/localstorage/session_memory.dart';
-import 'package:dine_dash/core/services/localstorage/storage_key.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/features/explore/user_explore_list_response.dart';
 import 'package:dine_dash/features/explore/user_explore_map_response.dart';
 import 'package:dine_dash/core/models/business_model.dart' hide Location;
-import 'package:geocoding/geocoding.dart';
+import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -31,21 +26,11 @@ class UserExploreController extends BaseController {
   int totalPages = 1;
   bool isLoadingMore = false;
 
-  Future<void> fetchBusinessesOnMap({
-    double? latitude,
-    double? longitude,
-  }) async {
+  Future<void> fetchBusinessesOnMap() async {
     await safeCall(
       task: () async {
-        double? lat = latitude;
-        double? lng = longitude;
-
-        final sessionLocation = sessionMemory.userLocation;
-
-        if (lat == null || lng == null) {
-          lat = sessionLocation.$1;
-          lng = sessionLocation.$2;
-        }
+        double? lat = currentPosition.value?.latitude;
+        double? lng = currentPosition.value?.longitude;
 
         if (lat == null || lng == null) {
           final position = await getCurrentPosition(controller: this);
@@ -121,7 +106,6 @@ class UserExploreController extends BaseController {
     );
   }
 
-  /// Call this to load next page
   Future<void> loadMoreBusinesses() async {
     if (currentPage < totalPages && !isLoadingMore) {
       currentPage++;
@@ -129,34 +113,25 @@ class UserExploreController extends BaseController {
     }
   }
 
-  Future<void> getCoordinatesFromPostalCode() async {
-    try {
-      // Attempt to get coordinates from postal code
-      String postalCode =
-          await Get.find<LocalStorageService>().getString(
-            StorageKey.postalCode,
-          ) ??
-          FallbackValue.postalCode;
-
-      List<Location> locations = await locationFromAddress(postalCode);
-
-      if (locations.isNotEmpty) {
-        // If postal code is found, use the first result
-        final Location location = locations.first;
-        currentPosition.value = LatLng(
-          location.latitude,
-          location.longitude,
-        ); // Update position with postal code coordinates
-      } else {
-        // Fallback to current location if postal code lookup fails
-        getCurrentLocation();
-      }
-    } catch (e) {
-      print("Error occurred while getting coordinates from postal code: $e");
-      // If an error occurs in postal code lookup, fallback to current location
-      getCurrentLocation();
-    }
-  }
+  // Future<void> getCoordinatesFromPostalCode() async {
+  //   try {
+  //     String postalCode =
+  //         await Get.find<LocalStorageService>().getString(
+  //           StorageKey.postalCode,
+  //         ) ??
+  //         FallbackValue.postalCode;
+  //     List<Location> locations = await locationFromAddress(postalCode);
+  //     if (locations.isNotEmpty) {
+  //       final Location location = locations.first;
+  //       currentPosition.value = LatLng(location.latitude, location.longitude);
+  //     } else {
+  //       getCurrentLocation();
+  //     }
+  //   } catch (e) {
+  //     print("Error occurred while getting coordinates from postal code: $e");
+  //     getCurrentLocation();
+  //   }
+  // }
 
   Future<void> getCurrentLocation() async {
     try {
@@ -167,11 +142,7 @@ class UserExploreController extends BaseController {
         currentLocation.longitude,
       );
     } catch (e) {
-      print("Error occurred while getting current location: $e");
-      currentPosition.value = LatLng(
-        FallbackValue.latitude,
-        FallbackValue.longitude,
-      );
+      showSnackBar(e.toString(), isError: true);
     }
   }
 }

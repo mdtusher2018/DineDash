@@ -69,7 +69,7 @@ Widget commonTextfieldWithTitle(
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          commonText(title.tr, size: textSize, fontWeight: FontWeight.w500),
+          commonText(title, size: textSize, fontWeight: FontWeight.w500),
           if (optional)
             commonText("(Optional)".tr, size: textSize, color: Colors.grey),
         ],
@@ -196,7 +196,7 @@ Widget commonButton(
                       children: [
                         commonText(
                           textAlign: textalign,
-                          title.tr,
+                          title,
                           size: textSize,
                           color: textColor,
                           isBold: true,
@@ -481,7 +481,7 @@ AppBar commonAppBar({
                 ),
               ),
             ),
-    title: commonText(title.tr, size: 20, isBold: true, color: textColor),
+    title: commonText(title, size: 20, isBold: true, color: textColor),
     centerTitle: isCenter,
   );
 }

@@ -55,84 +55,96 @@ class _DealerDealsRootPageState extends State<DealerDealsRootPage> {
               ),
             ),
             Obx(() {
+              final visibleDeals =
+                  controller.deals.where((deal) => !deal.isDeleted).toList();
+
               if (controller.isLoading.value && controller.deals.isEmpty) {
                 return Center(child: CircularProgressIndicator());
-              }
-              return Expanded(
-                child: RefreshIndicator(
-                  onRefresh: () async {
-                    controller.fetchAllDeals();
-                  },
-                  child: ListView.builder(
-                    itemCount: controller.deals.length,
-                    padding: const EdgeInsets.all(16),
-
-                    itemBuilder: (context, index) {
-                      final deal = controller.deals[index];
-                      if (deal.isDeleted) {
-                        return SizedBox.shrink();
-                      }
-                      return buildDealCard(
-                        title: deal.dealType,
-                        subText: deal.description,
-                        duration: deal.reuseableAfter.toString(),
-                        redeemed: deal.redeemCount.toString(),
-                        location: deal.businessName,
-                        benefitText: deal.benefitAmmount.toString(),
-                        status: deal.status,
-                        onEdit: () {
-                          navigateToPage(
-                            EditDealScreen(
-                              dealId: deal.dealId,
-                              businessId: deal.businessId,
-                            ),
-                            context: context,
-                          );
-                        },
-
-                        onDelete: () {
-                          showDeleteConfirmationDialog(
-                            context: context,
-                            title: "Delete Item",
-                            message:
-                                "Are you sure you want to delete this item? This action cannot be undone.",
-                            onDelete: () {
-                              showReasonDialog(
-                                context,
-                                (p0) {
-                                  controller.deleteDeal(
-                                    reason: p0,
-                                    dealId: deal.dealId,
-                                    deleteManually: () {
-                                      controller.deals.removeWhere((element) {
-                                        return element.id == deal.id;
-                                      });
-                                      setState(() {});
-                                    },
-                                  );
-                                },
-                                title: "Why do you want to delete this deal?",
-                              );
-                            },
-                          );
-                        },
-                        onToggleStatus: () {
-                          log(deal.dealId);
-                          controller.pauseDeal(dealId: deal.dealId).then((
-                            value,
-                          ) {
-                            if (value ?? false) {
-                              controller.deals[index].isActive =
-                                  !controller.deals[index].isActive;
-                              setState(() {});
-                            }
-                          });
-                        },
-                      );
-                    },
+              } else if (visibleDeals.isEmpty) {
+                return Expanded(
+                  child: Center(
+                    child: CommonImage(
+                      "assets/images/no_deals_white_background.png",
+                    ),
                   ),
-                ),
-              );
+                );
+              } else {
+                return Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: () async {
+                      controller.fetchAllDeals();
+                    },
+                    child: ListView.builder(
+                      itemCount: controller.deals.length,
+                      padding: const EdgeInsets.all(16),
+
+                      itemBuilder: (context, index) {
+                        final deal = controller.deals[index];
+                        if (deal.isDeleted) {
+                          return SizedBox.shrink();
+                        }
+                        return buildDealCard(
+                          title: deal.dealType,
+                          subText: deal.description,
+                          duration: deal.reuseableAfter.toString(),
+                          redeemed: deal.redeemCount.toString(),
+                          location: deal.businessName,
+                          benefitText: deal.benefitAmmount.toString(),
+                          status: deal.status,
+                          onEdit: () {
+                            navigateToPage(
+                              EditDealScreen(
+                                dealId: deal.dealId,
+                                businessId: deal.businessId,
+                              ),
+                              context: context,
+                            );
+                          },
+
+                          onDelete: () {
+                            showDeleteConfirmationDialog(
+                              context: context,
+                              title: "Delete Item",
+                              message:
+                                  "Are you sure you want to delete this item? This action cannot be undone.",
+                              onDelete: () {
+                                showReasonDialog(
+                                  context,
+                                  (p0) {
+                                    controller.deleteDeal(
+                                      reason: p0,
+                                      dealId: deal.dealId,
+                                      deleteManually: () {
+                                        controller.deals.removeWhere((element) {
+                                          return element.id == deal.id;
+                                        });
+                                        setState(() {});
+                                      },
+                                    );
+                                  },
+                                  title: "Why do you want to delete this deal?",
+                                );
+                              },
+                            );
+                          },
+                          onToggleStatus: () {
+                            log(deal.dealId);
+                            controller.pauseDeal(dealId: deal.dealId).then((
+                              value,
+                            ) {
+                              if (value ?? false) {
+                                controller.deals[index].isActive =
+                                    !controller.deals[index].isActive;
+                                setState(() {});
+                              }
+                            });
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                );
+              }
             }),
           ],
         ),
