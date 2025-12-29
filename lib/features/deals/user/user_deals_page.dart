@@ -35,7 +35,7 @@ class _UserDealsPageState extends State<UserDealsPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 64),
+        padding: const EdgeInsets.only(left: 14, right: 14, top: 32),
         child: Obx(() {
           if (usedDealController.isLoading.value) {
             return Center(child: CircularProgressIndicator());

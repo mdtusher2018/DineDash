@@ -294,6 +294,7 @@ class DealData {
   bool isActive;
   bool isApproved;
   bool isDeleted;
+  final List<ActiveTime> activeTime;
 
   DealData({
     required this.id,
@@ -306,6 +307,7 @@ class DealData {
     required this.isActive,
     required this.isApproved,
     required this.isDeleted,
+    required this.activeTime,
   });
 
   factory DealData.fromJson(Map<String, dynamic> json) {
@@ -320,6 +322,12 @@ class DealData {
       isActive: json['isActive'] ?? false,
       isApproved: json['isApproved'] ?? false,
       isDeleted: json['isDeleted'] ?? false,
+      activeTime:
+          json['activeTime'] is List
+              ? List<ActiveTime>.from(
+                json['activeTime'].map((x) => ActiveTime.fromJson(x)),
+              )
+              : [],
     );
   }
 
@@ -347,6 +355,30 @@ class DealData {
     }
 
     return "Paused";
+  }
+}
+
+// ActiveTime class to represent the active time details
+class ActiveTime {
+  final String day;
+  final String startTime;
+  final String endTime;
+  final String id;
+
+  ActiveTime({
+    required this.day,
+    required this.startTime,
+    required this.endTime,
+    required this.id,
+  });
+
+  factory ActiveTime.fromJson(Map<String, dynamic> json) {
+    return ActiveTime(
+      day: json['day'] ?? '',
+      startTime: json['startTime'] ?? '',
+      endTime: json['endTime'] ?? '',
+      id: json['_id'] ?? '',
+    );
   }
 }
 

@@ -1,12 +1,10 @@
 import 'package:dine_dash/core/models/business_model.dart';
 import 'package:flutter/material.dart';
 
-Map<String, List<OpeningHour>> groupOpeningHoursByDay(List<OpeningHour> hours) {
-  final Map<String, List<OpeningHour>> grouped = {};
+Map<String, List<ActiveTime>> groupOpeningHoursByDay(List<ActiveTime> hours) {
+  final Map<String, List<ActiveTime>> grouped = {};
 
   for (final hour in hours) {
-    if (!hour.isOpen) continue;
-
     grouped.putIfAbsent(hour.day, () => []);
     grouped[hour.day]!.add(hour);
   }
@@ -88,5 +86,3 @@ String _monthName(int month) {
   ];
   return months[month - 1];
 }
-
-

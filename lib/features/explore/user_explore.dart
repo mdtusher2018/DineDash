@@ -45,7 +45,7 @@ class _UserExplorePageState extends State<UserExplorePage> {
 
   Future<void> _loadCustomMarker() async {
     final icon = await BitmapDescriptor.asset(
-      const ImageConfiguration(size: Size(40, 40)),
+      const ImageConfiguration(size: Size(50, 50)),
       'assets/images/map_icon.png',
     );
     setState(() {

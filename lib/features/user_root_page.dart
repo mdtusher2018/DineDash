@@ -50,7 +50,7 @@ class _UserRootPageState extends State<UserRootPage> {
 
   @override
   Widget build(BuildContext context) {
-    final labels = ["Home", "Explore", "Favorite", "Details", "Profile"];
+    final labels = ["Home", "Explore", "Favorite", "Deals", "Profile"];
     final selectedIcons = [
       "assets/images/bottom nav/home_s.png",
       "assets/images/bottom nav/explore_s.png",

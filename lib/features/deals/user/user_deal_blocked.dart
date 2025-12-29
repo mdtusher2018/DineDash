@@ -162,7 +162,10 @@ class _UserDealBlockedPageState extends State<UserDealBlockedPage>
                 AnimatedBuilder(
                   animation: _bgScale,
                   builder: (_, child) {
-                    return Transform.scale(scale: _bgScale.value, child: child);
+                    return Transform.scale(
+                      scale: _bgScale.value / 1.6,
+                      child: child,
+                    );
                   },
                   child: Image.asset('assets/animation image/background.png'),
                 ),
@@ -174,7 +177,7 @@ class _UserDealBlockedPageState extends State<UserDealBlockedPage>
                     animation: _shrinkScale,
                     builder: (_, child) {
                       return Transform.scale(
-                        scale: _shrinkScale.value,
+                        scale: _shrinkScale.value / 1.6,
                         child: child,
                       );
                     },
@@ -191,7 +194,7 @@ class _UserDealBlockedPageState extends State<UserDealBlockedPage>
                       animation: _shrinkScale,
                       builder: (_, child) {
                         return Transform.scale(
-                          scale: _shrinkScale.value,
+                          scale: _shrinkScale.value / 1.6,
                           child: child,
                         );
                       },

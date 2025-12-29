@@ -468,6 +468,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                               duration: "${deal.reuseableAfter} Days",
                               subscriptionRequired: false,
                               isActive: deal.isActive,
+                              activeTime: deal.activeTime,
                               dealId: deal.id,
                               saving: deal.benefitAmount,
                             );
@@ -609,6 +610,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
     required String duration,
     required String dealId,
     required num saving,
+    required List<ActiveTime> activeTime,
     bool subscriptionRequired =
         false, //testing purpose remove while api intregration
     required bool isActive,
@@ -693,7 +695,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                     dealCount: controller.businessDetail.value!.deals.length,
                     saving: saving,
                     dealId: dealId,
-                    openingHours: controller.businessDetail.value!.openingHours,
+                    openingHours: activeTime,
                     onDealTap: (timeRange, day) {
                       Navigator.of(context).pop(); // Close dialog first
 
@@ -1223,7 +1225,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
     required String businessId,
     required String businessName,
     required String dealId,
-    required List<OpeningHour> openingHours,
+    required List<ActiveTime> openingHours,
     required num saving,
     bool subscriptionRequired =
         false, //testing purpose remove while api integration
@@ -1313,12 +1315,10 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                                         weekday,
                                       );
 
-                                      final startParts = slot.openingTime.split(
+                                      final startParts = slot.startTime.split(
                                         ':',
                                       );
-                                      final endParts = slot.closingTime.split(
-                                        ':',
-                                      );
+                                      final endParts = slot.endTime.split(':');
 
                                       selectedBookingStart = DateTime(
                                         bookingDate.year,
@@ -1366,7 +1366,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                                         const SizedBox(width: 12),
                                         Expanded(
                                           child: commonText(
-                                            "${slot.openingTime} - ${slot.closingTime}",
+                                            "${slot.startTime} - ${slot.endTime}",
                                             size: 14,
                                             isBold: true,
                                           ),

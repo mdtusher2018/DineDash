@@ -31,7 +31,7 @@ class _UserFavoritePageState extends State<UserFavoritePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
         child: SafeArea(
           child: Column(
             children: [

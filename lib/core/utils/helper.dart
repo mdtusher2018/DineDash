@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 
 String getFullImagePath(String imagePath) {
   if (imagePath.isEmpty) {
-    return "https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg";
+    return "";
   }
   if (imagePath.contains("public")) {
     imagePath = imagePath.replaceFirst("public", "");

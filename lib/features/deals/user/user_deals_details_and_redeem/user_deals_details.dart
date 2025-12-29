@@ -132,46 +132,45 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
                               ),
                               SizedBox(height: 5),
 
-                              Wrap(
-                                spacing: 12,
-                                runSpacing: 8,
-                                children:
-                                    dealData.value!.catgory.map((option) {
-                                      final isSelected =
-                                          selected.value == option;
-                                      return GestureDetector(
-                                        onTap: () {
-                                          selected.value = option;
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 16,
-                                            vertical: 8,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color:
-                                                isSelected
-                                                    ? Color(0xffB7CDF6)
-                                                    : Color(0xffB7CDF5),
-                                            borderRadius: BorderRadius.circular(
-                                              18,
-                                            ),
-                                          ),
-                                          child: Text(
-                                            option,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight:
-                                                  isSelected
-                                                      ? FontWeight.bold
-                                                      : FontWeight.normal,
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    }).toList(),
-                              ),
-
+                              // Wrap(
+                              //   spacing: 12,
+                              //   runSpacing: 8,
+                              //   children:
+                              //       dealData.value!.catgory.map((option) {
+                              //         final isSelected =
+                              //             selected.value == option;
+                              //         return GestureDetector(
+                              //           onTap: () {
+                              //             selected.value = option;
+                              //           },
+                              //           child: Container(
+                              //             padding: const EdgeInsets.symmetric(
+                              //               horizontal: 16,
+                              //               vertical: 8,
+                              //             ),
+                              //             decoration: BoxDecoration(
+                              //               color:
+                              //                   isSelected
+                              //                       ? Color(0xffB7CDF6)
+                              //                       : Color(0xffB7CDF5),
+                              //               borderRadius: BorderRadius.circular(
+                              //                 18,
+                              //               ),
+                              //             ),
+                              //             child: Text(
+                              //               option,
+                              //               style: TextStyle(
+                              //                 color: Colors.black,
+                              //                 fontWeight:
+                              //                     isSelected
+                              //                         ? FontWeight.bold
+                              //                         : FontWeight.normal,
+                              //               ),
+                              //             ),
+                              //           ),
+                              //         );
+                              //       }).toList(),
+                              // ),
                               SizedBox(height: 10),
                               Row(
                                 mainAxisAlignment:

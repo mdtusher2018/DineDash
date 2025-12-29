@@ -3,7 +3,6 @@ import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/features/deals/user/model_and_response/deal_model.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
 Widget dealCard({required UserDealItem deal, required bool isUsed}) {
@@ -17,185 +16,198 @@ Widget dealCard({required UserDealItem deal, required bool isUsed}) {
         borderRadius: BorderRadius.circular(15),
         color: Color(0xffE8EFFC),
       ),
-      child: Stack(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Container(
+            height: 134,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              image: DecorationImage(
+                image: NetworkImage(getFullImagePath(deal.businessImage)),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          SizedBox(height: 6),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: commonText(
+                    deal.businessName,
+                    size: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                // Flexible(
+                //   child: Row(
+                //     children: [
+                //       Flexible(
+                //         child: commonText(
+                //           "Price Range :".tr,
+                //           size: 14,
+                //           fontWeight: FontWeight.w600,
+                //         ),
+                //       ),
+                //       Flexible(
+                //         child: commonText(
+                //           " €${deal.minPrice}-${deal.maxPrice}",
+                //           size: 14,
+                //           fontWeight: FontWeight.w600,
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+              ],
+            ),
+          ),
+          // SizedBox(height: 4),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 8),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       Row(
+          //         spacing: 3,
+          //         children: [
+          //           RatingBar.builder(
+          //             initialRating: deal.rating.toDouble(),
+          //             itemSize: 20,
+          //             minRating: 1,
+          //             direction: Axis.horizontal,
+          //             allowHalfRating: true,
+          //             itemCount: 5,
+          //             itemPadding: EdgeInsets.symmetric(horizontal: 0),
+          //             itemBuilder:
+          //                 (context, _) =>
+          //                     Icon(Icons.star, color: Colors.amber),
+          //             onRatingUpdate: (rating) {
+          //               print(rating);
+          //             },
+          //           ),
+          //           commonText(
+          //             "(${deal.totalRating})",
+          //             size: 14,
+          //             fontWeight: FontWeight.w500,
+          //           ),
+          //         ],
+          //       ),
+          //       Row(
+          //         children: [
+          //           commonText(
+          //             "Open Time :".tr,
+          //             size: 14,
+          //             fontWeight: FontWeight.w600,
+          //           ),
+          //           commonText(
+          //             "9 AM - 10 PM",
+          //             size: 14,
+          //             fontWeight: FontWeight.w600,
+          //           ),
+          //         ],
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          SizedBox(height: 13),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Row(
+              children: [
+                Icon(Icons.location_on_rounded, color: Colors.blueAccent),
+                commonText("Location :", size: 16, fontWeight: FontWeight.w500),
+                Flexible(
+                  child: commonText(
+                    deal.address,
+                    maxline: 1,
+                    size: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 16),
+          Stack(
+            alignment: AlignmentGeometry.center,
             children: [
+              Divider(thickness: 2, color: Colors.blueAccent),
               Container(
-                height: 134,
-                width: double.infinity,
+                height: 39,
+                width: 89,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  image: DecorationImage(
-                    image: NetworkImage(getFullImagePath(deal.businessImage)),
-                    fit: BoxFit.cover,
+                  color: Colors.blueAccent,
+                ),
+                child: Center(
+                  child: commonText(
+                    isUsed ? "Used Deal" : "${deal.benefitAmmount} € Benefit",
+                    size: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
                   ),
                 ),
               ),
-              SizedBox(height: 6),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ],
+          ),
+          SizedBox(height: 16),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 17.5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                commonText(
+                  deal.dealType,
+                  size: 20,
+                  fontWeight: FontWeight.w600,
+                ),
+                commonText(
+                  deal.description,
+                  size: 16,
+                  maxline: 2,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xff0A0A0A),
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Flexible(
-                      child: commonText(
-                        deal.businessName,
-                        size: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Flexible(
-                      child: Row(
-                        children: [
-                          Flexible(
-                            child: commonText(
-                              "Price Range :".tr,
-                              size: 14,
-                              fontWeight: FontWeight.w600,
+                    Row(
+                      spacing: 5,
+                      children: [
+                        Container(
+                          height: 35,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.blueAccent.shade100,
+                          ),
+                          child: Center(
+                            child: CommonImage(
+                              "assets/images/clock.png",
+                              height: 25,
+                              width: 25,
+                              fit: BoxFit.contain,
                             ),
                           ),
-                          Flexible(
-                            child: commonText(
-                              " €${deal.minPrice}-${deal.maxPrice}",
-                              size: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 4),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      spacing: 3,
-                      children: [
-                        RatingBar.builder(
-                          initialRating: deal.rating.toDouble(),
-                          itemSize: 20,
-                          minRating: 1,
-                          direction: Axis.horizontal,
-                          allowHalfRating: true,
-                          itemCount: 5,
-                          itemPadding: EdgeInsets.symmetric(horizontal: 0),
-                          itemBuilder:
-                              (context, _) =>
-                                  Icon(Icons.star, color: Colors.amber),
-                          onRatingUpdate: (rating) {
-                            print(rating);
-                          },
                         ),
-                        commonText(
-                          "(${deal.totalRating})",
-                          size: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        commonText(
-                          "Open Time :".tr,
-                          size: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        commonText(
-                          "9 AM - 10 PM",
-                          size: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 13),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Row(
-                  children: [
-                    Icon(Icons.location_on_rounded, color: Colors.blueAccent),
-                    commonText(
-                      "Location :".tr,
-                      size: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    Flexible(
-                      child: commonText(
-                        deal.address,
-                        maxline: 1,
-                        size: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 28),
-              Divider(thickness: 2, color: Colors.blueAccent),
-              SizedBox(height: 28),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 17.5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    commonText(
-                      deal.dealType,
-                      size: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    commonText(
-                      deal.description,
-                      size: 16,
-                      maxline: 2,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xff0A0A0A),
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          spacing: 5,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              height: 35,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: Colors.blueAccent.shade100,
-                              ),
-                              child: Center(
-                                child: CommonImage(
-                                  "assets/images/clock.png",
-                                  height: 25,
-                                  width: 25,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
+                            commonText(
+                              "Reusable After".tr,
+                              size: 12,
+                              fontWeight: FontWeight.w400,
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                commonText(
-                                  "Reusable After".tr,
-                                  size: 12,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                commonText(
-                                  "${deal.reuseableAfter} Days",
-                                  size: 14,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ],
+                            commonText(
+                              "${deal.reuseableAfter} Days",
+                              size: 14,
+                              fontWeight: FontWeight.w700,
                             ),
                           ],
                         ),
@@ -203,28 +215,7 @@ Widget dealCard({required UserDealItem deal, required bool isUsed}) {
                     ),
                   ],
                 ),
-              ),
-            ],
-          ),
-          Positioned(
-            top: 236,
-            left: 110.5,
-            right: 110.5,
-            child: Container(
-              height: 39,
-              width: 89,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.blueAccent,
-              ),
-              child: Center(
-                child: commonText(
-                  isUsed ? "Used Deal" : "${deal.benefitAmmount} € Benefit",
-                  size: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
-                ),
-              ),
+              ],
             ),
           ),
         ],
