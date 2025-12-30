@@ -2,7 +2,9 @@ import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/features/notification/user%20notification/user_notification_response.dart';
+import 'package:dine_dash/features/ratting_and_feedback/user/user_giving_start_screen.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UserNotificationController extends BaseController {
@@ -62,7 +64,7 @@ class UserNotificationController extends BaseController {
     );
   }
 
-  Future<void> markAsRead(String notificationId) async {
+  Future<void> markAsRead(String notificationId, BuildContext context) async {
     await safeCall(
       task: () async {
         await _apiService.put(
@@ -74,6 +76,10 @@ class UserNotificationController extends BaseController {
         if (index != -1) {
           notifications[index] = NotificationItem(
             id: notifications[index].id,
+            businessId: notifications[index].businessId,
+            dealId: notifications[index].dealId,
+            rasturentName: notifications[index].rasturentName,
+            type: notifications[index].type,
             targetUser: notifications[index].targetUser,
             target: notifications[index].target,
             title: notifications[index].title,
@@ -84,8 +90,20 @@ class UserNotificationController extends BaseController {
           );
           notifications.refresh();
         }
-        // ✅ Show toast/snackbar
-        showSnackBar("This notification has been marked as read.".tr);
+        if (notifications[index].type == "rating") {
+          navigateToPage(
+            UserGivingStarsPage(
+              businessId: notifications[index].businessId,
+              dealId: notifications[index].dealId,
+              rasturentName: notifications[index].rasturentName,
+            ),
+            replace: true,
+            context: context,
+          );
+        } else {
+          // ✅ Show toast/snackbar
+          showSnackBar("This notification has been marked as read.".tr);
+        }
       },
     );
   }

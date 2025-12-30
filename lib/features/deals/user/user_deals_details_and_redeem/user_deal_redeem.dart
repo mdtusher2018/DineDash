@@ -1,5 +1,4 @@
 import 'package:dine_dash/res/commonWidgets.dart';
-import 'package:dine_dash/features/ratting_and_feedback/user/user_giving_start_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart'; // Add this import
@@ -239,17 +238,18 @@ class _UserDealRedeemPageState extends State<UserDealRedeemPage>
                     FadeTransition(
                       opacity: _fadeButton,
                       child: commonButton(
-                        "Continue".tr,
+                        "Back".tr,
                         onTap: () {
-                          navigateToPage(
-                            UserGivingStarsPage(
-                              businessId: widget.businessId,
-                              dealId: widget.dealId,
-                              rasturentName: widget.rasturentName,
-                            ),
-                            replace: true,
-                            context: context,
-                          );
+                          // navigateToPage(
+                          //   UserGivingStarsPage(
+                          //     businessId: widget.businessId,
+                          //     dealId: widget.dealId,
+                          //     rasturentName: widget.rasturentName,
+                          //   ),
+                          //   replace: true,
+                          //   context: context,
+                          // );
+                          Navigator.pop(context);
                         },
                       ),
                     ),

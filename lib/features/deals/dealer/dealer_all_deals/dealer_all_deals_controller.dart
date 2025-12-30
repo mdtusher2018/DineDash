@@ -48,7 +48,15 @@ class DealerAllDealsController extends BaseController {
   }
 
   /// Delegate pause deal action to PauseDealController
-  Future<bool?> pauseDeal({required String dealId}) async {
-    return await _pauseDealController.pauseToggleDeal(dealId: dealId);
+  Future<bool?> pauseDeal({
+    required String dealId,
+    required bool ispaused,
+    required String reason,
+  }) async {
+    return await _pauseDealController.pauseToggleDeal(
+      dealId: dealId,
+      ispaused: ispaused,
+      reason: reason,
+    );
   }
 }

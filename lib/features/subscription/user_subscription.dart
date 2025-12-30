@@ -15,9 +15,6 @@ class SubscriptionView extends StatefulWidget {
 }
 
 class _SubscriptionViewState extends State<SubscriptionView> {
-  bool isMonthlySelected = true;
-  final subscriptionController = Get.put(UserSubscriptionController());
-
   final controller = Get.find<UserSubscriptionController>();
 
   @override
@@ -25,12 +22,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller.getAllSubscription();
-    });
-  }
-
-  void togglePlan(bool monthly) {
-    setState(() {
-      isMonthlySelected = monthly;
+      controller.getMySubscription();
     });
   }
 
@@ -87,6 +79,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
     required String price,
     required List<String> features,
     required Widget button,
+    required bool monthly,
     bool isMostPopular = false,
     Color backgroundColor = Colors.white,
     Color borderColor = Colors.grey,
@@ -114,7 +107,21 @@ class _SubscriptionViewState extends State<SubscriptionView> {
               commonText(subtitle, size: 14, isBold: true),
               const SizedBox(height: 12),
 
-              commonText(price, size: 24, isBold: true, color: Colors.black),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  commonText(
+                    "$price/",
+                    size: 24,
+                    isBold: true,
+                    color: Colors.black,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 4.5),
+                    child: commonText(monthly ? "Monthly" : "Yearly", size: 12),
+                  ),
+                ],
+              ),
               const SizedBox(height: 12),
 
               if (isMostPopular)
@@ -166,56 +173,90 @@ class _SubscriptionViewState extends State<SubscriptionView> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-        child: Column(
-          children: [
-            commonText(
-              "Select the plan that fits your culinary journey",
-              size: 16,
-            ),
-            const SizedBox(height: 12),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              commonText("Your active subscription plan details", size: 16),
 
-            Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: AppColors.primaryColor.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(50),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  buildToggleButton(
-                    "Monthly",
-                    isMonthlySelected,
-                    () => togglePlan(true),
-                  ),
-                  const SizedBox(width: 16),
-                  buildToggleButton(
-                    "Yearly",
-                    !isMonthlySelected,
-                    () => togglePlan(false),
-                  ),
-                ],
-              ),
-            ),
+              Obx(() {
+                final activePlan =
+                    controller.mySubscription.value?.subscriptionPlan;
 
-            Expanded(
-              child: Obx(() {
-                if (subscriptionController.isLoading.value) {
+                if (activePlan == null) {
+                  return Center(child: Text("No active subscription found"));
+                }
+
+                return buildPlanCard(
+                  monthly: activePlan.duration == 30,
+                  title: activePlan.planName,
+                  subtitle: activePlan.description,
+                  price: "€${activePlan.price}",
+                  features: activePlan.feature,
+                  button: commonButton(
+                    "Manage Subscription",
+                    onTap: () async {
+                      if (activePlan.price != 0) {
+                        await controller.payment(
+                          activePlan.id,
+                          context: context,
+                        );
+                      }
+                    },
+                  ),
+                  backgroundColor:
+                      activePlan.planName.toLowerCase() == "premium"
+                          ? Colors.blue.shade50
+                          : Colors.white,
+                  borderColor:
+                      activePlan.planName.toLowerCase() == "premium"
+                          ? AppColors.primaryColor
+                          : Colors.grey.shade300,
+                );
+              }),
+              const SizedBox(height: 20), // Spacing below "Others" button
+              Container(
+                width: 250,
+                height: 50,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      AppColors.primaryColor.withOpacity(0.1),
+                      AppColors.primaryColor.withOpacity(0.2),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Center(
+                  child: commonText(
+                    "Others",
+                    size: 18,
+                    isBold: true,
+                    color: AppColors.primaryColor,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20), // Spacing below "Others" button
+              // Updated "Select the plan" section with improved style
+              commonText(
+                "Select the plan that fits your culinary journey",
+                size: 16,
+                color: Colors.grey.shade800,
+                isBold: false,
+              ),
+
+              Obx(() {
+                if (controller.isLoading.value) {
                   return Center(child: CircularProgressIndicator());
                 }
 
-                final filteredPlans =
-                    subscriptionController.plans
-                        .where(
-                          (plan) =>
-                              isMonthlySelected
-                                  ? plan.duration == 30
-                                  : plan.duration == 365,
-                        )
-                        .toList();
+                final filteredPlans = controller.plans.toList();
 
                 return ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
                   itemCount: filteredPlans.length,
                   itemBuilder: (context, index) {
                     final plan = filteredPlans[index];
@@ -223,6 +264,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                     return buildPlanCard(
                       title: plan.planName,
                       subtitle: plan.description,
+                      monthly: plan.duration == 30,
                       price: "€${plan.price}",
                       features: plan.feature,
                       isMostPopular: plan.planName.toLowerCase() == "premium",
@@ -257,8 +299,8 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                   },
                 );
               }),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

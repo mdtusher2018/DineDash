@@ -146,8 +146,8 @@ class _NotificationListState extends State<NotificationList> {
               ),
               tileColor: isRead ? Colors.white : const Color(0xFFB7CDF5),
               onTap: () {
-                if (!isRead) {
-                  widget.controller.markAsRead(n.id);
+                if (!isRead || n.type == 'rating') {
+                  widget.controller.markAsRead(n.id, context);
                 }
               },
             );

@@ -1,7 +1,6 @@
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/profile/common/profile/profile_controller.dart';
-import 'package:dine_dash/features/subscription/my_subscription.dart';
 import 'package:dine_dash/features/subscription/user_subscription.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/features/profile/widgets/common_dialog.dart';
@@ -213,16 +212,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 );
                               },
                             ),
-                            buildRowCon(
-                              image: 'assets/images/subscription.png',
-                              title: 'My Subscription',
-                              onTap: () {
-                                navigateToPage(
-                                  MySubscriptionsView(),
-                                  context: context,
-                                );
-                              },
-                            ),
+                            // buildRowCon(
+                            //   image: 'assets/images/subscription.png',
+                            //   title: 'My Subscription',
+                            //   onTap: () {
+                            //     navigateToPage(
+                            //       MySubscriptionsView(),
+                            //       context: context,
+                            //     );
+                            //   },
+                            // ),
                           ],
                         );
                       } else {

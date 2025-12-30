@@ -5,6 +5,7 @@ import 'package:dine_dash/core/models/dealer_deal_details.dart';
 import 'package:dine_dash/core/models/my_business_name_response.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
+import 'package:dine_dash/features/deals/dealer/create_deal/deal_type_response.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,20 @@ class DealerCreateDealController extends DealerMyBusinessNameListController {
   var isSubmitting = false.obs;
 
   var dealDetails = Rx<DealerDealDetailsData?>(null);
+  RxList<DealType> dealTypes = <DealType>[].obs;
+
+  Future<void> featchAllDealType() async {
+    safeCall(
+      task: () async {
+        final response = await _apiService.get(ApiEndpoints.getAllDealType);
+        if (response['statusCode'] != 201) {
+          throw response['message'];
+        } else {
+          dealTypes.value = DealTypeResponse.fromJson(response).deals;
+        }
+      },
+    );
+  }
 
   Future<void> createDeal({
     required BuildContext context,
@@ -69,7 +84,7 @@ class DealerCreateDealController extends DealerMyBusinessNameListController {
         );
 
         if (response['statusCode'] == 201) {
-     Navigator.of(context).pop(); // Close dialog first
+          Navigator.of(context).pop(); // Close dialog first
           showSnackBar(response['message'] ?? "Deal created successfully");
         } else {
           throw Exception(response['message'] ?? "Failed to create deal");

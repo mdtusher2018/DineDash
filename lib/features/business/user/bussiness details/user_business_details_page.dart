@@ -1410,8 +1410,8 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                                           resturentName: businessName,
                                           day: selectedDay ?? "N/A",
                                           timeRange:
-                                              "${selectedBookingStart!.hour}:${selectedBookingStart!.minute} - "
-                                              "${selectedBookingEnd!.hour}:${selectedBookingEnd!.minute}",
+                                              "${selectedBookingStart!.hour.toString().padLeft(2, '0')}:${selectedBookingStart!.minute.toString().padLeft(2, '0')} - "
+                                              "${selectedBookingEnd!.hour.toString().padLeft(2, '0')}:${selectedBookingEnd!.minute.toString().padLeft(2, '0')}",
                                         ),
                                         context: context,
                                       );

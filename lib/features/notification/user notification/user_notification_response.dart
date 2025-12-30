@@ -20,7 +20,8 @@ class NotificationResponse {
       status: json['status'] ?? '',
       statusCode: json['statusCode'] ?? 0,
       message: json['message'] ?? '',
-      data: json['data'] != null ? NotificationData.fromJson(json['data']) : null,
+      data:
+          json['data'] != null ? NotificationData.fromJson(json['data']) : null,
       errors: json['errors'] != null ? List<dynamic>.from(json['errors']) : [],
     );
   }
@@ -30,10 +31,7 @@ class NotificationData {
   final String type;
   final NotificationAttributes attributes;
 
-  NotificationData({
-    required this.type,
-    required this.attributes,
-  });
+  NotificationData({required this.type, required this.attributes});
 
   factory NotificationData.fromJson(Map<String, dynamic> json) {
     return NotificationData(
@@ -54,7 +52,8 @@ class NotificationAttributes {
 
   factory NotificationAttributes.fromJson(Map<String, dynamic> json) {
     return NotificationAttributes(
-      notifications: (json['notification'] as List<dynamic>?)
+      notifications:
+          (json['notification'] as List<dynamic>?)
               ?.map((e) => NotificationItem.fromJson(e))
               .toList() ??
           [],
@@ -65,6 +64,10 @@ class NotificationAttributes {
 
 class NotificationItem {
   final String id;
+  final String type;
+  final String businessId;
+  final String dealId;
+  final String rasturentName;
   final TargetUser targetUser;
   final String target;
   final LocalizedText title;
@@ -75,6 +78,10 @@ class NotificationItem {
 
   NotificationItem({
     required this.id,
+    required this.type,
+    required this.businessId,
+    required this.dealId,
+    required this.rasturentName,
     required this.targetUser,
     required this.target,
     required this.title,
@@ -87,6 +94,10 @@ class NotificationItem {
   factory NotificationItem.fromJson(Map<String, dynamic> json) {
     return NotificationItem(
       id: json['_id'] ?? '',
+      type: json['type'] ?? "",
+      businessId: json['businessId'] ?? "",
+      dealId: json['dealId'] ?? "",
+      rasturentName: json['rasturentName'] ?? "",
       targetUser: TargetUser.fromJson(json['targetUser'] ?? {}),
       target: json['target'] ?? '',
       title: LocalizedText.fromJson(json['title'] ?? {}),
@@ -103,11 +114,7 @@ class TargetUser {
   final String fullName;
   final String image;
 
-  TargetUser({
-    required this.id,
-    required this.fullName,
-    required this.image,
-  });
+  TargetUser({required this.id, required this.fullName, required this.image});
 
   factory TargetUser.fromJson(Map<String, dynamic> json) {
     return TargetUser(
@@ -122,16 +129,9 @@ class LocalizedText {
   final String en;
   final String de;
 
-  LocalizedText({
-    required this.en,
-    required this.de,
-  });
+  LocalizedText({required this.en, required this.de});
 
   factory LocalizedText.fromJson(Map<String, dynamic> json) {
-    return LocalizedText(
-      en: json['en'] ?? '',
-      de: json['de'] ?? '',
-    );
+    return LocalizedText(en: json['en'] ?? '', de: json['de'] ?? '');
   }
 }
-

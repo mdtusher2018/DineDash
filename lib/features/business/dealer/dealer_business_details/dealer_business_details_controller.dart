@@ -50,9 +50,17 @@ class DealerBusinessDetailController extends BaseController {
   }
 
   /// Delegate pause deal action to PauseDealController
-  Future<bool?> pauseDeal({required String dealId}) async {
+  Future<bool?> pauseDeal({
+    required String dealId,
+    required bool ispaused,
+    required String reason,
+  }) async {
     final pauseDealController = Get.find<DealerDealPauseController>();
-    return await pauseDealController.pauseToggleDeal(dealId: dealId);
+    return await pauseDealController.pauseToggleDeal(
+      dealId: dealId,
+      ispaused: ispaused,
+      reason: reason,
+    );
   }
 
   Future<void> deleteMenu({required String menuId}) async {

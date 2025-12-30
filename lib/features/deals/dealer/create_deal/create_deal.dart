@@ -2,6 +2,7 @@
 
 import 'package:dine_dash/core/models/my_business_name_response.dart';
 import 'package:dine_dash/features/deals/dealer/create_deal/create_deal_controller.dart';
+import 'package:dine_dash/features/deals/dealer/create_deal/deal_type_response.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -26,11 +27,9 @@ class _AddDealScreenState extends State<AddDealScreen> {
   final TextEditingController benefitController = TextEditingController(
     text: kDebugMode ? "20" : null,
   );
-  final TextEditingController dealTypeController = TextEditingController(
-    text: kDebugMode ? "2 for 1" : null,
-  );
 
   DealerBusinessItem? selectedBusiness;
+  DealType? selectedDealType;
   // String? selectedDealType;
   String? selectedRefusableDay;
   List<String> refuesableAfter = ["60 Days", "90 Days"];
@@ -52,6 +51,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller.fetchAllBusinessesName();
+      controller.featchAllDealType();
       if (widget.selectedBusiness != null) {
         selectedBusiness = widget.selectedBusiness;
       }
@@ -353,11 +353,19 @@ class _AddDealScreenState extends State<AddDealScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        commonTextfieldWithTitle(
-                          "Deal Type*",
-                          dealTypeController,
-                          fillColor: Colors.white,
-                          hintText: "Deal Type",
+                        commonText(
+                          "Deal Type*".tr,
+                          size: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        SizedBox(height: 8),
+                        commonDropdown<DealType>(
+                          items: controller.dealTypes,
+                          value: selectedDealType,
+                          hint: "Select your deal type".tr,
+                          labelBuilder: (p0) => p0.name,
+                          onChanged:
+                              (val) => setState(() => selectedDealType = val),
                         ),
                       ],
                     ),
@@ -427,7 +435,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                     description: descriptionController.text.trim(),
                     benefitAmount:
                         double.tryParse(benefitController.text.trim()) ?? 0,
-                    dealType: dealTypeController.text,
+                    dealType: selectedDealType?.name ?? "",
                     reusableAfter:
                         int.tryParse(
                           selectedRefusableDay?.split(' ').first ?? "0",

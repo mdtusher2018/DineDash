@@ -5,11 +5,11 @@ class ApiEndpoints {
   static String mapResturant(String resturantName) =>
       "https://places.googleapis.com/v1/places:searchText?query=$resturantName&key=$mapKey";
 
-  // static const String baseUrl = 'http://147.93.29.184:8020/api/v1/';
-  // static const String baseImageUrl = 'http://147.93.29.184:8020';
+  static const String baseUrl = 'http://147.93.29.184:8020/api/v1/';
+  static const String baseImageUrl = 'http://147.93.29.184:8020';
 
-  static const String baseUrl = 'http://10.10.10.33:8020/api/v1/';
-  static const String baseImageUrl = 'http://10.10.10.33:8020';
+  // static const String baseUrl = 'http://10.10.10.33:8020/api/v1/';
+  // static const String baseImageUrl = 'http://10.10.10.33:8020';
 
   //authentication
   static String signin = "auth/signin";
@@ -173,7 +173,9 @@ class ApiEndpoints {
     return "menu/edit/$id";
   }
 
-  static String pauseDeal(String dealId) => "deal/pause-toggle/$dealId";
+  static String pauseDeal(String dealId) => "deal/pause-req-toggle/$dealId";
+  //old end point
+  // "deal/pause-toggle/$dealId";
 
   static String editDeal(String dealId) => "deal/edit-deal/$dealId";
 
@@ -209,6 +211,8 @@ class ApiEndpoints {
   static String payment = "transaction/payment";
 
   static String mySubscription = "mysubscription/my-subs";
+
+  static String getAllDealType = "deal-type/all";
 
   static String deleteMenu(String menuId) {
     return "menu/$menuId";

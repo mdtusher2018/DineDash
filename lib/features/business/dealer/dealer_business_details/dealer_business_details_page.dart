@@ -321,19 +321,12 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
                   );
                 },
                 onToggleStatus: () {
-                  controller.pauseDeal(dealId: deal.id).then((value) {
-                    if (value ?? false) {
-                      controller
-                          .businessDetail
-                          .value!
-                          .dealsData[index]
-                          .isActive = !controller
-                              .businessDetail
-                              .value!
-                              .dealsData[index]
-                              .isActive;
-                      setState(() {});
-                    }
+                  showReasonDialog(context, (p0) {
+                    controller.pauseDeal(
+                      dealId: deal.id,
+                      ispaused: deal.isActive,
+                      reason: p0,
+                    );
                   });
                 },
               ),

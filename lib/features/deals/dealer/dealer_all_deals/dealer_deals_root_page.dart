@@ -128,15 +128,13 @@ class _DealerDealsRootPageState extends State<DealerDealsRootPage> {
                             );
                           },
                           onToggleStatus: () {
-                            log(deal.dealId);
-                            controller.pauseDeal(dealId: deal.dealId).then((
-                              value,
-                            ) {
-                              if (value ?? false) {
-                                controller.deals[index].isActive =
-                                    !controller.deals[index].isActive;
-                                setState(() {});
-                              }
+                            showReasonDialog(context, (p0) {
+                              log(deal.dealId);
+                              controller.pauseDeal(
+                                dealId: deal.dealId,
+                                ispaused: deal.isActive,
+                                reason: p0,
+                              );
                             });
                           },
                         );
