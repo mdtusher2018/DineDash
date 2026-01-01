@@ -49,8 +49,9 @@ class DealerAllBusinessController extends BaseController {
   Future<bool> deleteBusiness(String businessId) async {
     safeCall(
       task: () async {
-        final response = await _apiService.delete(
+        final response = await _apiService.put(
           ApiEndpoints.deleteBusiness(businessId),
+          {},
         );
         if (response['statusCode'] == 200) {
           businesses.removeWhere((element) => element.id == businessId);

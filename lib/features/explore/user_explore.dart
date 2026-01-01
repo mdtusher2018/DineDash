@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/core/controller/city_controller.dart';
 import 'package:dine_dash/features/explore/user_explore_controller.dart';
+import 'package:dine_dash/features/explore/user_explore_map_response.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/res/user_resturant_card.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/user_business_details_page.dart';
@@ -28,18 +31,27 @@ class _UserExplorePageState extends State<UserExplorePage> {
   SessionMemory sessionMemory = Get.find();
   GoogleMapController? _mapController;
   BitmapDescriptor? customMarkerIcon;
-  String? selectedExpense;
   String selectedSortBy = 'Low';
+  RxString selectedDate = "".obs;
 
+  List<String> days = [
+    "Today",
+    "Tomorrow",
+    "Saturday",
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+  ];
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _loadCustomMarker();
       controller.getCurrentLocation();
       cityController.fetchCities();
       controller.fetchBusinessesOnMap();
       controller.fetchBusinessesList();
-      _loadCustomMarker();
     });
   }
 
@@ -102,7 +114,10 @@ class _UserExplorePageState extends State<UserExplorePage> {
                         double.parse(prediction.lat!),
                         double.parse(prediction.lng!),
                       );
-
+                      controller.fetchBusinessesOnMap(
+                        lat: target.latitude,
+                        lng: target.longitude,
+                      );
                       _mapController?.animateCamera(
                         CameraUpdate.newLatLngZoom(target, 13),
                       );
@@ -113,6 +128,19 @@ class _UserExplorePageState extends State<UserExplorePage> {
                     searchTermController.selection = TextSelection.fromPosition(
                       TextPosition(offset: prediction.description!.length),
                     );
+                    if (prediction.lat != null && prediction.lng != null) {
+                      final LatLng target = LatLng(
+                        double.parse(prediction.lat!),
+                        double.parse(prediction.lng!),
+                      );
+                      controller.fetchBusinessesOnMap(
+                        lat: target.latitude,
+                        lng: target.longitude,
+                      );
+                      _mapController?.animateCamera(
+                        CameraUpdate.newLatLngZoom(target, 13),
+                      );
+                    }
                   },
                 ),
               ),
@@ -230,9 +258,10 @@ class _UserExplorePageState extends State<UserExplorePage> {
         ),
         mapType: MapType.normal,
         myLocationEnabled: true,
-        myLocationButtonEnabled: true,
+        myLocationButtonEnabled: false,
         zoomControlsEnabled: true,
         zoomGesturesEnabled: true,
+        mapToolbarEnabled: false,
 
         markers: _buildMarkers(),
         onMapCreated: (GoogleMapController controller) {
@@ -248,9 +277,58 @@ class _UserExplorePageState extends State<UserExplorePage> {
         markerId: MarkerId(b.id),
         position: LatLng(b.coordinates[1], b.coordinates[0]),
         infoWindow: InfoWindow(title: b.name),
+        onTap: () {
+          _showBottomSheet(context, b);
+        },
         icon: customMarkerIcon ?? BitmapDescriptor.defaultMarker,
       );
     }).toSet();
+  }
+
+  void _showBottomSheet(BuildContext context, BusinessOnMap business) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.all(16.0),
+          width: double.infinity,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 12),
+                child: SizedBox(
+                  child: RestaurantCard(
+                    imageUrl: business.image,
+                    title: business.name,
+                    rating: business.rating.toDouble(),
+                    reviewCount: business.totalReview,
+                    priceRange: "",
+                    openTime: business.openTimeText,
+                    location: business.formattedAddress,
+                    tags: business.type.map((e) => e.toString()).toList(),
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+              commonButton(
+                "See Details",
+                boarderRadious: 10,
+                height: 40,
+                onTap: () {
+                  Navigator.pop(context);
+                  navigateToPage(
+                    UserBusinessDetailsPage(businessId: business.id),
+                    context: context, //restaurantId: restaurant.id
+                  );
+                },
+              ),
+              SizedBox(height: 30),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   Widget _buildListView() {
@@ -283,6 +361,74 @@ class _UserExplorePageState extends State<UserExplorePage> {
           physics: AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
+              /// Filter and Sort
+              Obx(() {
+                return Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 0,
+                  ),
+
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value:
+                            cityController.selectedCity.value.isEmpty
+                                ? null
+                                : cityController.selectedCity.value,
+                        icon: Icon(
+                          Icons.arrow_drop_down,
+                          color: AppColors.primaryColor,
+                        ),
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            cityController.selectedCity.value = newValue;
+
+                            controller.fetchBusinessesList(
+                              city: newValue.split('-').first,
+                              searchTerm:
+                                  searchTermController.text.trim().isNotEmpty
+                                      ? searchTermController.text.trim()
+                                      : null,
+                              sortBy: selectedSortBy,
+                            );
+                          }
+                        },
+                        hint:
+                            cityController.isLoading.value
+                                ? const SizedBox(
+                                  height: 18,
+                                  width: 18,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                                : commonText(
+                                  cityController.cities.isEmpty
+                                      ? "No locations"
+                                      : "Select location",
+                                  size: 16,
+                                ),
+                        items:
+                            cityController.cities.map((city) {
+                              // use a unique identifier for each dropdown value
+                              final uniqueValue = city.cityName;
+                              return DropdownMenuItem<String>(
+                                value: uniqueValue,
+                                child: commonText(city.cityName, size: 16),
+                              );
+                            }).toList(),
+                      ),
+                    ),
+                  ),
+                );
+              }),
               const SizedBox(height: 16),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -346,68 +492,64 @@ class _UserExplorePageState extends State<UserExplorePage> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              value:
-                                  cityController.selectedCity.value.isEmpty
-                                      ? null
-                                      : cityController.selectedCity.value,
-                              icon: Icon(
-                                Icons.arrow_drop_down,
-                                color: AppColors.primaryColor,
-                              ),
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                              onChanged: (String? newValue) {
-                                if (newValue != null) {
-                                  cityController.selectedCity.value = newValue;
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: DropdownButton<String>(
+                                value:
+                                    selectedDate.value.isEmpty
+                                        ? null
+                                        : selectedDate.value,
+                                icon: const Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  size: 18,
+                                ),
+                                onChanged: (String? newValue) {
+                                  if (newValue != null) {
+                                    selectedDate.value = newValue;
 
-                                  controller.fetchBusinessesList(
-                                    city: newValue.split('-').first,
-                                    searchTerm:
-                                        searchTermController.text
-                                                .trim()
-                                                .isNotEmpty
-                                            ? searchTermController.text.trim()
-                                            : null,
-                                    sortBy: selectedSortBy,
-                                  );
-                                }
-                              },
-                              hint:
-                                  cityController.isLoading.value
-                                      ? const SizedBox(
-                                        height: 18,
-                                        width: 18,
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                        ),
-                                      )
-                                      : commonText(
-                                        cityController.cities.isEmpty
-                                            ? "No locations"
-                                            : "Select location",
-                                      ),
-                              items:
-                                  cityController.cities.map((city) {
-                                    // use a unique identifier for each dropdown value
-                                    final uniqueValue = city.cityName;
-                                    return DropdownMenuItem<String>(
-                                      value: uniqueValue,
-                                      child: commonText(
-                                        city.cityName,
-                                        size: 14,
-                                      ),
+                                    DateTime today = DateTime.now();
+                                    String dayOfWeek;
+                                    if (newValue == "Today") {
+                                      dayOfWeek = getDayOfWeek(today);
+                                    } else if (newValue == "Tomorrow") {
+                                      DateTime tomorrow = today.add(
+                                        Duration(days: 1),
+                                      );
+                                      dayOfWeek = getDayOfWeek(tomorrow);
+                                    } else {
+                                      dayOfWeek = newValue;
+                                    }
+                                    log("Selected day: $dayOfWeek");
+
+                                    controller.fetchBusinessesList(
+                                      day: dayOfWeek,
+                                      searchTerm:
+                                          searchTermController.text
+                                                  .trim()
+                                                  .isNotEmpty
+                                              ? searchTermController.text.trim()
+                                              : null,
+                                      sortBy: selectedSortBy,
                                     );
-                                  }).toList(),
+                                  }
+                                },
+                                hint: commonText("Select day"),
+                                items:
+                                    generateDayOptions().map((day) {
+                                      // Use the unique identifier for each dropdown value (day)
+                                      return DropdownMenuItem<String>(
+                                        value: day,
+                                        child: commonText(day, size: 14),
+                                      );
+                                    }).toList(),
+                              ),
                             ),
                           ),
                         ),
                       );
                     }),
                   ),
+
                   const SizedBox(width: 12),
                   Expanded(
                     child: DropdownButtonHideUnderline(

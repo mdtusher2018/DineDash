@@ -280,7 +280,7 @@ Map<String, String> de_DE = {
   "Reach new customers, build loyalty with existing ones, and increase repeat visits through targeted promotions.":
       "Erreichen Sie neue Kunden, stärken Sie die Treue bestehender und erhöhen Sie wiederholte Besuche durch gezielte Aktionen.",
 
-  "Edit Menu": "Menü bearbeiten",
+  "Edit Price": "Preis bearbeiten",
   "Item Name": "Artikelname",
   "Enter name": "Name eingeben",
   "Item Description": "Artikelbeschreibung",
@@ -288,7 +288,7 @@ Map<String, String> de_DE = {
   "Price": "Preis",
   "Enter price": "Preis eingeben",
   "+ Add More Item": "+ Weitere Artikel hinzufügen",
-  "Save Menu": "Menü speichern",
+  "Save Price": "Preis speichern",
 
   "Edit Business": "Geschäft bearbeiten",
   "Basic Information": "Basisinformationen",
@@ -320,7 +320,7 @@ Map<String, String> de_DE = {
   "deals": "Angebote",
   "deals redeemed this month": "Angebote diesen Monat eingelöst",
 
-  "Add Menu": "Menü hinzufügen",
+  "Add Price": "Preis hinzufügen",
 
   "Add Business": "Geschäft hinzufügen",
 };

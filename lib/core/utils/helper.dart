@@ -168,3 +168,47 @@ String formatBookingTime(String bookingStart, String bookingEnd) {
   // Return the formatted time range
   return '$startFormatted - $endFormatted';
 }
+
+// Function to generate days dynamically from today
+List<String> generateDayOptions() {
+  List<String> days = [];
+  DateTime today = DateTime.now();
+  List<String> dayNames = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
+
+  // Add "Today" and "Tomorrow" first
+  days.add("Today");
+  days.add("Tomorrow");
+
+  // Now add the next 5 days starting from the day after tomorrow
+  for (int i = 2; i < 7; i++) {
+    // Calculate the next days
+    DateTime nextDay = today.add(Duration(days: i));
+    String dayName = dayNames[nextDay.weekday % 7];
+    days.add(dayName);
+  }
+
+  return days;
+}
+
+String getDayOfWeek(DateTime date) {
+  List<String> weekDays = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
+  return weekDays[date.weekday %
+      7]; // `weekday` gives 1 for Monday, 7 for Sunday
+}

@@ -223,7 +223,7 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
             isBold: true,
           ),
         ),
-        Tab(child: commonText("Menu", size: 14, isBold: true)),
+        Tab(child: commonText("Price", size: 14, isBold: true)),
         Tab(
           child: commonText(
             "Reviews (${controller.businessDetail.value!.totalReview})",
@@ -587,7 +587,7 @@ class _MenuTabState extends State<MenuTab> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       commonText("Example from the", size: 14),
-                      commonText("Menu", size: 18, isBold: true),
+                      commonText("Price", size: 18, isBold: true),
                     ],
                   ),
                 ),

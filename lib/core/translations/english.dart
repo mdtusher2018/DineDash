@@ -275,7 +275,7 @@ Map<String, String> en_US = {
   "Reach new customers, build loyalty with existing ones, and increase repeat visits through targeted promotions.":
       "Reach new customers, build loyalty with existing ones, and increase repeat visits through targeted promotions.",
 
-  "Edit Menu": "Edit Menu",
+  "Edit Price": "Edit Price",
   "Item Name": "Item Name",
   "Enter name": "Enter name",
   "Item Description": "Item Description",
@@ -283,7 +283,7 @@ Map<String, String> en_US = {
   "Price": "Price",
   "Enter price": "Enter price",
   "+ Add More Item": "+ Add More Item",
-  "Save Menu": "Save Menu",
+  "Save Price": "Save Price",
 
   "Edit Business": "Edit Business",
   "Basic Information": "Basic Information",
@@ -316,7 +316,7 @@ Map<String, String> en_US = {
   "deals": "deals",
   "deals redeemed this month": "deals redeemed this month",
 
-  "Add Menu": "Add Menu",
+  "Add Price": "Add Price",
 
   "Add Business": "Add Business",
 };

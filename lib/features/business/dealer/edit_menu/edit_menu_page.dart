@@ -34,14 +34,14 @@ class _EditMenuScreenState extends State<EditMenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Edit Menu", context: context),
+      appBar: commonAppBar(title: "Edit Price", context: context),
       backgroundColor: AppColors.white,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            commonText("Menu", size: 16, isBold: true),
+            commonText("Price", size: 16, isBold: true),
             const SizedBox(height: 16),
 
             // Dynamically build input fields for each item
@@ -78,7 +78,7 @@ class _EditMenuScreenState extends State<EditMenuScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
         child: commonButton(
-          "Save Menu",
+          "Save Price",
           onTap: () {
             controller.editMenu(
               context: context,

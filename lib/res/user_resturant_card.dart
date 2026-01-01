@@ -94,14 +94,15 @@ class RestaurantCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Flexible(
-                      child: commonText(
-                        "${"Price Range :".tr} $priceRange",
-                        maxline: 1,
-                        size: smallTextSize,
-                        fontWeight: FontWeight.w600,
+                    if (priceRange.isNotEmpty)
+                      Flexible(
+                        child: commonText(
+                          "${"Price Range :".tr} $priceRange",
+                          maxline: 1,
+                          size: smallTextSize,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
                   ],
                 ),
 

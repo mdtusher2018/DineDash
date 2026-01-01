@@ -46,7 +46,7 @@ class _AddMenuScreenState extends State<AddMenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Add Menu", context: context),
+      appBar: commonAppBar(title: "Add Price", context: context),
       backgroundColor: AppColors.white,
       body: Column(
         children: [
@@ -56,7 +56,7 @@ class _AddMenuScreenState extends State<AddMenuScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  commonText("Menu", size: 16, isBold: true),
+                  commonText("Price", size: 16, isBold: true),
                   const SizedBox(height: 16),
 
                   // Dynamically build input fields for each item
@@ -118,7 +118,7 @@ class _AddMenuScreenState extends State<AddMenuScreen> {
             padding: const EdgeInsets.all(16.0),
             child: Obx(() {
               return commonButton(
-                "Add Menu",
+                "Add Price",
                 isLoading: controller.isLoading.value,
                 onTap: () async {
                   final validItems =

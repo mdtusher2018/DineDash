@@ -193,17 +193,20 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                   subtitle: activePlan.description,
                   price: "€${activePlan.price}",
                   features: activePlan.feature,
-                  button: commonButton(
-                    "Manage Subscription",
-                    onTap: () async {
-                      if (activePlan.price != 0) {
-                        await controller.payment(
-                          activePlan.id,
-                          context: context,
-                        );
-                      }
-                    },
-                  ),
+                  button:
+                      (activePlan.price != 0)
+                          ? commonButton(
+                            "Manage Subscription",
+                            onTap: () async {
+                              if (activePlan.price != 0) {
+                                await controller.payment(
+                                  activePlan.id,
+                                  context: context,
+                                );
+                              }
+                            },
+                          )
+                          : SizedBox.shrink(),
                   backgroundColor:
                       activePlan.planName.toLowerCase() == "premium"
                           ? Colors.blue.shade50
@@ -281,6 +284,11 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                         onTap: () async {
                           if (plan.price != 0) {
                             await controller.payment(plan.id, context: context);
+                          } else {
+                            await controller.freepayment(
+                              plan.id,
+                              context: context,
+                            );
                           }
                         },
                       ),

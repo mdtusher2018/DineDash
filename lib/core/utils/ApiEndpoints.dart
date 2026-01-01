@@ -65,6 +65,7 @@ class ApiEndpoints {
 
   static String businessNearestList({
     String? city,
+    String? day,
     String? searchTerm,
     String? sortBy,
     required int page,
@@ -73,6 +74,9 @@ class ApiEndpoints {
 
     if (city != null && city.isNotEmpty) {
       params['cityName'] = city.toLowerCase();
+    }
+    if (day != null && day.isNotEmpty) {
+      params['openDay'] = day;
     }
     if (searchTerm != null && searchTerm.isNotEmpty) {
       params['name'] = searchTerm.toLowerCase();
@@ -209,6 +213,7 @@ class ApiEndpoints {
   static String contactUs = "contact-us";
 
   static String payment = "transaction/payment";
+  static String freePayment = "mysubscription/get-freePlan";
 
   static String mySubscription = "mysubscription/my-subs";
 
