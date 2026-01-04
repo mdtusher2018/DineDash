@@ -4,6 +4,7 @@ import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/core/controller/city_controller.dart';
 import 'package:dine_dash/features/home/user/home_page_controller.dart';
 import 'package:dine_dash/core/models/business_model.dart';
+import 'package:dine_dash/features/user_root_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/res/user_resturant_card.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/user_business_details_page.dart';
@@ -153,47 +154,58 @@ class _UserHomeViewState extends State<UserHomeView> {
                 ],
 
                 /// Search bar
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  decoration: BoxDecoration(
-                    color: AppColors.lightBlue.withOpacity(0.4),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: searchTermController,
-                          decoration: InputDecoration(
-                            hintText: "Search restaurants, foods...".tr,
-                            border: InputBorder.none,
+                InkWell(
+                  onTap: () {
+                    UserRootPage.selectedIndex = 1;
+                    navigateToPage(
+                      UserRootPage(),
+                      context: context,
+                      clearStack: true,
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: AppColors.lightBlue.withOpacity(0.4),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            enabled: false,
+                            controller: searchTermController,
+                            decoration: InputDecoration(
+                              hintText: "Search restaurants, foods...".tr,
+                              border: InputBorder.none,
+                            ),
+                            onChanged: (value) {
+                              // if (value.trim().isEmpty) {
+                              //   controller.fetchHomeData(
+                              //     city:
+                              //         cityController.selectedCity
+                              //             .split('-')
+                              //             .first,
+                              //     searchTerm: null,
+                              //   );
+                              // }
+                            },
+                            onSubmitted: (value) {
+                              // controller.fetchHomeData(
+                              //   city:
+                              //       cityController.selectedCity.split('-').first,
+                              //   searchTerm:
+                              //       searchTermController.text.trim().isNotEmpty
+                              //           ? searchTermController.text.trim()
+                              //           : null,
+                              // );
+                            },
                           ),
-                          onChanged: (value) {
-                            if (value.trim().isEmpty) {
-                              controller.fetchHomeData(
-                                city:
-                                    cityController.selectedCity
-                                        .split('-')
-                                        .first,
-                                searchTerm: null,
-                              );
-                            }
-                          },
-                          onSubmitted: (value) {
-                            controller.fetchHomeData(
-                              city:
-                                  cityController.selectedCity.split('-').first,
-                              searchTerm:
-                                  searchTermController.text.trim().isNotEmpty
-                                      ? searchTermController.text.trim()
-                                      : null,
-                            );
-                          },
                         ),
-                      ),
-                      const SizedBox(width: 8),
-                      const Icon(Icons.search),
-                    ],
+                        const SizedBox(width: 8),
+                        const Icon(Icons.search),
+                      ],
+                    ),
                   ),
                 ),
 

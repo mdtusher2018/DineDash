@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
+import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/features/notification/user%20notification/user_notification_response.dart';
 import 'package:dine_dash/features/ratting_and_feedback/user/user_giving_start_screen.dart';
@@ -37,8 +40,10 @@ class UserNotificationController extends BaseController {
 
     await safeCall(
       task: () async {
+        log("is user ${SessionMemory.isUser}");
         final response = await _apiService.get(
-          ApiEndpoints.userNotifications(page: currentPage),
+        (SessionMemory.isUser)?  ApiEndpoints.userNotifications(page: currentPage):
+        ApiEndpoints.dealerNotifications(page: currentPage),
         );
 
         final parsed = NotificationResponse.fromJson(response);
