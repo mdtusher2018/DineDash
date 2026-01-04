@@ -323,4 +323,5 @@ Map<String, String> de_DE = {
   "Add Price": "Preis hinzufügen",
 
   "Add Business": "Geschäft hinzufügen",
+  "Your Businesses":"Ihre Unternehmen"
 };

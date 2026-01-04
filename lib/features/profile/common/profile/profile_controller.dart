@@ -17,6 +17,7 @@ import 'package:dine_dash/features/onboarding/UserOnboarding.dart';
 import 'package:dine_dash/features/profile/common/edit_profile/edit_profile_response.dart';
 import 'package:dine_dash/features/profile/common/profile/profile_response.dart';
 import 'package:dine_dash/features/profile/common/profile/switch_account_response.dart';
+import 'package:dine_dash/features/profile/widgets/common_dialog.dart';
 import 'package:dine_dash/features/user_root_page.dart';
 import 'package:dine_dash/core/models/user_model.dart'; // The model that holds user attributes
 import 'package:dine_dash/res/commonWidgets.dart';
@@ -142,41 +143,46 @@ class ProfileController extends BaseController {
       },
       errorHandle: (statusCode, massage) async {
         if (statusCode == 403) {
-          if (currentRole.value == 'user') {
-            _localStorageService.clearAllExceptOnboarding();
-            _sessionMemory.clear();
-            SessionMemory.isUser = false;
-            if (LocalStorageService.isDealerOnBoardingCompleated) {
-              navigateToPage(
-                CreateDealerAccount1stPage(),
-                clearStack: true,
-                context: context,
-              );
-            } else {
-              navigateToPage(
-                DealerOnboardingView(),
-                clearStack: true,
-                context: context,
-              );
-            }
-          } else {
-            _localStorageService.clearAllExceptOnboarding();
-            _sessionMemory.clear();
-            SessionMemory.isUser = true;
-            if (LocalStorageService.isUserOnboardingCompleated) {
-              navigateToPage(
-                CreateUserAccountFristPage(),
-                clearStack: true,
-                context: context,
-              );
-            } else {
-              navigateToPage(
-                UserOnboardingView(),
-                clearStack: true,
-                context: context,
-              );
-            }
-          }
+          showDealerCreateDialog(
+            context,
+            onContinue: () {
+              if (currentRole.value == 'user') {
+                _localStorageService.clearAllExceptOnboarding();
+                _sessionMemory.clear();
+                SessionMemory.isUser = false;
+                if (LocalStorageService.isDealerOnBoardingCompleated) {
+                  navigateToPage(
+                    CreateDealerAccount1stPage(),
+                    clearStack: true,
+                    context: context,
+                  );
+                } else {
+                  navigateToPage(
+                    DealerOnboardingView(),
+                    clearStack: true,
+                    context: context,
+                  );
+                }
+              } else {
+                _localStorageService.clearAllExceptOnboarding();
+                _sessionMemory.clear();
+                SessionMemory.isUser = true;
+                if (LocalStorageService.isUserOnboardingCompleated) {
+                  navigateToPage(
+                    CreateUserAccountFristPage(),
+                    clearStack: true,
+                    context: context,
+                  );
+                } else {
+                  navigateToPage(
+                    UserOnboardingView(),
+                    clearStack: true,
+                    context: context,
+                  );
+                }
+              }
+            },
+          );
         } else {
           showSnackBar(massage, isError: true);
         }

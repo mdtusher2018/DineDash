@@ -198,7 +198,7 @@ class _DealerHomepageState extends State<DealerHomepage> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: commonText(
-                    "Your Restaurants".tr,
+                    "Your Businesses".tr,
                     size: 18,
                     isBold: true,
                   ),

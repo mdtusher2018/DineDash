@@ -152,7 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        buildcontainer(
+                        Buildcontainer(
                           image: 'assets/images/edit.png',
                           title: 'Edit Profile',
                           onTap: () {
@@ -172,14 +172,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             }
                           },
                         ),
-                        buildcontainer(
+                        Buildcontainer(
                           image: 'assets/images/setting.png',
                           title: 'Settings',
                           onTap: () {
                             navigateToPage(SettingsScreen(), context: context);
                           },
                         ),
-                        buildcontainer(
+                        Buildcontainer(
                           image: 'assets/images/contact.png',
                           title: 'Contact Us',
                           onTap: () {
@@ -202,7 +202,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       if (controller.currentRole.value == 'user') {
                         return Column(
                           children: [
-                            buildRowCon(
+                            BuildRowCon(
                               image: 'assets/images/subscription.png',
                               title: 'Subscription',
                               onTap: () {
@@ -229,14 +229,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       }
                     }),
 
-                    buildRowCon(
+                    BuildRowCon(
                       image: 'assets/images/policy.png',
                       title: 'Privacy Policy',
                       onTap: () {
                         navigateToPage(PrivacyPolicyScreen(), context: context);
                       },
                     ),
-                    buildRowCon(
+                    BuildRowCon(
                       image: 'assets/images/termscon.png',
                       title: 'Terms and Condition',
                       onTap: () {
@@ -246,14 +246,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         );
                       },
                     ),
-                    buildRowCon(
+                    BuildRowCon(
                       image: 'assets/images/about.png',
                       title: 'About Us',
                       onTap: () {
                         navigateToPage(AboutUsPage(), context: context);
                       },
                     ),
-                    buildRowCon(
+                    BuildRowCon(
                       image:
                           'assets/images/language.png', // Add a globe or language icon in your assets
                       title: 'Language', // This should be localized later
@@ -262,7 +262,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },
                     ),
                     Obx(() {
-                      return buildRowCon(
+                      return BuildRowCon(
                         image: 'assets/images/become.png',
                         title:
                             'Become a ${(controller.currentRole.value == 'user' ? "Dealer" : "User")}',
@@ -368,8 +368,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
-class buildRowCon extends StatelessWidget {
-  const buildRowCon({
+class BuildRowCon extends StatelessWidget {
+  const BuildRowCon({
     super.key,
     required this.image,
     required this.title,
@@ -410,8 +410,8 @@ class buildRowCon extends StatelessWidget {
   }
 }
 
-class buildcontainer extends StatelessWidget {
-  const buildcontainer({
+class Buildcontainer extends StatelessWidget {
+  const Buildcontainer({
     super.key,
     required this.image,
     required this.title,

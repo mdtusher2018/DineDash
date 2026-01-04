@@ -58,3 +58,64 @@ void showLanguageSelector(BuildContext context) {
     },
   );
 }
+
+
+
+
+Future<void> showDealerCreateDialog(
+    BuildContext context,
+  {required  VoidCallback onContinue}
+  ) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: commonText(
+            "Are you sure to become a Dealer?".tr,
+            size: 18,
+            fontWeight: FontWeight.w500,
+            textAlign: TextAlign.center,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          actions: [
+            Row(
+              children: [
+                Expanded(
+                  child: commonButton(
+                    "Cancel".tr,
+                    color: Color(0xFFDDDDDD),
+                    textColor: Colors.black,
+                    height: 40,
+                    width: 100,
+                    boarderRadious: 10,
+                    onTap: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                    },
+                  ),
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: commonButton(
+                    "Continue",
+                    color: AppColors.primaryColor,
+                    textColor: Colors.white,
+                    height: 40,
+                    boarderRadious: 10,
+                    width: 100,
+                    onTap: onContinue,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  
+}
+
+
+
+

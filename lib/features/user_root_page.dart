@@ -10,13 +10,13 @@ import 'package:get/get.dart';
 
 class UserRootPage extends StatefulWidget {
   const UserRootPage({super.key});
-
+static   int selectedIndex = 0;
   @override
   _UserRootPageState createState() => _UserRootPageState();
 }
 
 class _UserRootPageState extends State<UserRootPage> {
-  int _selectedIndex = 0;
+
 
   final List<Widget> _pages = [
     UserHomeView(),
@@ -28,7 +28,7 @@ class _UserRootPageState extends State<UserRootPage> {
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      UserRootPage.selectedIndex = index;
     });
   }
 
@@ -67,10 +67,10 @@ class _UserRootPageState extends State<UserRootPage> {
     ];
 
     return Scaffold(
-      body: _pages[_selectedIndex],
+      body: _pages[ UserRootPage.selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex,
+        currentIndex:  UserRootPage.selectedIndex,
         onTap: _onItemTapped,
         backgroundColor: AppColors.white,
         selectedFontSize: 12,
@@ -86,7 +86,7 @@ class _UserRootPageState extends State<UserRootPage> {
             labels[index].tr,
             selectedIcons[index],
             unselectedIcons[index],
-            _selectedIndex == index,
+             UserRootPage.selectedIndex == index,
           );
         }),
       ),

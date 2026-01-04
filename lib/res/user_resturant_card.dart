@@ -181,10 +181,10 @@ class RestaurantCard extends StatelessWidget {
                                   vertical: 5,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: AppColors.lightBlue,
+                                  color: AppColors.primaryColor,
                                   borderRadius: BorderRadius.circular(20),
                                 ),
-                                child: commonText(tag, size: smallTextSize),
+                                child: commonText(tag, size: smallTextSize,color: AppColors.white,isBold: true),
                               ),
                             )
                             .toList(),

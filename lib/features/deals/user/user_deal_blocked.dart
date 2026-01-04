@@ -1,3 +1,4 @@
+import 'package:dine_dash/features/user_root_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -278,7 +279,8 @@ class _UserDealBlockedPageState extends State<UserDealBlockedPage>
                       child: commonButton(
                         "Go to deals".tr,
                         onTap: () {
-                          Navigator.of(context).pop(); // Close dialog first
+                         UserRootPage.selectedIndex=3;
+                         navigateToPage(UserRootPage(), context: context,clearStack: true);
                         },
                       ),
                     ),
