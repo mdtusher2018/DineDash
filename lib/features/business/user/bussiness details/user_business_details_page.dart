@@ -468,7 +468,8 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                               duration: "${deal.reuseableAfter} Days",
                               subscriptionRequired: false,
                               isActive: deal.isActive,
-                              remainingDeal:   deal.maxClaimCount-deal.redeemCount,
+                              remainingDeal:
+                                  deal.maxClaimCount - deal.redeemCount,
                               activeTime: deal.activeTime,
                               dealId: deal.id,
                               saving: deal.benefitAmount,
@@ -1153,6 +1154,8 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                                         ),
                                         context: context,
                                       );
+                                    } else {
+                                      Navigator.pop(context);
                                     }
                                   },
                           color: AppColors.primaryColor,
