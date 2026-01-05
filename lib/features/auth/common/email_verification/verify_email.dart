@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/auth/common/email_verification/email_verification_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
@@ -28,6 +30,14 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   }
 
   final controller = Get.find<EmailVerificationController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.isResendOTPTrue.value = false;
+    log("init state called");
+  }
 
   @override
   Widget build(BuildContext context) {

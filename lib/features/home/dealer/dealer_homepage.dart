@@ -186,8 +186,7 @@ class _DealerHomepageState extends State<DealerHomepage> {
                         );
                       }),
                       commonText(
-                        "Total monthly deals redeems across all restaurants."
-                            .tr,
+                        "Total monthly deals redeems across all businesses.",
                         size: 14,
                         fontWeight: FontWeight.w600,
                       ),

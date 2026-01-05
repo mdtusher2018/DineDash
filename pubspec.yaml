@@ -57,6 +57,8 @@ dependencies:
   webview_flutter: ^4.13.0
   geocoding: ^4.0.0
   flutter_svg: ^2.2.3
+  flutter_polyline_points: ^3.1.0
+  url_launcher: ^6.3.2
 
 
 

@@ -3,6 +3,7 @@ class UserDealItem {
   final num minPrice;
   final num maxPrice;
   final String businessImage;
+  final List<dynamic> businessLocation;
   final String businessId;
   final String businessName;
   final List<OpeningHour> openingHours;
@@ -25,6 +26,7 @@ class UserDealItem {
 
   UserDealItem({
     required this.id,
+    required this.businessLocation,
     required this.minPrice,
     required this.maxPrice,
     required this.businessImage,
@@ -51,6 +53,7 @@ class UserDealItem {
 
   factory UserDealItem.fromJson(Map<String, dynamic> json) => UserDealItem(
     id: json['_id'] ?? '',
+    businessLocation: json['businessLocation']?["coordinates"] ?? [],
     minPrice: json['minPrice'] ?? 0,
     maxPrice: json['maxPrice'] ?? 0,
     businessImage: json['businessImage'] ?? '',

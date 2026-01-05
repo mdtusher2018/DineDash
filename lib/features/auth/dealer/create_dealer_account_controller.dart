@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
@@ -23,33 +26,64 @@ class DealerCreateAccountController extends BaseController {
     required String businessName,
     required String businessType,
     required String email,
-    required String? postalCode,
+    required String postalCode,
     required String address,
     required String? password,
-    required String confirlPassword,
+
     required String phoneNumber,
     required Function() next,
+    String? hearFrom,
+
+    required List<String> types,
+
+    required List<Map<String, dynamic>> openingHours,
+    required List<double> coordinates,
+    required File imageFile,
   }) async {
     final role = (SessionMemory.isUser) ? "user" : "business";
 
     await safeCall<void>(
       task: () async {
-        final body = {
+        // final body = {
+        //   "fullName": fullName,
+        //   "email": email,
+        //   "postalCode": postalCode,
+        //   "password": password,
+        //   "role": role,
+        //   "businessName": businessName,
+        //   "businessType": businessType.toLowerCase(),
+        //   "formatted_address": address,
+        //   "types": types,
+        //   "formatted_phone_number": phoneNumber,
+        //   "qa": hearFrom,
+        // };
+
+        final formData = {
           "fullName": fullName,
           "email": email,
           "postalCode": postalCode,
           "password": password,
           "role": role,
-
           "businessName": businessName,
           "businessType": businessType.toLowerCase(),
           "formatted_address": address,
-          // "types": ["restaurant", "store"],
+          "types": types,
           "formatted_phone_number": phoneNumber,
-          // "qa": "question ans",
+          "qa": hearFrom,
+          "openingHours": openingHours,
+          "location": {"type": "Point", "coordinates": coordinates},
         };
 
-        final response = await _apiService.post(ApiEndpoints.userSignUp, body);
+        log(imageFile.path);
+
+        final response = await _apiService.multipart(
+          ApiEndpoints.userSignUp,
+          body: formData,
+          method: 'POST',
+          files: {'image': imageFile},
+        );
+
+        // final response = await _apiService.post(ApiEndpoints.userSignUp, body);
         final signUpResponse = DealerSignUpResponse.fromJson(response);
 
         if (signUpResponse.statusCode == 201) {
@@ -75,14 +109,59 @@ class DealerCreateAccountController extends BaseController {
     required Place? businessDetails,
     required double lat,
     required double long,
-    required String businessName,
     required String address,
+    required String name,
+
+    required List<String> types,
+    required String? businessType,
+    required String phoneNumber,
+    required String postalCode,
+    required List<Map<String, dynamic>> openingHours,
+    required List<double> coordinates,
+    File? imageFile,
   }) async {
     safeCall(
       task: () async {
         if (email.isEmpty || !email.isValidEmail) {
           throw Exception("Invalide Email");
         }
+
+        if (name.trim().isEmpty) {
+          throw Exception("Business name is required");
+        }
+
+        if (types.isEmpty) {
+          throw Exception("Please select at least one category/type");
+        }
+
+        if (businessType == null || businessType.trim().isEmpty) {
+          throw Exception("Please select a business type");
+        }
+
+        if (address.trim().isEmpty) {
+          throw Exception("Address is required");
+        }
+
+        if (phoneNumber.trim().isEmpty) {
+          throw Exception("Phone number is required");
+        }
+
+        if (postalCode.trim().isEmpty) {
+          throw Exception("Postal code is required");
+        }
+
+        if (openingHours.isEmpty) {
+          throw Exception("Please provide opening hours");
+        }
+
+        if (coordinates.length != 2) {
+          throw Exception("Invalid coordinates");
+        }
+
+        if (imageFile == null) {
+          throw Exception("Please upload your business image");
+        }
+
         final response = await _apiService.post(ApiEndpoints.checkEmail, {
           "email": email,
           "role": "business",
@@ -96,11 +175,17 @@ class DealerCreateAccountController extends BaseController {
             latitude: lat,
             longitude: long,
             address: address,
-            businessName: businessName,
+            businessName: name,
+            businessType: businessType,
+
+            openingHours: openingHours,
+            phoneNumber: phoneNumber,
+            postalCode: postalCode,
+            types: types,
+            imageFile: imageFile,
           ),
           context: context,
         );
-        //  navigateToPage(DealerAddBusinessSecondScreen(result: businessDetails,userData: emailResponseModel.data,email:email,latitude: latitude,longitude: longitude,fromSignup: true,))
       },
     );
   }

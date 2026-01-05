@@ -219,8 +219,8 @@ Map<String, String> de_DE = {
   "Businesses": "Restaurants",
   "Active Deals": "Aktive Angebote",
   "Monthly Performance": "Monatliche Leistung",
-  "Total monthly deals redeems across all restaurants.":
-      "Gesamte eingelöste Angebote dieses Monats in allen Restaurants.",
+  "Total monthly deals redeems across all businesses.":
+      "Gesamte monatliche Einlösungen von Angeboten über alle Unternehmen hinweg.",
   "Your Restaurants": "Ihre Restaurants",
   "_ deals redeemed this month":
       "@number Angebote wurden diesen Monat eingelöst",
@@ -323,5 +323,8 @@ Map<String, String> de_DE = {
   "Add Price": "Preis hinzufügen",
 
   "Add Business": "Geschäft hinzufügen",
-  "Your Businesses":"Ihre Unternehmen"
+  "Your Businesses": "Ihre Unternehmen",
+  "Manage deals across all your businesses":
+      "Verwalten Sie Angebote in all Ihren Unternehmen.",
+  "Become a User": "Benutzer werden",
 };

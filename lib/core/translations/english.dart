@@ -218,8 +218,8 @@ Map<String, String> en_US = {
   "Businesses": "Businesses",
   "Active Deals": "Active Deals",
   "Monthly Performance": "Monthly Performance",
-  "Total monthly deals redeems across all restaurants.":
-      "Total monthly deals redeems across all restaurants.",
+  "Total monthly deals redeems across all businesses.":
+      "Total monthly deals redeems across all businesses.",
   "Your Restaurants": "Your Restaurants",
   "_ deals redeemed this month": "@number deals redeemed this month",
 
@@ -319,5 +319,10 @@ Map<String, String> en_US = {
   "Add Price": "Add Price",
 
   "Add Business": "Add Business",
-  "Your Businesses":"Your Businesses"
+  "Your Businesses": "Your Businesses",
+
+  "Manage deals across all your businesses":
+      "Manage deals across all your businesses.",
+
+  "Become a User": "Become a User",
 };

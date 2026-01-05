@@ -390,43 +390,47 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
         ].map(buildDayRow),
 
         const SizedBox(height: 24),
-        commonButton(
-          "Add Business",
-          isLoading: controller.isLoading.value,
-          onTap: () async {
-            final openingHoursList =
-                openDays.entries
-                    .where((entry) => !entry.value)
-                    .map(
-                      (entry) => {
-                        "day": entry.key,
-                        "openingTime": timings[entry.key]!.start.format(
-                          context,
-                        ),
-                        "closingTime": timings[entry.key]!.end.format(context),
-                        'isOpen': !entry.value,
-                      },
-                    )
-                    .toList();
+        Obx(() {
+          return commonButton(
+            "Add Business",
+            isLoading: controller.isLoading.value,
+            onTap: () async {
+              final openingHoursList =
+                  openDays.entries
+                      .where((entry) => !entry.value)
+                      .map(
+                        (entry) => {
+                          "day": entry.key,
+                          "openingTime": timings[entry.key]!.start.format(
+                            context,
+                          ),
+                          "closingTime": timings[entry.key]!.end.format(
+                            context,
+                          ),
+                          'isOpen': !entry.value,
+                        },
+                      )
+                      .toList();
 
-            await controller.createBusiness(
-              context: context,
-              name: businessController.text.trim(),
-              types: selectedCategories,
-              businessType: selectedBusinessType,
+              await controller.createBusiness(
+                context: context,
+                name: businessController.text.trim(),
+                types: selectedCategories,
+                businessType: selectedBusinessType,
 
-              address: addressController.text.trim(),
-              phoneNumber: phoneController.text.trim(),
-              postalCode: zipController.text.trim(),
-              openingHours: openingHoursList,
-              coordinates: [
-                selectedLng.value ?? DefaultValue.lung,
-                selectedLat.value ?? DefaultValue.lung,
-              ],
-              imageFile: _selectedImage,
-            );
-          },
-        ),
+                address: addressController.text.trim(),
+                phoneNumber: phoneController.text.trim(),
+                postalCode: zipController.text.trim(),
+                openingHours: openingHoursList,
+                coordinates: [
+                  selectedLng.value ?? DefaultValue.lung,
+                  selectedLat.value ?? DefaultValue.lat,
+                ],
+                imageFile: _selectedImage,
+              );
+            },
+          );
+        }),
         const SizedBox(height: 32),
       ],
     );

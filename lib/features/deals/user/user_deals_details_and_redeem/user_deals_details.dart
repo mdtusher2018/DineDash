@@ -1,8 +1,8 @@
 // ignore_for_file: must_be_immutable
+
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/core/utils/share_links.dart';
-import 'package:dine_dash/features/business/user/bussiness%20details/user_business_details_page.dart';
 import 'package:dine_dash/features/deals/user/model_and_response/deal_model.dart';
 import 'package:dine_dash/features/deals/user/user_deals_details_and_redeem/user_deal_redeem.dart';
 import 'package:dine_dash/features/deals/user/user_deals_details_and_redeem/user_deal_redeem_controller.dart';
@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shake/shake.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserDealsDetails extends StatefulWidget {
   final bool fromDeepLink;
@@ -85,449 +86,459 @@ class _UserDealsDetailsState extends State<UserDealsDetails> {
         }
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: EdgeInsets.only(bottom: 20),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Color(0xffE8E8F5),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 124,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadiusGeometry.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
+          child: RefreshIndicator(
+            onRefresh: () async {
+              loadDealData();
+            },
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(bottom: 20),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Color(0xffE8E8F5),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 124,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Image.network(
-                            getFullImagePath(
-                              dealData.value?.businessImage ?? "",
+                          child: ClipRRect(
+                            borderRadius: BorderRadiusGeometry.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
                             ),
-                            fit: BoxFit.cover,
+                            child: Image.network(
+                              getFullImagePath(
+                                dealData.value?.businessImage ?? "",
+                              ),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 14),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 5),
-                              commonText(
-                                dealData.value!.businessName,
-                                size: 22,
-                                fontWeight: FontWeight.w700,
-                              ),
-                              SizedBox(height: 5),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 14),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 5),
+                                commonText(
+                                  dealData.value!.businessName,
+                                  size: 22,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                SizedBox(height: 5),
 
-                              // Wrap(
-                              //   spacing: 12,
-                              //   runSpacing: 8,
-                              //   children:
-                              //       dealData.value!.catgory.map((option) {
-                              //         final isSelected =
-                              //             selected.value == option;
-                              //         return GestureDetector(
-                              //           onTap: () {
-                              //             selected.value = option;
-                              //           },
-                              //           child: Container(
-                              //             padding: const EdgeInsets.symmetric(
-                              //               horizontal: 16,
-                              //               vertical: 8,
-                              //             ),
-                              //             decoration: BoxDecoration(
-                              //               color:
-                              //                   isSelected
-                              //                       ? Color(0xffB7CDF6)
-                              //                       : Color(0xffB7CDF5),
-                              //               borderRadius: BorderRadius.circular(
-                              //                 18,
-                              //               ),
-                              //             ),
-                              //             child: Text(
-                              //               option,
-                              //               style: TextStyle(
-                              //                 color: Colors.black,
-                              //                 fontWeight:
-                              //                     isSelected
-                              //                         ? FontWeight.bold
-                              //                         : FontWeight.normal,
-                              //               ),
-                              //             ),
-                              //           ),
-                              //         );
-                              //       }).toList(),
-                              // ),
-                              SizedBox(height: 10),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: InkWell(
-                                      onTap: () {
-                                        navigateToPage(
-                                          UserBusinessDetailsPage(
-                                            businessId:
-                                                dealData.value!.businessId,
-                                            fromDeepLink: true,
-                                          ),
-                                          context: context,
-                                        );
-                                      },
-                                      child: Container(
-                                        height: 31,
-                                        width: 150,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            20,
-                                          ),
-                                          border: Border.all(
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 5,
-                                            horizontal: 20,
-                                          ),
-                                          child: Row(
-                                            spacing: 10,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons.location_on_rounded,
-                                                color: Colors.black,
-                                                size: 20,
-                                              ),
-                                              Flexible(
-                                                child: FittedBox(
-                                                  fit: BoxFit.scaleDown,
-                                                  child: commonText(
-                                                    "Direction".tr,
-                                                    size: 16,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 12),
-                                  Expanded(
-                                    child: InkWell(
-                                      onTap: () {
-                                        Share.shareUri(
-                                          ShareLinks.deal(
-                                            dealData.value!.dealId,
-                                          ),
-                                        );
-                                      },
-                                      child: Container(
-                                        height: 31,
-                                        width: 150,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            20,
-                                          ),
-                                          border: Border.all(
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 5,
-                                          ),
-                                          child: Row(
-                                            spacing: 10,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons.share,
-                                                color: Colors.black,
-                                                size: 20,
-                                              ),
-                                              Flexible(
-                                                child: FittedBox(
-                                                  fit: BoxFit.scaleDown,
-                                                  child: commonText(
-                                                    "Share".tr,
-                                                    size: 16,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              SizedBox(height: 20),
-                              Stack(
-                                children: [
-                                  Column(
-                                    children: [
-                                      SizedBox(height: 20),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                          vertical: 10,
-                                        ),
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            10,
-                                          ),
-                                          color: Color(0xffE8EFFC),
-                                          border: Border.all(
-                                            color: Colors.blueAccent,
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 17.5,
-                                          ),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(height: 30),
-                                              commonText(
-                                                dealData.value!.dealType,
-                                                size: 20,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                              commonText(
-                                                dealData.value!.description,
-                                                size: 16,
-                                                fontWeight: FontWeight.w400,
-                                                color: Color(0xff0A0A0A),
-                                              ),
-                                              SizedBox(height: 10),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                spacing: 5,
-                                                children: [
-                                                  Container(
-                                                    height: 35,
-                                                    width: 40,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                            5,
-                                                          ),
-                                                      color:
-                                                          Colors
-                                                              .blueAccent
-                                                              .shade100,
-                                                    ),
-                                                    child: Center(
-                                                      child: CommonImage(
-                                                        "assets/images/clock.png",
-                                                        height: 25,
-                                                        width: 25,
-                                                        fit: BoxFit.contain,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      commonText(
-                                                        "Reusable After".tr,
-                                                        size: 12,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                      ),
-                                                      commonText(
-                                                        "${dealData.value!.reuseableAfter} Days",
-                                                        size: 14,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Positioned(
-                                    top: 0,
-                                    left: 110,
-                                    right: 110,
-                                    child: Container(
-                                      height: 39,
-                                      width: 89,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                        color: Colors.blueAccent,
-                                      ),
-                                      child: Center(
-                                        child: commonText(
-                                          "${dealData.value!.benefitAmmount} € Benefit",
-                                          size: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 16),
-
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                spacing: 8,
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      spacing: 10,
-                                      children: [
-                                        CommonImage(
-                                          "assets/images/date.png",
-                                          height: 30,
-                                          width: 30,
-                                        ),
-                                        commonText(
-                                          dealData.value!.day,
-                                          size: 16,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height:
-                                        60, // Adjust this to your desired divider height
-                                    child: VerticalDivider(
-                                      thickness: 2,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      spacing: 10,
-                                      children: [
-                                        CommonImage(
-                                          "assets/images/time.png",
-                                          height: 30,
-                                          width: 30,
-                                        ),
-                                        FittedBox(
-                                          child: commonText(
-                                            "${dealData.value!.start} - ${dealData.value!.end}",
-                                            size: 14,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 10),
-                              if (!widget.fromDeepLink) ...[
+                                // Wrap(
+                                //   spacing: 12,
+                                //   runSpacing: 8,
+                                //   children:
+                                //       dealData.value!.catgory.map((option) {
+                                //         final isSelected =
+                                //             selected.value == option;
+                                //         return GestureDetector(
+                                //           onTap: () {
+                                //             selected.value = option;
+                                //           },
+                                //           child: Container(
+                                //             padding: const EdgeInsets.symmetric(
+                                //               horizontal: 16,
+                                //               vertical: 8,
+                                //             ),
+                                //             decoration: BoxDecoration(
+                                //               color:
+                                //                   isSelected
+                                //                       ? Color(0xffB7CDF6)
+                                //                       : Color(0xffB7CDF5),
+                                //               borderRadius: BorderRadius.circular(
+                                //                 18,
+                                //               ),
+                                //             ),
+                                //             child: Text(
+                                //               option,
+                                //               style: TextStyle(
+                                //                 color: Colors.black,
+                                //                 fontWeight:
+                                //                     isSelected
+                                //                         ? FontWeight.bold
+                                //                         : FontWeight.normal,
+                                //               ),
+                                //             ),
+                                //           ),
+                                //         );
+                                //       }).toList(),
+                                // ),
+                                SizedBox(height: 10),
                                 Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
-                                      child: DottedLine(
-                                        dashLength: 15,
-                                        dashGapLength: 8,
-                                        lineThickness: 3,
-                                        dashColor: Colors.grey.shade400,
+                                      child: InkWell(
+                                        onTap: () async {
+                                          final url =
+                                              'https://www.google.com/maps/dir/?api=1&destination=${dealData.value!.businessLocation.last},${dealData.value!.businessLocation.first}';
+                                          if (await canLaunch(url)) {
+                                            await launch(url);
+                                          } else {
+                                            throw 'Could not launch $url';
+                                          }
+                                        },
+                                        child: Container(
+                                          height: 31,
+                                          width: 150,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                              20,
+                                            ),
+                                            border: Border.all(
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 5,
+                                              horizontal: 20,
+                                            ),
+                                            child: Row(
+                                              spacing: 10,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  Icons.location_on_rounded,
+                                                  color: Colors.black,
+                                                  size: 20,
+                                                ),
+                                                Flexible(
+                                                  child: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: commonText(
+                                                      "Direction".tr,
+                                                      size: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 12),
+                                    Expanded(
+                                      child: InkWell(
+                                        onTap: () {
+                                          Share.shareUri(
+                                            ShareLinks.deal(
+                                              dealData.value!.dealId,
+                                            ),
+                                          );
+                                        },
+                                        child: Container(
+                                          height: 31,
+                                          width: 150,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                              20,
+                                            ),
+                                            border: Border.all(
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 5,
+                                            ),
+                                            child: Row(
+                                              spacing: 10,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  Icons.share,
+                                                  color: Colors.black,
+                                                  size: 20,
+                                                ),
+                                                Flexible(
+                                                  child: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: commonText(
+                                                      "Share".tr,
+                                                      size: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
+
                                 SizedBox(height: 20),
-                                Container(
-                                  height: 48,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                      color: Colors.blueAccent,
+                                Stack(
+                                  children: [
+                                    Column(
+                                      children: [
+                                        SizedBox(height: 20),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                            vertical: 10,
+                                          ),
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
+                                            color: Color(0xffE8EFFC),
+                                            border: Border.all(
+                                              color: Colors.blueAccent,
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 17.5,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                SizedBox(height: 30),
+                                                commonText(
+                                                  dealData.value!.dealType,
+                                                  size: 20,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                                commonText(
+                                                  dealData.value!.description,
+                                                  size: 16,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Color(0xff0A0A0A),
+                                                ),
+                                                SizedBox(height: 10),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  spacing: 5,
+                                                  children: [
+                                                    Container(
+                                                      height: 35,
+                                                      width: 40,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                              5,
+                                                            ),
+                                                        color:
+                                                            Colors
+                                                                .blueAccent
+                                                                .shade100,
+                                                      ),
+                                                      child: Center(
+                                                        child: CommonImage(
+                                                          "assets/images/clock.png",
+                                                          height: 25,
+                                                          width: 25,
+                                                          fit: BoxFit.contain,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        commonText(
+                                                          "Reusable After".tr,
+                                                          size: 12,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                        commonText(
+                                                          "${dealData.value!.reuseableAfter} Days",
+                                                          size: 14,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    spacing: 10,
-                                    children: [
-                                      CommonImage(
-                                        "assets/images/shakephone.png",
-                                        height: 30,
-                                        width: 30,
-                                        fit: BoxFit.cover,
+                                    Positioned(
+                                      top: 0,
+                                      left: 110,
+                                      right: 110,
+                                      child: Container(
+                                        height: 39,
+                                        width: 89,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            15,
+                                          ),
+                                          color: Colors.blueAccent,
+                                        ),
+                                        child: Center(
+                                          child: commonText(
+                                            "${dealData.value!.benefitAmmount} € Benefit",
+                                            size: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                          ),
+                                        ),
                                       ),
-                                      commonText(
-                                        "Shake your phone to redeem".tr,
-                                        size: 18,
-                                        fontWeight: FontWeight.w500,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 16),
+
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  spacing: 8,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        spacing: 10,
+                                        children: [
+                                          CommonImage(
+                                            "assets/images/date.png",
+                                            height: 30,
+                                            width: 30,
+                                          ),
+                                          commonText(
+                                            dealData.value!.day,
+                                            size: 16,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height:
+                                          60, // Adjust this to your desired divider height
+                                      child: VerticalDivider(
+                                        thickness: 2,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        spacing: 10,
+                                        children: [
+                                          CommonImage(
+                                            "assets/images/time.png",
+                                            height: 30,
+                                            width: 30,
+                                          ),
+                                          FittedBox(
+                                            child: commonText(
+                                              "${dealData.value!.start} - ${dealData.value!.end}",
+                                              size: 14,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 10),
+                                if (!widget.fromDeepLink) ...[
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: DottedLine(
+                                          dashLength: 15,
+                                          dashGapLength: 8,
+                                          lineThickness: 3,
+                                          dashColor: Colors.grey.shade400,
+                                        ),
                                       ),
                                     ],
                                   ),
-                                ),
-                                SizedBox(height: 15),
+                                  SizedBox(height: 20),
+                                  Container(
+                                    height: 48,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: Colors.blueAccent,
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      spacing: 10,
+                                      children: [
+                                        CommonImage(
+                                          "assets/images/shakephone.png",
+                                          height: 30,
+                                          width: 30,
+                                          fit: BoxFit.cover,
+                                        ),
+                                        commonText(
+                                          "Shake your phone to redeem".tr,
+                                          size: 18,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: 15),
 
-                                commonButton(
-                                  "You can redeem from here also".tr,
-                                  onTap: () async {
-                                    await controller.dealRedeem(
-                                      widget.udmIdl,
-                                      dealId: widget.dealId,
-                                      businessId: dealData.value!.businessId,
-                                      rasturentName:
-                                          dealData.value!.businessName,
-                                      context: context,
-                                    );
-                                  },
-                                ),
+                                  commonButton(
+                                    "You can redeem from here also".tr,
+                                    onTap: () async {
+                                      await controller.dealRedeem(
+                                        widget.udmIdl,
+                                        dealId: widget.dealId,
+                                        businessId: dealData.value!.businessId,
+                                        rasturentName:
+                                            dealData.value!.businessName,
+                                        context: context,
+                                      );
+                                    },
+                                  ),
+                                ],
                               ],
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

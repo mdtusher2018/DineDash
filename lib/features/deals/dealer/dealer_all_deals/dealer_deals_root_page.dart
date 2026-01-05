@@ -40,7 +40,7 @@ class _DealerDealsRootPageState extends State<DealerDealsRootPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: commonText(
-                "Manage deals across all your resturant",
+                "Manage deals across all your businesses",
                 size: 14,
               ),
             ),

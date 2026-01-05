@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dine_dash/core/models/user_model.dart';
 import 'package:dine_dash/core/utils/image_paths.dart';
 import 'package:dine_dash/core/utils/colors.dart';
@@ -15,7 +17,13 @@ class CreateDealerAccount2ndPage extends StatefulWidget {
   final String email;
   final String businessName;
   final String address;
-  final double? longitude, latitude;
+  final double longitude, latitude;
+  final List<String> types;
+  final String businessType;
+  final String phoneNumber;
+  final String postalCode;
+  final List<Map<String, dynamic>> openingHours;
+  final File imageFile;
 
   const CreateDealerAccount2ndPage({
     super.key,
@@ -26,6 +34,13 @@ class CreateDealerAccount2ndPage extends StatefulWidget {
     required this.longitude,
     required this.businessName,
     required this.address,
+
+    required this.types,
+    required this.businessType,
+    required this.phoneNumber,
+    required this.postalCode,
+    required this.openingHours,
+    required this.imageFile,
   });
 
   @override
@@ -36,34 +51,18 @@ class CreateDealerAccount2ndPage extends StatefulWidget {
 class _CreateDealerAccount2ndPageState
     extends State<CreateDealerAccount2ndPage> {
   final nameController = TextEditingController();
-  final emailController = TextEditingController();
-  final phoneController = TextEditingController();
   final referralController = TextEditingController();
   final passwordController = TextEditingController();
 
   final controller = Get.find<DealerCreateAccountController>();
-
-  String? selectedBusinessType;
   bool isPasswordVisible = false;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      emailController.text = widget.email;
       if (widget.userData != null) {
         nameController.text = widget.userData!.fullName;
-      }
-      if (widget.businessDetails?.phoneNumber != null) {
-        phoneController.text = widget.businessDetails!.phoneNumber!;
-      }
-
-      // Optional: business type mapping
-      if (widget.businessDetails!.types != null &&
-          widget.businessDetails!.types!.contains(PlaceType.RESTAURANT)) {
-        selectedBusinessType = "Restaurant";
-      } else {
-        selectedBusinessType ??= "Activity";
       }
     });
   }
@@ -93,27 +92,7 @@ class _CreateDealerAccount2ndPageState
                     nameController,
                     hintText: "Enter your full name",
                   ),
-                  const SizedBox(height: 16),
-                  commonTextfieldWithTitle(
-                    "Your Phone Number",
-                    phoneController,
-                    hintText: "Phone number with country code",
-                  ),
-                  SizedBox(height: 16),
-                  commonText(
-                    "Business Type*",
-                    size: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  SizedBox(height: 8),
-                  commonDropdown<String>(
-                    items: const ["Restaurant", "Activity"],
-                    value: selectedBusinessType,
-                    hint: "Select your business".tr,
-                    onChanged: (val) {
-                      setState(() => selectedBusinessType = val);
-                    },
-                  ),
+
                   const SizedBox(height: 16),
 
                   commonTextfieldWithTitle(
@@ -147,28 +126,21 @@ class _CreateDealerAccount2ndPageState
                       "Submit",
                       isLoading: controller.isLoading.value,
                       onTap: () async {
-                        if (selectedBusinessType == null) {
-                          showSnackBar("Please sellect a Business Type");
-                          return;
-                        }
                         await controller.signUp(
                           fullName: nameController.text,
                           businessName: widget.businessName,
-                          businessType: selectedBusinessType!,
+                          businessType: widget.businessType,
                           email: widget.email,
-                          postalCode:
-                              (widget.businessDetails?.addressComponents !=
-                                      null)
-                                  ? widget.businessDetails?.addressComponents!
-                                      .firstWhere(
-                                        (c) => c.types.contains("postal_code"),
-                                      )
-                                      .name
-                                  : null,
+                          postalCode: widget.postalCode,
                           address: widget.address,
                           password: passwordController.text,
-                          confirlPassword: passwordController.text,
-                          phoneNumber: phoneController.text,
+
+                          phoneNumber: widget.phoneNumber,
+                          coordinates: [widget.longitude, widget.latitude],
+                          openingHours: widget.openingHours,
+                          types: widget.types,
+                          imageFile: widget.imageFile,
+                          hearFrom: referralController.text,
                           next: () {
                             navigateToPage(
                               EmailVerificationScreen(),

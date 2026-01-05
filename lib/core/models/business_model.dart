@@ -291,6 +291,7 @@ class DealData {
   final int reuseableAfter;
   final String reasonFor;
   final int redeemCount;
+  final int maxClaimCount;
   bool isActive;
   bool isApproved;
   bool isDeleted;
@@ -303,6 +304,7 @@ class DealData {
     required this.dealType,
     required this.reuseableAfter,
     required this.redeemCount,
+    required this.maxClaimCount,
     required this.reasonFor,
     required this.isActive,
     required this.isApproved,
@@ -319,6 +321,7 @@ class DealData {
       reasonFor: json['reasonFor'] ?? "",
       reuseableAfter: json['reuseableAfter'] ?? 0,
       redeemCount: json['redeemCount'] ?? 0,
+      maxClaimCount: json['maxClaimCount'] ?? 0,
       isActive: json['isActive'] ?? false,
       isApproved: json['isApproved'] ?? false,
       isDeleted: json['isDeleted'] ?? false,

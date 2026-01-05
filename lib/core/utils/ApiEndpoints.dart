@@ -112,6 +112,7 @@ class ApiEndpoints {
   static String userNotifications({required int page}) {
     return "notifications/notification-userend?page=$page&limit=10";
   }
+
   static String dealerNotifications({required int page}) {
     return "notifications/notification-businessend?page=$page&limit=10";
   }

@@ -468,6 +468,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                               duration: "${deal.reuseableAfter} Days",
                               subscriptionRequired: false,
                               isActive: deal.isActive,
+                              remainingDeal:   deal.maxClaimCount-deal.redeemCount,
                               activeTime: deal.activeTime,
                               dealId: deal.id,
                               saving: deal.benefitAmount,
@@ -610,6 +611,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
     required String duration,
     required String dealId,
     required num saving,
+    required int remainingDeal,
     required List<ActiveTime> activeTime,
     bool subscriptionRequired =
         false, //testing purpose remove while api intregration
@@ -692,7 +694,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                     subscriptionRequired: subscriptionRequired,
                     businessId: widget.businessId,
                     businessName: controller.businessDetail.value!.name,
-                    dealCount: controller.businessDetail.value!.deals.length,
+                    dealCount: remainingDeal,
                     saving: saving,
                     dealId: dealId,
                     openingHours: activeTime,
@@ -1097,10 +1099,20 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                                             isBold: true,
                                           ),
                                         ),
-                                        commonText(
-                                          "Deals",
-                                          size: 12,
-                                          color: Colors.grey,
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          spacing: 2,
+                                          children: [
+                                            commonText(
+                                              dealCount.toString(),
+                                              color: Colors.grey,
+                                            ),
+                                            commonText(
+                                              "Deals",
+                                              size: 12,
+                                              color: Colors.grey,
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
