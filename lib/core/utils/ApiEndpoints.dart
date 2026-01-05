@@ -223,6 +223,8 @@ class ApiEndpoints {
 
   static String getAllDealType = "deal-type/all";
 
+  static String unreadNotification = "notifications/count";
+
   static String deleteMenu(String menuId) {
     return "menu/$menuId";
   }

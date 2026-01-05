@@ -33,11 +33,16 @@ class _UserHomeViewState extends State<UserHomeView> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       cityController.fetchCities();
       controller.fetchHomeData();
+      controller.fetchNotification();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.fetchNotification();
+    });
+
     return Scaffold(
       body: SafeArea(
         child: Obx(() {
@@ -54,6 +59,7 @@ class _UserHomeViewState extends State<UserHomeView> {
           return RefreshIndicator(
             onRefresh: () async {
               controller.fetchHomeData();
+              controller.fetchNotification();
             },
             child: ListView(
               padding: const EdgeInsets.all(16),
@@ -128,16 +134,45 @@ class _UserHomeViewState extends State<UserHomeView> {
                             UserNotificationsPage(),
                             context: context,
                           ),
-                      child: Material(
-                        borderRadius: BorderRadius.circular(100),
-                        elevation: 2,
-                        child: const Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Icon(
-                            Icons.notifications_active,
-                            color: Colors.orange,
+                      child: Stack(
+                        children: [
+                          Padding(
+                            padding: EdgeInsetsGeometry.only(right: 5, top: 8),
+                            child: Material(
+                              borderRadius: BorderRadius.circular(100),
+                              elevation: 2,
+                              child: const Padding(
+                                padding: EdgeInsets.all(8),
+                                child: Icon(
+                                  Icons.notifications_active,
+                                  color: Colors.orange,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                          Positioned(
+                            right: 0,
+                            top: 0,
+                            child: Obx(() {
+                              if (controller.unread.value < 1) {
+                                return SizedBox();
+                              }
+                              return Container(
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: commonText(
+                                  controller.unread.value.toString(),
+                                  color: AppColors.white,
+                                  size: 14,
+                                  isBold: true,
+                                ),
+                              );
+                            }),
+                          ),
+                        ],
                       ),
                     ),
                   ],

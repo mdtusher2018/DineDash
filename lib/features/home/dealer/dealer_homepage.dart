@@ -29,17 +29,22 @@ class _DealerHomepageState extends State<DealerHomepage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       log("===========>>>>>>> Home page api called");
       controller.fetchDealerHomepageData();
+      controller.fetchNotification();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.fetchNotification();
+    });
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: RefreshIndicator(
           onRefresh: () async {
             await controller.fetchDealerHomepageData();
+            controller.fetchNotification();
           },
           child: SingleChildScrollView(
             controller: scrollController,
@@ -55,16 +60,51 @@ class _DealerHomepageState extends State<DealerHomepage> {
                       size: 18,
                       fontWeight: FontWeight.w700,
                     ),
-                    IconButton(
-                      onPressed: () {
-                        navigateToPage(
-                          UserNotificationsPage(),
-                          context: context,
-                        );
-                      },
-                      icon: Icon(
-                        Icons.notifications_active,
-                        color: Colors.orange,
+                    GestureDetector(
+                      onTap:
+                          () => navigateToPage(
+                            UserNotificationsPage(),
+                            context: context,
+                          ),
+                      child: Stack(
+                        children: [
+                          Padding(
+                            padding: EdgeInsetsGeometry.only(right: 5, top: 8),
+                            child: Material(
+                              borderRadius: BorderRadius.circular(100),
+                              elevation: 2,
+                              child: const Padding(
+                                padding: EdgeInsets.all(8),
+                                child: Icon(
+                                  Icons.notifications_active,
+                                  color: Colors.orange,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            right: 0,
+                            top: 0,
+                            child: Obx(() {
+                              if (controller.unread.value < 1) {
+                                return SizedBox();
+                              }
+                              return Container(
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: commonText(
+                                  controller.unread.value.toString(),
+                                  color: AppColors.white,
+                                  size: 14,
+                                  isBold: true,
+                                ),
+                              );
+                            }),
+                          ),
+                        ],
                       ),
                     ),
                   ],

@@ -7,9 +7,10 @@ import 'package:get/get.dart';
 class HomeController extends BaseController {
   final ApiService _apiService = Get.find();
 
-
   // Observables for UI
   var homeData = Rxn<HomeData>();
+
+  RxInt unread = 0.obs;
 
   Future<void> fetchHomeData({String? city, String? searchTerm}) async {
     await safeCall(
@@ -24,6 +25,18 @@ class HomeController extends BaseController {
           homeData.refresh();
         } else {
           throw Exception(homeResponse.message);
+        }
+      },
+    );
+  }
+
+  Future<void> fetchNotification() async {
+    await safeCall(
+      task: () async {
+        final response = await _apiService.get(ApiEndpoints.unreadNotification);
+
+        if (response['statusCode'] == 200) {
+          unread.value = response['data']?['attributes']?['count'] ?? 0;
         }
       },
     );
