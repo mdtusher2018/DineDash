@@ -15,6 +15,8 @@ class UserSubscriptionController extends BaseController {
   RxList<PlanModel> plans = <PlanModel>[].obs;
   Rx<SubscriptionData?> mySubscription = Rx<SubscriptionData?>(null);
 
+  RxBool haveSubscription = false.obs;
+
   // Fetch all subscriptions
   Future<void> getAllSubscription() async {
     await safeCall(
@@ -78,6 +80,18 @@ class UserSubscriptionController extends BaseController {
         );
 
         mySubscription.value = subscriptionResponse.data;
+      },
+    );
+  }
+
+  Future<void> getActiveSubscription() async {
+    await safeCall(
+      task: () async {
+        final response = await _apiService.get(
+          ApiEndpoints.myActiveSubscription,
+        );
+
+        haveSubscription.value = response['data']?['attributes'] ?? false;
       },
     );
   }

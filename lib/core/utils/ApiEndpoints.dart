@@ -220,6 +220,7 @@ class ApiEndpoints {
   static String freePayment = "mysubscription/get-freePlan";
 
   static String mySubscription = "mysubscription/my-subs";
+  static String myActiveSubscription = "mysubscription/my-active-subs";
 
   static String getAllDealType = "deal-type/all";
 

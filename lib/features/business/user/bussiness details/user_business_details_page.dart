@@ -1,4 +1,5 @@
-import 'dart:math';
+import 'dart:developer';
+import 'dart:math' hide log;
 
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
 import 'package:dine_dash/core/services/localstorage/session_memory.dart';
@@ -17,6 +18,7 @@ import 'package:dine_dash/features/deals/user/user_deal_blocked.dart';
 import 'package:dine_dash/core/models/business_model.dart';
 import 'package:dine_dash/features/onboarding/UserOnboarding.dart';
 import 'package:dine_dash/features/subscription/user_subscription.dart';
+import 'package:dine_dash/features/subscription/user_subscription_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/core/utils/colors.dart';
@@ -43,6 +45,8 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
 
   final BusinessDetailController controller =
       Get.find<BusinessDetailController>();
+  final UserSubscriptionController subscriptionController =
+      Get.find<UserSubscriptionController>();
 
   final localStorageController = Get.find<LocalStorageService>();
   RxString token = "".obs;
@@ -51,6 +55,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
   void initState() {
     super.initState();
     controller.fetchBusinessDetail(widget.businessId);
+
     getToken();
   }
 
@@ -61,6 +66,7 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    subscriptionController.getActiveSubscription();
     return Scaffold(
       body: Obx(() {
         final business = controller.businessDetail.value;
@@ -466,7 +472,10 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                               title: deal.dealType,
                               subText: deal.description,
                               duration: "${deal.reuseableAfter} Days",
-                              subscriptionRequired: false,
+                              subscriptionRequired:
+                                  !subscriptionController
+                                      .haveSubscription
+                                      .value,
                               isActive: deal.isActive,
                               remainingDeal:
                                   deal.maxClaimCount - deal.redeemCount,
@@ -614,10 +623,10 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
     required num saving,
     required int remainingDeal,
     required List<ActiveTime> activeTime,
-    bool subscriptionRequired =
-        false, //testing purpose remove while api intregration
+    required bool subscriptionRequired,
     required bool isActive,
   }) {
+    log(subscriptionRequired ? "true" : "false");
     return Stack(
       children: [
         Container(
@@ -688,6 +697,11 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                 color: AppColors.primaryColor,
                 height: 40,
                 onTap: () {
+                  if (subscriptionRequired) {
+                    navigateToPage(SubscriptionView(), context: context);
+                    return;
+                  }
+
                   showDealBottomSheet(
                     context,
                     title: title,
@@ -703,14 +717,11 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                       Navigator.of(context).pop(); // Close dialog first
 
                       navigateToPage(
-                        (subscriptionRequired)
-                            ? SubscriptionView()
-                            : UserDealBlockedPage(
-                              resturentName:
-                                  controller.businessDetail.value!.name,
-                              timeRange: timeRange,
-                              day: day,
-                            ),
+                        UserDealBlockedPage(
+                          resturentName: controller.businessDetail.value!.name,
+                          timeRange: timeRange,
+                          day: day,
+                        ),
                         context: context,
                       );
                     },

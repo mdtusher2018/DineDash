@@ -361,74 +361,6 @@ class _UserExplorePageState extends State<UserExplorePage> {
           physics: AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
-              /// Filter and Sort
-              Obx(() {
-                return Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 0,
-                  ),
-
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value:
-                            cityController.selectedCity.value.isEmpty
-                                ? null
-                                : cityController.selectedCity.value,
-                        icon: Icon(
-                          Icons.arrow_drop_down,
-                          color: AppColors.primaryColor,
-                        ),
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                        onChanged: (String? newValue) {
-                          if (newValue != null) {
-                            cityController.selectedCity.value = newValue;
-
-                            controller.fetchBusinessesList(
-                              city: newValue.split('-').first,
-                              searchTerm:
-                                  searchTermController.text.trim().isNotEmpty
-                                      ? searchTermController.text.trim()
-                                      : null,
-                              sortBy: selectedSortBy,
-                            );
-                          }
-                        },
-                        hint:
-                            cityController.isLoading.value
-                                ? const SizedBox(
-                                  height: 18,
-                                  width: 18,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                  ),
-                                )
-                                : commonText(
-                                  cityController.cities.isEmpty
-                                      ? "No locations"
-                                      : "Select location",
-                                  size: 16,
-                                ),
-                        items:
-                            cityController.cities.map((city) {
-                              // use a unique identifier for each dropdown value
-                              final uniqueValue = city.cityName;
-                              return DropdownMenuItem<String>(
-                                value: uniqueValue,
-                                child: commonText(city.cityName, size: 16),
-                              );
-                            }).toList(),
-                      ),
-                    ),
-                  ),
-                );
-              }),
               const SizedBox(height: 16),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -552,8 +484,8 @@ class _UserExplorePageState extends State<UserExplorePage> {
 
                   const SizedBox(width: 12),
                   Expanded(
-                    child: DropdownButtonHideUnderline(
-                      child: Container(
+                    child: Obx(() {
+                      return Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 16,
                           vertical: 0,
@@ -562,39 +494,66 @@ class _UserExplorePageState extends State<UserExplorePage> {
                           border: Border.all(color: AppColors.lightBlue),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: DropdownButton<String>(
-                          value: selectedSortBy,
-                          isExpanded: true,
-                          icon: const Icon(
-                            Icons.keyboard_arrow_down_rounded,
-                            size: 18,
-                          ),
-                          items:
-                              ['Low', 'High'].map((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: commonText("Price: $value", size: 14),
+
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            value:
+                                cityController.selectedCity.value.isEmpty
+                                    ? null
+                                    : cityController.selectedCity.value,
+                            icon: Icon(
+                              Icons.arrow_drop_down,
+                              color: AppColors.primaryColor,
+                            ),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                            onChanged: (String? newValue) {
+                              if (newValue != null) {
+                                cityController.selectedCity.value = newValue;
+
+                                controller.fetchBusinessesList(
+                                  city: newValue.split('-').first,
+                                  searchTerm:
+                                      searchTermController.text
+                                              .trim()
+                                              .isNotEmpty
+                                          ? searchTermController.text.trim()
+                                          : null,
+                                  sortBy: selectedSortBy,
                                 );
-                              }).toList(),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedSortBy = newValue!;
-                              controller.fetchBusinessesList(
-                                city:
-                                    cityController.selectedCity
-                                        .split('-')
-                                        .first,
-                                searchTerm:
-                                    searchTermController.text.trim().isNotEmpty
-                                        ? searchTermController.text.trim()
-                                        : null,
-                                sortBy: newValue,
-                              );
-                            });
-                          },
+                              }
+                            },
+                            hint:
+                                cityController.isLoading.value
+                                    ? const SizedBox(
+                                      height: 18,
+                                      width: 18,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                      ),
+                                    )
+                                    : commonText(
+                                      cityController.cities.isEmpty
+                                          ? "No locations"
+                                          : "Select location",
+                                      size: 14,
+                                    ),
+                            items:
+                                cityController.cities.map((city) {
+                                  // use a unique identifier for each dropdown value
+                                  final uniqueValue = city.cityName;
+                                  return DropdownMenuItem<String>(
+                                    value: uniqueValue,
+                                    child: commonText(city.cityName, size: 14),
+                                  );
+                                }).toList(),
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    }),
                   ),
                 ],
               ),

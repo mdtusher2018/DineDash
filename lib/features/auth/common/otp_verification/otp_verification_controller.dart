@@ -25,7 +25,9 @@ class OTPVerificationController extends BaseController {
     required String otp,
     required BuildContext context,
   }) async {
-    log(otp);
+    log(
+      "otp is : $otp \npurpose: ${(isResendOTPTrue.value) ? "resend-otp" : "email-verification"}",
+    );
     final validationMessage = AuthValidator.validateEmailAndOTPVerification(
       otp: otp,
     );

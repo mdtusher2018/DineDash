@@ -34,7 +34,9 @@ class EmailVerificationController extends BaseController {
       showSnackBar(validationMessage, isError: true);
       return;
     }
-    log(otp);
+    log(
+      "otp is : $otp \npurpose: ${(isResendOTPTrue.value) ? "resend-otp" : "email-verification"}",
+    );
     await safeCall<void>(
       task: () async {
         final body = {

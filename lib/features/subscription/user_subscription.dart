@@ -183,8 +183,36 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                 final activePlan =
                     controller.mySubscription.value?.subscriptionPlan;
 
-                if (activePlan == null) {
-                  return Center(child: Text("No active subscription found"));
+                if (activePlan == null || activePlan.planName == "N/A") {
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.subscriptions_outlined,
+                            size: 64,
+                            color: AppColors.primaryColor,
+                          ),
+                          const SizedBox(height: 16),
+                          commonText(
+                            "No Active Subscription",
+
+                            size: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          const SizedBox(height: 8),
+                          commonText(
+                            "You currently don’t have an active subscription. "
+                            "Subscribe to unlock premium features.",
+                            textAlign: TextAlign.center,
+                            size: 14,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
                 }
 
                 return buildPlanCard(
@@ -256,6 +284,38 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                 }
 
                 final filteredPlans = controller.plans.toList();
+
+                if (controller.plans.isEmpty) {
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.subscriptions_outlined,
+                            size: 64,
+                            color: AppColors.primaryColor,
+                          ),
+                          const SizedBox(height: 16),
+                          commonText(
+                            "No Subscriptions Available",
+
+                            size: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          const SizedBox(height: 8),
+                          commonText(
+                            "There are currently no subscription plans available. "
+                            "Please check back later.",
+                            textAlign: TextAlign.center,
+                            size: 14,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
 
                 return ListView.builder(
                   physics: NeverScrollableScrollPhysics(),
