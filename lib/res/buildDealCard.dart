@@ -86,7 +86,7 @@ Widget buildDealCard({
                               FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: commonText(
-                                  "Reusable After".tr,
+                                  "Reusable After",
                                   size: 12,
                                   maxline: 1,
                                 ),

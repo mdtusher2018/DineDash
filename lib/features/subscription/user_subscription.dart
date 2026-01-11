@@ -224,7 +224,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                   button:
                       (activePlan.price != 0)
                           ? commonButton(
-                            "Manage Subscription",
+                            "Manage Subscriptions",
                             onTap: () async {
                               if (activePlan.price != 0) {
                                 await controller.payment(

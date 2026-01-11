@@ -376,7 +376,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         commonText(
-                          "Reusable After*".tr,
+                          "Reusable After*",
                           size: 14,
                           fontWeight: FontWeight.bold,
                         ),
@@ -384,7 +384,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                         commonDropdown<String>(
                           items: refuesableAfter,
                           value: selectedRefusableDay,
-                          hint: "Reusable After",
+                          hint: "Reusable After".tr,
                           onChanged:
                               (val) =>
                                   setState(() => selectedRefusableDay = val),

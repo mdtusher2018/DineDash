@@ -309,7 +309,7 @@ class _UserAfterGivingStarPageState extends State<UserAfterGivingStarPage> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     commonText(
-                                                      "Reusable After".tr,
+                                                      "Reusable After",
                                                       size: 12,
                                                       fontWeight:
                                                           FontWeight.w400,

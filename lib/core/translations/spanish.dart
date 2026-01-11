@@ -1,14 +1,90 @@
 Map<String, String> de_DE = {
-  'Language': 'Sprache',
+  //new need to add
+  "Nearby open restaurants": "In der Nähe",
+  "Select location": "Stadt wählen",
+  "Hot Deals": "Hot Deals",
+  "Top rated restaurants": "Gut bewertete Restaurants",
+  "Favourite": "Favoriten",
+  "Book deal": "Deal buchen",
+  "Benefit": "Vorteil",
+  "Opening hours": "Öffnungszeiten",
+  "Reusable after": "Wiederverwendbar nach",
+  "Edit Profile": "Profil bearbeiten",
+  "Contact Us": "Kontaktiere uns",
+  "About Us": "Über uns",
+  "Become a dealer": "Werde Dealer",
+  "Manage subscriptions": "Mitgliedschaft",
+  "Subscribe now": "Werde Mitglied",
+  "Privacy policy": "Datenschutz",
+
+  "add deal": "Deal zufügen",
+  "Redeemed": "Eingelöst",
+  "Redeemed Deals": "Eingelöste Deals",
+  "All deals": "Alle Deals",
+  "Manage deals across all businesses":
+      "Verwalte Deals über alle Geschäfte hinweg",
+  "Pending for edit": "Genehmigung ausstehend",
+  "Add new Business": "Neues Geschäft zufügen",
+  "Active time frames": "Aktive Zeitfenster",
+  "Benefit Amount": "Vorteil",
+  "Maximum claims": "Maximal einlösbar",
+  "Overall Feedback": "Gesamtfeedback",
+  "Select your rating": "Wähle deine Bewertung",
+  "Sort by": "Sortieren nach",
+  "Dashboard": "Dashboard",
+  "0 deals redeemed this month": "0 Deals eingelöst/Monat",
+
+  //already exist.
+  //
+  //===============
+  "Your Businesses": "Deine Unternehmen",
+
+  "Edit": "Bearbeiten",
+  "Pause": "Pause",
+  "Delete": "Löschen",
+  "Active Deals": "Aktive Deals",
+  "Total Reviews": "Alle Rezensionen",
+  "Active": "Aktiv",
+  "Description": "Beschreibung",
+  "Deal Type": "Deal",
+  "Remove": "Entfernen",
+  "Save": "Speichern",
+  "Rating Distribution": "Bewertungsverteilung",
+  "Filters": "Filter",
+  "Business": "Geschäft",
+  "Select your business": "Wähle dein Geschäft",
+  "Select your sort": "Wähle deine Sortierung",
+
+  "Deals": "Deals",
+  "Search restaurants, foods...": "Suche...",
+  "See all": "Alle ansehen",
+  "Activities": "Aktivitäten",
+  "New": "Neu",
+  "Home": "Home",
+  "Explore": "Entdecke",
+  "Profile": "Profil",
+  "Price": "Preis",
+  "Reviews": "Rezensionen",
+  "Information": "Information",
+  "Ratings & Reviews": "Bewertungen & Rezensionen",
+  "Location": "Location",
+  "Contact": "Kontakt",
+  "Map": "Map",
+  "List": "Liste",
+  "Shake your phone to redeem": "Schütteln zum Einlösen",
+  "You can redeem from here also": "Oder direkt hier Einlösen",
+  "Direction": "Adresse",
+  "Share": "Teilen",
+  "Your Journey": "Deine Journey",
+  "Settings": "Einstellungen",
+  "Language": "Sprache",
+
   'Select Language': 'Sprache auswählen',
   'English': 'Englisch',
   'German': 'Deutsch',
-  'Edit Profile': 'Profil bearbeiten',
-  'Settings': 'Einstellungen',
-  'Contact Us': 'Kontaktieren Sie uns',
+
   'Privacy Policy': 'Datenschutzrichtlinie',
   'Terms and Condition': 'Allgemeine Geschäftsbedingungen',
-  'About Us': 'Über uns',
   'Become a Dealer': 'Händler werden',
   'Subscription': 'Abonnement',
   'Log Out': 'Abmelden',
@@ -24,7 +100,6 @@ Map<String, String> de_DE = {
   'Change Password': 'Passwort ändern',
   'Delete Account': 'Konto löschen',
   'Do you want to delete your account?': 'Möchten Sie Ihr Konto löschen?',
-  'Delete': 'Löschen',
 
   'Email': 'E-Mail',
   'Enter your email': 'Geben Sie Ihre E-Mail ein',
@@ -32,7 +107,6 @@ Map<String, String> de_DE = {
   'Enter your name': 'Geben Sie Ihren Namen ein',
   'Postcode': 'Postleitzahl',
   'Enter your postcode': 'Geben Sie Ihre Postleitzahl ein',
-  'Save': 'Speichern',
 
   'If you face any kind of problem with our service feel free to contact us.':
       'Wenn Sie ein Problem mit unserem Service haben, kontaktieren Sie uns bitte.',
@@ -43,18 +117,14 @@ Map<String, String> de_DE = {
   'Confirm New Password': 'Neues Passwort bestätigen',
   'Forgot Password': 'Passwort vergessen',
 
-  'Home': 'Startseite',
-  'Explore': 'Entdecken',
   'Favorite': 'Favoriten',
   'Details': 'Details',
-  'Profile': 'Profil',
 
-  'Your Journey': 'Ihre Reise',
   'Deutsch': 'Deutsch',
 
   'Discovering new restaurants, trying delicious dishes while paying less, a review of your culinary journey!':
       'Neue Restaurants entdecken, köstliche Gerichte probieren und dabei sparen – ein Rückblick auf Ihre kulinarische Reise!',
-  'Deals': 'Angebote',
+
   'Visited Place': 'Besuchte Orte',
   'Cities': 'Städte',
   'Ratings': 'Bewertungen',
@@ -85,18 +155,13 @@ Map<String, String> de_DE = {
   'Menu': 'Menü',
   'Currently Closed': 'Derzeit geschlossen',
   'Opens at {time}': 'Öffnet um @time',
-  'Reviews': 'Bewertungen',
-  'Information': 'Informationen',
-  'Ratings & Reviews': 'Bewertungen & Rezensionen',
+
   'All reviews {number}': 'Alle Bewertungen @number',
 
-  'Search restaurants, foods...': 'Restaurants, Speisen suchen...',
   'Nearby Open Restaurants': 'Nahegelegene offene Restaurants',
-  'Activities': 'Aktivitäten',
+
   'Hot Deals 🔥': 'Top-Angebote 🔥',
   'Top rated Restaurants': 'Bestbewertete Restaurants',
-  'New': 'Neu',
-  'See all': 'Alle ansehen',
 
   'Go to deals': 'Zu den Angeboten',
   'Deal booked!': 'Angebot gebucht!',
@@ -116,8 +181,6 @@ Map<String, String> de_DE = {
       'Beginnen Sie mit dem Entdecken unserer Rezepte und speichern Sie Ihre Favoriten, um Ihre persönliche Sammlung aufzubauen',
   'Start Exploring': 'Starten Sie die Erkundung',
 
-  'Map': 'Karte',
-  'List': 'Liste',
   'What do you want to do': 'Was möchten Sie tun',
   'Restaurants': 'Restaurants',
 
@@ -129,8 +192,6 @@ Map<String, String> de_DE = {
   'Continue': 'Fortfahren',
   'Remind me later': 'Später erinnern',
 
-  "Direction": "Wegbeschreibung",
-  "Share": "Teilen",
   "Your Rating": "Ihre Bewertung",
   "Reusable After": "Wiederverwendbar nach",
   "LOCATION": "STANDORT",
@@ -141,8 +202,6 @@ Map<String, String> de_DE = {
   "Location :": "Standort :",
   "Used Deals": "Genutzte Angebote",
 
-  "Shake your phone to redeem": "Schüttle dein Telefon, um einzulösen",
-  "You can redeem from here also": "Du kannst auch von hier einlösen",
   "Congratulations, you’ve discovered a new restaurant in your town!":
       "Herzlichen Glückwunsch, du hast ein neues Restaurant in deiner Stadt entdeckt!",
 
@@ -192,14 +251,14 @@ Map<String, String> de_DE = {
   "Add a new deal to attract more customers to your restaurant.":
       "Fügen Sie ein neues Angebot hinzu, um mehr Kunden in Ihr Restaurant zu locken.",
   "Business*": "Geschäft*",
-  "Select your business": "Wählen Sie Ihr Geschäft",
+
   "Deal Title*": "Angebotstitel*",
   "e.g., Happy Hour Special": "z.B. Happy Hour Special",
-  "Description": "Beschreibung",
+
   "Describe your deal...": "Beschreiben Sie Ihr Angebot...",
   "Active Time Frames*": "Aktive Zeitfenster*",
   "Add": "Hinzufügen",
-  "Remove": "Entfernen",
+
   "Day": "Tag",
   "Select day": "Wählen Sie den Tag",
   "Start Time": "Startzeit",
@@ -214,10 +273,10 @@ Map<String, String> de_DE = {
 
   "Hi Dealer!": "Hallo Händler!",
   "Quick Add Deal": "Schnellangebot hinzufügen",
-  "Total Reviews": "Gesamtbewertungen",
+
   "Avg. Rating": "Durchschnittsbewertung",
   "Businesses": "Restaurants",
-  "Active Deals": "Aktive Angebote",
+
   "Monthly Performance": "Monatliche Leistung",
   "Total monthly deals redeems across all businesses.":
       "Gesamte monatliche Einlösungen von Angeboten über alle Unternehmen hinweg.",
@@ -226,9 +285,6 @@ Map<String, String> de_DE = {
       "@number Angebote wurden diesen Monat eingelöst",
 
   "REDEENED": "EINGELÖST",
-  "Edit": "Bearbeiten",
-  "Pause": "Pause",
-  "Active": "Aktiv",
 
   "Why do you want to pause this deal?":
       "Warum möchten Sie dieses Angebot pausieren?",
@@ -238,19 +294,16 @@ Map<String, String> de_DE = {
   "Add Deal": "Deal hinzufügen",
   "+ Add Deal": "+ Deal hinzufügen",
   "Benefit Amount*": "Vorteilsbetrag*",
-  "Deal Type": "Angebotstyp",
+
   "Create Deal": "Deal erstellen",
 
   "Average Rating": "Durchschnittliche Bewertung",
-  "Rating Distribution": "Bewertungsverteilung",
-  "Filters": "Filter",
-  "Business": "Geschäft",
+
   "Rating": "Bewertung",
   "Sort By": "Sortieren nach",
   "Used :": "Verwendet :",
 
   "Select your ratting": "Wählen Sie Ihre Bewertung",
-  "Select your sort": "Wählen Sie Ihre Sortierung",
 
   "Back to User": "Zurück zum Benutzer",
 
@@ -285,7 +338,7 @@ Map<String, String> de_DE = {
   "Enter name": "Name eingeben",
   "Item Description": "Artikelbeschreibung",
   "Enter a short description": "Kurze Beschreibung eingeben",
-  "Price": "Preis",
+
   "Enter price": "Preis eingeben",
   "+ Add More Item": "+ Weitere Artikel hinzufügen",
   "Save Price": "Preis speichern",
@@ -298,12 +351,11 @@ Map<String, String> de_DE = {
   "Select a category": "Kategorie auswählen",
   "Business Image": "Geschäftsbild",
   "Upload your image": "Bild hochladen",
-  "Location": "Standort",
+
   "ZIP/Postal Code*": "PLZ*",
   "e.g., Downtown, Mall District": "z.B., Innenstadt, Einkaufszentrum",
   "Detailed Address*": "Detaillierte Adresse*",
   "e.g., 123 Main Street, Building Name": "z.B., Hauptstraße 123, Gebäudename",
-  "Contact": "Kontakt",
   "Phone Number*": "Telefonnummer*",
   "+880 126 2548 255": "+880 126 2548 255",
   "Opening Hours": "Öffnungszeiten",
@@ -323,8 +375,12 @@ Map<String, String> de_DE = {
   "Add Price": "Preis hinzufügen",
 
   "Add Business": "Geschäft hinzufügen",
-  "Your Businesses": "Ihre Unternehmen",
   "Manage deals across all your businesses":
       "Verwalten Sie Angebote in all Ihren Unternehmen.",
   "Become a User": "Benutzer werden",
+
+  "Avg Rating": "Durchschnittliche Bewertung",
+  "Monthly performance": "Monatliche Performance",
+  "Total monthly deals redeems across all businesses":
+      "Gesamtzahl der monatlich eingelösten Angebote in allen Restaurants.",
 };
