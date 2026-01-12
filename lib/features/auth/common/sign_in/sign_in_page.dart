@@ -6,6 +6,7 @@ import 'package:dine_dash/features/auth/user/user_create_account_1st_page.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:dine_dash/core/utils/image_paths.dart';
 import 'package:dine_dash/features/auth/common/forget_password/forget_password_page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,10 +19,10 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController emailController = TextEditingController(
-    text: "tusher@gmail.com",
+    text: kDebugMode ? "tusher@gmail.com" : null,
   );
   final TextEditingController passwordController = TextEditingController(
-    text: "aaaaaa",
+    text: kDebugMode ? "aaaaaa" : null,
   );
   bool rememberMe = false;
   bool isPasswordVisible = false;

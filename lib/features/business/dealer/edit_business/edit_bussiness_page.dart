@@ -111,18 +111,19 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
   }
 
   TimeOfDay _parseTime(String timeString) {
+    log("timeString: ============>>>>>>>>>>>>>> $timeString");
     final parts = timeString.split(' ');
     final timeParts = parts[0].split(':');
 
     int hour = int.parse(timeParts[0]);
     final minute = int.parse(timeParts[1]);
 
-    if (parts[1].toUpperCase() == "PM" && hour != 12) {
-      hour += 12; // Convert PM time to 24-hour format
-    }
-    if (parts[1].toUpperCase() == "AM" && hour == 12) {
-      hour = 0; // Convert 12 AM to 00 hours
-    }
+    // if (parts[1].toUpperCase() == "PM" && hour != 12) {
+    //   hour += 12; // Convert PM time to 24-hour format
+    // }
+    // if (parts[1].toUpperCase() == "AM" && hour == 12) {
+    //   hour = 0; // Convert 12 AM to 00 hours
+    // }
 
     return TimeOfDay(hour: hour, minute: minute);
   }

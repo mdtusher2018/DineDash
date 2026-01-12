@@ -115,10 +115,10 @@ class _DealerDealsRootPageState extends State<DealerDealsRootPage> {
                                       reason: p0,
                                       dealId: deal.dealId,
                                       deleteManually: () {
-                                        controller.deals.removeWhere((element) {
-                                          return element.id == deal.id;
-                                        });
-                                        setState(() {});
+                                        // controller.deals.removeWhere((element) {
+                                        //   return element.id == deal.id;
+                                        // });
+                                        // setState(() {});
                                       },
                                     );
                                   },

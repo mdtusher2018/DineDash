@@ -309,11 +309,11 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
                           reason: p0,
                           dealId: deal.id,
                           deleteManually: () {
-                            controller.businessDetail.value!.dealsData
-                                .removeWhere((element) {
-                                  return element.id == deal.id;
-                                });
-                            setState(() {});
+                            // controller.businessDetail.value!.dealsData
+                            //     .removeWhere((element) {
+                            //       return element.id == deal.id;
+                            //     });
+                            // setState(() {});
                           },
                         );
                       }, title: "Why do you want to delete this deal?");

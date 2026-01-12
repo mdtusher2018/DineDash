@@ -34,7 +34,21 @@ abstract class BaseController extends GetxController {
       if (e is ApiException && errorHandle != null) {
         errorHandle(e.statusCode, e.message);
       } else {
-        if (showErrorSnack) showSnackBar(errorMessage.value, isError: true);
+        if (e is ApiException) {
+          if (e.statusCode >= 400 && e.statusCode < 500) {
+            errorMessage.value = e.message;
+          } else if (e.statusCode >= 500) {
+            errorMessage.value =
+                'Server-side unknown error. Please try again later.';
+          } else {
+            errorMessage.value = 'An unexpected error occurred.';
+          }
+        }
+
+        if (showErrorSnack &&
+            errorMessage.value != "An unexpected error occurred.") {
+          showSnackBar(errorMessage.value, isError: true);
+        }
       }
       return null;
     } finally {
