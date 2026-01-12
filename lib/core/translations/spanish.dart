@@ -30,7 +30,7 @@ Map<String, String> de_DE = {
   "Maximum claims": "Maximal einlösbar",
   "Overall Feedback": "Gesamtfeedback",
   "Select your rating": "Wähle deine Bewertung",
-  "Sort by": "Sortieren nach",
+  "Sort By": "Sortieren nach",
   "Dashboard": "Dashboard",
   "0 deals redeemed this month": "0 Deals eingelöst/Monat",
 
@@ -83,7 +83,7 @@ Map<String, String> de_DE = {
   'English': 'Englisch',
   'German': 'Deutsch',
 
-  'Privacy Policy': 'Datenschutzrichtlinie',
+  'Privacy Policy': 'Datenschutz',
   'Terms and Condition': 'Allgemeine Geschäftsbedingungen',
   'Become a Dealer': 'Händler werden',
   'Subscription': 'Abonnement',
@@ -158,10 +158,10 @@ Map<String, String> de_DE = {
 
   'All reviews {number}': 'Alle Bewertungen @number',
 
-  'Nearby Open Restaurants': 'Nahegelegene offene Restaurants',
+  'Nearby Open Restaurants': 'In der Nähe',
 
-  'Hot Deals 🔥': 'Top-Angebote 🔥',
-  'Top rated Restaurants': 'Bestbewertete Restaurants',
+  'Hot Deals 🔥': 'Hot Deals 🔥',
+  'Top rated Restaurants': 'Gut bewertete Restaurants',
 
   'Go to deals': 'Zu den Angeboten',
   'Deal booked!': 'Angebot gebucht!',
@@ -268,7 +268,7 @@ Map<String, String> de_DE = {
   "Deal Type*": "Angebotsart*",
   "Reusable After*": "Wiederverwendbar nach*",
   "60 Days": "60 Tage",
-  "Maximum Claims*": "Maximale Anzahl Ansprüche*",
+  "Maximum Claims*": "Maximal einlösbar*",
   "e.g. 100": "z.B. 100",
 
   "Hi Dealer!": "Hallo Händler!",
@@ -281,8 +281,7 @@ Map<String, String> de_DE = {
   "Total monthly deals redeems across all businesses.":
       "Gesamte monatliche Einlösungen von Angeboten über alle Unternehmen hinweg.",
   "Your Restaurants": "Ihre Restaurants",
-  "_ deals redeemed this month":
-      "@number Angebote wurden diesen Monat eingelöst",
+  "_ deals redeemed this month": "@number Deals eingelöst/Monat",
 
   "REDEENED": "EINGELÖST",
 
@@ -291,16 +290,16 @@ Map<String, String> de_DE = {
   "Enter your reason...": "Geben Sie Ihren Grund ein...",
   "Submit": "Absenden",
 
-  "Add Deal": "Deal hinzufügen",
-  "+ Add Deal": "+ Deal hinzufügen",
-  "Benefit Amount*": "Vorteilsbetrag*",
+  "Add Deal": "Deal zufügen",
+  "+ Add Deal": "+ Deal zufügen",
+  "Benefit Amount*": "Vorteil*",
 
   "Create Deal": "Deal erstellen",
 
   "Average Rating": "Durchschnittliche Bewertung",
 
   "Rating": "Bewertung",
-  "Sort By": "Sortieren nach",
+
   "Used :": "Verwendet :",
 
   "Select your ratting": "Wählen Sie Ihre Bewertung",
@@ -363,7 +362,7 @@ Map<String, String> de_DE = {
   "to": "bis",
   "Save Business": "Geschäft speichern",
 
-  "Add New Business": "Neues Geschäft hinzufügen",
+  "Add New Business": "Neues Geschäft zufügen",
   "Chef's Table": "Chef's Tisch",
   "Delete Item": "Artikel löschen",
   "Are you sure you want to delete this item? This action cannot be undone.":

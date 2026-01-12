@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/core/utils/default_value.dart';
@@ -331,6 +332,9 @@ class _CreateDealerAccount1stPageState
   @override
   void initState() {
     super.initState();
+    final email = Get.find<SessionMemory>().email ?? "";
+    log("email: =======>>>>>>>>>>>>> $email");
+    emailController.text = email;
 
     for (var day in days) {
       if (day == "Saturday" || day == "Sunday") {
@@ -448,6 +452,7 @@ class _CreateDealerAccount1stPageState
                     "Your Email",
                     emailController,
                     hintText: "Enter your email",
+                    enable: false,
                   ),
 
                   business2ndPageDetails(),

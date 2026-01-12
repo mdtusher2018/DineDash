@@ -146,6 +146,9 @@ class ProfileController extends BaseController {
           showDealerCreateDialog(
             context,
             onContinue: () {
+              
+              _sessionMemory.setEmail(userModel.value!.email);
+
               if (currentRole.value == 'user') {
                 _localStorageService.clearAllExceptOnboarding();
                 _sessionMemory.clear();

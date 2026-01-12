@@ -265,8 +265,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       return BuildRowCon(
                         image: 'assets/images/become.png',
                         title:
-                            'Become a ${(controller.currentRole.value == 'user' ? "Dealer" : "User")}',
+                            'Become a ${(controller.userModel.value == null) ? "Loading..." : (controller.currentRole.value == 'user' ? "Dealer" : "User")}',
                         onTap: () {
+                          if (controller.userModel.value == null) {
+                            return;
+                          }
                           controller.switchAccount(context);
                         },
                       );

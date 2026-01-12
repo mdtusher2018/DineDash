@@ -12,4 +12,8 @@ class SessionMemory {
   void clear() {
     _token = null;
   }
+
+  String? _email;
+  void setEmail(String email) => _email = email;
+  String? get email => _email;
 }
