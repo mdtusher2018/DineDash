@@ -86,8 +86,7 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
     if (widget.business.openingHours != null) {
       for (final openingModel in widget.business.openingHours!) {
         log(
-          "opening hours:=========>>>>>>>>>${openingModel.day}   " +
-              openingModel.isOpen.toString(),
+          "opening hours:=========>>>>>>>>>${openingModel.day}   ${openingModel.isOpen}",
         );
 
         if (openDays.containsKey(openingModel.day)) {
@@ -111,13 +110,19 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
   }
 
   TimeOfDay _parseTime(String timeString) {
-    log("timeString: ============>>>>>>>>>>>>>> $timeString");
-    final parts = timeString.split(' ');
+    final parts = timeString.split(' '); // ["10:00", "AM"]
     final timeParts = parts[0].split(':');
 
     int hour = int.parse(timeParts[0]);
-    final minute = int.parse(timeParts[1]);
+    final int minute = int.parse(timeParts[1]);
 
+    final String period = parts[1].toUpperCase(); // AM / PM
+
+    if (period == "PM" && hour != 12) {
+      hour += 12;
+    } else if (period == "AM" && hour == 12) {
+      hour = 0;
+    }
     return TimeOfDay(hour: hour, minute: minute);
   }
 
