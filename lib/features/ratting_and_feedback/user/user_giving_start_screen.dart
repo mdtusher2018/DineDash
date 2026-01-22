@@ -33,9 +33,7 @@ class UserGivingStarsPage extends StatelessWidget {
             children: [
               SizedBox(height: 12),
               commonText(
-                "How was your experience at?".trParams({
-                  'restaurantName': rasturentName,
-                }),
+                "${"How was your experience at".tr} $rasturentName?",
                 size: 22,
                 fontWeight: FontWeight.w700,
               ),

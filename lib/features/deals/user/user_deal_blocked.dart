@@ -233,8 +233,7 @@ class _UserDealBlockedPageState extends State<UserDealBlockedPage>
                     SlideTransition(
                       position: _slideDetails,
                       child: commonText(
-                        "Enjoy the deal at The ${widget.resturentName}. To reserve a table, please contact the restaurant."
-                            .tr,
+                        "Enjoy the deal at The ${widget.resturentName}.",
                         textAlign: TextAlign.center,
                         size: 16,
                       ),
@@ -279,8 +278,12 @@ class _UserDealBlockedPageState extends State<UserDealBlockedPage>
                       child: commonButton(
                         "Go to deals".tr,
                         onTap: () {
-                         UserRootPage.selectedIndex=3;
-                         navigateToPage(UserRootPage(), context: context,clearStack: true);
+                          UserRootPage.selectedIndex = 3;
+                          navigateToPage(
+                            UserRootPage(),
+                            context: context,
+                            clearStack: true,
+                          );
                         },
                       ),
                     ),

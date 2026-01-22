@@ -165,8 +165,8 @@ Map<String, String> de_DE = {
 
   'Go to deals': 'Zu den Angeboten',
   'Deal booked!': 'Angebot gebucht!',
-  'Enjoy the deal at {restaurant}.\nTo reserve a table, please contact the restaurant.':
-      'Genießen Sie das Angebot im {restaurant}.\nUm einen Tisch zu reservieren, kontaktieren Sie bitte das Restaurant.',
+  'Enjoy the deal at {restaurant}.':
+      'Genießen Sie das Angebot im {restaurant}.',
 
   'Monday': 'Montag',
   'Tuesday': 'Dienstag',
@@ -184,7 +184,7 @@ Map<String, String> de_DE = {
   'What do you want to do': 'Was möchten Sie tun',
   'Restaurants': 'Restaurants',
 
-  'How was your experience at?': 'Wie war Ihre Erfahrung bei @restaurantName?',
+  'How was your experience at': 'Wie war Ihre Erfahrung bei',
   'Rating:': 'Bewertung:',
   'Comment:': 'Kommentar:',
   'Let others know about your experience..':
@@ -202,8 +202,8 @@ Map<String, String> de_DE = {
   "Location :": "Standort :",
   "Used Deals": "Genutzte Angebote",
 
-  "Congratulations, you’ve discovered a new restaurant in your town!":
-      "Herzlichen Glückwunsch, du hast ein neues Restaurant in deiner Stadt entdeckt!",
+  "Congratulations you have used a new deal in your city.":
+      "Herzlichen Glückwunsch, du hast ein neues Angebot in deiner Stadt genutzt.",
 
   "Create Account": "Konto erstellen",
   "Password": "Passwort",
@@ -382,4 +382,6 @@ Map<String, String> de_DE = {
   "Monthly performance": "Monatliche Performance",
   "Total monthly deals redeems across all businesses":
       "Gesamtzahl der monatlich eingelösten Angebote in allen Restaurants.",
+
+  "Deal redeemed!": "Deal eingelöst!",
 };

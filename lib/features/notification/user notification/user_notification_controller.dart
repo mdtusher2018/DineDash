@@ -26,7 +26,7 @@ class UserNotificationController extends BaseController {
   Future<void> fetchNotifications({bool refresh = false}) async {
     if (refresh) {
       currentPage = 1;
-      notifications.clear();
+      isMoreLoading.value = false;
     }
 
     if (isMoreLoading.value || isLoading.value) return;
@@ -42,8 +42,9 @@ class UserNotificationController extends BaseController {
       task: () async {
         log("is user ${SessionMemory.isUser}");
         final response = await _apiService.get(
-        (SessionMemory.isUser)?  ApiEndpoints.userNotifications(page: currentPage):
-        ApiEndpoints.dealerNotifications(page: currentPage),
+          (SessionMemory.isUser)
+              ? ApiEndpoints.userNotifications(page: currentPage)
+              : ApiEndpoints.dealerNotifications(page: currentPage),
         );
 
         final parsed = NotificationResponse.fromJson(response);

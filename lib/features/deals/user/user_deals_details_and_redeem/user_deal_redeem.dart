@@ -217,7 +217,7 @@ class _UserDealRedeemPageState extends State<UserDealRedeemPage>
                     SlideTransition(
                       position: _slideTitle,
                       child: commonText(
-                        "Deal redeemed!".tr,
+                        "Deal redeemed!",
                         size: 21,
                         isBold: true,
                       ),
@@ -226,7 +226,7 @@ class _UserDealRedeemPageState extends State<UserDealRedeemPage>
                     SlideTransition(
                       position: _slideDetails,
                       child: commonText(
-                        "Congratulations, you’ve discovered a new restaurant in your town!"
+                        "Congratulations you have used a new deal in your city."
                             .tr,
                         textAlign: TextAlign.center,
                         size: 16,

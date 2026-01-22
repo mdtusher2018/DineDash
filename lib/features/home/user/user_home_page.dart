@@ -33,16 +33,14 @@ class _UserHomeViewState extends State<UserHomeView> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       cityController.fetchCities();
       controller.fetchHomeData();
-      controller.fetchNotification();
+      Timer.periodic(const Duration(seconds: 30), (_) {
+        controller.fetchNotification();
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      controller.fetchNotification();
-    });
-
     return Scaffold(
       body: SafeArea(
         child: Obx(() {
@@ -154,7 +152,7 @@ class _UserHomeViewState extends State<UserHomeView> {
                             right: 0,
                             top: 0,
                             child: Obx(() {
-                              if (controller.unread.value < 1) {
+                              if (HomeController.unread.value < 1) {
                                 return SizedBox();
                               }
                               return Container(
@@ -164,7 +162,7 @@ class _UserHomeViewState extends State<UserHomeView> {
                                   shape: BoxShape.circle,
                                 ),
                                 child: commonText(
-                                  controller.unread.value.toString(),
+                                  HomeController.unread.value.toString(),
                                   color: AppColors.white,
                                   size: 14,
                                   isBold: true,

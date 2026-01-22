@@ -18,7 +18,7 @@ class DealerHomepageController extends BaseController {
 
   final performance = RxnNum();
 
-  RxInt unread = 0.obs;
+  static RxInt unread = 0.obs;
 
   /// Fetch business list
   Future<void> fetchDealerHomepageData({int page = 1}) async {
@@ -51,13 +51,15 @@ class DealerHomepageController extends BaseController {
     );
   }
 
-  Future<void> fetchNotification() async {
+  Future<void> fetchUnreadNotificationCount() async {
     await safeCall(
+      showLoading: false,
       task: () async {
         final response = await _apiService.get(ApiEndpoints.unreadNotification);
 
         if (response['statusCode'] == 200) {
-          unread.value = response['data']?['attributes']?['count'] ?? 0;
+          DealerHomepageController.unread.value =
+              response['data']?['attributes']?['count'] ?? 0;
         }
       },
     );

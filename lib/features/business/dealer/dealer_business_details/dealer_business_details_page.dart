@@ -281,13 +281,6 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
                 benefitText: deal.benefitAmount.toString(),
                 status: deal.status,
 
-                // deal.isActive
-                //     ? "Active"
-                //     : deal.reasonFor == "deleted"
-                //     ? "Pending for delete"
-                //     : deal.reasonFor == "edited"
-                //     ? "Pending for edit"
-                //     : "Paused",
                 onEdit: () {
                   navigateToPage(
                     EditDealScreen(

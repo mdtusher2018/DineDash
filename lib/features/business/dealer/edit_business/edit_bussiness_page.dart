@@ -110,19 +110,19 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
   }
 
   TimeOfDay _parseTime(String timeString) {
-    final parts = timeString.split(' '); // ["10:00", "AM"]
-    final timeParts = parts[0].split(':');
+    final parts = timeString.split(':');
 
-    int hour = int.parse(timeParts[0]);
-    final int minute = int.parse(timeParts[1]);
-
-    final String period = parts[1].toUpperCase(); // AM / PM
-
-    if (period == "PM" && hour != 12) {
-      hour += 12;
-    } else if (period == "AM" && hour == 12) {
-      hour = 0;
+    if (parts.length != 2) {
+      throw FormatException('Invalid time format. Expected HH:mm');
     }
+
+    final hour = int.parse(parts[0]);
+    final minute = int.parse(parts[1]);
+
+    if (hour < 0 || hour > 23 || minute < 0 || minute > 59) {
+      throw FormatException('Invalid hour or minute value');
+    }
+
     return TimeOfDay(hour: hour, minute: minute);
   }
 

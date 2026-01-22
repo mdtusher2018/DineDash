@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'dart:async';
 
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/core/utils/helper.dart';
@@ -27,24 +27,21 @@ class _DealerHomepageState extends State<DealerHomepage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      log("===========>>>>>>> Home page api called");
       controller.fetchDealerHomepageData();
-      controller.fetchNotification();
+      Timer.periodic(const Duration(seconds: 30), (_) {
+        controller.fetchUnreadNotificationCount();
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      controller.fetchNotification();
-    });
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: RefreshIndicator(
           onRefresh: () async {
             await controller.fetchDealerHomepageData();
-            controller.fetchNotification();
           },
           child: SingleChildScrollView(
             controller: scrollController,
@@ -86,7 +83,7 @@ class _DealerHomepageState extends State<DealerHomepage> {
                             right: 0,
                             top: 0,
                             child: Obx(() {
-                              if (controller.unread.value < 1) {
+                              if (DealerHomepageController.unread.value < 1) {
                                 return SizedBox();
                               }
                               return Container(
@@ -96,7 +93,8 @@ class _DealerHomepageState extends State<DealerHomepage> {
                                   shape: BoxShape.circle,
                                 ),
                                 child: commonText(
-                                  controller.unread.value.toString(),
+                                  DealerHomepageController.unread.value
+                                      .toString(),
                                   color: AppColors.white,
                                   size: 14,
                                   isBold: true,

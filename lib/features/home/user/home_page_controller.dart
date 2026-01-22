@@ -10,7 +10,7 @@ class HomeController extends BaseController {
   // Observables for UI
   var homeData = Rxn<HomeData>();
 
-  RxInt unread = 0.obs;
+  static RxInt unread = 0.obs;
 
   Future<void> fetchHomeData({String? city, String? searchTerm}) async {
     await safeCall(
@@ -32,11 +32,13 @@ class HomeController extends BaseController {
 
   Future<void> fetchNotification() async {
     await safeCall(
+      showLoading: false,
       task: () async {
         final response = await _apiService.get(ApiEndpoints.unreadNotification);
 
         if (response['statusCode'] == 200) {
-          unread.value = response['data']?['attributes']?['count'] ?? 0;
+          HomeController.unread.value =
+              response['data']?['attributes']?['count'] ?? 0;
         }
       },
     );

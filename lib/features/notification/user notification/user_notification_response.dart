@@ -97,7 +97,7 @@ class NotificationItem {
       type: json['type'] ?? "",
       businessId: json['businessId'] ?? "",
       dealId: json['dealId'] ?? "",
-      rasturentName: json['rasturentName'] ?? "",
+      rasturentName: json['businessName'] ?? "",
       targetUser: TargetUser.fromJson(json['targetUser'] ?? {}),
       target: json['target'] ?? '',
       title: LocalizedText.fromJson(json['title'] ?? {}),

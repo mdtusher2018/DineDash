@@ -133,8 +133,7 @@ Map<String, String> en_US = {
 
   'Go to deals': 'Go to deals',
   'Deal booked!': 'Deal booked!',
-  'Enjoy the deal at {restaurant}.\nTo reserve a table, please contact the restaurant.':
-      'Enjoy the deal at @restaurant.\nTo reserve a table, please contact the restaurant.',
+  'Enjoy the deal at {restaurant}.': 'Enjoy the deal at @restaurant.',
 
   'Monday': 'Monday',
   'Tuesday': 'Tuesday',
@@ -154,7 +153,7 @@ Map<String, String> en_US = {
   'What do you want to do': 'What do you want to do',
   'Restaurants': 'Restaurants',
 
-  "How was your experience at?": "How was your experience at @restaurantName?",
+  "How was your experience at": "How was your experience at",
 
   'Rating:': 'Rating:',
   'Comment:': 'Comment:',
@@ -177,8 +176,8 @@ Map<String, String> en_US = {
 
   "Shake your phone to redeem": "Shake your phone to redeem",
   "You can redeem from here also": "You can redeem from here also",
-  "Congratulations, you’ve discovered a new restaurant in your town!":
-      "Congratulations, you’ve discovered a new restaurant in your town!",
+  "Congratulations you have used a new deal in your city.":
+      "Congratulations you have used a new deal in your city.",
 
   "Create Account": "Create Account",
   "Password": "Password",
@@ -357,4 +356,5 @@ Map<String, String> en_US = {
       "Manage deals across all your businesses.",
 
   "Become a User": "Become a User",
+  "Deal redeemed!": "Deal redeemed!",
 };

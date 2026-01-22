@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:dine_dash/core/utils/colors.dart';
+import 'package:dine_dash/features/home/dealer/dealer_homepage_controller.dart';
 import 'package:dine_dash/features/notification/user%20notification/user_notification_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 
@@ -39,26 +40,35 @@ class UserNotificationsPage extends StatelessWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Spacer(flex: 1),
-            CommonImage(
-              'assets/images/no_notification.png',
-              width: 120,
-              height: 120,
-            ),
-            const SizedBox(height: 20),
-            commonText("There’s no notifications".tr, size: 21, isBold: true),
-            const SizedBox(height: 10),
-            commonText(
-              "Your notifications will appear on this page.".tr,
-              size: 16,
-              color: Colors.black54,
-            ),
-            const Spacer(flex: 2),
-          ],
+        child: RefreshIndicator(
+          onRefresh: () async {
+            controller.refreshNotifications();
+          },
+          child: ListView(
+            children: [
+              const SizedBox(height: 160),
+              CommonImage(
+                'assets/images/no_notification.png',
+                width: 120,
+                height: 120,
+              ),
+              const SizedBox(height: 20),
+              Center(
+                child: commonText(
+                  "There’s no notifications".tr,
+                  size: 21,
+                  isBold: true,
+                ),
+              ),
+              const SizedBox(height: 10),
+              commonText(
+                "Your notifications will appear on this page.".tr,
+                size: 16,
+                textAlign: TextAlign.center,
+                color: Colors.black54,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -92,8 +102,13 @@ class _NotificationListState extends State<NotificationList> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      DealerHomepageController.unread.value = 0;
+    });
     return RefreshIndicator(
-      onRefresh: widget.controller.refreshNotifications,
+      onRefresh: () async {
+        widget.controller.refreshNotifications();
+      },
       child: Obx(() {
         final notifications = widget.controller.notifications;
 
@@ -129,12 +144,22 @@ class _NotificationListState extends State<NotificationList> {
                 size: 32,
                 color: AppColors.primaryColor,
               ),
-              title: commonText(n.title.en, size: 16, isBold: true),
+              title: commonText(
+                Get.locale?.languageCode == 'en' ? n.title.en : n.title.de,
+                size: 16,
+                isBold: true,
+              ),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 4),
-                  commonText(n.message.en, size: 13, color: Colors.black87),
+                  commonText(
+                    Get.locale?.languageCode == 'en'
+                        ? n.message.en
+                        : n.message.de,
+                    size: 13,
+                    color: Colors.black87,
+                  ),
                   const SizedBox(height: 4),
                   commonText(
                     timeAgo,
