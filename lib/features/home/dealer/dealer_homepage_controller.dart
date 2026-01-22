@@ -54,6 +54,7 @@ class DealerHomepageController extends BaseController {
   Future<void> fetchUnreadNotificationCount() async {
     await safeCall(
       showLoading: false,
+      showErrorSnack: false,showSuccessSnack: false,
       task: () async {
         final response = await _apiService.get(ApiEndpoints.unreadNotification);
 

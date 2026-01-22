@@ -124,6 +124,9 @@ class ApiClient {
   }
 
   void _checkUnauthorized(http.Response res) {
+    if (res.request?.url.toString().contains('notifications/count') ?? false) {
+      return;
+    }
     if (res.statusCode == 401 ||
         (jsonDecode(res.body)?['message'] ?? "").contains('Unauthorized')) {
       if (navigatorKey.currentState != null) {

@@ -2,6 +2,7 @@
 
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/home/dealer/dealer_homepage_controller.dart';
+import 'package:dine_dash/features/home/user/home_page_controller.dart';
 import 'package:dine_dash/features/notification/user%20notification/user_notification_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
 
@@ -18,7 +19,11 @@ class UserNotificationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Fetch notifications initially
-    controller.fetchNotifications();
+    controller.refreshNotifications();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      DealerHomepageController.unread.value = 0;
+      HomeController.unread.value = 0;
+    });
 
     return Scaffold(
       appBar: commonAppBar(title: "Notification".tr, context: context),
@@ -102,9 +107,6 @@ class _NotificationListState extends State<NotificationList> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      DealerHomepageController.unread.value = 0;
-    });
     return RefreshIndicator(
       onRefresh: () async {
         widget.controller.refreshNotifications();

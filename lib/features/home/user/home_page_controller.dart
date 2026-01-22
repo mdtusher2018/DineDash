@@ -33,6 +33,8 @@ class HomeController extends BaseController {
   Future<void> fetchNotification() async {
     await safeCall(
       showLoading: false,
+      showErrorSnack: false,
+      showSuccessSnack: false,
       task: () async {
         final response = await _apiService.get(ApiEndpoints.unreadNotification);
 
