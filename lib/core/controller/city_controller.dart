@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/models/city_model.dart';
+import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
 class CityController extends BaseController {
@@ -20,8 +24,23 @@ class CityController extends BaseController {
 
         if (cityResponse.statusCode == 201 && cityResponse.data != null) {
           cities.assignAll(cityResponse.data!.results);
+          Position position = await getCurrentPosition(controller: this);
+
+          final currentCity = await getCityName(position);
+
+          log("============>>>>>>>>>>>>" + currentCity.toString());
+          if (currentCity != null && currentCity.isNotEmpty) {
+            final matchedCity = cities.firstWhereOrNull(
+              (city) =>
+                  city.cityName.toLowerCase() == currentCity.toLowerCase(),
+            );
+
+            if (matchedCity != null) {
+              selectedCity.value = matchedCity.cityName;
+            }
+          }
         } else {
-          showSnackBar('Failed to load cities');
+          showSnackBar('Failed to load cities, Please refresh.');
         }
       },
     );

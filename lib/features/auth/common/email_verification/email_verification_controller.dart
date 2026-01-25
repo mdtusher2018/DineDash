@@ -74,8 +74,6 @@ class EmailVerificationController extends BaseController {
               showPendingDialog(Get.context!);
             }
           }
-
-          showSnackBar('Signed Up successfully!', isError: false);
         } else {
           throw Exception(emailVerificationResponse.message);
         }

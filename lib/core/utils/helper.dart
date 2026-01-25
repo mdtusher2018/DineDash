@@ -1,5 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:dine_dash/core/base/base_controller.dart';
@@ -77,12 +79,24 @@ Map<String, dynamic> decodeJwtPayload(String token) {
   }
 }
 
+Future<String?> getCityName(Position position) async {
+  List<Placemark> placemarks = await placemarkFromCoordinates(
+    position.latitude,
+    position.longitude,
+  );
+
+  if (placemarks.isNotEmpty) {
+    return placemarks.first.locality; // City
+  }
+  return null;
+}
+
 Future<Position> getCurrentPosition({
   required BaseController? controller,
 }) async {
   Position fallbackPosition = Position(
-    latitude: 23.8103,
-    longitude: 90.4125,
+    latitude: 11.5730556,
+    longitude: 49.9436111,
     timestamp: DateTime.now(),
     accuracy: 1,
     altitude: 0,
@@ -211,4 +225,17 @@ String getDayOfWeek(DateTime date) {
 
   return weekDays[date.weekday %
       7]; // `weekday` gives 1 for Monday, 7 for Sunday
+}
+
+String to24Hour(TimeOfDay time) {
+  final hour = time.hour.toString().padLeft(2, '0'); // already 0–23
+  final minute = time.minute.toString().padLeft(2, '0');
+  return '$hour:$minute';
+}
+
+bool isValidSameDayRange(TimeOfDay start, TimeOfDay end) {
+  final startMinutes = start.hour * 60 + start.minute;
+  final endMinutes = end.hour * 60 + end.minute;
+
+  return endMinutes > startMinutes;
 }

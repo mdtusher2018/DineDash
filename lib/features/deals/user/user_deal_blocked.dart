@@ -236,6 +236,16 @@ class _UserDealBlockedPageState extends State<UserDealBlockedPage>
                         "Enjoy the deal at The ${widget.resturentName}.",
                         textAlign: TextAlign.center,
                         size: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    FadeTransition(
+                      opacity: _fadeRow,
+                      child: commonText(
+                        "This deal reservation does not contain a general reservation. You can just come to the location and redeem the deal. For a reservation, please contact the DEALR.",
+                        textAlign: TextAlign.center,
+                        size: 14,
                       ),
                     ),
                     SizedBox(height: 16),

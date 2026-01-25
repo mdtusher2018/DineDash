@@ -384,4 +384,6 @@ Map<String, String> de_DE = {
       "Gesamtzahl der monatlich eingelösten Angebote in allen Restaurants.",
 
   "Deal redeemed!": "Deal eingelöst!",
+  "This deal reservation does not contain a general reservation. You can just come to the location and redeem the deal. For a reservation, please contact the DEALR.":
+      "Diese Deal-Reservierung enthält keine allgemeine Reservierung. Du kannst einfach zur Location kommen und den Deal einlösen. Für eine Reservierung wende dich bitte an den jeweilegen DEALR.",
 };

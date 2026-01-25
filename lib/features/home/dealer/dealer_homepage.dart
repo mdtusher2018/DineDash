@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/features/home/dealer/dealer_homepage_controller.dart';
@@ -28,14 +26,14 @@ class _DealerHomepageState extends State<DealerHomepage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.fetchDealerHomepageData();
-      Timer.periodic(const Duration(seconds: 30), (_) {
-        controller.fetchUnreadNotificationCount();
-      });
+
+      controller.fetchUnreadNotificationCount();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    controller.fetchUnreadNotificationCount();
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),

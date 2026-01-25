@@ -357,4 +357,7 @@ Map<String, String> en_US = {
 
   "Become a User": "Become a User",
   "Deal redeemed!": "Deal redeemed!",
+
+  "This deal reservation does not contain a general reservation. You can just come to the location and redeem the deal. For a reservation, please contact the DEALR.":
+      "This deal reservation does not contain a general reservation. You can just come to the location and redeem the deal. For a reservation, please contact the DEALR.",
 };

@@ -250,6 +250,7 @@ class _UserDealRedeemPageState extends State<UserDealRedeemPage>
                           //   context: context,
                           // );
                           Navigator.pop(context);
+                          Navigator.pop(context);
                         },
                       ),
                     ),

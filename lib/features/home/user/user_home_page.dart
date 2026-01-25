@@ -30,17 +30,17 @@ class _UserHomeViewState extends State<UserHomeView> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      cityController.fetchCities();
-      controller.fetchHomeData();
-      Timer.periodic(const Duration(seconds: 30), (_) {
-        controller.fetchNotification();
-      });
+    controller.isLoading.value = true;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await cityController.fetchCities();
+      await controller.fetchHomeData(city: cityController.selectedCity.value);
+      controller.fetchNotification();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    controller.fetchNotification();
     return Scaffold(
       body: SafeArea(
         child: Obx(() {
@@ -212,27 +212,6 @@ class _UserHomeViewState extends State<UserHomeView> {
                               hintText: "Search restaurants, foods...".tr,
                               border: InputBorder.none,
                             ),
-                            onChanged: (value) {
-                              // if (value.trim().isEmpty) {
-                              //   controller.fetchHomeData(
-                              //     city:
-                              //         cityController.selectedCity
-                              //             .split('-')
-                              //             .first,
-                              //     searchTerm: null,
-                              //   );
-                              // }
-                            },
-                            onSubmitted: (value) {
-                              // controller.fetchHomeData(
-                              //   city:
-                              //       cityController.selectedCity.split('-').first,
-                              //   searchTerm:
-                              //       searchTermController.text.trim().isNotEmpty
-                              //           ? searchTermController.text.trim()
-                              //           : null,
-                              // );
-                            },
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -246,12 +225,17 @@ class _UserHomeViewState extends State<UserHomeView> {
 
                 /// Sections dynamically populated
                 buildSection(
-                  "Nearby Open Restaurants",
+                  cityController.selectedCity.isNotEmpty
+                      ? "Nearby Open Restaurants"
+                      : "Recommended",
                   homeData.restaurants,
                   () {
                     navigateToPage(
                       ListOfBusinessPage(
-                        title: "Nearby Open Restaurants",
+                        title:
+                            cityController.selectedCity.isNotEmpty
+                                ? "Nearby Open Restaurants"
+                                : "Recommended",
                         business: homeData.restaurants,
                       ),
                       context: context,

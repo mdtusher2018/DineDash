@@ -654,22 +654,32 @@ class _CreateDealerAccount1stPageState
             "Add Business",
             isLoading: controller.isLoading.value,
             onTap: () async {
+              for (final entry in openDays.entries.where((e) => !e.value)) {
+                final range = timings[entry.key];
+
+                if (range == null ||
+                    !isValidSameDayRange(range.start, range.end)) {
+                  showSnackBar(
+                    'Invalid time for ${entry.key}. Closing time must be after opening time.',
+                    isError: true,
+                  );
+                  return; // stop submission
+                }
+              }
+
               final openingHoursList =
                   openDays.entries
                       .where((entry) => !entry.value)
                       .map(
                         (entry) => {
                           "day": entry.key,
-                          "openingTime": timings[entry.key]!.start.format(
-                            context,
-                          ),
-                          "closingTime": timings[entry.key]!.end.format(
-                            context,
-                          ),
+                          "openingTime": to24Hour(timings[entry.key]!.start),
+                          "closingTime": to24Hour(timings[entry.key]!.end),
                           'isOpen': !entry.value,
                         },
                       )
                       .toList();
+              log(openingHoursList.toString());
               await controller.checkEmail(
                 emailController.text,
                 context: context,
