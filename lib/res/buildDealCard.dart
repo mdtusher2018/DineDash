@@ -11,6 +11,7 @@ Widget buildDealCard({
   required String redeemed,
   required String benefitText,
   required String status, // "Active" or "Paused"
+  required bool isActive,
   required VoidCallback onEdit,
   required VoidCallback onDelete,
   required VoidCallback onToggleStatus,
@@ -146,10 +147,10 @@ Widget buildDealCard({
                   onEdit,
                 ),
                 actionButton(
-                  status == "Active"
+                  isActive
                       ? CommonImage("assets/images/pause.png", width: 20)
                       : CommonImage("assets/images/play.png", width: 20),
-                  status == "Active" ? "Pause".tr : "Active".tr,
+                  isActive ? "Pause".tr : "Active".tr,
                   onToggleStatus,
                   color: AppColors.primaryColor,
                 ),

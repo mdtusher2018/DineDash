@@ -86,6 +86,7 @@ class _DealerDealsRootPageState extends State<DealerDealsRootPage> {
                         return buildDealCard(
                           title: deal.dealType,
                           subText: deal.description,
+                          isActive: deal.isActive,
                           duration: deal.reuseableAfter.toString(),
                           redeemed: deal.redeemCount.toString(),
                           location: deal.businessName,

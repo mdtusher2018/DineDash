@@ -280,6 +280,7 @@ class _DealerBusinessDetailsPageState extends State<DealerBusinessDetailsPage>
                 location: controller.businessDetail.value!.name,
                 benefitText: deal.benefitAmount.toString(),
                 status: deal.status,
+                isActive: deal.isActive,
 
                 onEdit: () {
                   navigateToPage(
