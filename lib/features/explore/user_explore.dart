@@ -339,20 +339,14 @@ class _UserExplorePageState extends State<UserExplorePage> {
                 notification.metrics.maxScrollExtent &&
             !controller.isLoadingMore &&
             controller.currentPage < controller.totalPages) {
-          controller.fetchBusinessesList(
-            city: cityController.selectedCity.split('-').first,
-            searchTerm:
-                searchTermController.text.trim().isNotEmpty
-                    ? searchTermController.text.trim()
-                    : null,
-            sortBy: selectedSortBy,
-            loadMore: true,
-          );
+          controller.loadMoreBusinesses();
         }
         return false;
       },
       child: RefreshIndicator(
         onRefresh: () async {
+          controller.currentPage = 0;
+          controller.businessList.clear();
           controller.fetchBusinessesList();
           cityController.selectedCity.value = "";
           searchTermController.clear();
@@ -561,7 +555,8 @@ class _UserExplorePageState extends State<UserExplorePage> {
               const SizedBox(height: 12),
 
               Obx(() {
-                if (controller.isLoading.value) {
+                if (controller.isLoading.value &&
+                    controller.businessList.isEmpty) {
                   return Center(child: CircularProgressIndicator());
                 }
 
@@ -597,40 +592,49 @@ class _UserExplorePageState extends State<UserExplorePage> {
                 }
 
                 return ListView.separated(
-                  itemCount: controller.businessList.length,
+                  itemCount: controller.businessList.length + 1,
                   shrinkWrap: true,
-                  itemBuilder:
-                      (context, index) => InkWell(
-                        onTap: () {
-                          navigateToPage(
-                            context: context,
-                            UserBusinessDetailsPage(
-                              businessId: controller.businessList[index].id,
-                            ),
-                          );
-                        },
-                        child: RestaurantCard(
-                          imageUrl: getFullImagePath(
-                            controller.businessList[index].image ?? "",
-                          ),
+                  physics: const NeverScrollableScrollPhysics(),
 
-                          title: controller.businessList[index].name,
-                          rating:
-                              controller.businessList[index].rating.toDouble(),
-                          reviewCount:
-                              controller.businessList[index].userRatingsTotal,
-                          priceRange:
-                              controller.businessList[index].priceRange != null
-                                  ? "€${controller.businessList[index].priceRange!.min}-${controller.businessList[index].priceRange!.max}"
-                                  : "N/A",
-                          openTime: controller.businessList[index].openTimeText,
-                          location: controller.businessList[index].addressText,
-                          tags: controller.businessList[index].types,
-                        ),
+                  itemBuilder: (context, index) {
+                    // 👇 Loader item
+                    if (index == controller.businessList.length) {
+                      return controller.isLoadingMore
+                          ? const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                            child: Center(child: CircularProgressIndicator()),
+                          )
+                          : const SizedBox.shrink();
+                    }
+
+                    // 👇 Normal list item
+                    final business = controller.businessList[index];
+
+                    return InkWell(
+                      onTap: () {
+                        navigateToPage(
+                          context: context,
+                          UserBusinessDetailsPage(businessId: business.id),
+                        );
+                      },
+                      child: RestaurantCard(
+                        imageUrl: getFullImagePath(business.image ?? ""),
+                        title: business.name,
+                        rating: business.rating.toDouble(),
+                        reviewCount: business.userRatingsTotal,
+                        priceRange:
+                            business.priceRange != null
+                                ? "€${business.priceRange!.min}-${business.priceRange!.max}"
+                                : "N/A",
+                        openTime: business.openTimeText,
+                        location: business.addressText,
+                        tags: business.types,
                       ),
-                  separatorBuilder: (context, index) => SizedBox(height: 8),
+                    );
+                  },
 
-                  physics: NeverScrollableScrollPhysics(),
+                  separatorBuilder:
+                      (context, index) => const SizedBox(height: 8),
                 );
               }),
             ],

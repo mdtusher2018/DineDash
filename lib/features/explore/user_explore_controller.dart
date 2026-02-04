@@ -67,14 +67,6 @@ class UserExploreController extends BaseController {
   }) async {
     if (isLoadingMore) return;
 
-    if (!loadMore) {
-      currentPage = 1;
-      totalPages = 1;
-      businessList.clear();
-    }
-    if (loadMore && currentPage >= totalPages) {
-      return;
-    }
     isLoadingMore = loadMore;
 
     await safeCall(
@@ -82,34 +74,33 @@ class UserExploreController extends BaseController {
         final response = await _apiService.get(
           ApiEndpoints.businessNearestList(
             city: city,
-            day:day,
+            day: day,
             searchTerm: searchTerm,
             sortBy: sortBy,
             page: currentPage,
           ),
         );
 
-        final userExploreBusinessListResponse =
-            UserExploreBusinessListResponse.fromJson(response);
+        final parsed = UserExploreBusinessListResponse.fromJson(response);
 
-        if (userExploreBusinessListResponse.statusCode == 200) {
-          businessList.assignAll(userExploreBusinessListResponse.businesses);
-
-          totalPages = userExploreBusinessListResponse.pagination.totalPages;
-          currentPage = userExploreBusinessListResponse.pagination.currentPage;
-
+        if (parsed.statusCode == 200) {
           if (loadMore) {
-            businessList.addAll(userExploreBusinessListResponse.businesses);
+            businessList.addAll(parsed.businesses);
           } else {
-            businessList.assignAll(userExploreBusinessListResponse.businesses);
+            businessList.assignAll(parsed.businesses);
           }
+
+          totalPages = parsed.pagination.totalPages;
+          currentPage = parsed.pagination.currentPage;
 
           businessList.refresh();
         } else {
-          throw Exception(userExploreBusinessListResponse.message);
+          throw Exception(parsed.message);
         }
       },
     );
+
+    isLoadingMore = false;
   }
 
   Future<void> loadMoreBusinesses() async {
