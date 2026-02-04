@@ -5,8 +5,8 @@ class ApiEndpoints {
   static String mapResturant(String resturantName) =>
       "https://places.googleapis.com/v1/places:searchText?query=$resturantName&key=$mapKey";
 
-  static const String baseUrl = 'http://147.93.29.184:8020/api/v1/';
-  static const String baseImageUrl = 'http://147.93.29.184:8020';
+  static const String baseUrl = 'http://145.79.7.81:8020/api/v1/';
+  static const String baseImageUrl = 'http://145.79.7.81:8020';
 
   // static const String baseUrl = 'http://10.10.10.33:8020/api/v1/';
   // static const String baseImageUrl = 'http://147.93.29.184:8020';
