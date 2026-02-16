@@ -408,15 +408,16 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                             ),
                             SizedBox(width: 4),
                             commonText(
-                              business.isBusinessOpen
-                                  ? 'Opened at {time}'.trParams({
-                                    'time':
-                                        business.openTimeText.split('-').first,
-                                  })
-                                  : 'Opens at {time}'.trParams({
-                                    'time':
-                                        business.openTimeText.split('-').first,
-                                  }),
+                              business.openStatusText.tr,
+                              // business.isBusinessOpen
+                              //     ? 'Opened at {time}'.trParams({
+                              //       'time':
+                              //           business.openTimeText.split('-').first,
+                              //     })
+                              //     : 'Opens at {time}'.trParams({
+                              //       'time':
+                              //           business.openTimeText.split('-').first,
+                              //     }),
                               color:
                                   business.isBusinessOpen
                                       ? Colors.green

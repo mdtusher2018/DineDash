@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:dine_dash/core/utils/constent.dart';
 import 'package:dine_dash/features/profile/common/profile/profile_controller.dart';
@@ -108,6 +109,7 @@ class ApiClient {
   }
 
   dynamic _processResponse(http.Response response) {
+    log(response.body.toString());
     _checkUnauthorized(response);
 
     final statusCode = response.statusCode;

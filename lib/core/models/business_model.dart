@@ -86,6 +86,97 @@ class BusinessModel {
     );
   }
 
+  String get openStatusText {
+    if (openingHours.isEmpty) return "Temporarily Closed";
+
+    final now = DateTime.now();
+
+    const weekDays = [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ];
+
+    final todayIndex = now.weekday - 1;
+    final todayName = weekDays[todayIndex];
+
+    String formatTime(String time24) {
+      try {
+        final dt = DateFormat("HH:mm").parse(time24);
+        return DateFormat("h:mm a").format(dt);
+      } catch (_) {
+        return time24;
+      }
+    }
+
+    // 🔹 1️⃣ Check today first
+    final today = openingHours.firstWhere(
+      (e) => e.day == todayName && e.isOpen,
+      orElse:
+          () => OpeningHour(
+            day: '',
+            isOpen: false,
+            openingTime: '',
+            closingTime: '',
+          ),
+    );
+
+    if (today.isOpen) {
+      final open = DateFormat("HH:mm").parse(today.openingTime);
+      final close = DateFormat("HH:mm").parse(today.closingTime);
+
+      final openingTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        open.hour,
+        open.minute,
+      );
+      final closingTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        close.hour,
+        close.minute,
+      );
+
+      if (now.isBefore(openingTime)) {
+        return "Opens at ${formatTime(today.openingTime)}";
+      }
+
+      if (now.isAfter(openingTime) && now.isBefore(closingTime)) {
+        return "Opened at ${formatTime(today.openingTime)}";
+      }
+    }
+
+    // 🔹 2️⃣ Find next opening day
+    for (int i = 1; i <= 7; i++) {
+      final nextIndex = (todayIndex + i) % 7;
+      final nextDay = weekDays[nextIndex];
+
+      final next = openingHours.firstWhere(
+        (e) => e.day == nextDay && e.isOpen,
+        orElse:
+            () => OpeningHour(
+              day: '',
+              isOpen: false,
+              openingTime: '',
+              closingTime: '',
+            ),
+      );
+
+      if (next.isOpen) {
+        return "Opens $nextDay at ${formatTime(next.openingTime)}";
+      }
+    }
+
+    return "Temporarily Closed";
+  }
+
   String get openTimeText {
     if (openingHours.isNotEmpty) {
       final now = DateTime.now();
@@ -147,10 +238,13 @@ class BusinessModel {
     final todayName = weekDays[now.weekday - 1];
     log(todayName.toString());
 
-    final todayOpening = openingHours.firstWhere((e) => e.day == todayName);
-    log(todayOpening.day.toString());
+    final todayOpening = openingHours.where(
+      (e) => e.day == todayName && e.isOpen,
+    );
 
-    final today = todayOpening;
+    if (todayOpening.isEmpty) return false;
+
+    final today = todayOpening.first;
 
     try {
       final open = DateFormat("HH:mm").parse(today.openingTime);
