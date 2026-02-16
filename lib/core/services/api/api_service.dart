@@ -16,15 +16,9 @@ class ApiService {
 
   Future<Map<String, String>> _getHeaders({Map<String, String>? extra}) async {
     String? token = await _localStorage.getString(StorageKey.token);
-  String? langCode =
-      await _localStorage.getString(StorageKey.languageCode) ?? 'de';
-
-    log("1111111111 ===========>>>>>>>>>>>>> token: $token");
-
+    String? langCode =
+        await _localStorage.getString(StorageKey.languageCode) ?? 'de';
     token ??= _sessionMemory.token;
-
-    log("222222222 ===========>>>>>>>>>>>>> token: $token");
-
     final headers = {
       'Accept-Language': langCode,
       'Content-Type': 'application/json',

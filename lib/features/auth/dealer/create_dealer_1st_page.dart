@@ -1,7 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:developer';
-
 import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/utils/colors.dart';
@@ -180,28 +178,6 @@ class _CreateDealerAccount1stPageState
                           }
 
                           if (_selectedPlace!.openingHours?.periods != null) {
-                            log(
-                              'Found ${_selectedPlace!.openingHours!.periods.length} periods',
-                            );
-
-                            // Iterate through the periods to log detailed information
-                            for (var period
-                                in _selectedPlace!.openingHours!.periods) {
-                              int dayIndex =
-                                  period
-                                      .open
-                                      .day
-                                      .index; // Get the day index (0=Sunday, 1=Monday, etc.)
-                              String dayName =
-                                  days[dayIndex]; // Get the name of the day (e.g., "Monday")
-
-                              // Log the open and close times for each period
-                              log(
-                                'Day: $dayName, Open: ${period.open.time.hours}:${period.open.time.minutes.toString().padLeft(2, '0')}, '
-                                'Close: ${period.close?.time.hours}:${period.close?.time.minutes.toString().padLeft(2, '0') ?? '23:59'}',
-                              );
-                            }
-
                             openDays.updateAll(
                               (key, value) => true,
                             ); // mark all closed by default
@@ -333,7 +309,7 @@ class _CreateDealerAccount1stPageState
   void initState() {
     super.initState();
     final email = Get.find<SessionMemory>().email ?? "";
-    log("email: =======>>>>>>>>>>>>> $email");
+
     emailController.text = email;
 
     for (var day in days) {
@@ -679,7 +655,7 @@ class _CreateDealerAccount1stPageState
                         },
                       )
                       .toList();
-              log(openingHoursList.toString());
+
               await controller.checkEmail(
                 emailController.text,
                 context: context,

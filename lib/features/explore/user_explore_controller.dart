@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/services/localstorage/session_memory.dart';
@@ -29,7 +27,7 @@ class UserExploreController extends BaseController {
   bool isLoadingMore = false;
 
   Future<void> fetchBusinessesOnMap({double? lat, double? lng}) async {
-    log("lat======>>>> $lat\nlng======>>>> $lng");
+
     await safeCall(
       task: () async {
         lat ??= currentPosition.value?.latitude;
@@ -110,25 +108,6 @@ class UserExploreController extends BaseController {
     }
   }
 
-  // Future<void> getCoordinatesFromPostalCode() async {
-  //   try {
-  //     String postalCode =
-  //         await Get.find<LocalStorageService>().getString(
-  //           StorageKey.postalCode,
-  //         ) ??
-  //         FallbackValue.postalCode;
-  //     List<Location> locations = await locationFromAddress(postalCode);
-  //     if (locations.isNotEmpty) {
-  //       final Location location = locations.first;
-  //       currentPosition.value = LatLng(location.latitude, location.longitude);
-  //     } else {
-  //       getCurrentLocation();
-  //     }
-  //   } catch (e) {
-  //     print("Error occurred while getting coordinates from postal code: $e");
-  //     getCurrentLocation();
-  //   }
-  // }
 
   Future<void> getCurrentLocation() async {
     try {

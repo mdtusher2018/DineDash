@@ -1,7 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:developer';
-
 import 'package:dine_dash/core/services/deeplink/deeplink_service.dart';
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
 import 'package:dine_dash/core/services/localstorage/session_memory.dart';
@@ -28,7 +26,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   Widget returnPage(String token) {
-    log(decodeJwtPayload(token).toString());
     if (decodeJwtPayload(token)['isLoginToken'] != null &&
         decodeJwtPayload(token)['isLoginToken'] == true) {
       if (decodeJwtPayload(token)['currentRole'] == 'user') {

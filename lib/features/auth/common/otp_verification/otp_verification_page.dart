@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/auth/common/otp_verification/otp_verification_controller.dart';
 import 'package:dine_dash/res/commonWidgets.dart';
@@ -34,7 +32,6 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
   void initState() {
     super.initState();
     controller.isResendOTPTrue.value = false;
-    log("init state called");
   }
 
   @override

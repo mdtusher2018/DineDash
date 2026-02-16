@@ -155,6 +155,7 @@ Map<String, String> de_DE = {
   'Menu': 'Menü',
   'Currently Closed': 'Derzeit geschlossen',
   'Opens at {time}': 'Öffnet um @time',
+  'Opened at {time}': 'Opened at @time',
 
   'All reviews {number}': 'Alle Bewertungen @number',
 
@@ -386,4 +387,6 @@ Map<String, String> de_DE = {
   "Deal redeemed!": "Deal eingelöst!",
   "This deal reservation does not contain a general reservation. You can just come to the location and redeem the deal. For a reservation, please contact the DEALR.":
       "Diese Deal-Reservierung enthält keine allgemeine Reservierung. Du kannst einfach zur Location kommen und den Deal einlösen. Für eine Reservierung wende dich bitte an den jeweilegen DEALR.",
+  "The deal is only valid for dine-in and does not apply to takeaway.":
+      "Nur gültig beim Essen im Lokal, nicht zum Mitnehmen.",
 };

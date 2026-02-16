@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dine_dash/core/base/base_controller.dart';
@@ -73,8 +72,6 @@ class DealerCreateAccountController extends BaseController {
           "openingHours": openingHours,
           "location": {"type": "Point", "coordinates": coordinates},
         };
-
-        log(imageFile.path);
 
         final response = await _apiService.multipart(
           ApiEndpoints.userSignUp,

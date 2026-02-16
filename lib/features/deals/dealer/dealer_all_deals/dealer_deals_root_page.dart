@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dine_dash/features/deals/dealer/dealer_all_deals/dealer_all_deals_controller.dart';
 import 'package:dine_dash/features/deals/dealer/edit_deal/edit_deals.dart';
 import 'package:dine_dash/res/buildDealCard.dart';
@@ -130,7 +128,6 @@ class _DealerDealsRootPageState extends State<DealerDealsRootPage> {
                           },
                           onToggleStatus: () {
                             showReasonDialog(context, (p0) {
-                              log(deal.dealId);
                               controller.pauseDeal(
                                 dealId: deal.dealId,
                                 ispaused: deal.isActive,

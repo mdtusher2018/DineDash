@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/fallback_value.dart';
@@ -95,7 +94,6 @@ class ProfileController extends BaseController {
   }
 
   Future<void> switchAccount(BuildContext context) async {
-    log(currentRole.value);
     await safeCall(
       task: () async {
         final response = await _apiService.get(ApiEndpoints.switchAccount);
@@ -146,7 +144,6 @@ class ProfileController extends BaseController {
           showDealerCreateDialog(
             context,
             onContinue: () {
-              
               _sessionMemory.setEmail(userModel.value!.email);
 
               if (currentRole.value == 'user') {

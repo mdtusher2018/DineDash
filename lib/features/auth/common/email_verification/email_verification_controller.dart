@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/utils/helper.dart';
@@ -34,9 +32,7 @@ class EmailVerificationController extends BaseController {
       showSnackBar(validationMessage, isError: true);
       return;
     }
-    log(
-      "otp is : $otp \npurpose: ${(isResendOTPTrue.value) ? "resend-otp" : "email-verification"}",
-    );
+
     await safeCall<void>(
       task: () async {
         final body = {
@@ -44,7 +40,7 @@ class EmailVerificationController extends BaseController {
           "purpose":
               (isResendOTPTrue.value) ? "resend-otp" : "email-verification",
         };
-        log(body.toString());
+
         final response = await _apiService.post(
           ApiEndpoints.emailVerification,
           body,
@@ -52,7 +48,6 @@ class EmailVerificationController extends BaseController {
         final emailVerificationResponse = EmailVerificationResponse.fromJson(
           response,
         );
-        log(emailVerificationResponse.accessToken + "===>>>>>>>");
 
         if (emailVerificationResponse.statusCode == 201) {
           final token = emailVerificationResponse.accessToken;

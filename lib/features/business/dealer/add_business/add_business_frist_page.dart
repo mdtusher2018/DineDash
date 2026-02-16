@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
@@ -420,7 +419,6 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
                         },
                       )
                       .toList();
-              log(openingHoursList.toString());
 
               await controller.createBusiness(
                 context: context,
@@ -654,28 +652,6 @@ class _AddBusinessScreenFristState extends State<AddBusinessScreenFrist> {
                           }
 
                           if (_selectedPlace!.openingHours?.periods != null) {
-                            log(
-                              'Found ${_selectedPlace!.openingHours!.periods.length} periods',
-                            );
-
-                            // Iterate through the periods to log detailed information
-                            for (var period
-                                in _selectedPlace!.openingHours!.periods) {
-                              int dayIndex =
-                                  period
-                                      .open
-                                      .day
-                                      .index; // Get the day index (0=Sunday, 1=Monday, etc.)
-                              String dayName =
-                                  days[dayIndex]; // Get the name of the day (e.g., "Monday")
-
-                              // Log the open and close times for each period
-                              log(
-                                'Day: $dayName, Open: ${period.open.time.hours}:${period.open.time.minutes.toString().padLeft(2, '0')}, '
-                                'Close: ${period.close?.time.hours}:${period.close?.time.minutes.toString().padLeft(2, '0') ?? '23:59'}',
-                              );
-                            }
-
                             openDays.updateAll(
                               (key, value) => true,
                             ); // mark all closed by default

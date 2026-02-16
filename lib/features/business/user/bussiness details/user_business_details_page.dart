@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:math' hide log;
 
 import 'package:dine_dash/core/services/localstorage/local_storage_service.dart';
@@ -395,7 +394,10 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                                   ? "Currently Open".tr
                                   : "Currently Closed".tr,
                               // "Currently Closed".tr,
-                              color: Colors.red,
+                              color:
+                                  business.isBusinessOpen
+                                      ? Colors.green
+                                      : Colors.red,
                               isBold: true,
                             ),
                             Spacer(),
@@ -406,10 +408,19 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                             ),
                             SizedBox(width: 4),
                             commonText(
-                              'Opens at {time}'.trParams({
-                                'time': business.openTimeText.split('-').first,
-                              }),
-                              color: Colors.red,
+                              business.isBusinessOpen
+                                  ? 'Opened at {time}'.trParams({
+                                    'time':
+                                        business.openTimeText.split('-').first,
+                                  })
+                                  : 'Opens at {time}'.trParams({
+                                    'time':
+                                        business.openTimeText.split('-').first,
+                                  }),
+                              color:
+                                  business.isBusinessOpen
+                                      ? Colors.green
+                                      : Colors.red,
                               size: 12,
                             ),
                             Spacer(),
@@ -626,7 +637,6 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
     required bool subscriptionRequired,
     required bool isActive,
   }) {
-    log(subscriptionRequired ? "true" : "false");
     return Stack(
       children: [
         Container(

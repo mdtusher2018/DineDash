@@ -243,7 +243,10 @@ class _UserDealBlockedPageState extends State<UserDealBlockedPage>
                     FadeTransition(
                       opacity: _fadeRow,
                       child: commonText(
-                        "This deal reservation does not contain a general reservation. You can just come to the location and redeem the deal. For a reservation, please contact the DEALR.",
+                        "This deal reservation does not contain a general reservation. You can just come to the location and redeem the deal. For a reservation, please contact the DEALR."
+                                .tr +
+                            "The deal is only valid for dine-in and does not apply to takeaway."
+                                .tr,
                         textAlign: TextAlign.center,
                         size: 14,
                       ),

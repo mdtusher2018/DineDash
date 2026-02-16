@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/utils/helper.dart';
 import 'package:dine_dash/core/validators/auth_validator.dart';
@@ -25,9 +23,6 @@ class OTPVerificationController extends BaseController {
     required String otp,
     required BuildContext context,
   }) async {
-    log(
-      "otp is : $otp \npurpose: ${(isResendOTPTrue.value) ? "resend-otp" : "email-verification"}",
-    );
     final validationMessage = AuthValidator.validateEmailAndOTPVerification(
       otp: otp,
     );
@@ -42,7 +37,7 @@ class OTPVerificationController extends BaseController {
           "otp": otp,
           "purpose": (isResendOTPTrue.value) ? "resend-otp" : "forget-password",
         };
-        log(body.toString());
+
         final response = await _apiService.post(ApiEndpoints.verifyOTP, body);
         final otpVerificationResponse = OTPVerificationResponse.fromJson(
           response,

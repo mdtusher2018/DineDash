@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:dine_dash/core/models/dealer_business_model.dart';
 import 'package:dine_dash/core/utils/colors.dart';
@@ -85,10 +84,6 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
     phoneController.text = widget.business.phoneNumber ?? '';
     if (widget.business.openingHours != null) {
       for (final openingModel in widget.business.openingHours!) {
-        log(
-          "opening hours:=========>>>>>>>>>${openingModel.day}   ${openingModel.isOpen}",
-        );
-
         if (openDays.containsKey(openingModel.day)) {
           openDays[openingModel.day] = openingModel.isOpen;
 
@@ -221,7 +216,7 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
               onChanged: (val) {
                 // openDays[day] = val ?? false;
                 openDays[day] = !openDays[day]!;
-                log(val.toString());
+
                 setState(() {});
               },
               label: "Closed",
@@ -476,7 +471,6 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
                           },
                         )
                         .toList();
-                log(openingHoursList.toString());
 
                 await controller.editBusiness(
                   context: context,

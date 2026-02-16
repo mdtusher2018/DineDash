@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dine_dash/core/base/base_controller.dart';
 import 'package:dine_dash/core/services/api/api_service.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
@@ -28,7 +26,6 @@ class CityController extends BaseController {
 
           final currentCity = await getCityName(position);
 
-          log("============>>>>>>>>>>>>" + currentCity.toString());
           if (currentCity != null && currentCity.isNotEmpty) {
             final matchedCity = cities.firstWhereOrNull(
               (city) =>

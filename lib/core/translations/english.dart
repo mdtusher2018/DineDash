@@ -118,6 +118,7 @@ Map<String, String> en_US = {
   'Menu': 'Menu',
   'Currently Closed': 'Currently Closed',
   'Opens at {time}': 'Opens at @time',
+  'Opened at {time}': 'Opened at @time',
   'Reviews': 'Reviews',
   'Information': 'Information',
   'Ratings & Reviews': 'Ratings & Reviews',
@@ -360,4 +361,7 @@ Map<String, String> en_US = {
 
   "This deal reservation does not contain a general reservation. You can just come to the location and redeem the deal. For a reservation, please contact the DEALR.":
       "This deal reservation does not contain a general reservation. You can just come to the location and redeem the deal. For a reservation, please contact the DEALR.",
+
+  "The deal is only valid for dine-in and does not apply to takeaway.":
+      "The deal is only valid for dine-in and does not apply to takeaway.",
 };

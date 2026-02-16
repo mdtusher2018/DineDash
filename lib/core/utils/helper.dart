@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -142,7 +141,7 @@ Future<File?> fetchImageFile(String photoRef) async {
         "?maxwidth=800"
         "&photoreference=$photoRef"
         "&key=${ApiEndpoints.mapKey}";
-    log(url);
+
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       final tempDir = await getTemporaryDirectory();

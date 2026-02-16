@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 import 'package:dine_dash/core/utils/constent.dart';
 import 'package:dine_dash/features/profile/common/profile/profile_controller.dart';
@@ -113,7 +112,7 @@ class ApiClient {
 
     final statusCode = response.statusCode;
     final body = response.body.isNotEmpty ? jsonDecode(response.body) : null;
-    log(response.body);
+
     if (statusCode >= 200 && statusCode < 300) return body;
 
     throw ApiException(

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dine_dash/core/services/localstorage/session_memory.dart';
 import 'package:dine_dash/core/utils/ApiEndpoints.dart';
 import 'package:dine_dash/core/utils/colors.dart';
@@ -345,7 +343,7 @@ class _UserExplorePageState extends State<UserExplorePage> {
       },
       child: RefreshIndicator(
         onRefresh: () async {
-          controller.currentPage = 0;
+          controller.currentPage = 1;
           controller.businessList.clear();
           controller.fetchBusinessesList();
           cityController.selectedCity.value = "";
@@ -445,7 +443,7 @@ class _UserExplorePageState extends State<UserExplorePage> {
                                     } else {
                                       dayOfWeek = newValue;
                                     }
-                                    log("Selected day: $dayOfWeek");
+              
 
                                     controller.fetchBusinessesList(
                                       day: dayOfWeek,

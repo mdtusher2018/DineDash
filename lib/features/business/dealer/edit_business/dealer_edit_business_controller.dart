@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +22,6 @@ class DealerEditBusinessController extends BaseController {
     required List<double?> coordinates,
     File? imageFile,
   }) async {
-    log(coordinates.toString());
     safeCall(
       task: () async {
         if (name.trim().isEmpty) {

@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:dine_dash/core/controller/my_business_name_controller.dart';
 import 'package:dine_dash/core/models/dealer_deal_details.dart';
@@ -40,7 +39,7 @@ class DealerCreateDealController extends DealerMyBusinessNameListController {
     required int maxClaimCount,
     required List<Map<String, dynamic>> activeTime,
   }) async {
-    log(reusableAfter.toString());
+    
     await safeCall(
       task: () async {
         if (business == null) {

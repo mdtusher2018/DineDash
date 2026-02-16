@@ -86,27 +86,6 @@ class BusinessModel {
     );
   }
 
-  /// Convenience getters
-
-  // String get openTimeText {
-  //   if (openingHours.isNotEmpty) {
-  //     final first = openingHours.first;
-  //     String formatTime(String time24) {
-  //       try {
-  //         final dt = DateFormat("HH:mm").parse(time24);
-  //         return DateFormat("h:mm a").format(dt); // converts to AM/PM
-  //       } catch (e) {
-  //         return time24; // fallback
-  //       }
-  //     }
-  //     final opening = formatTime(first.openingTime);
-  //     final closing = formatTime(first.closingTime);
-  //     return "$opening - $closing";
-  //     // return first.isOpen ? "$opening - $closing" : "Closed";
-  //   }
-  //   return "Closed";
-  // }
-
   String get openTimeText {
     if (openingHours.isNotEmpty) {
       final now = DateTime.now();
@@ -150,50 +129,53 @@ class BusinessModel {
   }
 
   bool get isBusinessOpen {
-    if (openingHours.isNotEmpty) {
-      final first = openingHours.first;
+    if (openingHours.isEmpty) return false;
 
-      final openingTime =
-          DateFormat("h:mm a").tryParse(first.openingTime) ??
-          DateFormat("h:mm a").parse("10:00 AM");
+    final now = DateTime.now();
 
-      final closingTime =
-          DateFormat("h:mm a").tryParse(first.closingTime) ??
-          DateFormat("h:mm a").parse("8:00 PM");
+    const weekDays = [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ];
 
-      final now = DateTime.now();
-      final currentTime = DateTime(
+    // Get today's name safely (NOT locale dependent)
+    final todayName = weekDays[now.weekday - 1];
+    log(todayName.toString());
+
+    final todayOpening = openingHours.firstWhere((e) => e.day == todayName);
+    log(todayOpening.day.toString());
+
+    final today = todayOpening;
+
+    try {
+      final open = DateFormat("HH:mm").parse(today.openingTime);
+      final close = DateFormat("HH:mm").parse(today.closingTime);
+
+      final openingTime = DateTime(
         now.year,
         now.month,
         now.day,
-        now.hour,
-        now.minute,
+        open.hour,
+        open.minute,
       );
 
-      final openingTimeOnly = DateTime(
+      final closingTime = DateTime(
         now.year,
         now.month,
         now.day,
-        openingTime.hour,
-        openingTime.minute,
-      );
-      final closingTimeOnly = DateTime(
-        now.year,
-        now.month,
-        now.day,
-        closingTime.hour,
-        closingTime.minute,
+        close.hour,
+        close.minute,
       );
 
-      log("Opening Time: $openingTimeOnly");
-      log("Closing Time: $closingTimeOnly");
-      log("Current Time: $currentTime");
-
-      return currentTime.isAfter(openingTimeOnly) &&
-          currentTime.isBefore(closingTimeOnly);
+      return now.isAfter(openingTime) && now.isBefore(closingTime);
+    } catch (e) {
+      return false;
     }
-
-    return false;
   }
 
   String get phoneText =>
