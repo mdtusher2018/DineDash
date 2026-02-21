@@ -236,6 +236,8 @@ class _UserHomeViewState extends State<UserHomeView> {
                             cityController.selectedCity.isNotEmpty
                                 ? "Nearby Open Restaurants"
                                 : "Recommended",
+                                    city: cityController.selectedCity.value,     searchTerm: searchTermController.text.trim().isNotEmpty
+                                      ? searchTermController.text.trim():null
                       ),
                       context: context,
                     );
@@ -247,7 +249,12 @@ class _UserHomeViewState extends State<UserHomeView> {
                   homeData.activities,
                   onTap: () {
                     navigateToPage(
-                      ListOfBusinessPage(title: "Activities"),
+                      ListOfBusinessPage(
+                        title: "Activities",
+                        city: cityController.selectedCity.value,
+                        searchTerm: searchTermController.text.trim().isNotEmpty
+                                      ? searchTermController.text.trim():null
+                      ),
                       context: context,
                     );
                   },
