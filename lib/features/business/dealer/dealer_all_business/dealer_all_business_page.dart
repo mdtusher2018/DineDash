@@ -74,9 +74,67 @@ class _DealerBusinessPageState extends State<DealerBusinessPage> {
             SizedBox(height: 16),
             Expanded(
               child: Obx(() {
+                if (controller.isLoading.value &&
+                    controller.businesses.isEmpty) {
+                  return Center(child: CircularProgressIndicator());
+                }
                 if (controller.businesses.isEmpty) {
-                  return Center(
-                    child: commonText("No businesses available", size: 16),
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      controller.fetchAllBusinessData(page: 1);
+                    },
+                    child: ListView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.2,
+                        ),
+                        Icon(
+                          Icons.business_outlined,
+                          size: 80,
+                          color: Colors.grey.shade400,
+                        ),
+                        const SizedBox(height: 20),
+                        Center(
+                          child: commonText(
+                            "No Businesses Found",
+                            size: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Center(
+                          child: Text(
+                            "Pull down to refresh or try again.",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey.shade600,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Center(
+                          child: ElevatedButton.icon(
+                            onPressed: () async {
+                              controller.fetchAllBusinessData(page: 1);
+                            },
+                            icon: const Icon(Icons.refresh),
+                            label: const Text("Refresh"),
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 24,
+                                vertical: 12,
+                              ),
+                              backgroundColor: AppColors.primaryColor,
+                              foregroundColor: AppColors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   );
                 }
                 return RefreshIndicator(

@@ -18,6 +18,7 @@ import 'package:dine_dash/features/business/dealer/dealer_all_business/dealer_al
 import 'package:dine_dash/features/business/dealer/edit_menu/edit_menu_controller.dart';
 import 'package:dine_dash/features/business/user/bussiness%20details/business_details_controller.dart';
 import 'package:dine_dash/core/controller/city_controller.dart';
+import 'package:dine_dash/features/business/user/list_of_business_controller.dart';
 import 'package:dine_dash/features/deals/dealer/create_deal/create_deal_controller.dart';
 import 'package:dine_dash/features/deals/dealer/dealer_deal_controller.dart';
 import 'package:dine_dash/features/deals/dealer/dealer_all_deals/dealer_all_deals_controller.dart';
@@ -137,7 +138,10 @@ class DependencyInjection {
       DealerEditMenuController(),
       permanent: true,
     );
-    Get.put<DealerReviewbackController>(DealerReviewbackController(), permanent: true);
+    Get.put<DealerReviewbackController>(
+      DealerReviewbackController(),
+      permanent: true,
+    );
     Get.put<DealerDealPauseController>(
       DealerDealPauseController(),
       permanent: true,
@@ -181,5 +185,9 @@ class DependencyInjection {
     );
     Get.put<UserFeedbackController>(UserFeedbackController(), permanent: true);
     Get.put<ContackUsController>(ContackUsController(), permanent: true);
+    Get.put<ListOfBusinessController>(
+      ListOfBusinessController(),
+      permanent: true,
+    );
   }
 }

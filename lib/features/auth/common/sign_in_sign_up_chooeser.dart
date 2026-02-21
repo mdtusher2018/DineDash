@@ -44,12 +44,7 @@ class _SignInSignUpChooeserState extends State<SignInSignUpChooeser> {
                   isBold: true,
                   color: AppColors.white,
                 ),
-                // SizedBox(height: 20),
-                // commonText(
-                //   "Now continue after register in ${SessionMemory.isUser ? "\"USER\"" : "\"DEALER\""}",
-                //   size: 14,
-                //   color: AppColors.white,
-                // ),
+
                 SizedBox(height: 20),
                 commonButton(
                   "Sign In",

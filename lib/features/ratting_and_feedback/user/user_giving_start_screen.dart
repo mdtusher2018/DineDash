@@ -88,19 +88,22 @@ class UserGivingStarsPage extends StatelessWidget {
               SizedBox(height: 25),
 
               SizedBox(height: 170),
-              commonButton(
-                "Continue".tr,
-                onTap: () {
-                  controller.addFeedback(
-                    businessId: businessId,
-                    dealId: dealId,
-                    feedbackText: commentController.text.trim(),
-                    ratting: ratting.value,
-                    rasturentName: rasturentName,
-                    context: context,
-                  );
-                },
-              ),
+              Obx(() {
+                return commonButton(
+                  "Continue".tr,
+                  isLoading: controller.isLoading.value,
+                  onTap: () async {
+                    await controller.addFeedback(
+                      businessId: businessId,
+                      dealId: dealId,
+                      feedbackText: commentController.text.trim(),
+                      ratting: ratting.value,
+                      rasturentName: rasturentName,
+                      context: context,
+                    );
+                  },
+                );
+              }),
               SizedBox(height: 10),
               Center(
                 child: TextButton(

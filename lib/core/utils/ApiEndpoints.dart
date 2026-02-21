@@ -40,6 +40,39 @@ class ApiEndpoints {
     return "home?$queryString";
   }
 
+  static String userAllBusinessList({String? city, String? searchTerm}) {
+    final params = <String, String>{};
+
+    if (city != null && city.isNotEmpty) params['cityName'] = city;
+    if (searchTerm != null && searchTerm.isNotEmpty) {
+      params['name'] = searchTerm;
+    }
+
+    params['limit'] = '10000';
+    if (params.isEmpty) return "home/all-restaurants";
+
+    final queryString = params.entries
+        .map((e) => "${e.key}=${e.value}")
+        .join("&");
+    return "home/all-restaurants?$queryString";
+  }
+
+  static String userAllActivityList({String? city, String? searchTerm}) {
+    final params = <String, String>{};
+
+    if (city != null && city.isNotEmpty) params['cityName'] = city;
+    if (searchTerm != null && searchTerm.isNotEmpty) {
+      params['name'] = searchTerm;
+    }
+    params['limit'] = '10000';
+    if (params.isEmpty) return "home/all-activities";
+
+    final queryString = params.entries
+        .map((e) => "${e.key}=${e.value}")
+        .join("&");
+    return "home/all-activities?$queryString";
+  }
+
   static String favoriteList({String? city, String? searchTerm}) {
     final params = <String, String>{};
 

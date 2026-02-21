@@ -77,18 +77,21 @@ class _EditMenuScreenState extends State<EditMenuScreen> {
       // Bottom Button
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: commonButton(
-          "Save Price",
-          onTap: () {
-            controller.editMenu(
-              context: context,
-              menuId: widget.menu.id,
-              itemDescription: itemDescriptionController.text,
-              itemName: itemNameController.text,
-              price: priceController.text,
-            );
-          },
-        ),
+        child: Obx(() {
+          return commonButton(
+            "Save Price",
+            isLoading: controller.isLoading.value,
+            onTap: () {
+              controller.editMenu(
+                context: context,
+                menuId: widget.menu.id,
+                itemDescription: itemDescriptionController.text,
+                itemName: itemNameController.text,
+                price: priceController.text,
+              );
+            },
+          );
+        }),
       ),
     );
   }

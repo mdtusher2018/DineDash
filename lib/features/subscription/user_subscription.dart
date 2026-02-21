@@ -225,6 +225,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                       (activePlan.price != 0)
                           ? commonButton(
                             "Manage Subscriptions",
+                            isLoading: controller.isLoading.value,
                             onTap: () async {
                               if (activePlan.price != 0) {
                                 await controller.payment(
@@ -341,6 +342,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                               : Colors.grey.shade300,
                       button: commonButton(
                         plan.price == 0 ? "Start Free" : "Subscribe Now",
+                        isLoading: controller.isLoading.value,
                         onTap: () async {
                           if (plan.price != 0) {
                             await controller.payment(plan.id, context: context);

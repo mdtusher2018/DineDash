@@ -240,15 +240,6 @@ class _UserDealRedeemPageState extends State<UserDealRedeemPage>
                       child: commonButton(
                         "Back".tr,
                         onTap: () {
-                          // navigateToPage(
-                          //   UserGivingStarsPage(
-                          //     businessId: widget.businessId,
-                          //     dealId: widget.dealId,
-                          //     rasturentName: widget.rasturentName,
-                          //   ),
-                          //   replace: true,
-                          //   context: context,
-                          // );
                           Navigator.pop(context);
                           Navigator.pop(context);
                         },

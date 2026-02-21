@@ -229,59 +229,35 @@ class _UserHomeViewState extends State<UserHomeView> {
                       ? "Nearby Open Restaurants"
                       : "Recommended",
                   homeData.restaurants,
-                  () {
+                  onTap: () {
                     navigateToPage(
                       ListOfBusinessPage(
                         title:
                             cityController.selectedCity.isNotEmpty
                                 ? "Nearby Open Restaurants"
                                 : "Recommended",
-                        business: homeData.restaurants,
                       ),
                       context: context,
                     );
                   },
                 ),
 
-                buildSection("Activities", homeData.activities, () {
-                  navigateToPage(
-                    ListOfBusinessPage(
-                      title: "Activities",
-                      business: homeData.activities,
-                    ),
-                    context: context,
-                  );
-                }),
+                buildSection(
+                  "Activities",
+                  homeData.activities,
+                  onTap: () {
+                    navigateToPage(
+                      ListOfBusinessPage(title: "Activities"),
+                      context: context,
+                    );
+                  },
+                ),
 
-                buildSection("Hot Deals 🔥", homeData.hotDeals, () {
-                  navigateToPage(
-                    ListOfBusinessPage(
-                      title: "Hot Deals 🔥",
-                      business: homeData.hotDeals,
-                    ),
-                    context: context,
-                  );
-                }),
+                buildSection("Hot Deals 🔥", homeData.hotDeals),
 
-                buildSection("Top rated Restaurants", homeData.topRated, () {
-                  navigateToPage(
-                    ListOfBusinessPage(
-                      title: "Top rated Restaurants",
-                      business: homeData.topRated,
-                    ),
-                    context: context,
-                  );
-                }),
+                buildSection("Top rated Restaurants", homeData.topRated),
 
-                buildSection("New", homeData.newRestaurants, () {
-                  navigateToPage(
-                    ListOfBusinessPage(
-                      title: "New",
-                      business: homeData.newRestaurants,
-                    ),
-                    context: context,
-                  );
-                }),
+                buildSection("New", homeData.newRestaurants),
               ],
             ),
           );
@@ -292,9 +268,9 @@ class _UserHomeViewState extends State<UserHomeView> {
 
   Widget buildSection(
     String title,
-    List<BusinessModel> items,
-    Function() onTap,
-  ) {
+    List<BusinessModel> items, {
+    Function()? onTap,
+  }) {
     if (items.isEmpty) return const SizedBox.shrink();
 
     return Column(
@@ -306,14 +282,15 @@ class _UserHomeViewState extends State<UserHomeView> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               commonText(title.tr, fontWeight: FontWeight.bold, size: 16),
-              GestureDetector(
-                onTap: onTap,
-                child: commonText(
-                  "See all".tr,
-                  color: Colors.blueGrey,
-                  isBold: true,
+              if (onTap != null)
+                GestureDetector(
+                  onTap: onTap,
+                  child: commonText(
+                    "See all".tr,
+                    color: Colors.blueGrey,
+                    isBold: true,
+                  ),
                 ),
-              ),
             ],
           ),
         ),

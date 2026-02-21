@@ -72,6 +72,9 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
         if (controller.isLoading.value && business == null) {
           return const Center(child: CircularProgressIndicator());
         }
+        if (widget.businessId != controller.businessDetail.value?.id) {
+          return const Center(child: CircularProgressIndicator());
+        }
         if (business == null) {
           return Center(
             child: commonText("No details available", size: 16, isBold: true),
@@ -120,7 +123,9 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
           if (controller.isLoading.value && business == null) {
             return const Center(child: CircularProgressIndicator());
           }
-
+          if (widget.businessId != controller.businessDetail.value?.id) {
+            return const Center(child: CircularProgressIndicator());
+          }
           if (business == null) {
             return Center(
               child: Column(

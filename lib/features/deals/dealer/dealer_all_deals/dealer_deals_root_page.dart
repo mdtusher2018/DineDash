@@ -1,3 +1,4 @@
+import 'package:dine_dash/core/utils/colors.dart';
 import 'package:dine_dash/features/deals/dealer/dealer_all_deals/dealer_all_deals_controller.dart';
 import 'package:dine_dash/features/deals/dealer/edit_deal/edit_deals.dart';
 import 'package:dine_dash/res/buildDealCard.dart';
@@ -60,9 +61,56 @@ class _DealerDealsRootPageState extends State<DealerDealsRootPage> {
                 return Center(child: CircularProgressIndicator());
               } else if (visibleDeals.isEmpty) {
                 return Expanded(
-                  child: Center(
-                    child: CommonImage(
-                      "assets/images/no_deals_white_background.png",
+                  child: RefreshIndicator(
+                    onRefresh: () async {
+                      controller.fetchAllDeals();
+                    },
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.7,
+                        child: Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              CommonImage(
+                                "assets/images/no_deals_white_background.png",
+                              ),
+                              const SizedBox(height: 16),
+
+                              Text(
+                                "Pull down to refresh",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey.shade600,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+
+                              Center(
+                                child: ElevatedButton.icon(
+                                  onPressed: () async {
+                                    controller.fetchAllDeals();
+                                  },
+                                  icon: const Icon(Icons.refresh),
+                                  label: const Text("Refresh"),
+                                  style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 24,
+                                      vertical: 12,
+                                    ),
+                                    backgroundColor: AppColors.primaryColor,
+                                    foregroundColor: AppColors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 );
@@ -113,12 +161,7 @@ class _DealerDealsRootPageState extends State<DealerDealsRootPage> {
                                     controller.deleteDeal(
                                       reason: p0,
                                       dealId: deal.dealId,
-                                      deleteManually: () {
-                                        // controller.deals.removeWhere((element) {
-                                        //   return element.id == deal.id;
-                                        // });
-                                        // setState(() {});
-                                      },
+                                      deleteManually: () {},
                                     );
                                   },
                                   title: "Why do you want to delete this deal?",
