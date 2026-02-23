@@ -388,8 +388,8 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                         decoration: BoxDecoration(
                           color:
                               business.isBusinessOpen
-                                  ? Colors.red.shade100
-                                  : Colors.green.shade100,
+                                  ? Colors.green.shade100
+                                  : Colors.red.shade100,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Row(
