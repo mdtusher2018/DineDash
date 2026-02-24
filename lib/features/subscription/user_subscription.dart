@@ -227,12 +227,30 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                             "Manage Subscriptions",
                             isLoading: controller.isLoading.value,
                             onTap: () async {
-                              if (activePlan.price != 0) {
-                                await controller.payment(
-                                  activePlan.id,
-                                  context: context,
-                                );
-                              }
+                              _showPromoCodeDialog(
+                                context,
+                                cancle: () async {
+                                  if (activePlan.price != 0) {
+                                    await controller.payment(
+                                      activePlan.id,
+                                      context: context,
+                                      couponCode: "",
+                                      useCoupon: false,
+                                    );
+                                  }
+                                },
+                                submit: (code) async {
+                                  if (activePlan.price != 0) {
+                                    await controller.payment(
+                                      activePlan.id,
+                                      context: context,
+                                      couponCode: code,
+                                      useCoupon: true,
+                                   
+                                    );
+                                  }
+                                },
+                              );
                             },
                           )
                           : SizedBox.shrink(),
@@ -344,14 +362,40 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                         plan.price == 0 ? "Start Free" : "Subscribe Now",
                         isLoading: controller.isLoading.value,
                         onTap: () async {
-                          if (plan.price != 0) {
-                            await controller.payment(plan.id, context: context);
-                          } else {
-                            await controller.freepayment(
-                              plan.id,
-                              context: context,
-                            );
-                          }
+                          _showPromoCodeDialog(
+                            context,
+                            cancle: () async {
+                              if (plan.price != 0) {
+                                await controller.payment(
+                                  plan.id,
+                                  context: context,
+                                  couponCode: "",
+                                  useCoupon: false,
+                                );
+                              } else {
+                                await controller.freepayment(
+                                  plan.id,
+                                  context: context,
+                                );
+                              }
+                            },
+                            submit: (code) async {
+                              if (plan.price != 0) {
+                                await controller.payment(
+                                  plan.id,
+                                  context: context,
+                                  couponCode: code,
+                                  useCoupon: true,
+                                );
+                              } else {
+                                await controller.freepayment(
+                                  plan.id,
+                                  context: context,
+                                );
+                              }
+                            },
+                          );
+                          return;
                         },
                       ),
                       bottomWidget:
@@ -373,6 +417,84 @@ class _SubscriptionViewState extends State<SubscriptionView> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showPromoCodeDialog(
+    BuildContext context, {
+    required Function(String) submit,
+    required Function() cancle,
+  }) {
+    final TextEditingController promoController = TextEditingController();
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: AppColors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// Close Button
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: const Icon(Icons.close),
+                    ),
+                  ],
+                ),
+
+                /// Title
+                commonText("Do you have any Coupon Code?", size: 16),
+
+                /// TextField
+                commonTextfieldWithTitle(
+                  "",
+                  hintText: "Enter code",
+                  promoController,
+                ),
+
+                const SizedBox(height: 20),
+
+                /// Buttons
+                Row(
+                  children: [
+                    Expanded(
+                      child: commonButton(
+                        "Skip",
+                        color: Colors.grey.shade300,
+                        textColor: AppColors.black,
+                        boarderRadious: 8,
+                        onTap: cancle,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: commonButton(
+                        "Submit",
+                        boarderRadious: 8,
+                        onTap: () {
+                          final code = promoController.text.trim();
+                          submit(code);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

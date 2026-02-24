@@ -395,7 +395,14 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                         child: Row(
                           children: [
                             Spacer(),
-                            Icon(Icons.circle, size: 4, color: Colors.red),
+                            Icon(
+                              Icons.circle,
+                              size: 4,
+                              color:
+                                  business.isBusinessOpen
+                                      ? Colors.green
+                                      : Colors.red,
+                            ),
                             const SizedBox(width: 8),
                             commonText(
                               business.isBusinessOpen
@@ -411,7 +418,10 @@ class _UserBusinessDetailsPageState extends State<UserBusinessDetailsPage> {
                             Spacer(),
                             Icon(
                               Icons.access_time,
-                              color: Colors.red,
+                              color:
+                                  business.isBusinessOpen
+                                      ? Colors.green
+                                      : Colors.red,
                               size: 16,
                             ),
                             SizedBox(width: 4),

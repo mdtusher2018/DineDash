@@ -236,8 +236,11 @@ class _UserHomeViewState extends State<UserHomeView> {
                             cityController.selectedCity.isNotEmpty
                                 ? "Nearby Open Restaurants"
                                 : "Recommended",
-                                    city: cityController.selectedCity.value,     searchTerm: searchTermController.text.trim().isNotEmpty
-                                      ? searchTermController.text.trim():null
+                        city: cityController.selectedCity.value,
+                        searchTerm:
+                            searchTermController.text.trim().isNotEmpty
+                                ? searchTermController.text.trim()
+                                : null,
                       ),
                       context: context,
                     );
@@ -252,8 +255,10 @@ class _UserHomeViewState extends State<UserHomeView> {
                       ListOfBusinessPage(
                         title: "Activities",
                         city: cityController.selectedCity.value,
-                        searchTerm: searchTermController.text.trim().isNotEmpty
-                                      ? searchTermController.text.trim():null
+                        searchTerm:
+                            searchTermController.text.trim().isNotEmpty
+                                ? searchTermController.text.trim()
+                                : null,
                       ),
                       context: context,
                     );
@@ -302,16 +307,16 @@ class _UserHomeViewState extends State<UserHomeView> {
           ),
         ),
         SizedBox(
-          height: 300,
+          height: MediaQuery.sizeOf(context).height * 0.32,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: items.length,
             itemBuilder: (context, index) {
               final restaurant = items[index];
               return Padding(
-                padding: const EdgeInsets.only(right: 12),
+                padding: const EdgeInsets.only(right: 4),
                 child: SizedBox(
-                  width: 360,
+                  width: MediaQuery.sizeOf(context).width * 0.8,
                   child: InkWell(
                     onTap:
                         () => navigateToPage(

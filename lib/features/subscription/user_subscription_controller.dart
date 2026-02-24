@@ -54,11 +54,17 @@ class UserSubscriptionController extends BaseController {
   Future<void> payment(
     String subscriptionId, {
     required BuildContext context,
+    required bool useCoupon,
+    required String couponCode,
   }) async {
     await safeCall(
       task: () async {
+        if (useCoupon && couponCode.isEmpty) {
+          throw Exception("Please Enter the code");
+        }
         final response = await _apiService.post(ApiEndpoints.payment, {
           "subscription": subscriptionId,
+          "couponCode": couponCode,
         });
 
         if (response["url"] != null) {
