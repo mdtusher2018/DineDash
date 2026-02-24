@@ -230,6 +230,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                               _showPromoCodeDialog(
                                 context,
                                 cancle: () async {
+                                  Navigator.pop(context);
                                   if (activePlan.price != 0) {
                                     await controller.payment(
                                       activePlan.id,
@@ -240,13 +241,13 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                                   }
                                 },
                                 submit: (code) async {
+                                  Navigator.pop(context);
                                   if (activePlan.price != 0) {
                                     await controller.payment(
                                       activePlan.id,
                                       context: context,
                                       couponCode: code,
                                       useCoupon: true,
-                                   
                                     );
                                   }
                                 },
@@ -365,6 +366,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                           _showPromoCodeDialog(
                             context,
                             cancle: () async {
+                              Navigator.pop(context);
                               if (plan.price != 0) {
                                 await controller.payment(
                                   plan.id,
@@ -380,6 +382,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                               }
                             },
                             submit: (code) async {
+                              Navigator.pop(context);
                               if (plan.price != 0) {
                                 await controller.payment(
                                   plan.id,
