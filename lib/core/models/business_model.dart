@@ -367,6 +367,7 @@ class DealData {
   final int reuseableAfter;
   final String reasonFor;
   final int redeemCount;
+  final String? dealStatus;
   final int maxClaimCount;
   bool isActive;
   bool isApproved;
@@ -386,6 +387,7 @@ class DealData {
     required this.isApproved,
     required this.isDeleted,
     required this.activeTime,
+    this.dealStatus,
   });
 
   factory DealData.fromJson(Map<String, dynamic> json) {
@@ -401,6 +403,7 @@ class DealData {
       isActive: json['isActive'] ?? false,
       isApproved: json['isApproved'] ?? false,
       isDeleted: json['isDeleted'] ?? false,
+      dealStatus: json['dealStatus'] ?? "",
       activeTime:
           json['activeTime'] is List
               ? List<ActiveTime>.from(
@@ -410,30 +413,49 @@ class DealData {
     );
   }
 
+  // String get status {
+  //   if (!isApproved && !isActive) {
+  //     //isaprove=false isactive=false
+  //     return "Pending for approve";
+  //   }
+  //   if (isActive) {
+  //     switch (reasonFor) {
+  //       case "deleted":
+  //         return "Pending for delete";
+  //       case "edited":
+  //         return "Pending for edit";
+  //     }
+  //     return "Active";
+  //   }
+  //   // isActive == false but approved → check reason
+  //   switch (reasonFor) {
+  //     case "deleted":
+  //       return "Pending for delete";
+  //     case "edited":
+  //       return "Pending for edit";
+  //   }
+  //   return "Paused";
+  // }
+
   String get status {
-    if (!isApproved) {
-      return "Pending for approve";
-    }
-
-    if (isActive) {
-      switch (reasonFor) {
-        case "deleted":
-          return "Pending for delete";
-        case "edited":
-          return "Pending for edit";
-      }
-      return "Active";
-    }
-
-    // isActive == false but approved → check reason
-    switch (reasonFor) {
-      case "deleted":
+    switch (dealStatus) {
+      case 'active':
+        return "Active";
+      case 'paused':
+        return "Paused";
+      case 'pending-for-deleted':
         return "Pending for delete";
-      case "edited":
+      case 'pending-for-edited':
         return "Pending for edit";
+      case 'pending-for-paused':
+        return "Pending for pause";
+      case 'pending-for-approved':
+        return "Pending for approval";
+      case 'pending-for-active':
+        return "Pending for activation";
+      default:
+        return "Unknown";
     }
-
-    return "Paused";
   }
 }
 

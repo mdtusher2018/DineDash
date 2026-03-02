@@ -57,6 +57,7 @@ class DealAttribute {
   bool isActive;
   bool isApproved;
   bool isDeleted;
+  final String? dealStatus;
 
   DealAttribute({
     required this.id,
@@ -72,6 +73,7 @@ class DealAttribute {
     required this.isActive,
     required this.isApproved,
     required this.isDeleted,
+    this.dealStatus,
   });
 
   factory DealAttribute.fromJson(Map<String, dynamic> json) => DealAttribute(
@@ -89,31 +91,53 @@ class DealAttribute {
     isActive: json["isActive"] ?? false,
     isApproved: json['isApproved'] ?? false,
     isDeleted: json['isDeleted'] ?? false,
+    dealStatus: json['dealStatus'] ?? "",
   );
 
   String get status {
-    if (!isApproved) {
-      return "Pending for approve";
-    }
-
-    if (isActive) {
-      switch (reasonFor) {
-        case "deleted":
-          return "Pending for delete";
-        case "edited":
-          return "Pending for edit";
-      }
-      return "Active";
-    }
-
-    // isActive == false but approved → check reason
-    switch (reasonFor) {
-      case "deleted":
+    switch (dealStatus) {
+      case 'active':
+        return "Active";
+      case 'paused':
+        return "Paused";
+      case 'pending-for-deleted':
         return "Pending for delete";
-      case "edited":
+      case 'pending-for-edited':
         return "Pending for edit";
+      case 'pending-for-paused':
+        return "Pending for pause";
+      case 'pending-for-approved':
+        return "Pending for approval";
+      case 'pending-for-active':
+        return "Pending for activation";
+      default:
+        return "Unknown";
     }
-
-    return "Paused";
   }
+
+  // String get status {
+  //   if (!isApproved && !isActive) {
+  //     return "Pending for approve";
+  //   }
+
+  //   if (isActive) {
+  //     switch (reasonFor) {
+  //       case "deleted":
+  //         return "Pending for delete";
+  //       case "edited":
+  //         return "Pending for edit";
+  //     }
+  //     return "Active";
+  //   }
+
+  //   // isActive == false but approved → check reason
+  //   switch (reasonFor) {
+  //     case "deleted":
+  //       return "Pending for delete";
+  //     case "edited":
+  //       return "Pending for edit";
+  //   }
+
+  //   return "Paused";
+  // }
 }

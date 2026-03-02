@@ -147,10 +147,12 @@ Widget buildDealCard({
                   onEdit,
                 ),
                 actionButton(
-                  isActive
+                  status == "Active" || status == "Pending for pause"
                       ? CommonImage("assets/images/pause.png", width: 20)
                       : CommonImage("assets/images/play.png", width: 20),
-                  isActive ? "Pause".tr : "Active".tr,
+                  status == "Active" || status == "Pending for pause"
+                      ? "Pause".tr
+                      : "Active".tr,
                   onToggleStatus,
                   color: AppColors.primaryColor,
                 ),

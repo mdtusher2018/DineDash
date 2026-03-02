@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserAfterGivingStarPage extends StatefulWidget {
   String dealId;
@@ -154,39 +155,51 @@ class _UserAfterGivingStarPageState extends State<UserAfterGivingStarPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Expanded(
-                                  child: Container(
-                                    height: 31,
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(color: Colors.black),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 5,
-                                        horizontal: 20,
+                                  child: InkWell(
+                                    onTap: () async {
+                                      if (dealData == null) return;
+                                      final url =
+                                          'https://www.google.com/maps/dir/?api=1&destination=${dealData!.businessLocation.last},${dealData!.businessLocation.first}';
+                                      if (await canLaunch(url)) {
+                                        await launch(url);
+                                      } else {
+                                        throw 'Could not launch $url';
+                                      }
+                                    },
+                                    child: Container(
+                                      height: 31,
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(color: Colors.black),
                                       ),
-                                      child: Row(
-                                        spacing: 10,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.location_on_rounded,
-                                            color: Colors.black,
-                                            size: 20,
-                                          ),
-                                          Flexible(
-                                            child: FittedBox(
-                                              fit: BoxFit.scaleDown,
-                                              child: commonText(
-                                                "Direction".tr,
-                                                size: 16,
-                                                fontWeight: FontWeight.w600,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 5,
+                                          horizontal: 20,
+                                        ),
+                                        child: Row(
+                                          spacing: 10,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.location_on_rounded,
+                                              color: Colors.black,
+                                              size: 20,
+                                            ),
+                                            Flexible(
+                                              child: FittedBox(
+                                                fit: BoxFit.scaleDown,
+                                                child: commonText(
+                                                  "Direction".tr,
+                                                  size: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
