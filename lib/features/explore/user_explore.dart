@@ -380,6 +380,8 @@ class _UserExplorePageState extends State<UserExplorePage> {
                           }
                         },
                         onSubmitted: (value) {
+                          controller.currentPage = 1;
+                          controller.businessList.clear();
                           controller.fetchBusinessesList(
                             city: cityController.selectedCity.split('-').first,
                             searchTerm:
@@ -392,7 +394,21 @@ class _UserExplorePageState extends State<UserExplorePage> {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    const Icon(Icons.search),
+                    InkWell(
+                      onTap: () {
+                        controller.currentPage = 1;
+                        controller.businessList.clear();
+                        controller.fetchBusinessesList(
+                          city: cityController.selectedCity.split('-').first,
+                          searchTerm:
+                              searchTermController.text.trim().isNotEmpty
+                                  ? searchTermController.text.trim()
+                                  : null,
+                          sortBy: selectedSortBy,
+                        );
+                      },
+                      child: const Icon(Icons.search),
+                    ),
                   ],
                 ),
               ),
@@ -443,7 +459,6 @@ class _UserExplorePageState extends State<UserExplorePage> {
                                     } else {
                                       dayOfWeek = newValue;
                                     }
-              
 
                                     controller.fetchBusinessesList(
                                       day: dayOfWeek,
