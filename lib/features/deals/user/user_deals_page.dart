@@ -42,11 +42,10 @@ class _UserDealsPageState extends State<UserDealsPage> {
           }
 
           return RefreshIndicator(
-            onRefresh:
-                () => Future.wait([
-                  abailableDealsController.fetchDealsList(),
-                  usedDealController.fetchUsedDealsList(),
-                ]),
+            onRefresh: () async {
+              await abailableDealsController.fetchDealsList();
+              await usedDealController.fetchUsedDealsList();
+            },
             child: SingleChildScrollView(
               physics: AlwaysScrollableScrollPhysics(),
               child: Column(
