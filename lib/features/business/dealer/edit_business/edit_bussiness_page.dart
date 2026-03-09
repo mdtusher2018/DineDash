@@ -461,13 +461,12 @@ class _EditBusinessScreenFristState extends State<EditBusinessScreenFrist> {
 
                 final openingHoursList =
                     openDays.entries
-                        .where((entry) => !entry.value)
                         .map(
                           (entry) => {
                             "day": entry.key,
                             "openingTime": to24Hour(timings[entry.key]!.start),
                             "closingTime": to24Hour(timings[entry.key]!.end),
-                            'isOpen': !entry.value,
+                            'isOpen': entry.value,
                           },
                         )
                         .toList();

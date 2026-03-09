@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:dine_dash/res/commonWidgets.dart';
 import 'package:flutter/material.dart';
@@ -63,6 +64,8 @@ class DealerEditBusinessController extends BaseController {
           if (coordinates.isNotEmpty)
             "location": {"type": "Point", "coordinates": coordinates},
         };
+
+        log(formData.toString());
 
         // Send the POST request
         final response = await _apiService.multipart(
